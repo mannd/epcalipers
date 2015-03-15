@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 - (IBAction)takePhoto:(id)sender;
 - (IBAction)selectPhoto:(id)sender;
