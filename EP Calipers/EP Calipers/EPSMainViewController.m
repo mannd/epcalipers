@@ -22,6 +22,12 @@
         [self.takePhotoButton setEnabled:NO];
     }
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.scrollView.delegate = self;
+    self.scrollView.minimumZoomScale = 0.75;
+    self.scrollView.maximumZoomScale = 1.5;
+    self.scrollView.zoomScale = 1.0;
+    [self.scrollView setClipsToBounds:YES];
+    [self.scrollView setBouncesZoom:NO];
 
 }
 
@@ -49,10 +55,39 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.imageView.image = chosenImage;
+    //self.scrollView.contentSize = chosenImage.size;
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return self.imageView;
+}
+
+//- (void)centerScrollViewContents {
+//    CGSize boundsSize = self.scrollView.bounds.size;
+//    CGRect contentsFrame = self.imageView.frame;
+//    
+//    if (contentsFrame.size.width < boundsSize.width) {
+//        contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0f;
+//    } else {
+//        contentsFrame.origin.x = 0.0f;
+//    }
+//    
+//    if (contentsFrame.size.height < boundsSize.height) {
+//        contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0f;
+//    } else {
+//        contentsFrame.origin.y = 0.0f;
+//    }
+//    
+//    _imageView.frame = contentsFrame;
+//}
+//
+//- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+//    // The scroll view has zoomed, so we need to re-center the contents
+//    [self centerScrollViewContents];
+//}
 @end

@@ -18,7 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xic-Ba-ViO">
-                                <rect key="frame" x="16" y="550" width="77" height="30"/>
+                                <rect key="frame" x="16" y="562" width="77" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="cua-DF-ZqB"/>
+                                </constraints>
                                 <state key="normal" title="Take Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -27,7 +30,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0QA-q9-LJJ">
-                                <rect key="frame" x="101" y="550" width="88" height="30"/>
+                                <rect key="frame" x="101" y="562" width="88" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="LLf-kc-RE5"/>
+                                </constraints>
                                 <state key="normal" title="Select Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -36,11 +42,10 @@
                                 </connections>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx">
-                                <rect key="frame" x="16" y="20" width="568" height="522"/>
+                                <rect key="frame" x="16" y="20" width="568" height="534"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7">
-                                        <rect key="frame" x="0.0" y="0.0" width="568" height="522"/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="568" height="534"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -49,6 +54,7 @@
                                     <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" id="IvH-ah-zgN"/>
                                     <constraint firstAttribute="bottom" secondItem="H9Q-uG-yq7" secondAttribute="bottom" id="VhL-sl-r6G"/>
                                     <constraint firstItem="H9Q-uG-yq7" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="top" id="Wyq-bg-gCO"/>
+                                    <constraint firstAttribute="bottom" secondItem="H9Q-uG-yq7" secondAttribute="bottom" id="Zb0-TM-o3M"/>
                                     <constraint firstAttribute="centerY" secondItem="H9Q-uG-yq7" secondAttribute="centerY" id="fSB-MN-391"/>
                                     <constraint firstAttribute="centerX" secondItem="H9Q-uG-yq7" secondAttribute="centerX" id="iO7-mi-IAF"/>
                                 </constraints>
@@ -59,15 +65,16 @@
                             <constraint firstItem="xic-Ba-ViO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="01z-A2-Fao"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="0vF-Mx-oBL"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="8pa-uw-ueu"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xic-Ba-ViO" secondAttribute="bottom" constant="8" symbolic="YES" id="Fu4-bx-zI8"/>
                             <constraint firstItem="0QA-q9-LJJ" firstAttribute="leading" secondItem="xic-Ba-ViO" secondAttribute="trailing" constant="8" id="GCs-l7-hfP"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="0QA-q9-LJJ" secondAttribute="bottom" constant="20" id="XhB-oD-Npz"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xic-Ba-ViO" secondAttribute="bottom" constant="20" id="bVi-TO-Ojt"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="llj-fp-2Y7"/>
+                            <constraint firstItem="xic-Ba-ViO" firstAttribute="centerY" secondItem="0QA-q9-LJJ" secondAttribute="centerY" id="mCK-ih-laM"/>
                             <constraint firstItem="xic-Ba-ViO" firstAttribute="top" secondItem="H9Q-uG-yq7" secondAttribute="bottom" constant="8" id="oZD-zH-the"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="H9Q-uG-yq7" id="P5j-pJ-mkb"/>
+                        <outlet property="scrollView" destination="X5X-Yr-OYx" id="H47-qu-pna"/>
                         <outlet property="selectPhotoButton" destination="0QA-q9-LJJ" id="36u-CO-B0N"/>
                         <outlet property="takePhotoButton" destination="xic-Ba-ViO" id="yDG-Fn-0nv"/>
                     </connections>
