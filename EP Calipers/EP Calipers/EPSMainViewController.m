@@ -22,13 +22,13 @@
         [self.takePhotoButton setEnabled:NO];
     }
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
+
     self.scrollView.delegate = self;
-    self.scrollView.minimumZoomScale = 0.75;
-    self.scrollView.maximumZoomScale = 1.2;
+    self.scrollView.minimumZoomScale = 0.5;
+    self.scrollView.maximumZoomScale = 3.0;
     self.scrollView.zoomScale = 1.0;
-    [self.scrollView setClipsToBounds:YES];
-    [self.scrollView setBouncesZoom:NO];
+//    [self.scrollView setClipsToBounds:YES];
+//    [self.scrollView setBouncesZoom:NO];
 
 }
 
@@ -56,6 +56,8 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.imageView.image = chosenImage;
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+
    // self.scrollView.contentSize = self.imageView.image.size;
     NSLog(@"imageView.size.height = %f", self.imageView.image.size.height);
     NSLog(@"imageView.size.width = %f", self.imageView.image.size.width);
