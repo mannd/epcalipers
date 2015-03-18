@@ -37,15 +37,12 @@
 }
 
 - (void)createToolbar {
-    UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Take Photo" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto:)];
-    UIBarButtonItem *selectPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Select Photo" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
-    UIBarButtonItem *rotatePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate Right" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
-    UIBarButtonItem *rotateLeftPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate Left" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
-    UIBarButtonItem *flipPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Flip Photo" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
-    UIBarButtonItem *mirrorPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Mirror Photo" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
+    UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Camera" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto:)];
+    UIBarButtonItem *selectPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
+    UIBarButtonItem *rotatePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
 
     NSArray *buttonItems = [NSArray arrayWithObjects:takePhotoButton, selectPhotoButton, rotatePhotoButton,
-                            rotateLeftPhotoButton, flipPhotoButton, mirrorPhotoButton, nil];
+                            nil];
     [self.toolBar setItems:buttonItems];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
@@ -137,9 +134,10 @@ UIImage* rotate(UIImage* src, UIImageOrientation orientation)
 //    self.imageView.transform = CGAffineTransformMakeRotation(M_PI_2);
 //    
 //
-    self.imageView.image = [self rotateImage:self.imageView.image onDegrees:-90];
     
-//    self.imageView.image = rotate(self.imageView.image, UIImageOrientationRight);
+    self.imageView.image = [self rotateImage:self.imageView.image onDegrees:45];
+    
+    //self.imageView.image = rotate(self.imageView.image, UIImageOrientationLeft);
     
  //   [UIView commitAnimations];
 
