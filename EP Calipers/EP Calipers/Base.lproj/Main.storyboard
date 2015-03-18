@@ -41,6 +41,19 @@
                                     <action selector="selectPhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="roC-AF-OTZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwe-9G-Ctx">
+                                <rect key="frame" x="197" y="562" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="bZ7-UJ-0ej"/>
+                                    <constraint firstAttribute="width" constant="46" id="qbT-uc-ycg"/>
+                                </constraints>
+                                <state key="normal" title="Rotate">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="rotatePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="94d-rt-IlP"/>
+                                </connections>
+                            </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx">
                                 <rect key="frame" x="16" y="20" width="568" height="534"/>
                                 <subviews>
@@ -61,9 +74,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="xic-Ba-ViO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="01z-A2-Fao"/>
+                            <constraint firstItem="uwe-9G-Ctx" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="bottom" constant="8" id="FYZ-qa-Bmm"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xic-Ba-ViO" secondAttribute="bottom" constant="8" symbolic="YES" id="Fu4-bx-zI8"/>
                             <constraint firstItem="0QA-q9-LJJ" firstAttribute="leading" secondItem="xic-Ba-ViO" secondAttribute="trailing" constant="8" id="GCs-l7-hfP"/>
                             <constraint firstItem="0QA-q9-LJJ" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="bottom" constant="8" id="LQ0-5x-YPA"/>
+                            <constraint firstItem="uwe-9G-Ctx" firstAttribute="leading" secondItem="0QA-q9-LJJ" secondAttribute="trailing" constant="8" id="VYJ-GH-7e5"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="W4Y-nF-S1C"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="hMI-tG-xPa"/>
                             <constraint firstItem="xic-Ba-ViO" firstAttribute="centerY" secondItem="0QA-q9-LJJ" secondAttribute="centerY" id="mCK-ih-laM"/>
