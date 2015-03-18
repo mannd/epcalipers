@@ -17,43 +17,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xic-Ba-ViO">
-                                <rect key="frame" x="16" y="562" width="77" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="cua-DF-ZqB"/>
-                                </constraints>
-                                <state key="normal" title="Take Photo">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="takePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GXM-dg-9Wq"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0QA-q9-LJJ">
-                                <rect key="frame" x="101" y="562" width="88" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="LLf-kc-RE5"/>
-                                </constraints>
-                                <state key="normal" title="Select Photo">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="selectPhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="roC-AF-OTZ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uwe-9G-Ctx">
-                                <rect key="frame" x="197" y="562" width="46" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="bZ7-UJ-0ej"/>
-                                    <constraint firstAttribute="width" constant="46" id="qbT-uc-ycg"/>
-                                </constraints>
-                                <state key="normal" title="Rotate">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="rotatePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="94d-rt-IlP"/>
-                                </connections>
-                            </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx">
                                 <rect key="frame" x="16" y="20" width="568" height="534"/>
                                 <subviews>
@@ -70,26 +33,31 @@
                                     <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" id="rzH-oC-0Z0"/>
                                 </constraints>
                             </scrollView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4de-bd-RXW">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="ZK8-rJ-AMI"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="Item" id="Y07-9Q-T9l"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="xic-Ba-ViO" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="01z-A2-Fao"/>
-                            <constraint firstItem="uwe-9G-Ctx" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="bottom" constant="8" id="FYZ-qa-Bmm"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="xic-Ba-ViO" secondAttribute="bottom" constant="8" symbolic="YES" id="Fu4-bx-zI8"/>
-                            <constraint firstItem="0QA-q9-LJJ" firstAttribute="leading" secondItem="xic-Ba-ViO" secondAttribute="trailing" constant="8" id="GCs-l7-hfP"/>
-                            <constraint firstItem="0QA-q9-LJJ" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="bottom" constant="8" id="LQ0-5x-YPA"/>
-                            <constraint firstItem="uwe-9G-Ctx" firstAttribute="leading" secondItem="0QA-q9-LJJ" secondAttribute="trailing" constant="8" id="VYJ-GH-7e5"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4de-bd-RXW" secondAttribute="bottom" id="SH7-g4-78Z"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="W4Y-nF-S1C"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="hMI-tG-xPa"/>
-                            <constraint firstItem="xic-Ba-ViO" firstAttribute="centerY" secondItem="0QA-q9-LJJ" secondAttribute="centerY" id="mCK-ih-laM"/>
+                            <constraint firstItem="4de-bd-RXW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="jXA-bo-V4Y"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4de-bd-RXW" secondAttribute="trailing" constant="-16" id="psb-YZ-hfo"/>
+                            <constraint firstItem="4de-bd-RXW" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="bottom" constant="2" id="sdf-1O-CVh"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="y4s-ff-zCZ"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="H9Q-uG-yq7" id="P5j-pJ-mkb"/>
                         <outlet property="scrollView" destination="X5X-Yr-OYx" id="H47-qu-pna"/>
-                        <outlet property="selectPhotoButton" destination="0QA-q9-LJJ" id="36u-CO-B0N"/>
-                        <outlet property="takePhotoButton" destination="xic-Ba-ViO" id="yDG-Fn-0nv"/>
+                        <outlet property="toolBar" destination="4de-bd-RXW" id="lS0-EZ-hEn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

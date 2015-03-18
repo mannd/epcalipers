@@ -17,6 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    [self createToolbar];
+    
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [self.takePhotoButton setEnabled:NO];
@@ -32,6 +34,23 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)createToolbar {
+    UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Take Photo" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto:)];
+    UIBarButtonItem *selectPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Select Photo" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
+    UIBarButtonItem *rotatePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate Right" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
+    UIBarButtonItem *rotateLeftPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate Left" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
+    UIBarButtonItem *flipPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Flip Photo" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
+    UIBarButtonItem *mirrorPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Mirror Photo" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
+
+    NSArray *buttonItems = [NSArray arrayWithObjects:takePhotoButton, selectPhotoButton, rotatePhotoButton,
+                            rotateLeftPhotoButton, flipPhotoButton, mirrorPhotoButton, nil];
+    [self.toolBar setItems:buttonItems];
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        // if no camera on device, just silently disable take photo button
+        [takePhotoButton setEnabled:NO];
+    }
 }
 
 - (IBAction)takePhoto:(id)sender {
@@ -53,15 +72,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.imageView.image = chosenImage;
-    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-
-   // self.scrollView.contentSize = self.imageView.image.size;
-    NSLog(@"imageView.size.height = %f", self.imageView.image.size.height);
-    NSLog(@"imageView.size.width = %f", self.imageView.image.size.width);
-    NSLog(@"scrollView.content.height = %f", self.scrollView.contentSize.height);
-    NSLog(@"scrollView.content.width = %f", self.scrollView.contentSize.width);
-
-    
+ 
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -125,9 +136,13 @@ UIImage* rotate(UIImage* src, UIImageOrientation orientation)
 //
 //    self.imageView.transform = CGAffineTransformMakeRotation(M_PI_2);
 //    
-//    [UIView commitAnimations];
-    
+//
     self.imageView.image = [self rotateImage:self.imageView.image onDegrees:-90];
+    
+//    self.imageView.image = rotate(self.imageView.image, UIImageOrientationRight);
+    
+ //   [UIView commitAnimations];
+
 }
 
 - (UIImage *)rotateImage:(UIImage *)image onDegrees:(float)degrees

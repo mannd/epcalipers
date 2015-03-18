@@ -16,6 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *selectPhotoButton;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 - (IBAction)rotatePhoto:(id)sender;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 
 
 @end
