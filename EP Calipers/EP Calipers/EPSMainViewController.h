@@ -17,6 +17,8 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 - (IBAction)rotatePhoto:(id)sender;
 @property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+@property NSArray *topMenuItems;
+@property NSArray *photoMenuItems;
 
 
 @end

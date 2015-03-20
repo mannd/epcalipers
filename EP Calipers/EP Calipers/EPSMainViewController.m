@@ -18,6 +18,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self createToolbar];
+    [self createPhotoToolbar];
+    
+    [self selectTopToolbar];
     
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
@@ -38,16 +41,32 @@
 }
 
 - (void)createToolbar {
+    UIBarButtonItem *photoButton = [[UIBarButtonItem alloc] initWithTitle:@"Photo" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhotoToolbar)];
+    UIBarButtonItem *measureButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:nil];
+
+    
+    self.topMenuItems = [NSArray arrayWithObjects:photoButton, measureButton, nil];
+}
+
+- (void)createPhotoToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Camera" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto:)];
     UIBarButtonItem *selectPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Select Photo" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
     UIBarButtonItem *rotatePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
-
-    NSArray *buttonItems = [NSArray arrayWithObjects:takePhotoButton, selectPhotoButton, rotatePhotoButton, nil];
-    [self.toolBar setItems:buttonItems];
+    UIBarButtonItem *backToTopButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(selectTopToolbar)];
+    
+    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectPhotoButton, rotatePhotoButton, backToTopButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
     }
+}
+
+- (void)selectPhotoToolbar {
+    [self.toolBar setItems:self.photoMenuItems];
+}
+
+- (void)selectTopToolbar {
+    [self.toolBar setItems:self.topMenuItems];
 }
 
 - (IBAction)takePhoto:(id)sender {
