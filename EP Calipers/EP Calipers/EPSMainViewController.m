@@ -23,6 +23,7 @@
         // if no camera on device, just silently disable take photo button
         [self.takePhotoButton setEnabled:NO];
     }
+    
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
 
     self.scrollView.delegate = self;
@@ -38,10 +39,13 @@
 
 - (void)createToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Camera" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto:)];
-    UIBarButtonItem *selectPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
+    UIBarButtonItem *selectPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Select Photo" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
     UIBarButtonItem *rotatePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
+    UIBarButtonItem *rotateLeftPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
+    UIBarButtonItem *flipPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
+    UIBarButtonItem *calibratePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
 
-    NSArray *buttonItems = [NSArray arrayWithObjects:takePhotoButton, selectPhotoButton, rotatePhotoButton,
+    NSArray *buttonItems = [NSArray arrayWithObjects:takePhotoButton, selectPhotoButton, rotatePhotoButton, rotateLeftPhotoButton, flipPhotoButton, calibratePhotoButton,
                             nil];
     [self.toolBar setItems:buttonItems];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -129,17 +133,18 @@ UIImage* rotate(UIImage* src, UIImageOrientation orientation)
 
 - (IBAction)rotatePhoto:(id)sender {
 
-//    [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
+   [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
 //
-//    self.imageView.transform = CGAffineTransformMakeRotation(M_PI_2);
+    static int multiplier = 1;
+   self.imageView.transform = CGAffineTransformMakeRotation(multiplier * M_PI_2);
+    multiplier += 1;
 //    
 //
     
-    self.imageView.image = [self rotateImage:self.imageView.image onDegrees:45];
+  //self.imageView.image = [self rotateImage:self.imageView.image onDegrees:90];
+ //   self.imageView.image = rotate(self.imageView.image, UIImageOrientationLeft);
     
-    //self.imageView.image = rotate(self.imageView.image, UIImageOrientationLeft);
-    
- //   [UIView commitAnimations];
+   [UIView commitAnimations];
 
 }
 
@@ -152,6 +157,7 @@ UIImage* rotate(UIImage* src, UIImageOrientation orientation)
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(ctx, newSide/2, newSide/2);
     CGContextRotateCTM(ctx, rads);
+    
     CGContextDrawImage(UIGraphicsGetCurrentContext(),CGRectMake(-[image size].width/2,-[image size].height/2,size.width, size.height),image.CGImage);
     UIImage *i = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
