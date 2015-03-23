@@ -16,6 +16,7 @@
 		8E1423781AB5F16A00CC15BC /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
 		8E9A33031AB9BBE30037E694 /* lollipop.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A33021AB9BBE30037E694 /* lollipop.jpg */; };
 		8E9A33051AB9C6E20037E694 /* Android-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A33041AB9C6E20037E694 /* Android-icon.png */; };
+		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,8 @@
 		8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EP_CalipersTests.m; sourceTree = "<group>"; };
 		8E9A33021AB9BBE30037E694 /* lollipop.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lollipop.jpg; sourceTree = "<group>"; };
 		8E9A33041AB9C6E20037E694 /* Android-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Android-icon.png"; sourceTree = "<group>"; };
+		8E9A33381AC09DE90037E694 /* CalipersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalipersView.h; sourceTree = "<group>"; };
+		8E9A33391AC09DE90037E694 /* CalipersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalipersView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +98,8 @@
 				8E9A33021AB9BBE30037E694 /* lollipop.jpg */,
 				8E14236A1AB5F16A00CC15BC /* LaunchScreen.xib */,
 				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
+				8E9A33381AC09DE90037E694 /* CalipersView.h */,
+				8E9A33391AC09DE90037E694 /* CalipersView.m */,
 			);
 			path = "EP Calipers";
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 				8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */,
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
 				8E14235E1AB5F16A00CC15BC /* main.m in Sources */,
+				8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

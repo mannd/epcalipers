@@ -9,17 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate>
-@property (strong, nonatomic) IBOutlet UIImageView *imageView;
-- (IBAction)takePhoto:(id)sender;
-- (IBAction)selectPhoto:(id)sender;
-@property (strong, nonatomic) IBOutlet UIButton *takePhotoButton;
-@property (strong, nonatomic) IBOutlet UIButton *selectPhotoButton;
-@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
-- (IBAction)rotatePhoto:(id)sender;
-@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
-@property NSArray *topMenuItems;
-@property NSArray *photoMenuItems;
 
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) IBOutlet UIView *calipersView;
+
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
+@property NSArray *mainMenuItems;
+@property NSArray *photoMenuItems;
+@property NSArray *calipersMenuItems;
 
 @end
 

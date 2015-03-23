@@ -17,22 +17,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    [self createToolbar];
+    [self createMainToolbar];
     [self createPhotoToolbar];
+    [self createCalipersToolbar];
     
-    [self selectTopToolbar];
+    [self selectMainToolbar];
     
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        // if no camera on device, just silently disable take photo button
-        [self.takePhotoButton setEnabled:NO];
-    }
-    
+ 
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
 
     self.scrollView.delegate = self;
-    self.scrollView.minimumZoomScale = 0.5;
-    self.scrollView.maximumZoomScale = 3.0;
+    self.scrollView.minimumZoomScale = 1.0;
+    self.scrollView.maximumZoomScale = 2.0;
     [self.scrollView setZoomScale:1.0];
+    
+    // pass touches through
+    [self.calipersView setUserInteractionEnabled:NO];
+    
+//    // add view for calipers
+//    UIView *caliperView = [[UIView alloc] initWithFrame:self.imageView.frame];
+// //   [self.view addSubview:caliperView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,33 +44,52 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)createToolbar {
+- (void)createMainToolbar {
     UIBarButtonItem *photoButton = [[UIBarButtonItem alloc] initWithTitle:@"Photo" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhotoToolbar)];
-    UIBarButtonItem *measureButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *calipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calipers" style:UIBarButtonItemStylePlain target:self action:@selector(selectCalipersToolbar)];
 
     
-    self.topMenuItems = [NSArray arrayWithObjects:photoButton, measureButton, nil];
+    self.mainMenuItems = [NSArray arrayWithObjects:photoButton, calipersButton, nil];
 }
 
 - (void)createPhotoToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Camera" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto:)];
-    UIBarButtonItem *selectPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Select Photo" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
+    UIBarButtonItem *selectPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
     UIBarButtonItem *rotatePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
-    UIBarButtonItem *backToTopButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(selectTopToolbar)];
+    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(selectMainToolbar)];
     
-    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectPhotoButton, rotatePhotoButton, backToTopButton, nil];
+    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectPhotoButton, rotatePhotoButton, backToMainMenuButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
     }
 }
 
+- (void)createCalipersToolbar {
+    UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calibrate" style:UIBarButtonItemStylePlain target:self action:@selector(calibrateCalipers:)];
+    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(selectMainToolbar)];
+    
+    self.calipersMenuItems = [NSArray arrayWithObjects:calibrateCalipersButton, backToMainMenuButton, nil];
+}
+
+
 - (void)selectPhotoToolbar {
     [self.toolBar setItems:self.photoMenuItems];
 }
 
-- (void)selectTopToolbar {
-    [self.toolBar setItems:self.topMenuItems];
+- (void)selectMainToolbar {
+    [self.toolBar setItems:self.mainMenuItems];
+    [self.calipersView setUserInteractionEnabled:NO];
+
+}
+
+- (void)selectCalipersToolbar {
+    [self.toolBar setItems:self.calipersMenuItems];
+    [self.calipersView setUserInteractionEnabled:YES];
+}
+
+- (IBAction)calibrateCalipers:(id)sender {
+    //
 }
 
 - (IBAction)takePhoto:(id)sender {
@@ -158,7 +181,6 @@ UIImage* rotate(UIImage* src, UIImageOrientation orientation)
  //   self.imageView.image = rotate(self.imageView.image, UIImageOrientationLeft);
     
    [UIView commitAnimations];
-
 }
 
 - (UIImage *)rotateImage:(UIImage *)image onDegrees:(float)degrees
