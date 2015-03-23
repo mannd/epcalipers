@@ -150,10 +150,8 @@ UIImage* rotate(UIImage* src, UIImageOrientation orientation)
 
    [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
 //
-    static int multiplier = 1;
-   self.imageView.transform = CGAffineTransformMakeRotation(multiplier * M_PI_2);
-    multiplier += 1;
-//    
+   self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(90));
+//
 //
     
   //self.imageView.image = [self rotateImage:self.imageView.image onDegrees:90];
