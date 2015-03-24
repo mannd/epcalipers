@@ -16,7 +16,7 @@
 - (void)drawRect:(CGRect)rect {
     // Drawing code
     CGContextRef con = UIGraphicsGetCurrentContext();
-    CGContextSetStrokeColorWithColor(con, [[UIColor redColor] CGColor]);
+    CGContextSetStrokeColorWithColor(con, [[UIColor blueColor] CGColor]);
     float startX = rect.size.width/3;
     float endX = (2 * rect.size.width)/3;
     CGContextMoveToPoint(con, startX, 0);

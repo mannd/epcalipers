@@ -14,8 +14,6 @@
 		8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423681AB5F16A00CC15BC /* Images.xcassets */; };
 		8E14236C1AB5F16A00CC15BC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E14236A1AB5F16A00CC15BC /* LaunchScreen.xib */; };
 		8E1423781AB5F16A00CC15BC /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
-		8E9A33031AB9BBE30037E694 /* lollipop.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A33021AB9BBE30037E694 /* lollipop.jpg */; };
-		8E9A33051AB9C6E20037E694 /* Android-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A33041AB9C6E20037E694 /* Android-icon.png */; };
 		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
 		8E9A333C1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */; };
 /* End PBXBuildFile section */
@@ -44,8 +42,6 @@
 		8E1423711AB5F16A00CC15BC /* EP CalipersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EP CalipersTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1423761AB5F16A00CC15BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EP_CalipersTests.m; sourceTree = "<group>"; };
-		8E9A33021AB9BBE30037E694 /* lollipop.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lollipop.jpg; sourceTree = "<group>"; };
-		8E9A33041AB9C6E20037E694 /* Android-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Android-icon.png"; sourceTree = "<group>"; };
 		8E9A33381AC09DE90037E694 /* CalipersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalipersView.h; sourceTree = "<group>"; };
 		8E9A33391AC09DE90037E694 /* CalipersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalipersView.m; sourceTree = "<group>"; };
 		8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Normal 12_Lead ECG.jpg"; sourceTree = "<group>"; };
@@ -91,14 +87,12 @@
 			isa = PBXGroup;
 			children = (
 				8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */,
-				8E9A33041AB9C6E20037E694 /* Android-icon.png */,
 				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
 				8E1423601AB5F16A00CC15BC /* AppDelegate.m */,
 				8E1423621AB5F16A00CC15BC /* EPSMainViewController.h */,
 				8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */,
 				8E1423651AB5F16A00CC15BC /* Main.storyboard */,
 				8E1423681AB5F16A00CC15BC /* Images.xcassets */,
-				8E9A33021AB9BBE30037E694 /* lollipop.jpg */,
 				8E14236A1AB5F16A00CC15BC /* LaunchScreen.xib */,
 				8E9A33381AC09DE90037E694 /* CalipersView.h */,
 				8E9A33391AC09DE90037E694 /* CalipersView.m */,
@@ -215,9 +209,7 @@
 			files = (
 				8E1423671AB5F16A00CC15BC /* Main.storyboard in Resources */,
 				8E14236C1AB5F16A00CC15BC /* LaunchScreen.xib in Resources */,
-				8E9A33031AB9BBE30037E694 /* lollipop.jpg in Resources */,
 				8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */,
-				8E9A33051AB9C6E20037E694 /* Android-icon.png in Resources */,
 				8E9A333C1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,6 +17,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+//    UINavigationBar *navigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64.0)];
+//    [navigationBar setDelegate:self];
+//    [self.view addSubview:navigationBar];
+//    UINavigationItem *titleItem = [[UINavigationItem alloc] initWithTitle:@"EP Calipers"];
+//    [navigationBar pushNavigationItem:titleItem animated:NO];
     [self createMainToolbar];
     [self createPhotoToolbar];
     [self createCalipersToolbar];
@@ -27,11 +32,15 @@
 
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
-    self.scrollView.maximumZoomScale = 2.0;
+    self.scrollView.maximumZoomScale = 5.0;
     [self.scrollView setZoomScale:1.0];
     
     // pass touches through calipers view to image initially
     [self.calipersView setUserInteractionEnabled:NO];
+}
+
+-(UIBarPosition)positionForBar:(id <UIBarPositioning>)bar{
+    return UIBarPositionTopAttached;
 }
 
 - (void)didReceiveMemoryWarning {
