@@ -17,6 +17,7 @@
 		8E9A33031AB9BBE30037E694 /* lollipop.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A33021AB9BBE30037E694 /* lollipop.jpg */; };
 		8E9A33051AB9C6E20037E694 /* Android-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A33041AB9C6E20037E694 /* Android-icon.png */; };
 		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
+		8E9A333C1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		8E9A33041AB9C6E20037E694 /* Android-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Android-icon.png"; sourceTree = "<group>"; };
 		8E9A33381AC09DE90037E694 /* CalipersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalipersView.h; sourceTree = "<group>"; };
 		8E9A33391AC09DE90037E694 /* CalipersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalipersView.m; sourceTree = "<group>"; };
+		8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Normal 12_Lead ECG.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 		8E14235A1AB5F16A00CC15BC /* EP Calipers */ = {
 			isa = PBXGroup;
 			children = (
+				8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */,
 				8E9A33041AB9C6E20037E694 /* Android-icon.png */,
 				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
 				8E1423601AB5F16A00CC15BC /* AppDelegate.m */,
@@ -97,9 +100,9 @@
 				8E1423681AB5F16A00CC15BC /* Images.xcassets */,
 				8E9A33021AB9BBE30037E694 /* lollipop.jpg */,
 				8E14236A1AB5F16A00CC15BC /* LaunchScreen.xib */,
-				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
 				8E9A33381AC09DE90037E694 /* CalipersView.h */,
 				8E9A33391AC09DE90037E694 /* CalipersView.m */,
+				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
 			);
 			path = "EP Calipers";
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 				8E9A33031AB9BBE30037E694 /* lollipop.jpg in Resources */,
 				8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */,
 				8E9A33051AB9C6E20037E694 /* Android-icon.png in Resources */,
+				8E9A333C1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

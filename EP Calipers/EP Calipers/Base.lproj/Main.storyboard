@@ -20,7 +20,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx">
                                 <rect key="frame" x="16" y="20" width="568" height="534"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lollipop.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Normal 12_Lead ECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
                                         <rect key="frame" x="0.0" y="0.0" width="567" height="533"/>
                                     </imageView>
                                 </subviews>
@@ -75,6 +75,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="lollipop.jpg" width="605" height="527"/>
+        <image name="Normal 12_Lead ECG.jpg" width="1411" height="676"/>
     </resources>
 </document>

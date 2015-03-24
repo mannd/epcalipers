@@ -22,7 +22,6 @@
     [self createCalipersToolbar];
     
     [self selectMainToolbar];
-    
  
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
 
@@ -31,12 +30,8 @@
     self.scrollView.maximumZoomScale = 2.0;
     [self.scrollView setZoomScale:1.0];
     
-    // pass touches through
+    // pass touches through calipers view to image initially
     [self.calipersView setUserInteractionEnabled:NO];
-    
-//    // add view for calipers
-//    UIView *caliperView = [[UIView alloc] initWithFrame:self.imageView.frame];
-// //   [self.view addSubview:caliperView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,20 +40,22 @@
 }
 
 - (void)createMainToolbar {
-    UIBarButtonItem *photoButton = [[UIBarButtonItem alloc] initWithTitle:@"Photo" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhotoToolbar)];
+    UIBarButtonItem *imageButton = [[UIBarButtonItem alloc] initWithTitle:@"Image" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhotoToolbar)];
     UIBarButtonItem *calipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calipers" style:UIBarButtonItemStylePlain target:self action:@selector(selectCalipersToolbar)];
-
     
-    self.mainMenuItems = [NSArray arrayWithObjects:photoButton, calipersButton, nil];
+    self.mainMenuItems = [NSArray arrayWithObjects:imageButton, calipersButton, nil];
 }
 
 - (void)createPhotoToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Camera" style:UIBarButtonItemStylePlain target:self action:@selector(takePhoto:)];
-    UIBarButtonItem *selectPhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
-    UIBarButtonItem *rotatePhotoButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate" style:UIBarButtonItemStylePlain target:self action:@selector(rotatePhoto:)];
+    UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
+    UIBarButtonItem *rotateImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Rotate" style:UIBarButtonItemStylePlain target:self action:@selector(rotateImage:)];
+    UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"Tweak L" style:UIBarButtonItemStylePlain target:self action:@selector(tweakLeft:)];
+    UIBarButtonItem *flipImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Flip" style:UIBarButtonItemStylePlain target:self action:@selector(flipImage:)];
+    UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
     UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(selectMainToolbar)];
     
-    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectPhotoButton, rotatePhotoButton, backToMainMenuButton, nil];
+    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, rotateImageButton, tweakLeftButton, flipImageButton, resetImageButton, backToMainMenuButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
@@ -72,7 +69,6 @@
     self.calipersMenuItems = [NSArray arrayWithObjects:calibrateCalipersButton, backToMainMenuButton, nil];
 }
 
-
 - (void)selectPhotoToolbar {
     [self.toolBar setItems:self.photoMenuItems];
 }
@@ -80,7 +76,6 @@
 - (void)selectMainToolbar {
     [self.toolBar setItems:self.mainMenuItems];
     [self.calipersView setUserInteractionEnabled:NO];
-
 }
 
 - (void)selectCalipersToolbar {
@@ -89,7 +84,8 @@
 }
 
 - (IBAction)calibrateCalipers:(id)sender {
-    //
+    // substitute text for buttons
+    // "Measure known time interval with calipers, press button when ready to calibrate"
 }
 
 - (IBAction)takePhoto:(id)sender {
@@ -146,56 +142,48 @@
 //}
 
 static inline double radians (double degrees) {return degrees * M_PI/180;}
-UIImage* rotate(UIImage* src, UIImageOrientation orientation)
-{
-    UIGraphicsBeginImageContext(src.size);
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    if (orientation == UIImageOrientationRight) {
-        CGContextRotateCTM (context, radians(90));
-    } else if (orientation == UIImageOrientationLeft) {
-        CGContextRotateCTM (context, radians(-90));
-    } else if (orientation == UIImageOrientationDown) {
-        // NOTHING
-    } else if (orientation == UIImageOrientationUp) {
-        CGContextRotateCTM (context, radians(90));
-    }
-    
-    [src drawAtPoint:CGPointMake(0, 0)];
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
 
-- (IBAction)rotatePhoto:(id)sender {
+- (IBAction)rotateImage:(id)sender {
 
    [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
-//
+
    self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(90));
-//
-//
-    
-  //self.imageView.image = [self rotateImage:self.imageView.image onDegrees:90];
- //   self.imageView.image = rotate(self.imageView.image, UIImageOrientationLeft);
     
    [UIView commitAnimations];
 }
 
-- (UIImage *)rotateImage:(UIImage *)image onDegrees:(float)degrees
-{
-    CGFloat rads = M_PI * degrees / 180;
-    float newSide = MAX([image size].width, [image size].height);
-    CGSize size =  CGSizeMake(newSide, newSide);
-    UIGraphicsBeginImageContext(size);
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(ctx, newSide/2, newSide/2);
-    CGContextRotateCTM(ctx, rads);
+- (IBAction)tweakLeft:(id)sender {
+    [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
     
-    CGContextDrawImage(UIGraphicsGetCurrentContext(),CGRectMake(-[image size].width/2,-[image size].height/2,size.width, size.height),image.CGImage);
-    UIImage *i = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return i;
+    self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(-1));
+    
+    [UIView commitAnimations];
 }
+
+- (IBAction)resetImage:(id)sender {
+    [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
+    
+    self.imageView.transform = CGAffineTransformIdentity;
+    
+    [UIView commitAnimations];
+}
+
+- (IBAction)flipImage:(id)sender {
+    static BOOL horizontal = YES;
+    float x = 1.0;
+    float y = 1.0;
+    if (horizontal) {
+        x = -1.0;
+    } else {
+        y = -1.0;
+    }
+    // change from horizontal to vertical with each button press
+    horizontal = !horizontal;
+    [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
+
+    self.imageView.transform = CGAffineTransformScale(self.imageView.transform, x, y);
+    
+    [UIView commitAnimations];
+}
+
 @end
