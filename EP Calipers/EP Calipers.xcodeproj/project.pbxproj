@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0208A61AC2A8B300FE7EC5 /* Caliper.m */; };
 		8E14235E1AB5F16A00CC15BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E14235D1AB5F16A00CC15BC /* main.m */; };
 		8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423601AB5F16A00CC15BC /* AppDelegate.m */; };
 		8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */; };
@@ -29,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8E0208A51AC2A8B300FE7EC5 /* Caliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliper.h; sourceTree = "<group>"; };
+		8E0208A61AC2A8B300FE7EC5 /* Caliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Caliper.m; sourceTree = "<group>"; };
 		8E1423581AB5F16A00CC15BC /* EP Calipers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EP Calipers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E14235C1AB5F16A00CC15BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E14235D1AB5F16A00CC15BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -97,6 +100,8 @@
 				8E9A33381AC09DE90037E694 /* CalipersView.h */,
 				8E9A33391AC09DE90037E694 /* CalipersView.m */,
 				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
+				8E0208A51AC2A8B300FE7EC5 /* Caliper.h */,
+				8E0208A61AC2A8B300FE7EC5 /* Caliper.m */,
 			);
 			path = "EP Calipers";
 			sourceTree = "<group>";
@@ -230,6 +235,7 @@
 			files = (
 				8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */,
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
+				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
 				8E14235E1AB5F16A00CC15BC /* main.m in Sources */,
 				8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */,
 			);

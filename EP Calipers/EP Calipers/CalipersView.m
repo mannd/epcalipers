@@ -7,6 +7,7 @@
 //
 
 #import "CalipersView.h"
+#import "Caliper.h"
 
 @implementation CalipersView
 
@@ -15,18 +16,21 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
+    Caliper *caliper = [[Caliper alloc] initWithDirection:Horizontal bar1Position:0 bar2Position:0];
+    caliper.color = [UIColor redColor];
     CGContextRef con = UIGraphicsGetCurrentContext();
-    CGContextSetStrokeColorWithColor(con, [[UIColor blueColor] CGColor]);
-    float startX = rect.size.width/3;
-    float endX = (2 * rect.size.width)/3;
-    CGContextMoveToPoint(con, startX, 0);
-    CGContextAddLineToPoint(con, startX, rect.size.height);
-    CGContextSetLineWidth(con, 1);
-    CGContextMoveToPoint(con, endX, 0);
-    CGContextAddLineToPoint(con, endX, rect.size.height);
-    CGContextMoveToPoint(con, endX, rect.size.height/2);
-    CGContextAddLineToPoint(con, startX, rect.size.height/2);
-    CGContextStrokePath(con);
+    [caliper drawWithContext:con withRect:rect];
+//    CGContextSetStrokeColorWithColor(con, [[UIColor blueColor] CGColor]);
+//    float startX = rect.size.width/3;
+//    float endX = (2 * rect.size.width)/3;
+//    CGContextMoveToPoint(con, startX, 0);
+//    CGContextAddLineToPoint(con, startX, rect.size.height);
+//    CGContextSetLineWidth(con, 1);
+//    CGContextMoveToPoint(con, endX, 0);
+//    CGContextAddLineToPoint(con, endX, rect.size.height);
+//    CGContextMoveToPoint(con, endX, rect.size.height/2);
+//    CGContextAddLineToPoint(con, startX, rect.size.height/2);
+//    CGContextStrokePath(con);
 }
 
 
