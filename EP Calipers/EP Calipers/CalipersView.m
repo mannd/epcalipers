@@ -33,4 +33,15 @@
     }
 }
 
+-(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *aTouch = [touches anyObject];
+    CGPoint location = [aTouch locationInView:self];
+    Caliper *c = (Caliper *)self.calipers[0];
+    if (location.x > c.bar1Position + 20 && location.x < c.bar2Position - 20
+        && location.y > c.crossBarPosition - 20 && location.y < c.crossBarPosition +20) {
+        CGPoint previousLocation = [aTouch previousLocationInView:self];
+        self.frame = CGRectOffset(self.frame, (location.x - previousLocation.x), (location.y - previousLocation.y));
+    }
+}
+
 @end
