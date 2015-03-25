@@ -18,9 +18,12 @@ typedef NS_ENUM(NSInteger, CaliperDirection) {
 @property float crossBarPosition;
 @property CaliperDirection direction;
 @property UIColor *color;
+@property(readonly) float valueInPoints;
 
-- (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position;
-- (void)drawWithContext:(CGContextRef) context withRect:(CGRect)rect;
+- (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position crossBarPosition:(float)crossBarPosition;
+- (instancetype)init;
+- (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;
+- (void)setInitialPositionInRect:(CGRect)rect;
 
 
 @end

@@ -48,6 +48,7 @@
 		8E9A33381AC09DE90037E694 /* CalipersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalipersView.h; sourceTree = "<group>"; };
 		8E9A33391AC09DE90037E694 /* CalipersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalipersView.m; sourceTree = "<group>"; };
 		8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Normal 12_Lead ECG.jpg"; sourceTree = "<group>"; };
+		8EB3DE351AC344CC009376AD /* EPSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSLogging.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +90,7 @@
 		8E14235A1AB5F16A00CC15BC /* EP Calipers */ = {
 			isa = PBXGroup;
 			children = (
+				8EB3DE351AC344CC009376AD /* EPSLogging.h */,
 				8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */,
 				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
 				8E1423601AB5F16A00CC15BC /* AppDelegate.m */,
@@ -181,9 +183,11 @@
 				TargetAttributes = {
 					8E1423571AB5F16A00CC15BC = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = W74NPJXYEG;
 					};
 					8E1423701AB5F16A00CC15BC = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = W74NPJXYEG;
 						TestTargetID = 8E1423571AB5F16A00CC15BC;
 					};
 				};
@@ -383,6 +387,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -394,6 +400,7 @@
 				INFOPLIST_FILE = "EP CalipersTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EP Calipers.app/EP Calipers";
 			};
 			name = Debug;
@@ -402,6 +409,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -409,6 +418,7 @@
 				INFOPLIST_FILE = "EP CalipersTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EP Calipers.app/EP Calipers";
 			};
 			name = Release;

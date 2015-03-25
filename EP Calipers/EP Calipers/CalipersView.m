@@ -11,27 +11,26 @@
 
 @implementation CalipersView
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        self.calipers = array;
+    }
+    return self;
+}
+
+
+
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
     // Drawing code
-    Caliper *caliper = [[Caliper alloc] initWithDirection:Horizontal bar1Position:0 bar2Position:0];
-    caliper.color = [UIColor redColor];
     CGContextRef con = UIGraphicsGetCurrentContext();
-    [caliper drawWithContext:con withRect:rect];
-//    CGContextSetStrokeColorWithColor(con, [[UIColor blueColor] CGColor]);
-//    float startX = rect.size.width/3;
-//    float endX = (2 * rect.size.width)/3;
-//    CGContextMoveToPoint(con, startX, 0);
-//    CGContextAddLineToPoint(con, startX, rect.size.height);
-//    CGContextSetLineWidth(con, 1);
-//    CGContextMoveToPoint(con, endX, 0);
-//    CGContextAddLineToPoint(con, endX, rect.size.height);
-//    CGContextMoveToPoint(con, endX, rect.size.height/2);
-//    CGContextAddLineToPoint(con, startX, rect.size.height/2);
-//    CGContextStrokePath(con);
+    for (Caliper *caliper in self.calipers) {
+        [caliper drawWithContext:con inRect:rect];
+    }
 }
-
 
 @end

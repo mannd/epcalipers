@@ -10,4 +10,7 @@
 
 @interface CalipersView : UIView
 
+- (id)initWithCoder:(NSCoder *)aDecoder;
+@property(nonatomic, strong)NSMutableArray *calipers;
+
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "EPSMainViewController.h"
+#import "Caliper.h"
 
 @interface EPSMainViewController ()
 
@@ -37,6 +38,11 @@
     
     // pass touches through calipers view to image initially
     [self.calipersView setUserInteractionEnabled:NO];
+    Caliper *caliper = [[Caliper alloc] init];
+    [caliper setInitialPositionInRect:self.view.frame];
+    
+    [self.calipersView.calipers addObject:caliper];
+
 }
 
 -(UIBarPosition)positionForBar:(id <UIBarPositioning>)bar{

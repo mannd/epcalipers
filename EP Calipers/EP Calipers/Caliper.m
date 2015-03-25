@@ -10,36 +10,91 @@
 
 @implementation Caliper
 
-- (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position {
+- (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position
+                 crossBarPosition:(float)crossBarPosition {
     self = [super init];
     if (self) {
         self.direction = direction;
         self.bar1Position = bar1Position;
         self.bar2Position = bar2Position;
     }
-    self.color = [UIColor blueColor];
+    self.color = [UIColor blackColor];
     return self;
 }
 
-- (void)drawWithContext:(CGContextRef)context withRect:(CGRect)rect {
-    CGContextSetStrokeColorWithColor(context, [self.color CGColor]);
-    float startX = rect.size.width/3;
-    float endX = (2 * rect.size.width)/3;
-    CGContextMoveToPoint(context, startX, 0);
-    CGContextAddLineToPoint(context, startX, rect.size.height);
-    CGContextSetLineWidth(context, 1);
-    CGContextMoveToPoint(context, endX, 0);
-    CGContextAddLineToPoint(context, endX, rect.size.height);
-    CGContextMoveToPoint(context, endX, rect.size.height/2);
-    CGContextAddLineToPoint(context, startX, rect.size.height/2);
-    CGContextStrokePath(context);
-    
+- (instancetype)init {
+    return [self initWithDirection:Horizontal bar1Position:0 bar2Position:0 crossBarPosition:100];
 }
 
-- (void)drawWithContext:(CGContextRef)context {
+// set slightly different positions for each new caliper
+- (void)setInitialPositionInRect:(CGRect)rect {
+    static float differential = 0;
+    if (self.direction == Horizontal) {
+        self.bar1Position = (rect.size.width/3) + differential;
+        self.bar2Position = ((2 * rect.size.width)/3) + differential;
+        self.crossBarPosition = (rect.size.height/2) + differential;
+    } else {
+        self.bar1Position = (rect.size.height/3) + differential;
+        self.bar2Position = ((2 * rect.size.height)/3) + differential;
+        self.crossBarPosition = (rect.size.width/2) + differential;
+    }
+    differential += 10;
+    if (differential > 50) {
+        differential = 0;
+    }
+}
+
+- (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect {
     CGContextSetStrokeColorWithColor(context, [self.color CGColor]);
+    CGContextSetLineWidth(context, 1);
+
+    if (self.direction == Horizontal) {
+        CGContextMoveToPoint(context, self.bar1Position, 0);
+        CGContextAddLineToPoint(context, self.bar1Position, rect.size.height);
+        
+        CGContextMoveToPoint(context, self.bar2Position, 0);
+        CGContextAddLineToPoint(context, self.bar2Position, rect.size.height);
+        CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
+        CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
+        
+    } else {    // vertical caliper, bar2 on the bottom
+        CGContextMoveToPoint(context, 0, self.bar1Position);
+        CGContextAddLineToPoint(context, rect.size.width, self.bar1Position);
+        CGContextMoveToPoint(context, 0, self.bar2Position);
+        CGContextAddLineToPoint(context, rect.size.width, self.bar2Position);
+        CGContextMoveToPoint(context, self.crossBarPosition, self.bar2Position);
+        CGContextAddLineToPoint(context, self.crossBarPosition, self.bar1Position);
+    }
+    CGContextStrokePath(context);
+    NSString *text = [self measurement];
+    UIFont *textFont = [UIFont fontWithName:@"Helvetica" size:15.0];
+    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    paragraphStyle.alignment = NSTextAlignmentCenter;
+
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
+    [attributes setObject:textFont forKey:NSFontAttributeName];
+    [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+
+
+    [text drawInRect:CGRectMake(self.bar1Position, self.crossBarPosition - 20, self.bar2Position - self.bar1Position, 20)  withAttributes:attributes];
     
-    
+
+
+}
+
+- (NSString *)measurement {
+    NSString *s = @"Uncalibrated";
+    s = [NSString stringWithFormat:@"%@ (%.1f points)", s, [self points]];
+    return s;
+}
+
+- (float) points {
+    return self.bar2Position - self.bar1Position;
+}
+
+- (float)valueInPoints {
+    return self.bar2Position - self.bar1Position;
 }
 
 @end
