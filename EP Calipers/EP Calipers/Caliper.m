@@ -83,7 +83,11 @@
 
 // returns CGRect containing caliper
 - (CGRect)rect:(CGRect)containerRect {
-    return CGRectMake(self.bar1Position, containerRect.origin.y, self.bar2Position - self.bar1Position, containerRect.size.height);
+    if (self.direction == Horizontal) {
+        return CGRectMake(self.bar1Position, containerRect.origin.y, self.bar2Position - self.bar1Position, containerRect.size.height);
+    } else { // vertical caliper
+        return CGRectMake(0, self.bar1Position, containerRect.size.width, self.bar2Position - self.bar1Position);
+    }
 }
 
 - (NSString *)measurement {

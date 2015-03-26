@@ -20,6 +20,7 @@
 @property NSArray *photoMenuItems;
 @property NSArray *calipersMenuItems;
 @property NSArray *adjustImageMenuItems;
+@property NSArray *addCalipersMenuItems;
 @property (strong, nonatomic) IBOutlet UIView *imageContainerView;
 
 @end

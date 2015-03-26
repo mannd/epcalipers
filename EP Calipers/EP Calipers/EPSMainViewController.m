@@ -27,11 +27,10 @@
     [self createPhotoToolbar];
     [self createAdjustImageToolbar];
     [self createCalipersToolbar];
+    [self createAddCalipersToolbar];
     
     [self selectMainToolbar];
  
-    //self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.maximumZoomScale = 4.0;
@@ -39,11 +38,8 @@
     
     // pass touches through calipers view to image initially
     [self.calipersView setUserInteractionEnabled:NO];
-    Caliper *caliper = [[Caliper alloc] init];
-    [caliper setInitialPositionInRect:self.view.frame];
-    
-    [self.calipersView.calipers addObject:caliper];
-
+    // add a Caliper to start out
+    [self addHorizontalCaliper];
 }
 
 -(UIBarPosition)positionForBar:(id <UIBarPositioning>)bar{
@@ -89,17 +85,27 @@
 }
 
 - (void)createCalipersToolbar {
+    UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
     UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calibrate" style:UIBarButtonItemStylePlain target:self action:@selector(calibrateCalipers:)];
-    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(selectMainToolbar)];
+    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     
-    self.calipersMenuItems = [NSArray arrayWithObjects:calibrateCalipersButton, backToMainMenuButton, nil];
+    self.calipersMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, backToMainMenuButton, nil];
+}
+
+- (void)createAddCalipersToolbar {
+    UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Horizontal" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
+    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Vertical" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
+    UIBarButtonItem *backToCalipersMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectCalipersToolbar:)];
+    
+    self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, backToCalipersMenuButton, nil];
+
 }
 
 - (IBAction)selectPhotoToolbar:(id)sender {
     [self.toolBar setItems:self.photoMenuItems];
 }
 
-- (IBAction)selectMainToolbar {
+- (void)selectMainToolbar {
     [self.toolBar setItems:self.mainMenuItems];
     [self.calipersView setUserInteractionEnabled:NO];
 }
@@ -107,6 +113,10 @@
 - (IBAction)selectCalipersToolbar:(id)sender {
     [self.toolBar setItems:self.calipersMenuItems];
     [self.calipersView setUserInteractionEnabled:YES];
+}
+
+- (void)selectAddCalipersToolbar {
+    [self.toolBar setItems:self.addCalipersMenuItems];
 }
 
 - (IBAction)selectAdjustImageToolbar {
@@ -134,6 +144,25 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
+- (void)addHorizontalCaliper {
+    [self addCaliperWithDirection:Horizontal];
+}
+
+- (void)addVerticalCaliper {
+    [self addCaliperWithDirection:Vertical];
+
+}
+
+- (void)addCaliperWithDirection:(CaliperDirection)direction {
+    Caliper *caliper = [[Caliper alloc] init];
+    caliper.direction = direction;
+    [caliper setInitialPositionInRect:self.view.frame];
+    
+    [self.calipersView.calipers addObject:caliper];
+    [self.calipersView setNeedsDisplay];
+   
+}
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.imageView.image = chosenImage;
@@ -148,28 +177,6 @@
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageContainerView;
 }
-
-//-(void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
-//{
-//    UITouch *touch = [[event allTouches] anyObject];
-//    CGPoint touchLocation = [touch locationInView:touch.view];
-//    self.imageView.center = touchLocation;
-//}
-//- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    // get touch event
-//    
-//    UITouch *touch = [[event allTouches] anyObject];
-//    CGPoint touchLocation = [touch locationInView:self.imageView];
-//    
-//    if ([touch view] == self.view)
-//    {
-//        
-//        self.imageView.center = touchLocation;
-//        
-//        
-//    }
-//}
 
 static inline double radians (double degrees) {return degrees * M_PI/180;}
 
