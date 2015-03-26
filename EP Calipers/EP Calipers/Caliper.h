@@ -24,6 +24,8 @@ typedef NS_ENUM(NSInteger, CaliperDirection) {
 - (instancetype)init;
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;
 - (void)setInitialPositionInRect:(CGRect)rect;
+- (CGRect)rect:(CGRect)containerRect;
+
 
 
 @end

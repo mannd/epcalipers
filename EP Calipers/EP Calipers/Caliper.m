@@ -75,12 +75,15 @@
     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
     [attributes setObject:textFont forKey:NSFontAttributeName];
     [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [attributes setObject:self.color forKey:NSForegroundColorAttributeName];
 
 
     [text drawInRect:CGRectMake(self.bar1Position, self.crossBarPosition - 20, self.bar2Position - self.bar1Position, 20)  withAttributes:attributes];
-    
+}
 
-
+// returns CGRect containing caliper
+- (CGRect)rect:(CGRect)containerRect {
+    return CGRectMake(self.bar1Position, containerRect.origin.y, self.bar2Position - self.bar1Position, containerRect.size.height);
 }
 
 - (NSString *)measurement {
