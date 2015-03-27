@@ -20,8 +20,9 @@
         self.bar1Position = bar1Position;
         self.bar2Position = bar2Position;
         self.crossBarPosition = crossBarPosition;
+        self.color = [UIColor magentaColor];
+        self.selected = NO;
     }
-    self.color = [UIColor magentaColor];
     return self;
 }
 
@@ -80,7 +81,7 @@
     [attributes setObject:self.color forKey:NSForegroundColorAttributeName];
 
     if (self.direction == Horizontal) {
-        [text drawInRect:CGRectMake(self.bar1Position, self.crossBarPosition - 20, self.bar2Position - self.bar1Position, 20)  withAttributes:attributes];
+        [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position : self.bar2Position), self.crossBarPosition - 20, fabsf(self.bar2Position - self.bar1Position), 20)  withAttributes:attributes];
     }
     else {
         [text drawInRect:CGRectMake(self.crossBarPosition, self.bar1Position + (self.bar2Position - self.bar1Position)/2, 200, 20) withAttributes:attributes];

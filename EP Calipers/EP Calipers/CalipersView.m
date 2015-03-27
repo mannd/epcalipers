@@ -38,21 +38,31 @@
 
 - (void)selectCaliper:(Caliper *)c {
     c.color = [UIColor redColor];
-    [self setNeedsDisplay];
-    
+    c.selected = YES;
+    [self setNeedsDisplay];    
 }
 
 - (void)unselectCaliper:(Caliper *)c {
     // TODO c.color = settings.defaultColor;, etc.
     c.color = [UIColor magentaColor];
+    c.selected = NO;
     [self setNeedsDisplay];
 }
 
+// Single tap initially highlites caliper, second tap deletes it.  Thus,
+// deletion can be down with a quick double tap or more methodically, or cancelled by
+// unselecting the caliper.
 - (void)singleTap:(UITapGestureRecognizer *)t {
     CGPoint location = [t locationInView:self];
-    for (int i = self.calipers.count -1; i >= 0; i--) {
+    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
         if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
-            [self selectCaliper:(Caliper *)self.calipers[i]];
+            if (((Caliper *)self.calipers[i]).selected) {
+                [self.calipers removeObject:self.calipers[i]];
+                [self setNeedsDisplay];
+            }
+            else  {
+                [self selectCaliper:(Caliper *)self.calipers[i]];
+            }
         }
         else {
             [self unselectCaliper:(Caliper *)self.calipers[i]];
@@ -67,7 +77,7 @@
     static BOOL bar2Selected = NO;
     static BOOL crossBarSelected = NO;
     if (p.state == UIGestureRecognizerStateBegan) {
-        for (int i = self.calipers.count -1; i >= 0; i--) {
+        for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
             if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
                 selectedCaliper = (Caliper *)self.calipers[i];
                 if ([selectedCaliper pointNearCrossBar:location]) {

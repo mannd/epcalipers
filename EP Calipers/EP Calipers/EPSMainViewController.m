@@ -8,6 +8,7 @@
 
 #import "EPSMainViewController.h"
 #import "Caliper.h"
+#import "EPSLogging.h"
 
 @interface EPSMainViewController ()
 
