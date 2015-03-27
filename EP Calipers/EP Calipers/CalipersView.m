@@ -21,6 +21,7 @@
         [self addGestureRecognizer:t];
         UIPanGestureRecognizer *p = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragging:)];
         [self addGestureRecognizer:p];
+        self.clearsContextBeforeDrawing = YES;
     }
     return self;
 }
@@ -40,14 +41,14 @@
 
 - (void)selectCaliper:(Caliper *)c {
     c.color = [UIColor redColor];
-    [self setNeedsDisplayInRect:[c rect:[self frame]]];
+    [self setNeedsDisplay];
     
 }
 
 - (void)unselectCaliper:(Caliper *)c {
     // TODO c.color = settings.defaultColor;, etc.
     c.color = [UIColor blackColor];
-    [self setNeedsDisplayInRect:[c rect:[self frame]]];
+    [self setNeedsDisplay];
 }
 
 - (void)singleTap:(UITapGestureRecognizer *)t {
@@ -55,8 +56,7 @@
     EPSLog(@"single x = %f, y = %f", location.x, location.y);
 
     for (int i = self.calipers.count -1; i >= 0; i--) {
-        CGRect rect = [(Caliper *)self.calipers[i] rect:self.frame];
-        if (CGRectContainsPoint(rect, location)) {
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
             [self selectCaliper:(Caliper *)self.calipers[i]];
         }
         else {
@@ -67,7 +67,62 @@
 }
 
 - (void)dragging:(UIPanGestureRecognizer *)p {
-    EPSLog(@"dragging");
+    //EPSLog(@"dragging");
+    //    UIView *view = p.view;
+    CGPoint location = [p locationInView:self];
+    static Caliper *selectedCaliper = nil;
+    static BOOL bar1Selected = NO;
+    static BOOL bar2Selected = NO;
+    static BOOL crossBarSelected = NO;
+    if (p.state == UIGestureRecognizerStateBegan) {
+        // TODO reverse this; most recently added caliper should win
+        for (int i = self.calipers.count -1; i >= 0; i--) {
+            if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
+                selectedCaliper = (Caliper *)self.calipers[i];
+                EPSLog(@"caliper selected");
+                if ([selectedCaliper pointNearCrossBar:location]) {
+                    crossBarSelected = YES;
+                    EPSLog(@"crossbarSelected");
+                }
+                else if ([selectedCaliper pointNearBar:location forBarPosition:selectedCaliper.bar1Position]) {
+                    bar1Selected = YES;
+                    EPSLog(@"bar1Selected");
+                }
+                else if ([selectedCaliper pointNearBar:location forBarPosition:selectedCaliper.bar2Position]) {
+                    bar2Selected = YES;
+                    EPSLog(@"bar2Selected");
+                }
+            }
+        }
+    }
+    if (p.state == UIGestureRecognizerStateEnded) {
+        selectedCaliper = nil;
+        bar1Selected = NO;
+        bar2Selected = NO;
+        crossBarSelected = NO;
+        return;
+    }
+    if (selectedCaliper != nil) {
+        CGPoint delta = [p translationInView:self];
+        EPSLog(@"delta.x = %f, delta.y = %f", delta.x, delta.y);
+        if (crossBarSelected) {
+        selectedCaliper.bar1Position += delta.x;
+        selectedCaliper.bar2Position += delta.x;
+        selectedCaliper.crossBarPosition += delta.y;
+        }
+        else if (bar1Selected) {
+            selectedCaliper.bar1Position += delta.x;
+        }
+        else if (bar2Selected) {
+            selectedCaliper.bar2Position += delta.x;
+        }
+        [p setTranslation:CGPointZero inView:self];
+        [self setNeedsDisplay];
+        EPSLog(@"set needs display");
+    }
+    
+    
+    
 }
 
 //-(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {

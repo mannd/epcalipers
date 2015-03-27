@@ -25,6 +25,12 @@ typedef NS_ENUM(NSInteger, CaliperDirection) {
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;
 - (void)setInitialPositionInRect:(CGRect)rect;
 - (CGRect)rect:(CGRect)containerRect;
+- (BOOL)pointNearBar:(CGPoint)p forBarPosition:(float)barPosition;
+- (BOOL)pointNearCrossBar:(CGPoint)p;
+- (BOOL)pointNearCaliper:(CGPoint)p;
+
+
+
 
 
 

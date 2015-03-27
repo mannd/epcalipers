@@ -8,6 +8,8 @@
 
 #import "Caliper.h"
 
+#define DELTA 20.0
+
 @implementation Caliper
 
 - (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position
@@ -17,8 +19,9 @@
         self.direction = direction;
         self.bar1Position = bar1Position;
         self.bar2Position = bar2Position;
+        
     }
-    self.color = [UIColor blackColor];
+    self.color = [UIColor magentaColor];
     return self;
 }
 
@@ -102,6 +105,30 @@
 
 - (float)valueInPoints {
     return self.bar2Position - self.bar1Position;
+}
+
+- (BOOL)pointNearBar:(CGPoint)p forBarPosition:(float)barPosition {
+    BOOL nearBar = NO;
+    if (self.direction == Horizontal) {
+        nearBar = (p.x > barPosition - DELTA && p.x < barPosition + DELTA);
+    } else {
+        nearBar = (p.y > barPosition - DELTA && p.y < barPosition + DELTA);
+    }
+    return nearBar;
+}
+
+- (BOOL)pointNearCrossBar:(CGPoint)p {
+    BOOL nearBar = NO;
+    if (self.direction == Horizontal) {
+        nearBar = (p.x > self.bar1Position + DELTA && p.x < self.bar2Position - DELTA && p.y > self.crossBarPosition - DELTA && p.y < self.crossBarPosition + DELTA);
+    } else {
+        nearBar = (p.y > self.bar1Position + DELTA && p.y < self.bar2Position - DELTA && p.x > self.crossBarPosition - DELTA && p.x < self.crossBarPosition + DELTA);
+    }
+    return nearBar;
+}
+
+- (BOOL)pointNearCaliper:(CGPoint)p {
+    return ([self pointNearCrossBar:p] || [self pointNearBar:p forBarPosition:self.bar1Position] || [self pointNearBar:p forBarPosition:self.bar2Position]);
 }
 
 @end
