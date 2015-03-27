@@ -7,19 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Calibration.h"
 
 @interface Caliper : NSObject
-typedef NS_ENUM(NSInteger, CaliperDirection) {
-    Horizontal,
-    Vertical
-};
+#import "Defs.h"
+
+
 @property float bar1Position;
 @property float bar2Position;
 @property float crossBarPosition;
 @property CaliperDirection direction;
 @property UIColor *color;
-@property(readonly) float valueInPoints;
+@property (readonly) float valueInPoints;
 @property BOOL selected;
+@property (weak, nonatomic) Calibration *calibration;
 
 - (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position crossBarPosition:(float)crossBarPosition;
 - (instancetype)init;

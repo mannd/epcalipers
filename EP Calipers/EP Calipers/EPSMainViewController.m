@@ -25,9 +25,8 @@
 //    UINavigationItem *titleItem = [[UINavigationItem alloc] initWithTitle:@"EP Calipers"];
 //    [navigationBar pushNavigationItem:titleItem animated:NO];
     [self createMainToolbar];
-    [self createPhotoToolbar];
+    [self createImageToolbar];
     [self createAdjustImageToolbar];
-    [self createCalipersToolbar];
     [self createAddCalipersToolbar];
     
     [self selectMainToolbar];
@@ -37,10 +36,20 @@
     self.scrollView.maximumZoomScale = 4.0;
     [self.scrollView setZoomScale:1.0];
     
-    // pass touches through calipers view to image initially
-    [self.calipersView setUserInteractionEnabled:NO];
+    self.horizontalCalibration = [[Calibration alloc] init];
+    self.horizontalCalibration.direction = Horizontal;
+    self.verticalCalibration = [[Calibration alloc] init];
+    self.verticalCalibration.direction = Vertical;
+    
+    [self.calipersView setUserInteractionEnabled:YES];
+     
     // add a Caliper to start out
     [self addHorizontalCaliper];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.calipersView setUserInteractionEnabled:YES];
+    
 }
 
 -(UIBarPosition)positionForBar:(id <UIBarPositioning>)bar{
@@ -53,17 +62,22 @@
 }
 
 - (void)createMainToolbar {
-    UIBarButtonItem *imageButton = [[UIBarButtonItem alloc] initWithTitle:@"Image" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhotoToolbar:)];
-    UIBarButtonItem *calipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calipers" style:UIBarButtonItemStylePlain target:self action:@selector(selectCalipersToolbar:)];
+    UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
+    UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calibrate" style:UIBarButtonItemStylePlain target:self action:@selector(calibrateCalipers:)];
+    UIBarButtonItem *imageButton = [[UIBarButtonItem alloc] initWithTitle:@"Image" style:UIBarButtonItemStylePlain target:self action:@selector(selectImageToolbar:)];
+    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:@"Help" style:UIBarButtonItemStylePlain target:self action:nil];
     
-    self.mainMenuItems = [NSArray arrayWithObjects:imageButton, calipersButton, nil];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, imageButton, settingsButton, helpButton, nil];
+
+
 }
 
-- (void)createPhotoToolbar {
+- (void)createImageToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto:)];
     UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto:)];
     UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
-    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
+    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(selectMainToolbar)];
     
     self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, backToMainMenuButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -79,49 +93,37 @@
     UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"1°L" style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
     UIBarButtonItem *flipImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Flip" style:UIBarButtonItemStylePlain target:self action:@selector(flipImage:)];
     UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
-    UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectPhotoToolbar:)];
+    UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(selectImageToolbar:)];
     
     self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, flipImageButton, resetImageButton, backToImageMenuButton, nil];
     
 }
 
-- (void)createCalipersToolbar {
-    UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
-    UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calibrate" style:UIBarButtonItemStylePlain target:self action:@selector(calibrateCalipers:)];
-    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
-    
-    self.calipersMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, backToMainMenuButton, nil];
-}
-
 - (void)createAddCalipersToolbar {
     UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Horizontal" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
     UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Vertical" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
-    UIBarButtonItem *backToCalipersMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectCalipersToolbar:)];
+    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(selectMainToolbar)];
     
-    self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, backToCalipersMenuButton, nil];
+    self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, backToMainMenuButton, nil];
 
 }
 
-- (IBAction)selectPhotoToolbar:(id)sender {
-    [self.toolBar setItems:self.photoMenuItems];
-}
-
-- (void)selectMainToolbar {
-    [self.toolBar setItems:self.mainMenuItems];
+- (IBAction)selectImageToolbar:(id)sender {
+    [self.toolbar setItems:self.photoMenuItems];
     [self.calipersView setUserInteractionEnabled:NO];
 }
 
-- (IBAction)selectCalipersToolbar:(id)sender {
-    [self.toolBar setItems:self.calipersMenuItems];
+- (void)selectMainToolbar {
+    [self.toolbar setItems:self.mainMenuItems];
     [self.calipersView setUserInteractionEnabled:YES];
 }
 
 - (void)selectAddCalipersToolbar {
-    [self.toolBar setItems:self.addCalipersMenuItems];
+    [self.toolbar setItems:self.addCalipersMenuItems];
 }
 
 - (IBAction)selectAdjustImageToolbar {
-    [self.toolBar setItems:self.adjustImageMenuItems];
+    [self.toolbar setItems:self.adjustImageMenuItems];
 }
 
 - (IBAction)calibrateCalipers:(id)sender {
@@ -157,6 +159,12 @@
 - (void)addCaliperWithDirection:(CaliperDirection)direction {
     Caliper *caliper = [[Caliper alloc] init];
     caliper.direction = direction;
+    if (direction == Horizontal) {
+        caliper.calibration = self.horizontalCalibration;
+    }
+    else {
+        caliper.calibration = self.verticalCalibration;
+    }
     [caliper setInitialPositionInRect:self.view.frame];
     
     [self.calipersView.calipers addObject:caliper];

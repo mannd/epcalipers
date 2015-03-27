@@ -11,6 +11,7 @@
 @interface CalipersView : UIView
 
 - (id)initWithCoder:(NSCoder *)aDecoder;
-@property(nonatomic, strong)NSMutableArray *calipers;
+@property (nonatomic, strong)NSMutableArray *calipers;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 
 @end

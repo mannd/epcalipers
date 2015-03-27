@@ -9,6 +9,7 @@
 #import "CalipersView.h"
 #import "Caliper.h"
 #import "EPSLogging.h"
+#import "EPSMainViewController.h"
 
 @implementation CalipersView
 
@@ -22,8 +23,22 @@
         UIPanGestureRecognizer *p = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragging:)];
         [self addGestureRecognizer:p];
         self.clearsContextBeforeDrawing = YES;
-    }
+        self.toolbar = ((EPSMainViewController *)self.superview).toolbar;
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(deviceOrientationDidChangeNotification:)
+         name:UIDeviceOrientationDidChangeNotification
+         object:nil];
+   }
     return self;
+}
+
+- (void)deviceOrientationDidChangeNotification:(NSNotification*)note
+{
+    // TODO change calibration
+    // UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation]
+
+    [self setNeedsDisplay];
 }
 
 // Only override drawRect: if you perform custom drawing.

@@ -84,7 +84,7 @@
         [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position : self.bar2Position), self.crossBarPosition - 20, fabsf(self.bar2Position - self.bar1Position), 20)  withAttributes:attributes];
     }
     else {
-        [text drawInRect:CGRectMake(self.crossBarPosition, self.bar1Position + (self.bar2Position - self.bar1Position)/2, 200, 20) withAttributes:attributes];
+        [text drawInRect:CGRectMake(self.crossBarPosition, self.bar1Position + (self.bar2Position - self.bar1Position)/2, 150, 20) withAttributes:attributes];
     }
     
 }
@@ -104,7 +104,7 @@
 }
 
 - (NSString *)measurement {
-    NSString *s = [NSString stringWithFormat:@"%.1f *points*", [self points]];
+    NSString *s = [NSString stringWithFormat:@"%.1f %@", [self points] * self.calibration.multiplier, self.calibration.units];
     return s;
 }
 
