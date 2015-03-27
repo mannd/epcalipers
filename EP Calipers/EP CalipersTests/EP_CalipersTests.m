@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "Caliper.h"
 
 @interface EP_CalipersTests : XCTestCase
 
@@ -35,6 +36,17 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
     }];
+}
+
+- (void)testBarCoord {
+    Caliper *c = [[Caliper alloc] init];
+    XCTAssert(c.bar1Position == 0);
+    XCTAssert(c.bar2Position == 0);
+    XCTAssert(c.crossBarPosition == 100.0);
+    CGPoint p = CGPointMake(100, 50);
+    XCTAssert([c barCoord:p] == 100);
+    c.direction = Vertical;
+    XCTAssert([c barCoord:p] == 50);
 }
 
 @end

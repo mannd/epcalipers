@@ -17,6 +17,7 @@
 		8E1423781AB5F16A00CC15BC /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
 		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
 		8E9A333C1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */; };
+		8EB3DE361AC5B12A009376AD /* Caliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0208A61AC2A8B300FE7EC5 /* Caliper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -249,6 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB3DE361AC5B12A009376AD /* Caliper.m in Sources */,
 				8E1423781AB5F16A00CC15BC /* EP_CalipersTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

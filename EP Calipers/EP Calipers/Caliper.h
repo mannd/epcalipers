@@ -29,6 +29,8 @@ typedef NS_ENUM(NSInteger, CaliperDirection) {
 - (BOOL)pointNearCrossBar:(CGPoint)p;
 - (BOOL)pointNearCaliper:(CGPoint)p;
 
+- (float)barCoord:(CGPoint)p;
+
 
 
 

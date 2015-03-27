@@ -19,7 +19,7 @@
         self.direction = direction;
         self.bar1Position = bar1Position;
         self.bar2Position = bar2Position;
-        
+        self.crossBarPosition = crossBarPosition;
     }
     self.color = [UIColor magentaColor];
     return self;
@@ -41,8 +41,8 @@
         self.bar2Position = ((2 * rect.size.height)/3) + differential;
         self.crossBarPosition = (rect.size.width/2) + differential;
     }
-    differential += 10;
-    if (differential > 50) {
+    differential += 15;
+    if (differential > 80) {
         differential = 0;
     }
 }
@@ -54,7 +54,6 @@
     if (self.direction == Horizontal) {
         CGContextMoveToPoint(context, self.bar1Position, 0);
         CGContextAddLineToPoint(context, self.bar1Position, rect.size.height);
-        
         CGContextMoveToPoint(context, self.bar2Position, 0);
         CGContextAddLineToPoint(context, self.bar2Position, rect.size.height);
         CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
@@ -70,7 +69,7 @@
     }
     CGContextStrokePath(context);
     NSString *text = [self measurement];
-    UIFont *textFont = [UIFont fontWithName:@"Helvetica" size:15.0];
+    UIFont *textFont = [UIFont fontWithName:@"Helvetica" size:18.0];
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
     paragraphStyle.alignment = NSTextAlignmentCenter;
@@ -80,8 +79,18 @@
     [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
     [attributes setObject:self.color forKey:NSForegroundColorAttributeName];
 
+    if (self.direction == Horizontal) {
+        [text drawInRect:CGRectMake(self.bar1Position, self.crossBarPosition - 20, self.bar2Position - self.bar1Position, 20)  withAttributes:attributes];
+    }
+    else {
+        [text drawInRect:CGRectMake(self.crossBarPosition, self.bar1Position + (self.bar2Position - self.bar1Position)/2, 200, 20) withAttributes:attributes];
+    }
+    
+}
 
-    [text drawInRect:CGRectMake(self.bar1Position, self.crossBarPosition - 20, self.bar2Position - self.bar1Position, 20)  withAttributes:attributes];
+// returns significant bar coordinate depending on direction of caliper
+- (float)barCoord:(CGPoint)p {
+    return (self.direction == Horizontal ? p.x : p.y);
 }
 
 // returns CGRect containing caliper
@@ -94,8 +103,7 @@
 }
 
 - (NSString *)measurement {
-    NSString *s = @"Uncalibrated";
-    s = [NSString stringWithFormat:@"%@ (%.1f points)", s, [self points]];
+    NSString *s = [NSString stringWithFormat:@"%.1f *points*", [self points]];
     return s;
 }
 
@@ -108,13 +116,7 @@
 }
 
 - (BOOL)pointNearBar:(CGPoint)p forBarPosition:(float)barPosition {
-    BOOL nearBar = NO;
-    if (self.direction == Horizontal) {
-        nearBar = (p.x > barPosition - DELTA && p.x < barPosition + DELTA);
-    } else {
-        nearBar = (p.y > barPosition - DELTA && p.y < barPosition + DELTA);
-    }
-    return nearBar;
+    return [self barCoord:p] > barPosition - DELTA && [self barCoord:p] < barPosition + DELTA;
 }
 
 - (BOOL)pointNearCrossBar:(CGPoint)p {
