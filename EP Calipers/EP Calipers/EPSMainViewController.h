@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CalipersView.h"
 #import "Calibration.h"
+#import "Settings.h"
 
 @interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UINavigationBarDelegate>
 
@@ -26,6 +27,7 @@
 
 @property (strong, nonatomic) Calibration *horizontalCalibration;
 @property (strong, nonatomic) Calibration *verticalCalibration;
+@property (strong, nonatomic) Settings *settings;
 
 @end
 

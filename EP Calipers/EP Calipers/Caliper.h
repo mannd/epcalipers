@@ -18,6 +18,9 @@
 @property float crossBarPosition;
 @property CaliperDirection direction;
 @property UIColor *color;
+@property UIColor *unselectedColor;
+@property UIColor *selectedColor;
+@property NSInteger lineWidth;
 @property (readonly) float valueInPoints;
 @property BOOL selected;
 @property (weak, nonatomic) Calibration *calibration;

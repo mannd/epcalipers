@@ -11,6 +11,7 @@
 @interface Settings : NSObject
 @property (strong, nonatomic) UIColor *caliperColor;
 @property (strong, nonatomic) UIColor *highlightColor;
+@property NSInteger lineWidth;
 
 - (instancetype)init;
 

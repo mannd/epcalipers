@@ -8,7 +8,9 @@
 
 #import "EPSMainViewController.h"
 #import "Caliper.h"
+#import "Settings.h"
 #import "EPSLogging.h"
+
 
 @interface EPSMainViewController ()
 
@@ -24,6 +26,8 @@
 //    [self.view addSubview:navigationBar];
 //    UINavigationItem *titleItem = [[UINavigationItem alloc] initWithTitle:@"EP Calipers"];
 //    [navigationBar pushNavigationItem:titleItem animated:NO];
+    self.settings = [[Settings alloc] init];
+    
     [self createMainToolbar];
     [self createImageToolbar];
     [self createAdjustImageToolbar];
@@ -158,6 +162,9 @@
 
 - (void)addCaliperWithDirection:(CaliperDirection)direction {
     Caliper *caliper = [[Caliper alloc] init];
+    caliper.lineWidth = self.settings.lineWidth;
+    caliper.unselectedColor = self.settings.caliperColor;
+    caliper.selectedColor = self.settings.highlightColor;
     caliper.direction = direction;
     if (direction == Horizontal) {
         caliper.calibration = self.horizontalCalibration;

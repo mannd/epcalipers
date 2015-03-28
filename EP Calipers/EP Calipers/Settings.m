@@ -15,6 +15,7 @@
     if (self) {
         self.caliperColor = [UIColor blackColor];
         self.highlightColor = [UIColor redColor];
+        self.lineWidth = 2; // should = 1
     }
     return self;
 }

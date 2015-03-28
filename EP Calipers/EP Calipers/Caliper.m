@@ -21,7 +21,10 @@
         self.bar1Position = bar1Position;
         self.bar2Position = bar2Position;
         self.crossBarPosition = crossBarPosition;
-        self.color = [UIColor blackColor];
+        self.unselectedColor = [UIColor blackColor];
+        self.selectedColor = [UIColor redColor];
+        self.color = self.unselectedColor;
+        self.lineWidth = 2;
         self.selected = NO;
     }
     return self;
@@ -51,7 +54,7 @@
 
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect {
     CGContextSetStrokeColorWithColor(context, [self.color CGColor]);
-    CGContextSetLineWidth(context, 1);
+    CGContextSetLineWidth(context, self.lineWidth);
 
     if (self.direction == Horizontal) {
         CGContextMoveToPoint(context, self.bar1Position, 0);

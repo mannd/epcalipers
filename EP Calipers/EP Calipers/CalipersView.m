@@ -29,7 +29,6 @@
          selector:@selector(deviceOrientationDidChangeNotification:)
          name:UIDeviceOrientationDidChangeNotification
          object:nil];
-        self.settings = [[Settings alloc] init];
    }
     return self;
 }
@@ -53,13 +52,13 @@
 }
 
 - (void)selectCaliper:(Caliper *)c {
-    c.color = [self.settings highlightColor];
+    c.color = c.selectedColor;
     c.selected = YES;
     [self setNeedsDisplay];    
 }
 
 - (void)unselectCaliper:(Caliper *)c {
-    c.color = [self.settings caliperColor];
+    c.color = c.unselectedColor;
     c.selected = NO;
     [self setNeedsDisplay];
 }
