@@ -10,4 +10,13 @@
 
 @implementation Settings
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.caliperColor = [UIColor blackColor];
+        self.highlightColor = [UIColor redColor];
+    }
+    return self;
+}
+
 @end
