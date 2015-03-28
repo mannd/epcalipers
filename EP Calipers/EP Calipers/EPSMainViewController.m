@@ -32,6 +32,7 @@
     [self createImageToolbar];
     [self createAdjustImageToolbar];
     [self createAddCalipersToolbar];
+    [self createSetupCalibrationToolbar];
     
     [self selectMainToolbar];
  
@@ -46,13 +47,13 @@
     self.verticalCalibration.direction = Vertical;
     
     [self.calipersView setUserInteractionEnabled:YES];
-     
+    
     // add a Caliper to start out
     [self addHorizontalCaliper];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self.calipersView setUserInteractionEnabled:YES];
+    [self.view setUserInteractionEnabled:YES];
     
 }
 
@@ -67,14 +68,12 @@
 
 - (void)createMainToolbar {
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
-    UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calibrate" style:UIBarButtonItemStylePlain target:self action:@selector(calibrateCalipers:)];
+    UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calibrate" style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
     UIBarButtonItem *imageButton = [[UIBarButtonItem alloc] initWithTitle:@"Image" style:UIBarButtonItemStylePlain target:self action:@selector(selectImageToolbar:)];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:nil];
     UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:@"Help" style:UIBarButtonItemStylePlain target:self action:nil];
     
     self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, imageButton, settingsButton, helpButton, nil];
-
-
 }
 
 - (void)createImageToolbar {
@@ -106,10 +105,104 @@
 - (void)createAddCalipersToolbar {
     UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Horizontal" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
     UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Vertical" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
-    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(selectMainToolbar)];
     
-    self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, backToMainMenuButton, nil];
+    self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, nil];
+}
 
+- (void)createCalibrateToolbar {
+    UIView *inputAccessoryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 32)];
+    [inputAccessoryView setBackgroundColor:[UIColor lightGrayColor]];
+    
+    
+    UILabel *accessoryValueLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 140, 32)];
+    accessoryValueLabel.text = @"Calibration Value:";
+    
+    UITextField *inputValueTextField = [[UITextField alloc] initWithFrame:CGRectMake(160, 0, 50, 32)];
+    inputValueTextField.text = @"500";
+    
+    UILabel *accessoryUnitsLabel = [[UILabel alloc] initWithFrame:CGRectMake(220, 0, 50, 32)];
+    accessoryUnitsLabel.text = @"Units:";
+    
+    UITextField *inputUnitsTextField = [[UITextField alloc] initWithFrame:CGRectMake(280, 0, 50, 32)];
+    inputUnitsTextField.text = @"msec";
+
+    [inputAccessoryView addSubview:accessoryValueLabel];
+    [inputAccessoryView addSubview:inputValueTextField];
+    [inputAccessoryView addSubview:accessoryUnitsLabel];
+    [inputAccessoryView addSubview:inputUnitsTextField];
+    
+
+    UILabel *valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 32)];
+    valueLabel.text = @"Value";
+    UIBarButtonItem *valueLabelItem = [[UIBarButtonItem alloc] initWithCustomView:valueLabel];
+
+    UITextField *valueTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 40, 32)];
+    valueTextField.inputAccessoryView = inputAccessoryView;
+    [valueTextField setDelegate:self];
+    [valueTextField setReturnKeyType:UIReturnKeyDone];
+    valueTextField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+    valueTextField.text = @"500";
+    UIBarButtonItem *valueTextFieldItem = [[UIBarButtonItem alloc] initWithCustomView:valueTextField];
+
+    UILabel *unitsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 32)];
+    unitsLabel.text = @"Units";
+    UIBarButtonItem *unitsLabelItem = [[UIBarButtonItem alloc] initWithCustomView:unitsLabel];
+
+    UITextField *unitsTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 50, 32)];
+    unitsTextField.inputAccessoryView = inputAccessoryView;
+    [unitsTextField setDelegate:self];
+    [unitsTextField setReturnKeyType:UIReturnKeyDone];
+    unitsTextField.text = @"msec";
+    UIBarButtonItem *unitsTextFieldItem = [[UIBarButtonItem alloc] initWithCustomView:unitsTextField];
+
+    UIBarButtonItem *setCalibrationButton = [[UIBarButtonItem alloc] initWithTitle:@"Set" style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(selectMainToolbar)];
+   
+    self.calibrateMenuItems = [NSArray arrayWithObjects:valueLabelItem, valueTextFieldItem, unitsLabelItem, unitsTextFieldItem, setCalibrationButton, backToMainMenuButton, nil];
+    
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    // done button was pressed - dismiss keyboard
+    [textField resignFirstResponder];
+    return YES;
+}
+
+
+- (IBAction)textFieldDoneEditing:(id)sender {
+    [sender resignFirstResponder];
+}
+
+- (IBAction)backgroundTap:(id)sender {
+    //    [self.inputField resignFirstResponder];
+    //    [self.qtField resignFirstResponder];
+}
+
+- (void)createSetupCalibrationToolbar {
+    UILabel *instructionsLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 240, 32)];
+    instructionsLabel.text = @"Position highlighted caliper";
+    UIBarButtonItem *instructionsLabelItem = [[UIBarButtonItem alloc] initWithCustomView:instructionsLabel];
+    UIBarButtonItem *setButton = [[UIBarButtonItem alloc] initWithTitle:@"Set" style:UIBarButtonItemStylePlain target:self action:@selector(setCalibration)];
+    
+    self.calibrateMenuItems = [NSArray arrayWithObjects:instructionsLabelItem, setButton, nil];
+   
+}
+
+- (void)setupCalibration {
+    [self.toolbar setItems:self.calibrateMenuItems];
+    [self.calipersView selectCaliperIfNoneSelected];
+}
+
+- (void)setCalibration {
+    
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Calibrate" message:@"Enter measurement (e.g. 500 msec)" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    EPSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
 }
 
 - (IBAction)selectImageToolbar:(id)sender {
@@ -130,9 +223,8 @@
     [self.toolbar setItems:self.adjustImageMenuItems];
 }
 
-- (IBAction)calibrateCalipers:(id)sender {
-    // substitute text for buttons
-    // "Measure known time interval with calipers, press button when ready to calibrate"
+- (void)selectCalibrateToolbar {
+    [self.toolbar setItems:self.calibrateMenuItems];
 }
 
 - (IBAction)takePhoto:(id)sender {
@@ -176,6 +268,7 @@
     
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
+    [self selectMainToolbar];
    
 }
 
@@ -193,6 +286,8 @@
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageContainerView;
 }
+
+
 
 static inline double radians (double degrees) {return degrees * M_PI/180;}
 

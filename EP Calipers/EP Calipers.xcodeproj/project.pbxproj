@@ -116,9 +116,9 @@
 				8EB3DE371AC603A3009376AD /* Calibration.h */,
 				8EB3DE381AC603A3009376AD /* Calibration.m */,
 				8EB3DE3B1AC604FB009376AD /* Defs.h */,
-				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
 				8EB3DE3C1AC616C0009376AD /* Settings.h */,
 				8EB3DE3D1AC616C0009376AD /* Settings.m */,
+				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
 			);
 			path = "EP Calipers";
 			sourceTree = "<group>";

@@ -137,4 +137,20 @@
     }
 }
 
+- (void)selectCaliperIfNoneSelected {
+    if ([self noCaliperIsSelected]) {
+        [self selectCaliper:(Caliper *)self.calipers[self.calipers.count - 1]];
+    }
+}
+
+- (BOOL)noCaliperIsSelected {
+    BOOL noneSelected = YES;
+    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
+        if ([(Caliper *)self.calipers[i] selected]) {
+            noneSelected = NO;
+        }
+    }
+    return noneSelected;
+}
+
 @end
