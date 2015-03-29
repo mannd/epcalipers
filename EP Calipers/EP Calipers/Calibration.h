@@ -15,11 +15,15 @@
 @property BOOL calibrated;
 @property CaliperDirection direction;
 @property UIDeviceOrientation orientation;
-@property float multiplier;
+@property double multiplier;
 @property (strong, nonatomic) NSString *units;
+@property float currentOrientationRatio;
+@property float calibratedOrientationRatio;
 
 - (instancetype)initWithDirection:(CaliperDirection)direction withOrientation:(UIDeviceOrientation)orientation;
 - (instancetype)init;
+- (void)reset;
+
 
 
 @end

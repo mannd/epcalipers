@@ -40,13 +40,28 @@
     
     self.horizontalCalibration = [[Calibration alloc] init];
     self.horizontalCalibration.direction = Horizontal;
+
     self.verticalCalibration = [[Calibration alloc] init];
     self.verticalCalibration.direction = Vertical;
+
     
     [self.calipersView setUserInteractionEnabled:YES];
     
     // add a Caliper to start out
     [self addHorizontalCaliper];
+    
+    EPSLog(@"view h = %f, view w = %f", self.view.frame.size.height, self.view.frame.size.width);
+    
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    EPSLog(@"orientation is %ld", orientation);
+    
+    // detect orientation changes to change calibration on the fly
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(orientationChanged:)
+     name:UIDeviceOrientationDidChangeNotification
+     object:[UIDevice currentDevice]];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -109,10 +124,17 @@
 
 - (void)createSetupCalibrationToolbar {
     UIBarButtonItem *setButton = [[UIBarButtonItem alloc] initWithTitle:@"Set" style:UIBarButtonItemStylePlain target:self action:@selector(setCalibration)];
+    UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(clearCalibration)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
 
     
-    self.calibrateMenuItems = [NSArray arrayWithObjects:setButton, cancelButton, nil];
+    self.calibrateMenuItems = [NSArray arrayWithObjects:setButton, clearButton, cancelButton, nil];
+}
+
+- (void)clearCalibration {
+    [self.horizontalCalibration reset];
+    [self.verticalCalibration reset];
+    [self.calipersView setNeedsDisplay];
 }
 
 - (void)setupCalibration {
@@ -271,21 +293,31 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         EPSLog(@"Entered: %@, value = %f, units = %@", rawText, value, trimmedUnits);
         if (fabsf(value) > 0.0) {
+            EPSLog(@"view h = %f, view w = %f", self.view.frame.size.height, self.view.frame.size.width);
+            EPSLog(@"calipersView h = %f, w = %f", self.calipersView.frame.size.height, self.calipersView.frame.size.width);
+            
+            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+            EPSLog(@"orientation is %ld", orientation);
+
             Caliper *c = self.calipersView.activeCaliper;
+            double ratio = self.view.frame.size.height/self.view.frame.size.width;
             if (c.direction == Horizontal) {
                 self.horizontalCalibration.units = trimmedUnits;
                 self.horizontalCalibration.multiplier = value/c.valueInPoints;
+                self.horizontalCalibration.calibratedOrientationRatio = ratio;
+                self.horizontalCalibration.calibrated = YES;
             }
             else {
                 self.verticalCalibration.units = trimmedUnits;
                 self.verticalCalibration.multiplier = value/c.valueInPoints;
+                self.verticalCalibration.calibratedOrientationRatio  = ratio;
+                self.verticalCalibration.calibrated = YES;
             }
             [self.calipersView setNeedsDisplay];
             [self selectMainToolbar];
         }
 
     }
-    
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
@@ -307,5 +339,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // TODO
     // reset all calibration
 }
+
+- (void) orientationChanged:(NSNotification *)note {
+    double ratio = self.view.frame.size.height/self.view.frame.size.width;
+    self.horizontalCalibration.currentOrientationRatio = ratio;
+    self.verticalCalibration.currentOrientationRatio = ratio;
+    EPSLog(@"Orientation changed. Ratio = %f", ratio);
+
+}
+
 
 @end
