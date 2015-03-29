@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Caliper.h"
 
 @interface CalipersView : UIView
 
@@ -17,5 +18,6 @@
 
 - (void)selectCaliperIfNoneSelected;
 - (BOOL)noCaliperIsSelected;
+- (Caliper *)activeCaliper;
 
 @end

@@ -7,7 +7,6 @@
 //
 
 #import "CalipersView.h"
-#import "Caliper.h"
 #import "EPSLogging.h"
 #import "EPSMainViewController.h"
 
@@ -151,6 +150,19 @@
         }
     }
     return noneSelected;
+}
+
+- (Caliper *)activeCaliper {
+    if (self.calipers.count <= 0) {
+        return nil;
+    }
+    Caliper *c = nil;
+    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
+        if ([(Caliper *)self.calipers[i] selected]) {
+            c = (Caliper *)self.calipers[i];
+        }
+    }
+    return c;
 }
 
 @end

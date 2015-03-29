@@ -11,6 +11,8 @@
 #import "Settings.h"
 #import "EPSLogging.h"
 
+#define ANIMATION_DURATION 0.5
+
 @interface EPSMainViewController ()
 
 @end
@@ -127,7 +129,7 @@
 
 - (void)setCalibration {
     if ([self.calipersView noCaliperIsSelected]) {
-        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Caliper Selected" message:@"Select a caliper by single-tapping it.  It will appear highlighted.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Caliper Selected" message:@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
         [noSelectionAlert show];
         return;
@@ -225,29 +227,17 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self rotateImage:-1];
 }
 
-- (IBAction)tweakLeft:(id)sender {
-    [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
-    
-    self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(-1));
-    
-    [UIView commitAnimations];
-}
-
 - (void)rotateImage:(double)degrees {
-    [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
-    
-    self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(degrees));
-    
-    [UIView commitAnimations];
+    [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
+        self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(degrees));
+    }];
 
 }
 
 - (IBAction)resetImage:(id)sender {
-    [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
-    
-    self.imageView.transform = CGAffineTransformIdentity;
-    
-    [UIView commitAnimations];
+    [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
+        self.imageView.transform = CGAffineTransformIdentity;
+    }];
 }
 
 - (IBAction)flipImage:(id)sender {
@@ -261,11 +251,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
     // change from horizontal to vertical with each button press
     horizontal = !horizontal;
-    [UIView beginAnimations:nil context:nil]; [UIView setAnimationDuration:1.0f]; [UIView setAnimationDelegate:self];
-
-    self.imageView.transform = CGAffineTransformScale(self.imageView.transform, x, y);
-    
-    [UIView commitAnimations];
+    [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
+        self.imageView.transform = CGAffineTransformScale(self.imageView.transform, x, y);
+    }];
 }
 
 #pragma mark - Delegate Methods
@@ -282,10 +270,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         [scanner scanFloat:&value];
         trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         EPSLog(@"Entered: %@, value = %f, units = %@", rawText, value, trimmedUnits);
-        if (value > 0.0) {
+        if (fabsf(value) > 0.0) {
+            Caliper *c = self.calipersView.activeCaliper;
+            self.horizontalCalibration.units = trimmedUnits;
+            c.calibration = self.horizontalCalibration;
+           // c.units = trimmedUnits;
             // get active caliper
             // get pertinent calibration object (per type caliper and device rotation
             // multiplier = value/measurement in points
+            [self.calipersView setNeedsDisplay];
+            [self selectMainToolbar];
         }
 
     }
@@ -305,6 +299,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageContainerView;
+}
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    // TODO
+    // reset all calibration
 }
 
 @end
