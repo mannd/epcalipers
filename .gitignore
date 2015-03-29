@@ -20,3 +20,4 @@ profiles.*
 
 # Emacs tmp file
 .#*
+\#*

@@ -25,7 +25,6 @@
 @property (strong, nonatomic) NSArray *adjustImageMenuItems;
 @property (strong, nonatomic) NSArray *addCalipersMenuItems;
 @property (strong, nonatomic) NSArray *calibrateMenuItems;
-@property (strong, nonatomic) NSCharacterSet *numericCharacterSet;
 
 @property (strong, nonatomic) Calibration *horizontalCalibration;
 @property (strong, nonatomic) Calibration *verticalCalibration;

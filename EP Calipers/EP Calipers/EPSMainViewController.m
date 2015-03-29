@@ -23,11 +23,6 @@
 
     self.settings = [[Settings alloc] init];
     
-    NSMutableCharacterSet *numberSet = [[NSMutableCharacterSet alloc] init];
-    [numberSet addCharactersInString:@"0123456789,. "];
-    [self.numericCharacterSet copy:numberSet];
-    
-    
     [self createMainToolbar];
     [self createImageToolbar];
     [self createAdjustImageToolbar];
@@ -275,8 +270,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     NSString *rawText = [[alertView textFieldAtIndex:0] text];
     if (rawText.length > 0) {
-        float value = [rawText floatValue];
-        NSString *trimmedUnits = [rawText stringByTrimmingCharactersInSet:self.numericCharacterSet];
+        float value = 0.0;
+        NSString *trimmedUnits = @"";
+        NSScanner *scanner = [NSScanner scannerWithString:rawText];
+        [scanner scanFloat:&value];
+        trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         EPSLog(@"Entered: %@, value = %f, units = %@", rawText, value, trimmedUnits);
         if (value > 0.0) {
             // get active caliper
