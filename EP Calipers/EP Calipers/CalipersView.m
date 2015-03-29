@@ -138,7 +138,7 @@
 }
 
 - (void)selectCaliperIfNoneSelected {
-    if ([self noCaliperIsSelected]) {
+    if (self.calipers.count > 0 && [self noCaliperIsSelected]) {
         [self selectCaliper:(Caliper *)self.calipers[self.calipers.count - 1]];
     }
 }

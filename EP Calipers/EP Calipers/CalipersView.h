@@ -11,9 +11,11 @@
 @interface CalipersView : UIView
 
 - (id)initWithCoder:(NSCoder *)aDecoder;
+
 @property (nonatomic, strong)NSMutableArray *calipers;
 @property (weak, nonatomic)IBOutlet UIToolbar *toolbar;
-- (void)selectCaliperIfNoneSelected;
 
+- (void)selectCaliperIfNoneSelected;
+- (BOOL)noCaliperIsSelected;
 
 @end

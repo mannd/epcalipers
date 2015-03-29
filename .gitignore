@@ -17,3 +17,6 @@ profiles.*
 
 # Backup files
 *~.nib
+
+# Emacs tmp file
+.#*
