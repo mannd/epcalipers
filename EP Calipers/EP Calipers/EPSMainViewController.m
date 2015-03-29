@@ -134,6 +134,9 @@
     }
     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Calibrate" message:@"Enter measurement (e.g. 500 msec)" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [[alert textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+    //[[alert textFieldAtIndex:0] becomeFirstResponder];
+
     [alert show];
 }
 
@@ -272,7 +275,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if (rawText.length > 0) {
         float value = 0.0;
         NSString *trimmedUnits = @"";
-        NSScanner *scanner = [NSScanner scannerWithString:rawText];
+        // commented lines can be used to test different locale behavior
+        // NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"FR"];
+        NSScanner *scanner = [NSScanner localizedScannerWithString:rawText];
+        // scanner.locale = locale;
         [scanner scanFloat:&value];
         trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         EPSLog(@"Entered: %@, value = %f, units = %@", rawText, value, trimmedUnits);
