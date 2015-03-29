@@ -223,7 +223,10 @@
     else {
         caliper.calibration = self.verticalCalibration;
     }
-    [caliper setInitialPositionInRect:self.calipersView.frame];
+    [caliper setInitialPositionInRect:self.view.bounds];
+    EPSLog(@"Bounds x = %f, h = %f", self.view.bounds.origin.x, self.view.bounds.size.height);
+    EPSLog(@"Frame x = %f, h = %f", self.view.frame.origin.x, self.view.frame.size.height);
+   
     
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
