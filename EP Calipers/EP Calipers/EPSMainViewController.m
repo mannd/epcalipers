@@ -272,12 +272,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         EPSLog(@"Entered: %@, value = %f, units = %@", rawText, value, trimmedUnits);
         if (fabsf(value) > 0.0) {
             Caliper *c = self.calipersView.activeCaliper;
-            self.horizontalCalibration.units = trimmedUnits;
-            c.calibration = self.horizontalCalibration;
-           // c.units = trimmedUnits;
-            // get active caliper
-            // get pertinent calibration object (per type caliper and device rotation
-            // multiplier = value/measurement in points
+            if (c.direction == Horizontal) {
+                self.horizontalCalibration.units = trimmedUnits;
+                self.horizontalCalibration.multiplier = value/c.valueInPoints;
+            }
+            else {
+                self.verticalCalibration.units = trimmedUnits;
+                self.verticalCalibration.multiplier = value/c.valueInPoints;
+            }
             [self.calipersView setNeedsDisplay];
             [self selectMainToolbar];
         }
