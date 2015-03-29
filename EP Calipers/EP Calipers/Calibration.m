@@ -18,7 +18,6 @@
     if (self) {
         [self reset];
         self.direction = direction;
-        self.orientation = orientation;
     }
     return self;
 }

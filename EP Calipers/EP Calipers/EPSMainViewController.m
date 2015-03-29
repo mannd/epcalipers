@@ -223,7 +223,7 @@
     else {
         caliper.calibration = self.verticalCalibration;
     }
-    [caliper setInitialPositionInRect:self.view.frame];
+    [caliper setInitialPositionInRect:self.calipersView.frame];
     
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
@@ -300,6 +300,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             EPSLog(@"orientation is %ld", orientation);
 
             Caliper *c = self.calipersView.activeCaliper;
+            if (c == nil) {
+                return;
+            }
             double ratio = self.view.frame.size.height/self.view.frame.size.width;
             if (c.direction == Horizontal) {
                 self.horizontalCalibration.units = trimmedUnits;

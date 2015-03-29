@@ -14,7 +14,6 @@
 
 @property BOOL calibrated;
 @property CaliperDirection direction;
-@property UIDeviceOrientation orientation;
 @property double multiplier;
 @property (strong, nonatomic) NSString *units;
 @property float currentOrientationRatio;
