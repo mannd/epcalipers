@@ -7,13 +7,15 @@
 //
 
 #import "Calibration.h"
+#import "EPSLogging.h"
 
 @implementation Calibration
 
 @synthesize multiplier=_multiplier;
+@synthesize units=_units;
 
 
-- (instancetype)initWithDirection:(CaliperDirection)direction withOrientation:(UIDeviceOrientation)orientation {
+- (instancetype)initWithDirection:(CaliperDirection)direction {
     self = [super init];
     if (self) {
         [self reset];
@@ -23,18 +25,35 @@
 }
 
 - (instancetype)init {
-    self = [self initWithDirection:Horizontal withOrientation:UIDeviceOrientationUnknown];
+    self = [self initWithDirection:Horizontal];
 
     return self;
 }
 
+- (NSString *)units {
+    if (self.displayRate)
+        return @"bpm";
+    else
+        return _units;
+}
+
 - (double)multiplier {
-   if (!self.calibrated || self.currentOrientationRatio == self.calibratedOrientationRatio) {
-        return _multiplier;
+    double multiplier = 1.0;
+    if (!self.calibrated || self.currentOrientationRatio == self.calibratedOrientationRatio) {
+        multiplier = _multiplier;
     }
     else {
-        return _multiplier * self.currentOrientationRatio;
+        multiplier = _multiplier * self.currentOrientationRatio;
     }
+//    if (self.displayRate && self.canDisplayRate) {
+//        if (self.unitsAreMsec) {
+//            multiplier = multiplier / 60000.0;
+//        }
+//        if (self.unitsAreSeconds) {
+//            multiplier = 60.0 / multiplier;
+//        }
+//    }
+    return multiplier;
 }
 
 - (void)setMultiplier:(double)multiplier {
@@ -47,7 +66,34 @@
     self.multiplier = 1.0;
     self.currentOrientationRatio = 1.0;
     self.calibratedOrientationRatio = 1.0;
+    self.displayRate = NO;
     self.calibrated = NO; 
+}
+
+- (BOOL)canDisplayRate {
+    if (self.direction == Vertical) {
+        return NO;
+    }
+    return self.unitsAreMsec || self.unitsAreSeconds;
+}
+
+- (BOOL)unitsAreSeconds {
+    if (_units.length < 1) {
+        return NO;
+    }
+    NSString *units = [_units uppercaseString];
+    EPSLog(@"units = %@", units);
+    return [units isEqualToString:@"S"] || [units isEqualToString:@"SEC"] || [units isEqualToString:@"SECOND"]
+        || [units isEqualToString:@"SECS"] || [units isEqualToString:@"SECONDS"];
+}
+
+- (BOOL)unitsAreMsec {
+    if (_units.length < 1) {
+        return NO;
+    }
+    NSString *units = [_units uppercaseString];
+    EPSLog(@"units = %@", units);
+    return [units containsString:@"MSEC"] || [units isEqualToString:@"MS"] || [units containsString:@"MILLIS"];
 }
 
 

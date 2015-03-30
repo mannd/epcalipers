@@ -80,11 +80,12 @@
 - (void)createMainToolbar {
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
     UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calibrate" style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
+    self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:@"Toggle" style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     UIBarButtonItem *imageButton = [[UIBarButtonItem alloc] initWithTitle:@"Image" style:UIBarButtonItemStylePlain target:self action:@selector(selectImageToolbar)];
     UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:nil];
-    UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:@"Help" style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *helpButton = [[UIBarButtonItem alloc]   initWithTitle:@"Help" style:UIBarButtonItemStylePlain target:self action:nil];
     
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, imageButton, settingsButton, helpButton, nil];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, self.toggleIntervalRateButton, imageButton, settingsButton, helpButton, nil];
 }
 
 - (void)createImageToolbar {
@@ -128,6 +129,11 @@
 
     
     self.calibrateMenuItems = [NSArray arrayWithObjects:setButton, clearButton, cancelButton, nil];
+}
+
+- (void)toggleIntervalRate {
+    self.horizontalCalibration.displayRate = ! self.horizontalCalibration.displayRate;
+    [self.calipersView setNeedsDisplay];
 }
 
 - (void)clearCalibration {
@@ -194,6 +200,7 @@
 - (void)selectMainToolbar {
     [self.toolbar setItems:self.mainMenuItems];
     [self.calipersView setUserInteractionEnabled:YES];
+    [self.toggleIntervalRateButton setEnabled:[self.horizontalCalibration canDisplayRate]];
 }
 
 - (void)selectAddCalipersToolbar {
@@ -332,6 +339,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                 self.horizontalCalibration.calibrationString = rawText;
                 self.horizontalCalibration.units = trimmedUnits;
                 self.horizontalCalibration.multiplier = value/c.valueInPoints;
+                if (!self.horizontalCalibration.canDisplayRate) {
+                    self.horizontalCalibration.displayRate = NO;
+                }
                 self.horizontalCalibration.calibratedOrientationRatio = ratio;
                 self.horizontalCalibration.calibrated = YES;
             }
@@ -343,7 +353,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                 self.verticalCalibration.calibrated = YES;
             }
             [self.calipersView setNeedsDisplay];
-            [self selectMainToolbar];
+            [self selectMainToolbar];            
         }
 
     }

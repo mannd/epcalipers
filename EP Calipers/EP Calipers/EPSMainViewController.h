@@ -19,6 +19,8 @@
 @property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIView *imageContainerView;
 
+@property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
+
 @property (strong, nonatomic) NSArray *mainMenuItems;
 @property (strong, nonatomic) NSArray *photoMenuItems;
 @property (strong, nonatomic) NSArray *calipersMenuItems;

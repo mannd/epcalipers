@@ -109,7 +109,16 @@
 }
 
 - (NSString *)measurement {
-    NSString *s = [NSString stringWithFormat:@"%.4g %@", [self points] * self.calibration.multiplier, self.calibration.units];
+    double result = [self points] * self.calibration.multiplier;
+    if (result != 0 && self.calibration.displayRate && self.calibration.canDisplayRate) {
+        if (self.calibration.unitsAreMsec) {
+            result = 60000.0 / result;
+        }
+        if (self.calibration.unitsAreSeconds) {
+            result = 60.0 / result;
+        }
+    }
+    NSString *s = [NSString stringWithFormat:@"%.4g %@", result, self.calibration.units];
     return s;
 }
 

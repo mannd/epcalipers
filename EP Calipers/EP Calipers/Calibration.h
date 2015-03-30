@@ -19,8 +19,12 @@
 @property (strong, nonatomic) NSString *calibrationString;
 @property float currentOrientationRatio;
 @property float calibratedOrientationRatio;
+@property (readonly) BOOL canDisplayRate;
+@property (readonly) BOOL unitsAreSeconds;
+@property (readonly) BOOL unitsAreMsec;
+@property BOOL displayRate;
 
-- (instancetype)initWithDirection:(CaliperDirection)direction withOrientation:(UIDeviceOrientation)orientation;
+- (instancetype)initWithDirection:(CaliperDirection)direction;
 - (instancetype)init;
 - (void)reset;
 
