@@ -12,7 +12,9 @@
 @property (strong, nonatomic) UIColor *caliperColor;
 @property (strong, nonatomic) UIColor *highlightColor;
 @property NSInteger lineWidth;
+@property (strong, nonatomic) NSString *defaultCalibration;
 
 - (instancetype)init;
+- (void)loadPreferences;
 
 @end

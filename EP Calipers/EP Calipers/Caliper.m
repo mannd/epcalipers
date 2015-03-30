@@ -21,9 +21,9 @@
         self.bar1Position = bar1Position;
         self.bar2Position = bar2Position;
         self.crossBarPosition = crossBarPosition;
-        self.unselectedColor = [UIColor blackColor];
+        self.unselectedColor = [UIColor blueColor];
         self.selectedColor = [UIColor redColor];
-        self.color = self.unselectedColor;
+        self.color = [UIColor blueColor];
         self.lineWidth = 2;
         self.selected = NO;
     }
@@ -57,6 +57,10 @@
     CGContextSetLineWidth(context, self.lineWidth);
 
     if (self.direction == Horizontal) {
+        self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - 5);
+        self.crossBarPosition = fmaxf(self.crossBarPosition, 20);
+        self.bar1Position = fminf(self.bar1Position, rect.size.width - 20);
+        self.bar2Position = fmaxf(self.bar2Position, 20);
         CGContextMoveToPoint(context, self.bar1Position, 0);
         CGContextAddLineToPoint(context, self.bar1Position, rect.size.height);
         CGContextMoveToPoint(context, self.bar2Position, 0);
@@ -64,7 +68,11 @@
         CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
         CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
         
-    } else {    // vertical caliper, bar2 on the bottom
+    } else {    // vertical caliper
+        self.crossBarPosition = fminf(self.crossBarPosition, rect.size.width - 5);
+        self.crossBarPosition = fmaxf(self.crossBarPosition, 5);
+        self.bar1Position = fminf(self.bar1Position, rect.size.height - 20);
+        self.bar2Position = fmaxf(self.bar2Position, 20);
         CGContextMoveToPoint(context, 0, self.bar1Position);
         CGContextAddLineToPoint(context, rect.size.width, self.bar1Position);
         CGContextMoveToPoint(context, 0, self.bar2Position);

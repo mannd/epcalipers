@@ -24,7 +24,12 @@
     // Do any additional setup after loading the view, typically from a nib.
 
     self.settings = [[Settings alloc] init];
+    [self.settings loadPreferences];
+
+
     
+//    [self refreshDefaults];
+
     [self createMainToolbar];
     [self createImageToolbar];
     [self createAdjustImageToolbar];
@@ -48,11 +53,9 @@
     
     // add a Caliper to start out
     [self addHorizontalCaliper];
+
     
     EPSLog(@"view h = %f, view w = %f", self.view.frame.size.height, self.view.frame.size.width);
-    
-    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-    EPSLog(@"orientation is %ld", orientation);
     
     // detect orientation changes to change calibration on the fly
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
@@ -60,11 +63,13 @@
      addObserver:self selector:@selector(orientationChanged:)
      name:UIDeviceOrientationDidChangeNotification
      object:[UIDevice currentDevice]];
+    
 
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
+
 }
 
 - (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar{
@@ -76,16 +81,36 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)refreshDefaults {
+    NSArray *colorKeys = [NSArray arrayWithObjects:@"Black", @"Magenta", @"Light Gray", @"Blue", @"Green", @"White", @"Red", @"Yellow", @"Orange", nil];
+    NSArray *colorValues = [NSArray arrayWithObjects:[UIColor blackColor], [UIColor magentaColor], [UIColor lightGrayColor], [UIColor blueColor], [UIColor greenColor], [UIColor whiteColor], [UIColor redColor], [UIColor yellowColor], [UIColor orangeColor], nil];
+    NSDictionary *colorMap = [NSDictionary dictionaryWithObjects:colorValues forKeys:colorKeys];
+    
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if (defaults != nil) {
+        self.settings.lineWidth = [[defaults objectForKey:@"lineWidthPreference"] integerValue];
+        self.settings.defaultCalibration = [defaults objectForKey:@"calibrationPreference"];
+        NSString *color = [defaults objectForKey:@"caliperColorPreference"];
+        NSString *highlightColor = [defaults objectForKey:@"highlightColorPreference"];
+        self.settings.caliperColor = [colorMap valueForKey:color];
+        self.settings.highlightColor = [colorMap valueForKey:highlightColor];
+        EPSLog(@"Color = %@, highlightColor = %@", color, highlightColor);
+        
+    }
+}
+
+
 // Create toolbars
 - (void)createMainToolbar {
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
     UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calibrate" style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:@"Toggle" style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     UIBarButtonItem *imageButton = [[UIBarButtonItem alloc] initWithTitle:@"Image" style:UIBarButtonItemStylePlain target:self action:@selector(selectImageToolbar)];
-    UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:nil];
     UIBarButtonItem *helpButton = [[UIBarButtonItem alloc]   initWithTitle:@"Help" style:UIBarButtonItemStylePlain target:self action:nil];
     
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, self.toggleIntervalRateButton, imageButton, settingsButton, helpButton, nil];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, self.toggleIntervalRateButton, imageButton, helpButton, nil];
 }
 
 - (void)createImageToolbar {
@@ -164,10 +189,22 @@
         [noSelectionAlert show];
         return;
     }
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Calibrate" message:@"Enter measurement (e.g. 500 msec)" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     Caliper* c = self.calipersView.activeCaliper;
+    NSString *example = @"";
+    if (c!= nil && c.direction == Vertical) {
+        example = @"1 mV";
+    }
+    else {
+        example = @"500 msec";
+    }
+    NSString *message = [NSString stringWithFormat:@"Enter measurement (e.g. %@)", example];
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Calibrate" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     NSString *calibrationString = @"";
+    // set initial calibration time calibration to default
+    if ([self.horizontalCalibration.calibrationString length] < 1) {
+        self.horizontalCalibration.calibrationString = self.settings.defaultCalibration;
+    }
     if (c != nil) {
         CaliperDirection direction = c.direction;
         if (direction == Horizontal) {
@@ -244,6 +281,7 @@
     caliper.lineWidth = self.settings.lineWidth;
     caliper.unselectedColor = self.settings.caliperColor;
     caliper.selectedColor = self.settings.highlightColor;
+    caliper.color = caliper.unselectedColor;
     caliper.direction = direction;
     if (direction == Horizontal) {
         caliper.calibration = self.horizontalCalibration;
@@ -312,6 +350,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 #pragma mark - Delegate Methods
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        return;
+    }
     NSString *rawText = [[alertView textFieldAtIndex:0] text];
     if (rawText.length > 0) {
         float value = 0.0;
@@ -327,9 +368,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             EPSLog(@"view h = %f, view w = %f", self.view.frame.size.height, self.view.frame.size.width);
             EPSLog(@"calipersView h = %f, w = %f", self.calipersView.frame.size.height, self.calipersView.frame.size.width);
             
-            UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
-            EPSLog(@"orientation is %ld", orientation);
-
             Caliper *c = self.calipersView.activeCaliper;
             if (c == nil) {
                 return;
