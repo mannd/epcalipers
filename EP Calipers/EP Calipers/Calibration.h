@@ -16,6 +16,7 @@
 @property CaliperDirection direction;
 @property double multiplier;
 @property (strong, nonatomic) NSString *units;
+@property (strong, nonatomic) NSString *calibrationString;
 @property float currentOrientationRatio;
 @property float calibratedOrientationRatio;
 

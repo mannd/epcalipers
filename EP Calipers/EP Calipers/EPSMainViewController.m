@@ -35,7 +35,7 @@
  
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
-    self.scrollView.maximumZoomScale = 4.0;
+    self.scrollView.maximumZoomScale = 6.0;
     [self.scrollView setZoomScale:1.0];
     
     self.horizontalCalibration = [[Calibration alloc] init];
@@ -43,7 +43,6 @@
 
     self.verticalCalibration = [[Calibration alloc] init];
     self.verticalCalibration.direction = Vertical;
-
     
     [self.calipersView setUserInteractionEnabled:YES];
     
@@ -139,9 +138,7 @@
 
 - (void)setupCalibration {
     if (self.calipersView.calipers.count < 1) {
-        UIAlertView *noCalipersAlert = [[UIAlertView alloc] initWithTitle:@"No Calipers To Use" message:@"Add one or more calipers first before calibration." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        noCalipersAlert.alertViewStyle = UIAlertViewStyleDefault;
-        [noCalipersAlert show];
+        [self showNoCalipersAlert];
     }
     else {
         [self.toolbar setItems:self.calibrateMenuItems];
@@ -150,6 +147,11 @@
 }
 
 - (void)setCalibration {
+    if (self.calipersView.calipers.count < 1) {
+        [self showNoCalipersAlert];
+        [self selectMainToolbar];
+        return;
+    }
     if ([self.calipersView noCaliperIsSelected]) {
         UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Caliper Selected" message:@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
@@ -158,10 +160,29 @@
     }
     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Calibrate" message:@"Enter measurement (e.g. 500 msec)" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    Caliper* c = self.calipersView.activeCaliper;
+    NSString *calibrationString = @"";
+    if (c != nil) {
+        CaliperDirection direction = c.direction;
+        if (direction == Horizontal) {
+            calibrationString = self.horizontalCalibration.calibrationString;
+        }
+        else {
+            calibrationString = self.verticalCalibration.calibrationString;
+        }
+    }
+    
     [[alert textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-    //[[alert textFieldAtIndex:0] becomeFirstResponder];
+    [[alert textFieldAtIndex:0] setText:calibrationString];
+    [[alert textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
 
     [alert show];
+}
+
+- (void)showNoCalipersAlert {
+    UIAlertView *noCalipersAlert = [[UIAlertView alloc] initWithTitle:@"No Calipers To Use" message:@"Add one or more calipers first before calibration." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    noCalipersAlert.alertViewStyle = UIAlertViewStyleDefault;
+    [noCalipersAlert show];
 }
 
 // Select toolbars
@@ -308,12 +329,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             }
             double ratio = self.view.frame.size.height/self.view.frame.size.width;
             if (c.direction == Horizontal) {
+                self.horizontalCalibration.calibrationString = rawText;
                 self.horizontalCalibration.units = trimmedUnits;
                 self.horizontalCalibration.multiplier = value/c.valueInPoints;
                 self.horizontalCalibration.calibratedOrientationRatio = ratio;
                 self.horizontalCalibration.calibrated = YES;
             }
             else {
+                self.verticalCalibration.calibrationString = rawText;
                 self.verticalCalibration.units = trimmedUnits;
                 self.verticalCalibration.multiplier = value/c.valueInPoints;
                 self.verticalCalibration.calibratedOrientationRatio  = ratio;
@@ -353,6 +376,5 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     EPSLog(@"Orientation changed. Ratio = %f", ratio);
 
 }
-
 
 @end
