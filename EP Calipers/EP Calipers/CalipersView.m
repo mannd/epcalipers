@@ -32,11 +32,7 @@
     return self;
 }
 
-- (void)deviceOrientationDidChangeNotification:(NSNotification*)note
-{
-    // TODO change calibration
-    // UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation]
-
+- (void)deviceOrientationDidChangeNotification:(NSNotification*)note {
     [self setNeedsDisplay];
 }
 

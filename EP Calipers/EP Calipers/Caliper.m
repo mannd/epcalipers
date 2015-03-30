@@ -109,7 +109,7 @@
 }
 
 - (NSString *)measurement {
-    NSString *s = [NSString stringWithFormat:@"%.1f %@", [self points] * self.calibration.multiplier, self.calibration.units];
+    NSString *s = [NSString stringWithFormat:@"%.4g %@", [self points] * self.calibration.multiplier, self.calibration.units];
     return s;
 }
 

@@ -365,8 +365,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    // TODO
-    // reset all calibration
+    [self.horizontalCalibration reset];
+    [self.verticalCalibration reset];
+    [self.calipersView setNeedsDisplay];
 }
 
 - (void) orientationChanged:(NSNotification *)note {
