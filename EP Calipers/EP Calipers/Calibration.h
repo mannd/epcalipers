@@ -23,6 +23,7 @@
 @property (readonly) BOOL unitsAreSeconds;
 @property (readonly) BOOL unitsAreMsec;
 @property BOOL displayRate;
+@property (strong, nonatomic) NSString *rawUnits;
 
 - (instancetype)initWithDirection:(CaliperDirection)direction;
 - (instancetype)init;

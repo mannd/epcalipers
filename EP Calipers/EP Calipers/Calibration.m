@@ -37,6 +37,10 @@
         return _units;
 }
 
+- (NSString *)rawUnits {
+    return _units;
+}
+
 - (double)multiplier {
     double multiplier = 1.0;
     if (!self.calibrated || self.currentOrientationRatio == self.calibratedOrientationRatio) {

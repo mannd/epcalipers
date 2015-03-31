@@ -117,17 +117,30 @@
 }
 
 - (NSString *)measurement {
-    double result = [self points] * self.calibration.multiplier;
-    if (result != 0 && self.calibration.displayRate && self.calibration.canDisplayRate) {
-        if (self.calibration.unitsAreMsec) {
-            result = 60000.0 / result;
-        }
-        if (self.calibration.unitsAreSeconds) {
-            result = 60.0 / result;
-        }
-    }
-    NSString *s = [NSString stringWithFormat:@"%.4g %@", result, self.calibration.units];
+    NSString *s = [NSString stringWithFormat:@"%.4g %@", [self calibratedResult], self.calibration.units];
     return s;
+}
+
+- (double)calibratedResult {
+    double result = [self intervalResult];
+    if (result != 0 && self.calibration.displayRate && self.calibration.canDisplayRate) {
+        result = [self rateResult:result];
+    }
+    return result;
+}
+
+- (double)intervalResult {
+    return [self points] * self.calibration.multiplier;
+}
+
+- (double)rateResult:(double)interval {
+    if (self.calibration.unitsAreMsec) {
+        interval = 60000.0 / interval;
+    }
+    if (self.calibration.unitsAreSeconds) {
+        interval = 60.0 / interval;
+    }
+    return interval;
 }
 
 - (float) points {

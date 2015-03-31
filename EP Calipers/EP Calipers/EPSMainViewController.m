@@ -13,6 +13,16 @@
 
 #define ANIMATION_DURATION 0.5
 
+#define CALIBRATE_IPAD @"Calibrate"
+#define CALIBRATE_IPHONE @"Cal"
+#define TOGGLE_INT_RATE_IPAD @"Interval/Rate"
+#define TOGGLE_INT_RATE_IPHONE @"I/R"
+#define HELP_IPAD @"Help"
+#define HELP_IPHONE @"?"
+
+#define CALIBRATION_ALERTVIEW 20
+#define MEAN_RR_ALERTVIEW 30
+
 @interface EPSMainViewController ()
 
 @end
@@ -22,13 +32,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
 
     self.settings = [[Settings alloc] init];
     [self.settings loadPreferences];
-
-
-    
-//    [self refreshDefaults];
 
     [self createMainToolbar];
     [self createImageToolbar];
@@ -81,43 +89,24 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)refreshDefaults {
-    NSArray *colorKeys = [NSArray arrayWithObjects:@"Black", @"Magenta", @"Light Gray", @"Blue", @"Green", @"White", @"Red", @"Yellow", @"Orange", nil];
-    NSArray *colorValues = [NSArray arrayWithObjects:[UIColor blackColor], [UIColor magentaColor], [UIColor lightGrayColor], [UIColor blueColor], [UIColor greenColor], [UIColor whiteColor], [UIColor redColor], [UIColor yellowColor], [UIColor orangeColor], nil];
-    NSDictionary *colorMap = [NSDictionary dictionaryWithObjects:colorValues forKeys:colorKeys];
-    
-
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    if (defaults != nil) {
-        self.settings.lineWidth = [[defaults objectForKey:@"lineWidthPreference"] integerValue];
-        self.settings.defaultCalibration = [defaults objectForKey:@"calibrationPreference"];
-        NSString *color = [defaults objectForKey:@"caliperColorPreference"];
-        NSString *highlightColor = [defaults objectForKey:@"highlightColorPreference"];
-        self.settings.caliperColor = [colorMap valueForKey:color];
-        self.settings.highlightColor = [colorMap valueForKey:highlightColor];
-        EPSLog(@"Color = %@, highlightColor = %@", color, highlightColor);
-        
-    }
-}
-
-
 // Create toolbars
 - (void)createMainToolbar {
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
-    UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:@"Calibrate" style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
-    self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:@"Toggle" style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
+    UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? CALIBRATE_IPAD : CALIBRATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
+    self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
+    self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:@"mRate" style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
+    self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:nil];
     UIBarButtonItem *imageButton = [[UIBarButtonItem alloc] initWithTitle:@"Image" style:UIBarButtonItemStylePlain target:self action:@selector(selectImageToolbar)];
-    UIBarButtonItem *helpButton = [[UIBarButtonItem alloc]   initWithTitle:@"Help" style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? HELP_IPAD : HELP_IPHONE) style:UIBarButtonItemStylePlain target:self action:nil];
     
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, self.toggleIntervalRateButton, imageButton, helpButton, nil];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, imageButton, helpButton, nil];
 }
 
 - (void)createImageToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
     UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
     UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
-    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(selectMainToolbar)];
+    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     
     self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, backToMainMenuButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -133,7 +122,7 @@
     UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"1°L" style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
     UIBarButtonItem *flipImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Flip" style:UIBarButtonItemStylePlain target:self action:@selector(flipImage:)];
     UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
-    UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(selectImageToolbar)];
+    UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectImageToolbar)];
     
     self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, flipImageButton, resetImageButton, backToImageMenuButton, nil];
     
@@ -142,7 +131,7 @@
 - (void)createAddCalipersToolbar {
     UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Horizontal" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
     UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Vertical" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     
     self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, cancelButton, nil];
 }
@@ -150,7 +139,7 @@
 - (void)createSetupCalibrationToolbar {
     UIBarButtonItem *setButton = [[UIBarButtonItem alloc] initWithTitle:@"Set" style:UIBarButtonItemStylePlain target:self action:@selector(setCalibration)];
     UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(clearCalibration)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
 
     
     self.calibrateMenuItems = [NSArray arrayWithObjects:setButton, clearButton, cancelButton, nil];
@@ -161,9 +150,40 @@
     [self.calipersView setNeedsDisplay];
 }
 
+- (void)meanRR {
+    if (self.calipersView.calipers.count < 1) {
+        [self showNoCalipersAlert];
+        [self selectMainToolbar];
+        return;
+    }
+    if ([self.calipersView noCaliperIsSelected]) {
+        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
+        [noSelectionAlert show];
+        return;
+    }
+    Caliper* c = self.calipersView.activeCaliper;
+    if (c.direction == Vertical) {
+        UIAlertView *noHorizontalCaliberAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        noHorizontalCaliberAlert.alertViewStyle = UIAlertViewStyleDefault;
+        [noHorizontalCaliberAlert show];
+        return;
+    }
+    UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Calculate", nil];
+    calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    calculateMeanRRAlertView.tag = MEAN_RR_ALERTVIEW;
+    [calculateMeanRRAlertView show];
+    
+    [[calculateMeanRRAlertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
+    [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"3"];
+    [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
+
+    
+    
+}
+
 - (void)clearCalibration {
-    [self.horizontalCalibration reset];
-    [self.verticalCalibration reset];
+    [self resetCalibration];
     [self.calipersView setNeedsDisplay];
 }
 
@@ -184,9 +204,9 @@
         return;
     }
     if ([self.calipersView noCaliperIsSelected]) {
-        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Caliper Selected" message:@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
-        [noSelectionAlert show];
+        UIAlertView *noSelectionAlertView = [[UIAlertView alloc] initWithTitle:@"No Caliper Selected" message:@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        noSelectionAlertView.alertViewStyle = UIAlertViewStyleDefault;
+        [noSelectionAlertView show];
         return;
     }
     Caliper* c = self.calipersView.activeCaliper;
@@ -200,6 +220,7 @@
     NSString *message = [NSString stringWithFormat:@"Enter measurement (e.g. %@)", example];
     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Calibrate" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = CALIBRATION_ALERTVIEW;
     NSString *calibrationString = @"";
     // set initial calibration time calibration to default
     if ([self.horizontalCalibration.calibrationString length] < 1) {
@@ -223,7 +244,7 @@
 }
 
 - (void)showNoCalipersAlert {
-    UIAlertView *noCalipersAlert = [[UIAlertView alloc] initWithTitle:@"No Calipers To Use" message:@"Add one or more calipers first before calibration." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *noCalipersAlert = [[UIAlertView alloc] initWithTitle:@"No Calipers To Use" message:@"Add one or more calipers first before proceeding." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     noCalipersAlert.alertViewStyle = UIAlertViewStyleDefault;
     [noCalipersAlert show];
 }
@@ -238,6 +259,8 @@
     [self.toolbar setItems:self.mainMenuItems];
     [self.calipersView setUserInteractionEnabled:YES];
     [self.toggleIntervalRateButton setEnabled:[self.horizontalCalibration canDisplayRate]];
+    [self.mRRButton setEnabled:[self.horizontalCalibration canDisplayRate]];
+    [self.qtcButton setEnabled:[self.horizontalCalibration canDisplayRate]];
 }
 
 - (void)selectAddCalipersToolbar {
@@ -299,6 +322,11 @@
     [self selectMainToolbar];
 }
 
+- (void)resetCalibration {
+    [self.horizontalCalibration reset];
+    [self.verticalCalibration reset];
+}
+
 // Adjust image
 static inline double radians (double degrees) {return degrees * M_PI/180;}
 
@@ -353,47 +381,69 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if (buttonIndex == 0) {
         return;
     }
-    NSString *rawText = [[alertView textFieldAtIndex:0] text];
-    if (rawText.length > 0) {
-        float value = 0.0;
-        NSString *trimmedUnits = @"";
-        // commented lines can be used to test different locale behavior
-        // NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"FR"];
-        NSScanner *scanner = [NSScanner localizedScannerWithString:rawText];
-        // scanner.locale = locale;
-        [scanner scanFloat:&value];
-        trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        EPSLog(@"Entered: %@, value = %f, units = %@", rawText, value, trimmedUnits);
-        if (fabsf(value) > 0.0) {
-            EPSLog(@"view h = %f, view w = %f", self.view.frame.size.height, self.view.frame.size.width);
-            EPSLog(@"calipersView h = %f, w = %f", self.calipersView.frame.size.height, self.calipersView.frame.size.width);
+    if (alertView.tag == CALIBRATION_ALERTVIEW) {
+        NSString *rawText = [[alertView textFieldAtIndex:0] text];
+        if (rawText.length > 0) {
+            float value = 0.0;
+            NSString *trimmedUnits = @"";
+            // commented lines can be used to test different locale behavior
+            // NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"FR"];
+            NSScanner *scanner = [NSScanner localizedScannerWithString:rawText];
+            // scanner.locale = locale;
+            [scanner scanFloat:&value];
+            trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            EPSLog(@"Entered: %@, value = %f, units = %@", rawText, value, trimmedUnits);
+            // all calibrations must be positive
+            value = fabsf(value);
+            if (value > 0.0) {
+                EPSLog(@"view h = %f, view w = %f", self.view.frame.size.height, self.view.frame.size.width);
+                EPSLog(@"calipersView h = %f, w = %f", self.calipersView.frame.size.height, self.calipersView.frame.size.width);
+                
+                Caliper *c = self.calipersView.activeCaliper;
+                if (c == nil || c.valueInPoints <= 0) {
+                    return;
+                }
+                double ratio = self.view.frame.size.height/self.view.frame.size.width;
+                if (c.direction == Horizontal) {
+                    self.horizontalCalibration.calibrationString = rawText;
+                    self.horizontalCalibration.units = trimmedUnits;
+                    self.horizontalCalibration.multiplier = value/c.valueInPoints;
+                    if (!self.horizontalCalibration.canDisplayRate) {
+                        self.horizontalCalibration.displayRate = NO;
+                    }
+                    self.horizontalCalibration.calibratedOrientationRatio = ratio;
+                    self.horizontalCalibration.calibrated = YES;
+                }
+                else {
+                    self.verticalCalibration.calibrationString = rawText;
+                    self.verticalCalibration.units = trimmedUnits;
+                    self.verticalCalibration.multiplier = value/c.valueInPoints;
+                    self.verticalCalibration.calibratedOrientationRatio  = ratio;
+                    self.verticalCalibration.calibrated = YES;
+                }
+                [self.calipersView setNeedsDisplay];
+                [self selectMainToolbar];            
+            }
             
+        }
+    }
+    else if (alertView.tag == MEAN_RR_ALERTVIEW) {
+        NSString *rawText = [[alertView textFieldAtIndex:0] text];
+        int divisor = [rawText intValue];
+        if (divisor > 0) {
             Caliper *c = self.calipersView.activeCaliper;
             if (c == nil) {
                 return;
             }
-            double ratio = self.view.frame.size.height/self.view.frame.size.width;
-            if (c.direction == Horizontal) {
-                self.horizontalCalibration.calibrationString = rawText;
-                self.horizontalCalibration.units = trimmedUnits;
-                self.horizontalCalibration.multiplier = value/c.valueInPoints;
-                if (!self.horizontalCalibration.canDisplayRate) {
-                    self.horizontalCalibration.displayRate = NO;
-                }
-                self.horizontalCalibration.calibratedOrientationRatio = ratio;
-                self.horizontalCalibration.calibrated = YES;
-            }
-            else {
-                self.verticalCalibration.calibrationString = rawText;
-                self.verticalCalibration.units = trimmedUnits;
-                self.verticalCalibration.multiplier = value/c.valueInPoints;
-                self.verticalCalibration.calibratedOrientationRatio  = ratio;
-                self.verticalCalibration.calibrated = YES;
-            }
-            [self.calipersView setNeedsDisplay];
-            [self selectMainToolbar];            
+            double intervalResult = fabsf(c.intervalResult);
+            double meanRR = intervalResult / divisor;
+            EPSLog(@"Average RR = %.4g %@", meanRR, [c.calibration rawUnits]);
+            double meanRate = [c rateResult:meanRR];
+            EPSLog(@"Average rate = %.4g bpm", meanRate);
+            UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval/Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
+            [resultAlertView show];
         }
-
     }
 }
 
@@ -402,6 +452,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.imageView.image = chosenImage;
  
     [picker dismissViewControllerAnimated:YES completion:NULL];
+    [self clearCalibration];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -413,9 +464,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    [self.horizontalCalibration reset];
-    [self.verticalCalibration reset];
-    [self.calipersView setNeedsDisplay];
+    [self clearCalibration];
 }
 
 - (void) orientationChanged:(NSNotification *)note {

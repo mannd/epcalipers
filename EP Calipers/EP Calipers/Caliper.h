@@ -25,6 +25,9 @@
 @property BOOL selected;
 @property (weak, nonatomic) Calibration *calibration;
 
+- (double)intervalResult;
+- (double)rateResult:(double)interval;
+- (double)calibratedResult;
 - (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position crossBarPosition:(float)crossBarPosition;
 - (instancetype)init;
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;

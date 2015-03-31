@@ -20,6 +20,8 @@
 @property (strong, nonatomic) IBOutlet UIView *imageContainerView;
 
 @property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
+@property (strong, nonatomic) UIBarButtonItem *mRRButton;
+@property (strong, nonatomic) UIBarButtonItem *qtcButton;
 
 @property (strong, nonatomic) NSArray *mainMenuItems;
 @property (strong, nonatomic) NSArray *photoMenuItems;
@@ -31,6 +33,8 @@
 @property (strong, nonatomic) Calibration *horizontalCalibration;
 @property (strong, nonatomic) Calibration *verticalCalibration;
 @property (strong, nonatomic) Settings *settings;
+
+@property BOOL isIpad;
 
 @end
 

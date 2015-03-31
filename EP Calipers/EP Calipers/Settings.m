@@ -27,9 +27,6 @@
     NSArray *colorValues = [NSArray arrayWithObjects:[UIColor blackColor], [UIColor magentaColor], [UIColor lightGrayColor], [UIColor blueColor], [UIColor greenColor], [UIColor whiteColor], [UIColor redColor], [UIColor yellowColor], [UIColor orangeColor], nil];
     NSDictionary *colorMap = [NSDictionary dictionaryWithObjects:colorValues forKeys:colorKeys];
     
-    
-    [NSUserDefaults resetStandardUserDefaults];
-    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
     // until user changes defaults, they don't work
