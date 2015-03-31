@@ -134,13 +134,33 @@
 }
 
 - (double)rateResult:(double)interval {
-    if (self.calibration.unitsAreMsec) {
-        interval = 60000.0 / interval;
-    }
-    if (self.calibration.unitsAreSeconds) {
-        interval = 60.0 / interval;
+    if (interval != 0) {
+        if (self.calibration.unitsAreMsec) {
+            interval = 60000.0 / interval;
+        }
+        if (self.calibration.unitsAreSeconds) {
+            interval = 60.0 / interval;
+        }
     }
     return interval;
+}
+
+- (double)intervalInSecs:(double)interval {
+    if (self.calibration.unitsAreSeconds) {
+        return interval;
+    }
+    else {
+        return interval / 1000;
+    }
+}
+
+- (double)intervalInMsec:(double)interval {
+    if (self.calibration.unitsAreMsec) {
+        return interval;
+    }
+    else {
+        return 1000 * interval;
+    }
 }
 
 - (float) points {

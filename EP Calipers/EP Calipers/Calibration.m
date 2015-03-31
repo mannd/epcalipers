@@ -86,7 +86,6 @@
         return NO;
     }
     NSString *units = [_units uppercaseString];
-    EPSLog(@"units = %@", units);
     return [units isEqualToString:@"S"] || [units isEqualToString:@"SEC"] || [units isEqualToString:@"SECOND"]
         || [units isEqualToString:@"SECS"] || [units isEqualToString:@"SECONDS"];
 }
@@ -96,7 +95,6 @@
         return NO;
     }
     NSString *units = [_units uppercaseString];
-    EPSLog(@"units = %@", units);
     return [units containsString:@"MSEC"] || [units isEqualToString:@"MS"] || [units containsString:@"MILLIS"];
 }
 

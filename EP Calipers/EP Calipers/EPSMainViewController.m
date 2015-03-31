@@ -20,8 +20,10 @@
 #define HELP_IPAD @"Help"
 #define HELP_IPHONE @"?"
 
+// AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
 #define MEAN_RR_ALERTVIEW 30
+#define MEAN_RR_FOR_QTC_ALERTVIEW 43
 
 @interface EPSMainViewController ()
 
@@ -64,11 +66,10 @@
     // add a Caliper to start out
     [self addHorizontalCaliper];
     
+    self.rrIntervalForQTc = 0.0;
+    
     [self.imageView setHidden:self.settings.hideStartImage];
 
-    
-    EPSLog(@"view h = %f, view w = %f", self.view.frame.size.height, self.view.frame.size.width);
-    
     // detect orientation changes to change calibration on the fly
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter]
@@ -151,9 +152,9 @@
 
 - (void)createQTcStep1Toolbar {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 32)];
-    [label setText:@"RR interval(s)"];
+    [label setText:@"RR interval(s)?"];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     self.qtcStep1MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureRRButton, cancelButton, nil];
@@ -161,9 +162,9 @@
 
 - (void)createQTcStep2Toolbar {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 32)];
-    [label setText:@"QT interval"];
+    [label setText:@"QT interval?"];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     self.qtcStep2MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureRRButton, cancelButton, nil];
@@ -205,8 +206,63 @@
 }
 
 - (void)calculateQTc {
+    self.rrIntervalForQTc = 0.0;
     [self.toolbar setItems:self.qtcStep1MenuItems];
-    
+}
+
+- (void)qtcMeasureRR {
+    if ([self noTimeCaliperSelected]) {
+        [self showNoTimeCaliperSelectedAlertView];
+    }
+    else {
+        UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Calculate", nil];
+        calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+        calculateMeanRRAlertView.tag = MEAN_RR_FOR_QTC_ALERTVIEW;
+        [calculateMeanRRAlertView show];
+        
+        [[calculateMeanRRAlertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
+        [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"3"];
+        [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
+
+        [self.toolbar setItems:self.qtcStep2MenuItems];
+    }
+}
+
+- (void)qtcMeasureQT {
+    if ([self noTimeCaliperSelected]) {
+        [self showNoTimeCaliperSelectedAlertView];
+    }
+    else {
+        Caliper *c = [self.calipersView activeCaliper];
+        float qt = fabsf([c intervalInSecs:c.intervalResult]);
+        float meanRR = fabsf(self.rrIntervalForQTc);  // already in secs
+        NSString *result = @"Invalid Result";
+        EPSLog(@"RR in sec = %f, QT in sec = %f", meanRR, qt);
+        if (meanRR > 0) {
+            float sqrtRR = sqrtf(meanRR);
+            float qtc = qt/sqrtRR;
+            // switch to units that calibration uses
+            if (c.calibration.unitsAreMsec) {
+                meanRR *= 1000;
+                qt *= 1000;
+                qtc *= 1000;
+            }
+            result = [NSString stringWithFormat:@"Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett formula)", meanRR, c.calibration.units, qt, c.calibration.units, qtc, c.calibration.units];
+        }
+        UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:@"Calculated QTc" message:result delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        qtcResultAlertView.alertViewStyle = UIAlertViewStyleDefault;
+        [qtcResultAlertView show];
+    }
+}
+
+- (BOOL)noTimeCaliperSelected {
+    return (self.calipersView.calipers.count < 1 || [self.calipersView noCaliperIsSelected]  || [self.calipersView activeCaliper].direction == Vertical);
+}
+
+- (void)showNoTimeCaliperSelectedAlertView {
+    UIAlertView *nothingToMeasureAlertView = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Use a selected (highlighted) caliper to measure one or more RR intervals." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    nothingToMeasureAlertView.alertViewStyle = UIAlertActionStyleDefault;
+    [nothingToMeasureAlertView show];
 }
 
 - (void)clearCalibration {
@@ -340,9 +396,6 @@
         caliper.calibration = self.verticalCalibration;
     }
     [caliper setInitialPositionInRect:self.view.bounds];
-    EPSLog(@"Bounds x = %f, h = %f", self.view.bounds.origin.x, self.view.bounds.size.height);
-    EPSLog(@"Frame x = %f, h = %f", self.view.frame.origin.x, self.view.frame.size.height);
-   
     
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
@@ -454,7 +507,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             
         }
     }
-    else if (alertView.tag == MEAN_RR_ALERTVIEW) {
+    else if (alertView.tag == MEAN_RR_ALERTVIEW || alertView.tag == MEAN_RR_FOR_QTC_ALERTVIEW) {
         NSString *rawText = [[alertView textFieldAtIndex:0] text];
         int divisor = [rawText intValue];
         if (divisor > 0) {
@@ -467,9 +520,15 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             EPSLog(@"Average RR = %.4g %@", meanRR, [c.calibration rawUnits]);
             double meanRate = [c rateResult:meanRR];
             EPSLog(@"Average rate = %.4g bpm", meanRate);
-            UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-            resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
-            [resultAlertView show];
+            if (alertView.tag == MEAN_RR_ALERTVIEW) {
+                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
+                [resultAlertView show];
+            }
+            else {
+                self.rrIntervalForQTc = [c intervalInSecs:meanRR];
+            }
+            
         }
     }
 }

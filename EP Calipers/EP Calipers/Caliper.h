@@ -28,6 +28,8 @@
 - (double)intervalResult;
 - (double)rateResult:(double)interval;
 - (double)calibratedResult;
+- (double)intervalInSecs:(double)interval;
+- (double)intervalInMsec:(double)interval;
 - (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position crossBarPosition:(float)crossBarPosition;
 - (instancetype)init;
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;

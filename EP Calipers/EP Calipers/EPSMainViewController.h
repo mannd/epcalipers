@@ -37,6 +37,7 @@
 @property (strong, nonatomic) Settings *settings;
 
 @property BOOL isIpad;
+@property double rrIntervalForQTc;
 
 @end
 
