@@ -18,6 +18,7 @@
         self.highlightColor = [UIColor redColor];
         self.lineWidth = 2;
         self.defaultCalibration = @"1000 msec";
+        self.hideStartImage = NO;
     }
     return self;
 }
@@ -48,6 +49,10 @@
     if (highlightColor != nil) {
         self.highlightColor = highlightColor;
     }
+    
+    // doesn't matter if not set, will be NO which is the default anyway
+    self.hideStartImage = [defaults boolForKey:@"hideStartImagePreference"];
+    
     EPSLog(@"Color = %@, highlightColor = %@", colorName, highlightColor);
 
     

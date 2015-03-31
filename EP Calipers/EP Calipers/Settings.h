@@ -13,6 +13,7 @@
 @property (strong, nonatomic) UIColor *highlightColor;
 @property NSInteger lineWidth;
 @property (strong, nonatomic) NSString *defaultCalibration;
+@property BOOL hideStartImage;
 
 - (instancetype)init;
 - (void)loadPreferences;

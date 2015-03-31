@@ -63,6 +63,8 @@
     
     // add a Caliper to start out
     [self addHorizontalCaliper];
+    
+    [self.imageView setHidden:self.settings.hideStartImage];
 
     
     EPSLog(@"view h = %f, view w = %f", self.view.frame.size.height, self.view.frame.size.width);
@@ -475,6 +477,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     self.imageView.image = chosenImage;
+    [self.imageView setHidden:NO];
  
     [picker dismissViewControllerAnimated:YES completion:NULL];
     [self clearCalibration];
