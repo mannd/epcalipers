@@ -19,6 +19,6 @@
 - (void)selectCaliperIfNoneSelected;
 - (BOOL)noCaliperIsSelected;
 - (Caliper *)activeCaliper;
-- (void)shiftCalipers:(double)ratio;
+- (void)shiftCalipers:(double)ratio forNewHeight:(double)height;
 
 @end

@@ -550,7 +550,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     double ratio = size.height/size.width;
     self.horizontalCalibration.currentOrientationRatio = ratio;
     self.verticalCalibration.currentOrientationRatio = ratio;
-    [self.calipersView shiftCalipers:ratio];
+    [self.calipersView shiftCalipers:ratio forNewHeight:size.height];
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
