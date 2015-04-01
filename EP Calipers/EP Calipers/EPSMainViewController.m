@@ -200,6 +200,7 @@
 - (void)calculateQTc {
     self.rrIntervalForQTc = 0.0;
     [self.toolbar setItems:self.qtcStep1MenuItems];
+    self.calipersView.locked = YES;
 }
 
 - (void)qtcMeasureRR {
@@ -239,7 +240,7 @@
                 qt *= 1000;
                 qtc *= 1000;
             }
-            result = [NSString stringWithFormat:@"Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett formula)", meanRR, c.calibration.units, qt, c.calibration.units, qtc, c.calibration.units];
+            result = [NSString stringWithFormat:@"Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett's formula)", meanRR, c.calibration.units, qt, c.calibration.units, qtc, c.calibration.units];
         }
         UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:@"Calculated QTc" message:result delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         qtcResultAlertView.alertViewStyle = UIAlertViewStyleDefault;
@@ -263,6 +264,18 @@
     [self.calipersView setNeedsDisplay];
 }
 
+- (BOOL)horizontalCalipersAvailable {
+    if (self.calipersView.calipers.count < 1) {
+        return NO;
+    }
+    for (Caliper *c in self.calipersView.calipers) {
+        if (c.direction == Horizontal) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void)setupCalibration {
     if (self.calipersView.calipers.count < 1) {
         [self showNoCalipersAlert];
@@ -270,6 +283,7 @@
     else {
         [self.toolbar setItems:self.calibrateMenuItems];
         [self.calipersView selectCaliperIfNoneSelected];
+        self.calipersView.locked = YES;
     }
 }
 
@@ -334,9 +348,11 @@
 - (void)selectMainToolbar {
     [self.toolbar setItems:self.mainMenuItems];
     [self.calipersView setUserInteractionEnabled:YES];
-    [self.toggleIntervalRateButton setEnabled:[self.horizontalCalibration canDisplayRate]];
-    [self.mRRButton setEnabled:[self.horizontalCalibration canDisplayRate]];
-    [self.qtcButton setEnabled:[self.horizontalCalibration canDisplayRate]];
+    BOOL enable = [self.horizontalCalibration canDisplayRate];
+    [self.toggleIntervalRateButton setEnabled:enable];
+    [self.mRRButton setEnabled:enable];
+    [self.qtcButton setEnabled:enable];
+    self.calipersView.locked = NO;
 }
 
 - (void)selectAddCalipersToolbar {
@@ -374,6 +390,8 @@
 - (void)addVerticalCaliper {
     [self addCaliperWithDirection:Vertical];
 }
+
+//- (BOOL)noCalipers
 
 - (void)addCaliperWithDirection:(CaliperDirection)direction {
     Caliper *caliper = [[Caliper alloc] init];

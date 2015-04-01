@@ -23,6 +23,7 @@
         [self addGestureRecognizer:p];
         self.clearsContextBeforeDrawing = YES;
         self.toolbar = ((EPSMainViewController *)self.superview).toolbar;
+        self.locked = NO;
         [[NSNotificationCenter defaultCenter]
          addObserver:self
          selector:@selector(deviceOrientationDidChangeNotification:)
@@ -65,7 +66,7 @@
     CGPoint location = [t locationInView:self];
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
         if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
-            if (((Caliper *)self.calipers[i]).selected) {
+            if (((Caliper *)self.calipers[i]).selected && !self.locked) {
                 [self.calipers removeObject:self.calipers[i]];
                 [self setNeedsDisplay];
             }

@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong)NSMutableArray *calipers;
 @property (weak, nonatomic)IBOutlet UIToolbar *toolbar;
+@property BOOL locked;
 
 - (void)selectCaliperIfNoneSelected;
 - (BOOL)noCaliperIsSelected;
