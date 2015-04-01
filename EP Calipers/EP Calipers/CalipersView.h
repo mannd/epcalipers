@@ -19,5 +19,6 @@
 - (void)selectCaliperIfNoneSelected;
 - (BOOL)noCaliperIsSelected;
 - (Caliper *)activeCaliper;
+- (void)shiftCalipers:(double)ratio forMaxDimension:(double)maxDimension;
 
 @end

@@ -70,15 +70,7 @@
     
     [self.imageView setHidden:self.settings.hideStartImage];
 
-    // detect orientation changes to change calibration on the fly
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(orientationChanged:)
-     name:UIDeviceOrientationDidChangeNotification
-     object:[UIDevice currentDevice]];
-    
-
-}
+ }
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
@@ -554,12 +546,18 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self clearCalibration];
 }
 
-- (void) orientationChanged:(NSNotification *)note {
-    double ratio = self.view.frame.size.height/self.view.frame.size.width;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    double ratio = size.height/size.width;
     self.horizontalCalibration.currentOrientationRatio = ratio;
     self.verticalCalibration.currentOrientationRatio = ratio;
     EPSLog(@"Orientation changed. Ratio = %f", ratio);
-
+    
+    [self.calipersView shiftCalipers:ratio forMaxDimension:fmin(size.height, size.width)];
+    
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    
+    
 }
+
 
 @end

@@ -161,4 +161,27 @@
     return c;
 }
 
+- (void)shiftCalipers:(double)ratio forMaxDimension:(double)maxDimension {
+    for (Caliper *c in self.calipers) {
+        if (c != nil) {
+            double compensation = 1 / ratio;
+            if (c.direction == Horizontal) {
+                c.bar1Position = c.bar1Position * compensation;
+                c.bar2Position = c.bar2Position * compensation;
+                c.crossBarPosition = c.crossBarPosition * ratio;
+            }
+            else {
+// TODO fix this
+                c.bar1Position = c.bar1Position * compensation;
+                c.bar2Position = c.bar2Position * compensation;
+                c.crossBarPosition = c.crossBarPosition * ratio;
+
+            }
+            
+            [self setNeedsDisplay];
+        }
+    }
+}
+
+
 @end
