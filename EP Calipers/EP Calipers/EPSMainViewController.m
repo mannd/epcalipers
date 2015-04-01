@@ -215,7 +215,7 @@
         [[calculateMeanRRAlertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
         [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"3"];
         [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
-
+        
         [self.toolbar setItems:self.qtcStep2MenuItems];
     }
 }
@@ -244,6 +244,7 @@
         UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:@"Calculated QTc" message:result delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
         qtcResultAlertView.alertViewStyle = UIAlertViewStyleDefault;
         [qtcResultAlertView show];
+        [self selectMainToolbar];
     }
 }
 
