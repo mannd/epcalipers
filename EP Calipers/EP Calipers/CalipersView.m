@@ -161,24 +161,14 @@
     return c;
 }
 
-- (void)shiftCalipers:(double)ratio forMaxDimension:(double)maxDimension {
+// Keeps calipers measuring same interval (though can move around with rotation).
+// Vertical calipers tend to go to screen edges.
+- (void)shiftCalipers:(double)ratio {
     for (Caliper *c in self.calipers) {
         if (c != nil) {
             double compensation = 1 / ratio;
-            if (c.direction == Horizontal) {
-                c.bar1Position = c.bar1Position * compensation;
-                c.bar2Position = c.bar2Position * compensation;
-                c.crossBarPosition = c.crossBarPosition * ratio;
-            }
-            else {
-// TODO fix this
-                c.bar1Position = c.bar1Position * compensation;
-                c.bar2Position = c.bar2Position * compensation;
-                c.crossBarPosition = c.crossBarPosition * ratio;
-
-            }
-            
-            [self setNeedsDisplay];
+            c.bar1Position *= compensation;
+            c.bar2Position *= compensation;
         }
     }
 }

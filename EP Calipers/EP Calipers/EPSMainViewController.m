@@ -550,9 +550,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     double ratio = size.height/size.width;
     self.horizontalCalibration.currentOrientationRatio = ratio;
     self.verticalCalibration.currentOrientationRatio = ratio;
-    EPSLog(@"Orientation changed. Ratio = %f", ratio);
-    
-    [self.calipersView shiftCalipers:ratio forMaxDimension:fmin(size.height, size.width)];
+    [self.calipersView shiftCalipers:ratio];
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     
