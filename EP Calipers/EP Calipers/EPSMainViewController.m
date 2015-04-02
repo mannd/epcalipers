@@ -209,6 +209,7 @@
 }
 
 - (void)calculateQTc {
+    self.horizontalCalibration.displayRate = NO;
     Caliper *singleHorizontalCaliper = [self getLoneTimeCaliper];
     if (singleHorizontalCaliper != nil) {
         [self.calipersView selectCaliper:singleHorizontalCaliper];
