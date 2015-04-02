@@ -178,9 +178,9 @@
 - (BOOL)pointNearCrossBar:(CGPoint)p {
     BOOL nearBar = NO;
     if (self.direction == Horizontal) {
-        nearBar = (p.x > self.bar1Position + DELTA && p.x < self.bar2Position - DELTA && p.y > self.crossBarPosition - DELTA && p.y < self.crossBarPosition + DELTA);
+        nearBar = (p.x > fmin(self.bar1Position, self.bar2Position) + DELTA && p.x < fmaxf(self.bar2Position, self.bar1Position) - DELTA && p.y > self.crossBarPosition - DELTA && p.y < self.crossBarPosition + DELTA);
     } else {
-        nearBar = (p.y > self.bar1Position + DELTA && p.y < self.bar2Position - DELTA && p.x > self.crossBarPosition - DELTA && p.x < self.crossBarPosition + DELTA);
+        nearBar = (p.y > fminf(self.bar1Position, self.bar2Position) + DELTA && p.y < fmaxf(self.bar2Position, self.bar1Position) - DELTA && p.x > self.crossBarPosition - DELTA && p.x < self.crossBarPosition + DELTA);
     }
     return nearBar;
 }
