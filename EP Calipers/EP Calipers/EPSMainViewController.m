@@ -17,6 +17,8 @@
 #define CALIBRATE_IPHONE @"Cal"
 #define TOGGLE_INT_RATE_IPAD @"Interval/Rate"
 #define TOGGLE_INT_RATE_IPHONE @"I/R"
+#define MEAN_RATE_IPAD @"meanRate"
+#define MEAN_RATE_IPHONE @"mRate"
 #define HELP_IPAD @"Help"
 #define HELP_IPHONE @"?"
 
@@ -91,7 +93,7 @@
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
     UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? CALIBRATE_IPAD : CALIBRATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
-    self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:@"mRate" style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
+    self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)   ];
     UIBarButtonItem *imageButton = [[UIBarButtonItem alloc] initWithTitle:@"Image" style:UIBarButtonItemStylePlain target:self action:@selector(selectImageToolbar)];
     UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? HELP_IPAD : HELP_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(showHelp)];

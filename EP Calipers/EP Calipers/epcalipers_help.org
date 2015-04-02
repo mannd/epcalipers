@@ -1,7 +1,7 @@
-#+TITLE:     EP Coding Help
+#+TITLE:     EP Calipers Help
 #+AUTHOR:    David Mann
 #+EMAIL:     mannd@epstudiossoftware.com
-#+DATE:      2014-02-08 Sat
+#+DATE:      [2015-04-02 Thu]
 #+DESCRIPTION:
 #+KEYWORDS:
 #+LANGUAGE:  en
@@ -13,4 +13,41 @@
 #+LINK_UP:   
 #+LINK_HOME: 
 #+XSLT:
-* Text
+* Overview
+*EP Calipers* provides electronic calipers to measure intervals on images of ECGs or electrophysiologic recordings.  In today's practice of medicine, it is common for doctors, nurses and medical technicians to photograph and send ECGs to each other via email and messaging using smart phones and tablets.  As an example, a physician on-call may be asked to review the QT measurement on an ECG to determine whether or not it is safe to continue a QT-prolonging drug such as dofetilide.  It is more difficult to make measurements on these images than it is with ECG recordings made on paper.  *EP Calipers* can be used to make these measurements and do these calculations, using electronic calipers similar to those in electrophysiologic recording systems.
+* Using the calipers
+** Caliper Mode versus Image Mode
+In *EP Calipers* you can manipulate calipers, or manipulate the image, but not both at the same time.  The app starts in *Caliper Mode* (with a sample image loaded).  You can create, delete, and  move calipers, as well as perform calculations such as mean heart rate and corrected QT interval in this mode.  Selecting *Image* on the toolbar switches to *Image Mode*.  Use this mode to load an image and zoom or scroll around in the image.  Exiting the Image toolbar by selecting *Done* returns to *Caliper Mode*.
+** Loading an image
+Select *Image* on the toolbar to display the *Image* menu.  Touch the *Camera* icon to take a photo of an ECG tracing and load it into the app.  Note that images captured this way are not saved in the Photos collection of the device.  Alternatively, Touch *Select* to chose an image that is already saved on your device.  Select *Done* to return to the main toolbar.
+** Adjusting the image
+Select *Image* and adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the *Adjust* menu to rotate or flip the image.
+** Moving calipers
+Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of vertical calipers) to stretch or shrink the calipers.  Note that you cannot pinch both bars at the same time.
+** Making measurements
+The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units ("points").
+** Adding and deleting calipers
+Select the *+* icon to add new calipers.  Calipers can be horizontal (time measurements) or vertical (amplitude measurements).  Select *Horizontal* or *Vertical* to add the type of caliper you want.  Double-tap a caliper to delete it.
+** Highlighting a caliper
+Single tap a caliper to highlight it.  Its color will change.  Tap another caliper to change the highlight to that caliper.  Only one caliper can be highlighted at a time.  Touch any place where there is not a caliper to remove highlighting.  Tap a highlighted caliper (when not in the middle of a calculation) and it will be deleted. In some cases a caliper will be highlighted automatically (for example to do calibration) if you have not already highlighted one.  If you want to highlight a different caliper, just tap another caliper.   A caliper needs to be highlighted to do calibrations and calculations.
+** Calibration
+Select *Calibration*.  Stretch a highlighted caliper over a known interval (such as 1000 msec for horizontal, or 10 mm for vertical calipers).  Select *Set*.  In the dialog box, make sure the interval matches what you are measuring.  It is best if you enter both the calibration interval and units (e.g. 400 msec, or 1 sec, or 1 mV).  Select *Set* in the dialog box to set the calibration.  Note that horizontal and vertical calibers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
+** Changing calibration
+You can recalibrate at any time.  You can clear calibration by selecting *Clear* in the calibration toolbar.  Note that calibration is maintained if the device is rotated.  Going into *Image Mode* also will maintain calibration as long as the image is not zoomed (scrolling and rotating don't cause calibration to be lost).  If the image is zoomed, calibration is lost.  Units revert back to arbitrary "points" and it will be necessary to calibrate again.
+** Interval/Rate
+Once a time (horizontal) caliber is calibrated, provided you use time units (such as msec or sec) for the calibration, it is possible to toggle between interval measurements (e.g. 600 msec) and heart rate measurements (e.g. 100 bpm) by selecting *Interval/Rate* on iPads (or  *I/R* on iPhones).
+** Mean rate and interval calculation
+Select a calibrated caliper and stretch it over a number of intervals.  Select *meanRate* or *mRate* and enter the number of intervals measured.  A dialog box will show the calculated mean heart rate and interval.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
+** QTc calculation
+Stretch a time caliper over one or more intervals and select *QTc*.  After measuring the interval/rate, measure the QT.  A dialog box will give the calculated QTc using Bazett's formula.
+** Settings
+Preferences such as caliper colors and default calibration interval can be selected in the Settings app of your device under *EP Calipers*.  Note that by the nature of iOS it is necessary to close the *EP Calipers* app before new settings take effect.  As iOS keeps apps running when you switch apps, it is necessary to close the app by double pressing the Home button and then swiping the app away in the app switching screen.
+* Acknowledgements
+- Thanks to Dr. Michael Katz for suggesting the idea.
+- The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers][GitHub]].
+- *EP Calipers* is open source software and is licensed under the [[http://www.apache.org/licenses/LICENSE-2.0.html][Apache
+  License Version 2.0]].  No guarantees are made as to the accuracy of
+  the app, so use at your own risk.
+- For questions, error reporting or suggestions contact
+  [[mailto:mannd@epstudiossoftware.com][EP Studios]].
+- Website: [[http://www.epstudiossoftware.com][epstudiossoftware.com]]
