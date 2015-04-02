@@ -1,7 +1,7 @@
-## Description
-EP Calipers is an Apple iOS application that provides electronic
-calipers for making measurements on images of ECGs or other
-recordings.
+## Description EP Calipers is an Apple iOS application that provides
+electronic calipers for making measurements on images of ECGs or other
+recordings.  Simple calculations such as mean heart rate and corrected
+QT intervals can be performed directly in the app.
 
 EP Calipers for iOS is open source, and licensed under the 
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
