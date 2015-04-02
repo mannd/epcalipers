@@ -9,7 +9,7 @@
 #import "Caliper.h"
 #include <math.h>
 
-#define DELTA 20.0
+#define DELTA 25.0
 
 @implementation Caliper
 
