@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0208A61AC2A8B300FE7EC5 /* Caliper.m */; };
 		8E14235E1AB5F16A00CC15BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E14235D1AB5F16A00CC15BC /* main.m */; };
 		8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423601AB5F16A00CC15BC /* AppDelegate.m */; };
 		8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */; };
@@ -14,8 +15,19 @@
 		8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423681AB5F16A00CC15BC /* Images.xcassets */; };
 		8E14236C1AB5F16A00CC15BC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E14236A1AB5F16A00CC15BC /* LaunchScreen.xib */; };
 		8E1423781AB5F16A00CC15BC /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
-		8E9A33031AB9BBE30037E694 /* lollipop.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A33021AB9BBE30037E694 /* lollipop.jpg */; };
-		8E9A33051AB9C6E20037E694 /* Android-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A33041AB9C6E20037E694 /* Android-icon.png */; };
+		8E559EA71ACC96FC004A6F91 /* epcalipers_help.html in Resources */ = {isa = PBXBuildFile; fileRef = 8E559EA61ACC96FC004A6F91 /* epcalipers_help.html */; };
+		8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E559EA81ACD9262004A6F91 /* Launch Screen.xib */; };
+		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
+		8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */; };
+		8E5A8F761ACC9169000EEA89 /* epcalipers_help.org in Resources */ = {isa = PBXBuildFile; fileRef = 8E5A8F751ACC9169000EEA89 /* epcalipers_help.org */; };
+		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
+		8E9A333C1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */; };
+		8EB3DE361AC5B12A009376AD /* Caliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0208A61AC2A8B300FE7EC5 /* Caliper.m */; };
+		8EB3DE391AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
+		8EB3DE3A1AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
+		8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE3D1AC616C0009376AD /* Settings.m */; };
+		8EB3DE3F1AC616C0009376AD /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE3D1AC616C0009376AD /* Settings.m */; };
+		8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB3DE401AC9A488009376AD /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +41,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8E0208A51AC2A8B300FE7EC5 /* Caliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliper.h; sourceTree = "<group>"; };
+		8E0208A61AC2A8B300FE7EC5 /* Caliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Caliper.m; sourceTree = "<group>"; };
 		8E1423581AB5F16A00CC15BC /* EP Calipers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EP Calipers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E14235C1AB5F16A00CC15BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E14235D1AB5F16A00CC15BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -42,8 +56,23 @@
 		8E1423711AB5F16A00CC15BC /* EP CalipersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EP CalipersTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1423761AB5F16A00CC15BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EP_CalipersTests.m; sourceTree = "<group>"; };
-		8E9A33021AB9BBE30037E694 /* lollipop.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = lollipop.jpg; sourceTree = "<group>"; };
-		8E9A33041AB9C6E20037E694 /* Android-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Android-icon.png"; sourceTree = "<group>"; };
+		8E559EA61ACC96FC004A6F91 /* epcalipers_help.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = epcalipers_help.html; sourceTree = "<group>"; };
+		8E559EA81ACD9262004A6F91 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
+		8E5A8F6F1ACC7A54000EEA89 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		8E5A8F701ACC7A54000EEA89 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DismissSegue.h; sourceTree = "<group>"; };
+		8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissSegue.m; sourceTree = "<group>"; };
+		8E5A8F751ACC9169000EEA89 /* epcalipers_help.org */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = epcalipers_help.org; sourceTree = "<group>"; };
+		8E9A33381AC09DE90037E694 /* CalipersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalipersView.h; sourceTree = "<group>"; };
+		8E9A33391AC09DE90037E694 /* CalipersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalipersView.m; sourceTree = "<group>"; };
+		8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Normal 12_Lead ECG.jpg"; sourceTree = "<group>"; };
+		8EB3DE351AC344CC009376AD /* EPSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSLogging.h; sourceTree = "<group>"; };
+		8EB3DE371AC603A3009376AD /* Calibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calibration.h; sourceTree = "<group>"; };
+		8EB3DE381AC603A3009376AD /* Calibration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calibration.m; sourceTree = "<group>"; };
+		8EB3DE3B1AC604FB009376AD /* Defs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Defs.h; sourceTree = "<group>"; };
+		8EB3DE3C1AC616C0009376AD /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
+		8EB3DE3D1AC616C0009376AD /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
+		8EB3DE401AC9A488009376AD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +96,7 @@
 		8E14234F1AB5F16A00CC15BC = {
 			isa = PBXGroup;
 			children = (
+				8EB3DE401AC9A488009376AD /* Settings.bundle */,
 				8E14235A1AB5F16A00CC15BC /* EP Calipers */,
 				8E1423741AB5F16A00CC15BC /* EP CalipersTests */,
 				8E1423591AB5F16A00CC15BC /* Products */,
@@ -85,16 +115,32 @@
 		8E14235A1AB5F16A00CC15BC /* EP Calipers */ = {
 			isa = PBXGroup;
 			children = (
-				8E9A33041AB9C6E20037E694 /* Android-icon.png */,
+				8E559EA61ACC96FC004A6F91 /* epcalipers_help.html */,
+				8E5A8F751ACC9169000EEA89 /* epcalipers_help.org */,
+				8EB3DE351AC344CC009376AD /* EPSLogging.h */,
+				8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */,
 				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
 				8E1423601AB5F16A00CC15BC /* AppDelegate.m */,
 				8E1423621AB5F16A00CC15BC /* EPSMainViewController.h */,
 				8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */,
 				8E1423651AB5F16A00CC15BC /* Main.storyboard */,
 				8E1423681AB5F16A00CC15BC /* Images.xcassets */,
-				8E9A33021AB9BBE30037E694 /* lollipop.jpg */,
 				8E14236A1AB5F16A00CC15BC /* LaunchScreen.xib */,
+				8E9A33381AC09DE90037E694 /* CalipersView.h */,
+				8E9A33391AC09DE90037E694 /* CalipersView.m */,
+				8E0208A51AC2A8B300FE7EC5 /* Caliper.h */,
+				8E0208A61AC2A8B300FE7EC5 /* Caliper.m */,
+				8EB3DE371AC603A3009376AD /* Calibration.h */,
+				8EB3DE381AC603A3009376AD /* Calibration.m */,
+				8EB3DE3B1AC604FB009376AD /* Defs.h */,
+				8EB3DE3C1AC616C0009376AD /* Settings.h */,
+				8EB3DE3D1AC616C0009376AD /* Settings.m */,
+				8E5A8F6F1ACC7A54000EEA89 /* WebViewController.h */,
+				8E5A8F701ACC7A54000EEA89 /* WebViewController.m */,
 				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
+				8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */,
+				8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */,
+				8E559EA81ACD9262004A6F91 /* Launch Screen.xib */,
 			);
 			path = "EP Calipers";
 			sourceTree = "<group>";
@@ -174,9 +220,11 @@
 				TargetAttributes = {
 					8E1423571AB5F16A00CC15BC = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = W74NPJXYEG;
 					};
 					8E1423701AB5F16A00CC15BC = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = W74NPJXYEG;
 						TestTargetID = 8E1423571AB5F16A00CC15BC;
 					};
 				};
@@ -207,9 +255,12 @@
 			files = (
 				8E1423671AB5F16A00CC15BC /* Main.storyboard in Resources */,
 				8E14236C1AB5F16A00CC15BC /* LaunchScreen.xib in Resources */,
-				8E9A33031AB9BBE30037E694 /* lollipop.jpg in Resources */,
+				8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */,
+				8E559EA71ACC96FC004A6F91 /* epcalipers_help.html in Resources */,
 				8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */,
-				8E9A33051AB9C6E20037E694 /* Android-icon.png in Resources */,
+				8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */,
+				8E9A333C1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg in Resources */,
+				8E5A8F761ACC9169000EEA89 /* epcalipers_help.org in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,8 +279,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */,
+				8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */,
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
+				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
+				8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */,
 				8E14235E1AB5F16A00CC15BC /* main.m in Sources */,
+				8EB3DE391AC603A3009376AD /* Calibration.m in Sources */,
+				8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */,
+				8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +294,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB3DE361AC5B12A009376AD /* Caliper.m in Sources */,
+				8EB3DE3A1AC603A3009376AD /* Calibration.m in Sources */,
+				8EB3DE3F1AC616C0009376AD /* Settings.m in Sources */,
 				8E1423781AB5F16A00CC15BC /* EP_CalipersTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -375,6 +435,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -386,6 +448,7 @@
 				INFOPLIST_FILE = "EP CalipersTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EP Calipers.app/EP Calipers";
 			};
 			name = Debug;
@@ -394,6 +457,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -401,6 +466,7 @@
 				INFOPLIST_FILE = "EP CalipersTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EP Calipers.app/EP Calipers";
 			};
 			name = Release;

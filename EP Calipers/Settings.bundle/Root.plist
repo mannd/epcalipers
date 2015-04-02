@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Hide Start Image</string>
+			<key>Key</key>
+			<string>hideStartImagePreference</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+			<key>DefaultValue</key>
+			<string>1000 msec</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>Key</key>
+			<string>calibrationPreference</string>
+			<key>KeyboardType</key>
+			<string>Alphabet</string>
+			<key>Title</key>
+			<string>Default Calibration</string>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Caliper Color</string>
+			<key>Titles</key>
+			<array>
+				<string>Black</string>
+				<string>Magenta</string>
+				<string>Light Gray</string>
+				<string>Blue</string>
+				<string>Green</string>
+				<string>White</string>
+			</array>
+			<key>Key</key>
+			<string>caliperColorPreference</string>
+			<key>DefaultValue</key>
+			<string>Blue</string>
+			<key>Values</key>
+			<array>
+				<string>Black</string>
+				<string>Magenta</string>
+				<string>Light Gray</string>
+				<string>Blue</string>
+				<string>Green</string>
+				<string>White</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Highlight Color</string>
+			<key>Key</key>
+			<string>highlightColorPreference</string>
+			<key>DefaultValue</key>
+			<string>Red</string>
+			<key>Titles</key>
+			<array>
+				<string>Red</string>
+				<string>Yellow</string>
+				<string>Orange</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>Red</string>
+				<string>Yellow</string>
+				<string>Orange</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Line Width</string>
+			<key>Key</key>
+			<string>lineWidthPreference</string>
+			<key>DefaultValue</key>
+			<string>2</string>
+			<key>Titles</key>
+			<array>
+				<string>1 point</string>
+				<string>2 points</string>
+				<string>3 points</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>1</string>
+				<string>2</string>
+				<string>3</string>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

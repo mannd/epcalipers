@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "Caliper.h"
+#import "Calibration.h"
 
 @interface EP_CalipersTests : XCTestCase
 
@@ -35,6 +37,41 @@
     [self measureBlock:^{
         // Put the code you want to measure the time of here.
     }];
+}
+
+- (void)testBarCoord {
+    Caliper *c = [[Caliper alloc] init];
+    XCTAssert(c.bar1Position == 0);
+    XCTAssert(c.bar2Position == 0);
+    XCTAssert(c.crossBarPosition == 100.0);
+    CGPoint p = CGPointMake(100, 50);
+    XCTAssert([c barCoord:p] == 100);
+    c.direction = Vertical;
+    XCTAssert([c barCoord:p] == 50);
+}
+
+- (void)testCanDisplayRate {
+    Calibration *cal = [[Calibration alloc] init];
+    cal.units = @"msec";
+    XCTAssert([cal canDisplayRate]);
+    cal.units = @"milliseconds";
+    XCTAssert([cal canDisplayRate]);
+    cal.units = @"sec";
+    XCTAssert([cal canDisplayRate]);
+    cal.units = @"secs";
+    XCTAssert([cal canDisplayRate]);
+    cal.units = @"Msec";
+    XCTAssert([cal canDisplayRate]);
+    cal.units = @"ms";
+    XCTAssert([cal canDisplayRate]);
+    cal.units = @"mm";
+    XCTAssert(![cal canDisplayRate]);
+    cal.units = @"mSecs";
+    XCTAssert([cal canDisplayRate]);
+    cal.direction = Vertical;
+    XCTAssert(![cal canDisplayRate]);
+
+    
 }
 
 @end
