@@ -178,8 +178,13 @@
         [self selectMainToolbar];
         return;
     }
+    Caliper *singleHorizontalCaliper = [self getLoneTimeCaliper];
+    if (singleHorizontalCaliper != nil) {
+        [self.calipersView selectCaliper:singleHorizontalCaliper];
+        [self unselectCalipersExcept:singleHorizontalCaliper];
+    }
     if ([self.calipersView noCaliperIsSelected]) {
-        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
         [noSelectionAlert show];
         return;
@@ -202,9 +207,19 @@
 }
 
 - (void)calculateQTc {
-    self.rrIntervalForQTc = 0.0;
-    [self.toolbar setItems:self.qtcStep1MenuItems];
-    self.calipersView.locked = YES;
+    Caliper *singleHorizontalCaliper = [self getLoneTimeCaliper];
+    if (singleHorizontalCaliper != nil) {
+        [self.calipersView selectCaliper:singleHorizontalCaliper];
+        [self unselectCalipersExcept:singleHorizontalCaliper];
+    }
+    if ([self noTimeCaliperSelected]) {
+        [self showNoTimeCaliperSelectedAlertView];
+    }
+    else {
+        self.rrIntervalForQTc = 0.0;
+        [self.toolbar setItems:self.qtcStep1MenuItems];
+        self.calipersView.locked = YES;
+    }
 }
 
 - (void)qtcMeasureRR {
@@ -341,6 +356,36 @@
     UIAlertView *noCalipersAlert = [[UIAlertView alloc] initWithTitle:@"No Calipers To Use" message:@"Add one or more calipers first before proceeding." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     noCalipersAlert.alertViewStyle = UIAlertViewStyleDefault;
     [noCalipersAlert show];
+}
+
+- (Caliper *)getLoneTimeCaliper {
+    Caliper *c = nil;
+    int n = 0;
+    if (self.calipersView.calipers.count > 0) {
+        for (Caliper *caliper in self.calipersView.calipers) {
+            if (caliper.direction == Horizontal) {
+                c = caliper;
+                n++;
+            }
+        }
+    }
+    if (n == 1) {
+        return c;
+    }
+    else {
+        return nil;
+    }
+}
+
+- (void)unselectCalipersExcept:(Caliper *)c {
+    // if only one caliper, no others can be selected
+    if (self.calipersView.calipers.count > 1) {
+        for (Caliper *caliper in self.calipersView.calipers) {
+            if (caliper != c) {
+                [self.calipersView unselectCaliper:caliper];
+            }
+        }
+    }
 }
 
 // Select toolbars
