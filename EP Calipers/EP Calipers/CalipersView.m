@@ -64,14 +64,17 @@
 // unselecting the caliper.
 - (void)singleTap:(UITapGestureRecognizer *)t {
     CGPoint location = [t locationInView:self];
+    BOOL selectionMade = NO;
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
-        if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
-            if (((Caliper *)self.calipers[i]).selected && !self.locked) {
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:location] && !selectionMade) {
+            if (((Caliper *)self.calipers[i]).selected && !self.locked ) {
                 [self.calipers removeObject:self.calipers[i]];
                 [self setNeedsDisplay];
+                return;
             }
             else  {
                 [self selectCaliper:(Caliper *)self.calipers[i]];
+                selectionMade = YES;
             }
         }
         else {
