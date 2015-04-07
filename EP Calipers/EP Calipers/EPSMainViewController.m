@@ -27,6 +27,9 @@
 #define MEAN_RR_ALERTVIEW 30
 #define MEAN_RR_FOR_QTC_ALERTVIEW 43
 
+#define CALIPERS_VIEW_TITLE @"Calipers"
+#define IMAGE_VIEW_TITLE @"Image"
+
 @interface EPSMainViewController ()
 
 @end
@@ -71,17 +74,42 @@
     self.rrIntervalForQTc = 0.0;
     
     [self.imageView setHidden:self.settings.hideStartImage];
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    [btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Switch" style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
+    [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
+    self.isCalipersView = YES;
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+
+
 
  }
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
+    [self.navigationController setToolbarHidden:NO];
 
 }
 
-- (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar{
-    return UIBarPositionTopAttached;
+- (void)switchView {
+    self.isCalipersView = !self.isCalipersView;
+    self.navigationItem.title = (self.isCalipersView ? CALIPERS_VIEW_TITLE : IMAGE_VIEW_TITLE);
+    if (self.isCalipersView) {
+        [self selectMainToolbar];
+    }
+    else {
+        [self selectImageToolbar];
+    }
+    // fix menus
+    
 }
+
+//- (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar{
+//    return UIBarPositionTopAttached;
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -95,10 +123,8 @@
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)   ];
-    UIBarButtonItem *imageButton = [[UIBarButtonItem alloc] initWithTitle:@"Image" style:UIBarButtonItemStylePlain target:self action:@selector(selectImageToolbar)];
-    UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? HELP_IPAD : HELP_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(showHelp)];
-    
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, imageButton, helpButton, nil];
+   
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, nil];
 }
 
 - (void)createImageToolbar {
@@ -239,7 +265,7 @@
         [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"3"];
         [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
         
-        [self.toolbar setItems:self.qtcStep2MenuItems];
+        self.toolbarItems = self.qtcStep2MenuItems;
     }
 }
 
@@ -303,7 +329,7 @@
         [self showNoCalipersAlert];
     }
     else {
-        [self.toolbar setItems:self.calibrateMenuItems];
+        self.toolbarItems = self.calibrateMenuItems;
         [self.calipersView selectCaliperIfNoneSelected];
         self.calipersView.locked = YES;
     }
@@ -393,12 +419,12 @@
 
 // Select toolbars
 - (void)selectImageToolbar {
-    [self.toolbar setItems:self.photoMenuItems];
+    self.toolbarItems = self.photoMenuItems;
     [self.calipersView setUserInteractionEnabled:NO];
 }
 
 - (void)selectMainToolbar {
-    [self.toolbar setItems:self.mainMenuItems];
+    self.toolbarItems  = self.mainMenuItems;
     [self.calipersView setUserInteractionEnabled:YES];
     BOOL enable = [self.horizontalCalibration canDisplayRate];
     [self.toggleIntervalRateButton setEnabled:enable];
@@ -408,15 +434,15 @@
 }
 
 - (void)selectAddCalipersToolbar {
-    [self.toolbar setItems:self.addCalipersMenuItems];
+    self.toolbarItems = self.addCalipersMenuItems;
 }
 
 - (void)selectAdjustImageToolbar {
-    [self.toolbar setItems:self.adjustImageMenuItems];
+    self.toolbarItems = self.adjustImageMenuItems;
 }
 
 - (void)selectCalibrateToolbar {
-    [self.toolbar setItems:self.calibrateMenuItems];
+    self.toolbarItems = self.calibrateMenuItems;
 }
 
 - (void)takePhoto {

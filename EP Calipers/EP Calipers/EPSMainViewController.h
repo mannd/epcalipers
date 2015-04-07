@@ -39,5 +39,7 @@
 @property BOOL isIpad;
 @property double rrIntervalForQTc;
 
+@property BOOL isCalipersView;
+
 @end
 
