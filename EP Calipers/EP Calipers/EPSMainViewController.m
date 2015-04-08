@@ -10,6 +10,7 @@
 #import "Caliper.h"
 #import "Settings.h"
 #import "EPSLogging.h"
+#include "Defs.h"
 
 #define ANIMATION_DURATION 0.5
 
@@ -54,9 +55,7 @@
     [self createQTcStep2Toolbar];
     
     [self selectMainToolbar];
-    [self.navigationController setToolbarHidden:NO];
 
- 
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 0.5;
     self.scrollView.maximumZoomScale = 5.0;
@@ -68,6 +67,8 @@
 
     self.verticalCalibration = [[Calibration alloc] init];
     self.verticalCalibration.direction = Vertical;
+    
+    self.horizontalCalibration.orientation = self.verticalCalibration.orientation = [self viewOrientation];
     
     [self.calipersView setUserInteractionEnabled:YES];
     
@@ -90,9 +91,12 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
+    [self.navigationController setToolbarHidden:NO];
 
-    self.horizontalCalibration.orientation = ([self isPortraitMode] ? Portrait : Vertical);
-    self.verticalCalibration.orientation = ([self isPortraitMode] ? Portrait : Vertical);
+}
+
+- (InterfaceOrientation)viewOrientation {
+    return ([self isPortraitMode] ? Portrait : Landscape);
 }
 
 - (void)switchView {
@@ -104,13 +108,7 @@
     else {
         [self selectImageToolbar];
     }
-    // fix menus
-    
 }
-
-//- (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar{
-//    return UIBarPositionTopAttached;
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -492,8 +490,12 @@
 }
 
 - (void)resetCalibration {
-    [self.horizontalCalibration reset];
-    [self.verticalCalibration reset];
+    // don't bother if no calibration present
+    if ([self.horizontalCalibration calibratedEitherMode] || [self.verticalCalibration calibratedEitherMode]) {
+        [self flashCalipers];
+        [self.horizontalCalibration reset];
+        [self.verticalCalibration reset];
+    }
 }
 
 // Adjust image
@@ -525,6 +527,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (IBAction)resetImage:(id)sender {
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         self.imageView.transform = CGAffineTransformIdentity;
+    }];
+}
+
+- (void)flashCalipers {
+    [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionAutoreverse animations:^ {
+        self.calipersView.alpha = 0.2f;
+    } completion:^(BOOL finished) {
+        self.calipersView.alpha = 1.0f;
     }];
 }
 
@@ -576,7 +586,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                 if (c == nil || c.valueInPoints <= 0) {
                     return;
                 }
-                double ratio = self.calipersView.frame.size.height/self.calipersView.frame.size.width;
                 if (c.direction == Horizontal) {
                     self.horizontalCalibration.calibrationString = rawText;
                     self.horizontalCalibration.units = trimmedUnits;
@@ -592,7 +601,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                         self.horizontalCalibration.multiplierForLandscape = value/c.valueInPoints;
                         self.horizontalCalibration.calibratedLandscapeMode = YES;
                     }
-                    self.horizontalCalibration.calibratedOrientationRatio = ratio;
                 }
                 else {
                     self.verticalCalibration.calibrationString = rawText;
@@ -606,7 +614,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                         self.verticalCalibration.calibratedLandscapeMode = YES;
                     }
                     
-                    self.verticalCalibration.calibratedOrientationRatio  = ratio;
                 }
                 [self.calipersView setNeedsDisplay];
                 [self selectMainToolbar];            
@@ -624,9 +631,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             }
             double intervalResult = fabsf(c.intervalResult);
             double meanRR = intervalResult / divisor;
-            EPSLog(@"Average RR = %.4g %@", meanRR, [c.calibration rawUnits]);
             double meanRate = [c rateResult:meanRR];
-            EPSLog(@"Average rate = %.4g bpm", meanRate);
             if (alertView.tag == MEAN_RR_ALERTVIEW) {
                 UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
@@ -657,25 +662,17 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     return self.imageContainerView;
 }
 
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     [self clearCalibration];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-//    [self clearCalibration];
-//    double horizontalRatio = 984/916.0;  // self.view.frame.size.width/size.width;
-//    double verticalRatio = self.view.frame.size.height/size.height;
-//    self.horizontalCalibration.currentOrientationRatio = horizontalRatio;
-//    self.verticalCalibration.currentOrientationRatio = verticalRatio;
-//    [self.calipersView shiftCalipers:horizontalRatio forNewHeight:size.height forNewWidth:size.width];
-//
-    self.horizontalCalibration.orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Vertical);
-    self.verticalCalibration.orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Vertical);
-
+    InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
+    self.horizontalCalibration.orientation = orientation;
+    self.verticalCalibration.orientation = orientation;
+    [self.calipersView setNeedsDisplay];
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    
-    
 }
 
 

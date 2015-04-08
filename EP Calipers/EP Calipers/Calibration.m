@@ -11,33 +11,26 @@
 
 @implementation Calibration
 
-@synthesize multiplierForPortrait=_multiplierForPortrait;
 @synthesize multiplier=_multiplier;
 @synthesize units=_units;
-
 
 - (instancetype)initWithDirection:(CaliperDirection)direction {
     self = [super init];
     if (self) {
         [self reset];
         self.direction = direction;
+        self.orientation = Portrait;    // default, but don't clear with reset
     }
     return self;
 }
 
 - (instancetype)init {
     self = [self initWithDirection:Horizontal];
-
     return self;
 }
 
 + (BOOL)isPortraitOrientationForSize:(CGSize)size {
     return size.height > size.width;
-}
-
-- (BOOL)isOriginalOrientation:(CGSize)size {
-    // TODO make this return true if orientation unchanged from that used for calibration
-    return YES;
 }
 
 - (NSString *)units {
@@ -55,22 +48,6 @@
     return _units;
 }
 
-- (double)multiplierForPortrait {
-    double multiplier = 1.0;
-//    if (!self.calibratedProtraitMode || self.currentOrientationRatio == self.calibratedOrientationRatio) {
-//        multiplier = _multiplierForPortrait;
-//    }
-//    else {
-//        multiplier = _multiplierForPortrait * self.currentOrientationRatio;
-//    }
-    multiplier = _multiplierForPortrait;
-    return multiplier;
-}
-
-- (void)setMultiplierForPortrait:(double)multiplier {
-    _multiplierForPortrait = multiplier;
-}
-
 - (double)multiplier {
     if (self.orientation == Portrait) {
         return self.multiplierForPortrait;
@@ -86,11 +63,8 @@
     self.units = @"points";
     self.multiplierForPortrait = 1.0;
     self.multiplierForLandscape = 1.0;
-    self.currentOrientationRatio = 1.0;
-    self.calibratedOrientationRatio = 1.0;
     self.displayRate = NO;
-    self.calibratedProtraitMode = NO;
-    self.orientation = Portrait;
+    //self.orientation = Portrait;
 }
 
 - (BOOL)canDisplayRate {
@@ -115,6 +89,10 @@
     }
     NSString *units = [_units uppercaseString];
     return [units containsString:@"MSEC"] || [units isEqualToString:@"MS"] || [units containsString:@"MILLIS"];
+}
+
+- (BOOL)calibratedEitherMode {
+    return self.calibratedLandscapeMode || self.calibratedProtraitMode;
 }
 
 

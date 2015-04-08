@@ -41,9 +41,4 @@
 
 - (float)barCoord:(CGPoint)p;
 
-
-
-
-
-
 @end

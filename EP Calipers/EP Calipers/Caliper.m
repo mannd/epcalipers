@@ -9,9 +9,12 @@
 #import "Caliper.h"
 #include <math.h>
 
-#define DELTA 25.0
+#define DELTA 20.0
 
 @implementation Caliper
+{
+    NSInteger tmpLineWidth; // for "shaking" caliper
+}
 
 - (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position
                  crossBarPosition:(float)crossBarPosition {

@@ -24,23 +24,16 @@
         self.clearsContextBeforeDrawing = YES;
         self.toolbar = ((EPSMainViewController *)self.superview).toolbar;
         self.locked = NO;
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(deviceOrientationDidChangeNotification:)
-         name:UIDeviceOrientationDidChangeNotification
-         object:nil];
+//        [[NSNotificationCenter defaultCenter]
+//         addObserver:self
+//         selector:@selector(deviceOrientationDidChangeNotification:)
+//         name:UIDeviceOrientationDidChangeNotification
+//         object:nil];
    }
     return self;
 }
 
-- (void)deviceOrientationDidChangeNotification:(NSNotification*)note {
-    [self setNeedsDisplay];
-}
-
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect {
-    // Drawing code
     CGContextRef con = UIGraphicsGetCurrentContext();
     for (Caliper *caliper in self.calipers) {
         [caliper drawWithContext:con inRect:rect];
@@ -168,40 +161,5 @@
     }
     return c;
 }
-
-// Keeps calipers measuring same interval (though can move around with rotation).
-// Vertical calipers tend to go to screen edges.
-- (void)shiftCalipers:(double)ratio forNewHeight:(double)height forNewWidth:(double)width {
-    for (Caliper *c in self.calipers) {
-        if (c != nil) {
-            double compensation = ratio;
-            c.bar1Position *= compensation;
-            c.bar2Position *= compensation;
-//            if (c.direction == Vertical) {
-//                [self moveCaliperTowardsCenter:c forCenter:(double)height/2.0];
-//            }
-//            else {
-//                [self moveCaliperTowardsCenter:c forCenter:(double)width/2.0];
-//            }
-        }
-    }
-}
-
-- (void)moveCaliperTowardsCenter:(Caliper *)caliper forCenter:(double)center {
-    // caliper straddles middle, leave it be
-    if (caliper.bar1Position < center && caliper.bar2Position > center) {
-        return;
-    }
-    if (caliper.bar1Position > center) {
-        double delta = caliper.bar1Position - center;
-        caliper.bar1Position -= delta;
-        caliper.bar2Position -= delta;
-    } else if (caliper.bar2Position < center) {
-        double delta = center - caliper.bar2Position;
-        caliper.bar1Position += delta;
-        caliper.bar2Position += delta;
-    }
-}
-
 
 @end
