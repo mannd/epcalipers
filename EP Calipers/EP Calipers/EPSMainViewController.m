@@ -27,8 +27,8 @@
 #define MEAN_RR_ALERTVIEW 30
 #define MEAN_RR_FOR_QTC_ALERTVIEW 43
 
-#define CALIPERS_VIEW_TITLE @"Calipers"
-#define IMAGE_VIEW_TITLE @"Image"
+#define CALIPERS_VIEW_TITLE @"EP Calipers"
+#define IMAGE_VIEW_TITLE @"Image Mode"
 
 @interface EPSMainViewController ()
 
@@ -54,11 +54,14 @@
     [self createQTcStep2Toolbar];
     
     [self selectMainToolbar];
+    [self.navigationController setToolbarHidden:NO];
+
  
     self.scrollView.delegate = self;
-    self.scrollView.minimumZoomScale = 1.0;
-    self.scrollView.maximumZoomScale = 6.0;
+    self.scrollView.minimumZoomScale = 0.5;
+    self.scrollView.maximumZoomScale = 5.0;
     [self.scrollView setZoomScale:1.0];
+
     
     self.horizontalCalibration = [[Calibration alloc] init];
     self.horizontalCalibration.direction = Horizontal;
@@ -78,20 +81,18 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     [btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Switch" style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Switch Mode" style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.isCalipersView = YES;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
-
-
-
  }
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
-    [self.navigationController setToolbarHidden:NO];
 
+    self.horizontalCalibration.orientation = ([self isPortraitMode] ? Portrait : Vertical);
+    self.verticalCalibration.orientation = ([self isPortraitMode] ? Portrait : Vertical);
 }
 
 - (void)switchView {
@@ -131,9 +132,8 @@
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
     UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
     UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
-    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
-    
-    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, backToMainMenuButton, nil];
+
+    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
@@ -156,7 +156,7 @@
 - (void)createAddCalipersToolbar {
     UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Horizontal" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
     UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Vertical" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, cancelButton, nil];
 }
@@ -246,7 +246,7 @@
     }
     else {
         self.rrIntervalForQTc = 0.0;
-        [self.toolbar setItems:self.qtcStep1MenuItems];
+        self.toolbarItems = self.qtcStep1MenuItems;
         self.calipersView.locked = YES;
     }
 }
@@ -544,6 +544,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }];
 }
 
+- (BOOL)isPortraitMode {
+    return self.view.frame.size.height > self.view.frame.size.width;
+}
+
 #pragma mark - Delegate Methods
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -572,23 +576,37 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                 if (c == nil || c.valueInPoints <= 0) {
                     return;
                 }
-                double ratio = self.view.frame.size.height/self.view.frame.size.width;
+                double ratio = self.calipersView.frame.size.height/self.calipersView.frame.size.width;
                 if (c.direction == Horizontal) {
                     self.horizontalCalibration.calibrationString = rawText;
                     self.horizontalCalibration.units = trimmedUnits;
-                    self.horizontalCalibration.multiplier = value/c.valueInPoints;
                     if (!self.horizontalCalibration.canDisplayRate) {
                         self.horizontalCalibration.displayRate = NO;
                     }
+                    // separate calibration for portrait and landscape modes
+                    if ([self isPortraitMode]) {
+                        self.horizontalCalibration.multiplierForPortrait = value/c.valueInPoints;
+                        self.horizontalCalibration.calibratedProtraitMode = YES;
+                    }
+                    else {
+                        self.horizontalCalibration.multiplierForLandscape = value/c.valueInPoints;
+                        self.horizontalCalibration.calibratedLandscapeMode = YES;
+                    }
                     self.horizontalCalibration.calibratedOrientationRatio = ratio;
-                    self.horizontalCalibration.calibrated = YES;
                 }
                 else {
                     self.verticalCalibration.calibrationString = rawText;
                     self.verticalCalibration.units = trimmedUnits;
-                    self.verticalCalibration.multiplier = value/c.valueInPoints;
+                    if ([self isPortraitMode]) {
+                        self.verticalCalibration.multiplierForPortrait = value/c.valueInPoints;
+                        self.verticalCalibration.calibratedProtraitMode = YES;
+                    }
+                    else {
+                        self.verticalCalibration.multiplierForLandscape = value/c.valueInPoints;
+                        self.verticalCalibration.calibratedLandscapeMode = YES;
+                    }
+                    
                     self.verticalCalibration.calibratedOrientationRatio  = ratio;
-                    self.verticalCalibration.calibrated = YES;
                 }
                 [self.calipersView setNeedsDisplay];
                 [self selectMainToolbar];            
@@ -644,10 +662,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    double ratio = size.height/size.width;
-    self.horizontalCalibration.currentOrientationRatio = ratio;
-    self.verticalCalibration.currentOrientationRatio = ratio;
-    [self.calipersView shiftCalipers:ratio forNewHeight:size.height];
+//    [self clearCalibration];
+//    double horizontalRatio = 984/916.0;  // self.view.frame.size.width/size.width;
+//    double verticalRatio = self.view.frame.size.height/size.height;
+//    self.horizontalCalibration.currentOrientationRatio = horizontalRatio;
+//    self.verticalCalibration.currentOrientationRatio = verticalRatio;
+//    [self.calipersView shiftCalipers:horizontalRatio forNewHeight:size.height forNewWidth:size.width];
+//
+    self.horizontalCalibration.orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Vertical);
+    self.verticalCalibration.orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Vertical);
+
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     

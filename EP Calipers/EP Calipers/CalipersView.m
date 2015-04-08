@@ -171,15 +171,18 @@
 
 // Keeps calipers measuring same interval (though can move around with rotation).
 // Vertical calipers tend to go to screen edges.
-- (void)shiftCalipers:(double)ratio forNewHeight:(double)height {
+- (void)shiftCalipers:(double)ratio forNewHeight:(double)height forNewWidth:(double)width {
     for (Caliper *c in self.calipers) {
         if (c != nil) {
-            double compensation = 1 / ratio;
+            double compensation = ratio;
             c.bar1Position *= compensation;
             c.bar2Position *= compensation;
-            if (c.direction == Vertical) {
-                [self moveCaliperTowardsCenter:c forCenter:(double)height/2.0];
-            }
+//            if (c.direction == Vertical) {
+//                [self moveCaliperTowardsCenter:c forCenter:(double)height/2.0];
+//            }
+//            else {
+//                [self moveCaliperTowardsCenter:c forCenter:(double)width/2.0];
+//            }
         }
     }
 }

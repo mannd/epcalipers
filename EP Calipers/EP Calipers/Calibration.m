@@ -11,6 +11,7 @@
 
 @implementation Calibration
 
+@synthesize multiplierForPortrait=_multiplierForPortrait;
 @synthesize multiplier=_multiplier;
 @synthesize units=_units;
 
@@ -30,48 +31,66 @@
     return self;
 }
 
++ (BOOL)isPortraitOrientationForSize:(CGSize)size {
+    return size.height > size.width;
+}
+
+- (BOOL)isOriginalOrientation:(CGSize)size {
+    // TODO make this return true if orientation unchanged from that used for calibration
+    return YES;
+}
+
 - (NSString *)units {
     if (self.displayRate)
         return @"bpm";
+    else if ((self.orientation == Portrait && self.calibratedProtraitMode) ||
+        (self.orientation == Landscape && self.calibratedLandscapeMode)) {
+            return _units;
+        }
     else
-        return _units;
+        return @"points";
 }
 
 - (NSString *)rawUnits {
     return _units;
 }
 
-- (double)multiplier {
+- (double)multiplierForPortrait {
     double multiplier = 1.0;
-    if (!self.calibrated || self.currentOrientationRatio == self.calibratedOrientationRatio) {
-        multiplier = _multiplier;
-    }
-    else {
-        multiplier = _multiplier * self.currentOrientationRatio;
-    }
-//    if (self.displayRate && self.canDisplayRate) {
-//        if (self.unitsAreMsec) {
-//            multiplier = multiplier / 60000.0;
-//        }
-//        if (self.unitsAreSeconds) {
-//            multiplier = 60.0 / multiplier;
-//        }
+//    if (!self.calibratedProtraitMode || self.currentOrientationRatio == self.calibratedOrientationRatio) {
+//        multiplier = _multiplierForPortrait;
 //    }
+//    else {
+//        multiplier = _multiplierForPortrait * self.currentOrientationRatio;
+//    }
+    multiplier = _multiplierForPortrait;
     return multiplier;
 }
 
-- (void)setMultiplier:(double)multiplier {
-    _multiplier = multiplier;
+- (void)setMultiplierForPortrait:(double)multiplier {
+    _multiplierForPortrait = multiplier;
+}
+
+- (double)multiplier {
+    if (self.orientation == Portrait) {
+        return self.multiplierForPortrait;
+    }
+    else {
+        return self.multiplierForLandscape;
+    }
 }
 
 - (void)reset {
-    self.calibrated = NO;
+    self.calibratedProtraitMode = NO;
+    self.calibratedLandscapeMode = NO;
     self.units = @"points";
-    self.multiplier = 1.0;
+    self.multiplierForPortrait = 1.0;
+    self.multiplierForLandscape = 1.0;
     self.currentOrientationRatio = 1.0;
     self.calibratedOrientationRatio = 1.0;
     self.displayRate = NO;
-    self.calibrated = NO; 
+    self.calibratedProtraitMode = NO;
+    self.orientation = Portrait;
 }
 
 - (BOOL)canDisplayRate {

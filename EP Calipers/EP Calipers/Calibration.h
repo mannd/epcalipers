@@ -12,9 +12,12 @@
 @interface Calibration : NSObject
 #import "Defs.h"
 
-@property BOOL calibrated;
+@property BOOL calibratedProtraitMode;
+@property BOOL calibratedLandscapeMode;
 @property CaliperDirection direction;
-@property double multiplier;
+@property double multiplierForPortrait;
+@property double multiplierForLandscape;
+@property (readonly) double multiplier;
 @property (strong, nonatomic) NSString *units;
 @property (strong, nonatomic) NSString *calibrationString;
 @property float currentOrientationRatio;
@@ -24,10 +27,15 @@
 @property (readonly) BOOL unitsAreMsec;
 @property BOOL displayRate;
 @property (strong, nonatomic) NSString *rawUnits;
+@property InterfaceOrientation orientation;
 
 - (instancetype)initWithDirection:(CaliperDirection)direction;
 - (instancetype)init;
 - (void)reset;
+
++ (BOOL)isPortraitOrientationForSize:(CGSize)size;
+- (BOOL)isOriginalOrientation:(CGSize)size;
+
 
 
 
