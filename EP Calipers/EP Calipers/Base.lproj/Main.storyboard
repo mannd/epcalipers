@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6xA-Uv-Lhv">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="qqU-HB-H7V">
+            <objects>
+                <navigationController id="6xA-Uv-Lhv" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vUZ-Ww-Lje">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="30S-wT-10h"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9y6-dF-T0W" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-436" y="28"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -18,20 +34,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx">
-                                <rect key="frame" x="16" y="20" width="568" height="536"/>
+                                <rect key="frame" x="16" y="20" width="568" height="580"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c">
-                                        <rect key="frame" x="0.0" y="0.0" width="568" height="536"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="568" height="580"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Normal 12_Lead ECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
-                                                <rect key="frame" x="0.0" y="0.0" width="568" height="536"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="568" height="580"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="H9Q-uG-yq7" secondAttribute="bottom" id="DpY-xy-zGg"/>
                                             <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" id="Hr7-Uj-Un9"/>
                                             <constraint firstItem="H9Q-uG-yq7" firstAttribute="top" secondItem="blB-p5-m1c" secondAttribute="top" id="RdC-uQ-27Z"/>
                                             <constraint firstItem="H9Q-uG-yq7" firstAttribute="leading" secondItem="blB-p5-m1c" secondAttribute="leading" id="o5l-yi-fn0"/>
+                                            <constraint firstAttribute="centerY" secondItem="H9Q-uG-yq7" secondAttribute="centerY" id="oLv-Pb-WhB"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -45,44 +61,33 @@
                                 </constraints>
                             </scrollView>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView">
-                                <rect key="frame" x="16" y="20" width="568" height="536"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="16" y="20" width="568" height="580"/>
                             </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4de-bd-RXW">
-                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="ZK8-rJ-AMI"/>
-                                </constraints>
-                                <items/>
-                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4de-bd-RXW" secondAttribute="bottom" id="SH7-g4-78Z"/>
+                            <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="9AP-Ra-sMs"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D98-VW-HwH" secondAttribute="bottom" id="B1Q-FQ-EcS"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="W4Y-nF-S1C"/>
-                            <constraint firstItem="4de-bd-RXW" firstAttribute="top" secondItem="D98-VW-HwH" secondAttribute="bottom" id="aTt-Ou-03d"/>
                             <constraint firstItem="D98-VW-HwH" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="eN7-OW-4Se"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="hMI-tG-xPa"/>
-                            <constraint firstItem="4de-bd-RXW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-16" id="jXA-bo-V4Y"/>
                             <constraint firstItem="D98-VW-HwH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="niK-rv-kxE"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4de-bd-RXW" secondAttribute="trailing" constant="-16" id="psb-YZ-hfo"/>
-                            <constraint firstItem="4de-bd-RXW" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="bottom" id="sdf-1O-CVh"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="bottom" id="ui7-MR-on6"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="y4s-ff-zCZ"/>
-                            <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="yjn-oM-UKM"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="zAQ-bd-wcX"/>
                     <connections>
                         <outlet property="calipersView" destination="D98-VW-HwH" id="EQE-il-SPF"/>
                         <outlet property="imageContainerView" destination="blB-p5-m1c" id="pps-DN-j7O"/>
                         <outlet property="imageView" destination="H9Q-uG-yq7" id="P5j-pJ-mkb"/>
                         <outlet property="scrollView" destination="X5X-Yr-OYx" id="H47-qu-pna"/>
-                        <outlet property="toolbar" destination="4de-bd-RXW" id="08d-yN-Yua"/>
                         <segue destination="F3l-Jg-V2u" kind="show" identifier="WebViewSegue" id="BOZ-jC-arD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="241" y="11"/>
+            <point key="canvasLocation" x="217" y="28"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="MQ0-kA-Odt">
@@ -97,39 +102,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-Iu-ikC">
-                                <rect key="frame" x="16" y="20" width="568" height="536"/>
+                                <rect key="frame" x="16" y="20" width="568" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </webView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sQ3-Sm-O5W">
-                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem title="Item" id="YTd-SW-2za"/>
-                                </items>
-                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="sQ3-Sm-O5W" secondAttribute="trailing" constant="-16" id="2TU-0E-8zu"/>
+                            <constraint firstItem="dhT-Iu-ikC" firstAttribute="top" secondItem="oyL-zp-Gbv" secondAttribute="bottom" id="Cg8-WD-7HJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dhT-Iu-ikC" secondAttribute="trailing" id="MRz-og-kWW"/>
-                            <constraint firstItem="OfB-zJ-Qqw" firstAttribute="top" secondItem="sQ3-Sm-O5W" secondAttribute="bottom" id="Yoq-mk-IBz"/>
-                            <constraint firstItem="sQ3-Sm-O5W" firstAttribute="top" secondItem="dhT-Iu-ikC" secondAttribute="bottom" id="j6x-nR-aeG"/>
-                            <constraint firstItem="sQ3-Sm-O5W" firstAttribute="leading" secondItem="GR2-WM-Ksu" secondAttribute="leadingMargin" constant="-16" id="l9D-76-13V"/>
-                            <constraint firstItem="dhT-Iu-ikC" firstAttribute="top" secondItem="oyL-zp-Gbv" secondAttribute="bottom" id="w8s-5I-FRR"/>
+                            <constraint firstItem="OfB-zJ-Qqw" firstAttribute="top" secondItem="dhT-Iu-ikC" secondAttribute="bottom" id="e4R-Xx-4W6"/>
                             <constraint firstItem="dhT-Iu-ikC" firstAttribute="leading" secondItem="GR2-WM-Ksu" secondAttribute="leadingMargin" id="yyw-8F-6Il"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="toolbar" destination="sQ3-Sm-O5W" id="xAZ-fr-j0A"/>
                         <outlet property="webView" destination="dhT-Iu-ikC" id="Aad-r6-6Kh"/>
                         <segue destination="BYZ-38-t0r" kind="custom" identifier="DismissWebViewSegue" customClass="DismissSegue" id="Xdy-EN-bbI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hiY-F4-0ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="891" y="11"/>
+            <point key="canvasLocation" x="878" y="28"/>
         </scene>
     </scenes>
     <resources>
         <image name="Normal 12_Lead ECG.jpg" width="1411" height="676"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Xdy-EN-bbI"/>
+    </inferredMetricsTieBreakers>
 </document>

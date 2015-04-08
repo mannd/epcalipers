@@ -10,6 +10,7 @@
 #import "Caliper.h"
 #import "Settings.h"
 #import "EPSLogging.h"
+#include "Defs.h"
 
 #define ANIMATION_DURATION 0.5
 
@@ -26,6 +27,9 @@
 #define CALIBRATION_ALERTVIEW 20
 #define MEAN_RR_ALERTVIEW 30
 #define MEAN_RR_FOR_QTC_ALERTVIEW 43
+
+#define CALIPERS_VIEW_TITLE @"EP Calipers"
+#define IMAGE_VIEW_TITLE @"Image Mode"
 
 @interface EPSMainViewController ()
 
@@ -51,17 +55,20 @@
     [self createQTcStep2Toolbar];
     
     [self selectMainToolbar];
- 
+
     self.scrollView.delegate = self;
-    self.scrollView.minimumZoomScale = 1.0;
-    self.scrollView.maximumZoomScale = 6.0;
+    self.scrollView.minimumZoomScale = 0.5;
+    self.scrollView.maximumZoomScale = 5.0;
     [self.scrollView setZoomScale:1.0];
+
     
     self.horizontalCalibration = [[Calibration alloc] init];
     self.horizontalCalibration.direction = Horizontal;
 
     self.verticalCalibration = [[Calibration alloc] init];
     self.verticalCalibration.direction = Vertical;
+    
+    self.horizontalCalibration.orientation = self.verticalCalibration.orientation = [self viewOrientation];
     
     [self.calipersView setUserInteractionEnabled:YES];
     
@@ -71,16 +78,36 @@
     self.rrIntervalForQTc = 0.0;
     
     [self.imageView setHidden:self.settings.hideStartImage];
-
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    [btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Switch Mode" style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
+    [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
+    self.isCalipersView = YES;
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
  }
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
+    [self.navigationController setToolbarHidden:NO];
 
 }
 
-- (UIBarPosition)positionForBar:(id <UIBarPositioning>)bar{
-    return UIBarPositionTopAttached;
+- (InterfaceOrientation)viewOrientation {
+    return ([self isPortraitMode] ? Portrait : Landscape);
+}
+
+- (void)switchView {
+    self.isCalipersView = !self.isCalipersView;
+    self.navigationItem.title = (self.isCalipersView ? CALIPERS_VIEW_TITLE : IMAGE_VIEW_TITLE);
+    if (self.isCalipersView) {
+        [self selectMainToolbar];
+    }
+    else {
+        [self selectImageToolbar];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,19 +122,16 @@
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)   ];
-    UIBarButtonItem *imageButton = [[UIBarButtonItem alloc] initWithTitle:@"Image" style:UIBarButtonItemStylePlain target:self action:@selector(selectImageToolbar)];
-    UIBarButtonItem *helpButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? HELP_IPAD : HELP_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(showHelp)];
-    
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, imageButton, helpButton, nil];
+   
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, nil];
 }
 
 - (void)createImageToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
     UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
     UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
-    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
-    
-    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, backToMainMenuButton, nil];
+
+    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
@@ -130,7 +154,7 @@
 - (void)createAddCalipersToolbar {
     UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Horizontal" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
     UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Vertical" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, cancelButton, nil];
 }
@@ -220,7 +244,7 @@
     }
     else {
         self.rrIntervalForQTc = 0.0;
-        [self.toolbar setItems:self.qtcStep1MenuItems];
+        self.toolbarItems = self.qtcStep1MenuItems;
         self.calipersView.locked = YES;
     }
 }
@@ -239,7 +263,7 @@
         [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"3"];
         [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
         
-        [self.toolbar setItems:self.qtcStep2MenuItems];
+        self.toolbarItems = self.qtcStep2MenuItems;
     }
 }
 
@@ -303,7 +327,7 @@
         [self showNoCalipersAlert];
     }
     else {
-        [self.toolbar setItems:self.calibrateMenuItems];
+        self.toolbarItems = self.calibrateMenuItems;
         [self.calipersView selectCaliperIfNoneSelected];
         self.calipersView.locked = YES;
     }
@@ -393,12 +417,12 @@
 
 // Select toolbars
 - (void)selectImageToolbar {
-    [self.toolbar setItems:self.photoMenuItems];
+    self.toolbarItems = self.photoMenuItems;
     [self.calipersView setUserInteractionEnabled:NO];
 }
 
 - (void)selectMainToolbar {
-    [self.toolbar setItems:self.mainMenuItems];
+    self.toolbarItems  = self.mainMenuItems;
     [self.calipersView setUserInteractionEnabled:YES];
     BOOL enable = [self.horizontalCalibration canDisplayRate];
     [self.toggleIntervalRateButton setEnabled:enable];
@@ -408,15 +432,15 @@
 }
 
 - (void)selectAddCalipersToolbar {
-    [self.toolbar setItems:self.addCalipersMenuItems];
+    self.toolbarItems = self.addCalipersMenuItems;
 }
 
 - (void)selectAdjustImageToolbar {
-    [self.toolbar setItems:self.adjustImageMenuItems];
+    self.toolbarItems = self.adjustImageMenuItems;
 }
 
 - (void)selectCalibrateToolbar {
-    [self.toolbar setItems:self.calibrateMenuItems];
+    self.toolbarItems = self.calibrateMenuItems;
 }
 
 - (void)takePhoto {
@@ -466,8 +490,12 @@
 }
 
 - (void)resetCalibration {
-    [self.horizontalCalibration reset];
-    [self.verticalCalibration reset];
+    // don't bother if no calibration present
+    if ([self.horizontalCalibration calibratedEitherMode] || [self.verticalCalibration calibratedEitherMode]) {
+        [self flashCalipers];
+        [self.horizontalCalibration reset];
+        [self.verticalCalibration reset];
+    }
 }
 
 // Adjust image
@@ -502,6 +530,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }];
 }
 
+- (void)flashCalipers {
+    [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionAutoreverse animations:^ {
+        self.calipersView.alpha = 0.2f;
+    } completion:^(BOOL finished) {
+        self.calipersView.alpha = 1.0f;
+    }];
+}
+
 - (IBAction)flipImage:(id)sender {
     static BOOL horizontal = YES;
     float x = 1.0;
@@ -516,6 +552,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         self.imageView.transform = CGAffineTransformScale(self.imageView.transform, x, y);
     }];
+}
+
+- (BOOL)isPortraitMode {
+    return self.view.frame.size.height > self.view.frame.size.width;
 }
 
 #pragma mark - Delegate Methods
@@ -546,23 +586,34 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                 if (c == nil || c.valueInPoints <= 0) {
                     return;
                 }
-                double ratio = self.view.frame.size.height/self.view.frame.size.width;
                 if (c.direction == Horizontal) {
                     self.horizontalCalibration.calibrationString = rawText;
                     self.horizontalCalibration.units = trimmedUnits;
-                    self.horizontalCalibration.multiplier = value/c.valueInPoints;
                     if (!self.horizontalCalibration.canDisplayRate) {
                         self.horizontalCalibration.displayRate = NO;
                     }
-                    self.horizontalCalibration.calibratedOrientationRatio = ratio;
-                    self.horizontalCalibration.calibrated = YES;
+                    // separate calibration for portrait and landscape modes
+                    if ([self isPortraitMode]) {
+                        self.horizontalCalibration.multiplierForPortrait = value/c.valueInPoints;
+                        self.horizontalCalibration.calibratedProtraitMode = YES;
+                    }
+                    else {
+                        self.horizontalCalibration.multiplierForLandscape = value/c.valueInPoints;
+                        self.horizontalCalibration.calibratedLandscapeMode = YES;
+                    }
                 }
                 else {
                     self.verticalCalibration.calibrationString = rawText;
                     self.verticalCalibration.units = trimmedUnits;
-                    self.verticalCalibration.multiplier = value/c.valueInPoints;
-                    self.verticalCalibration.calibratedOrientationRatio  = ratio;
-                    self.verticalCalibration.calibrated = YES;
+                    if ([self isPortraitMode]) {
+                        self.verticalCalibration.multiplierForPortrait = value/c.valueInPoints;
+                        self.verticalCalibration.calibratedProtraitMode = YES;
+                    }
+                    else {
+                        self.verticalCalibration.multiplierForLandscape = value/c.valueInPoints;
+                        self.verticalCalibration.calibratedLandscapeMode = YES;
+                    }
+                    
                 }
                 [self.calipersView setNeedsDisplay];
                 [self selectMainToolbar];            
@@ -580,9 +631,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             }
             double intervalResult = fabsf(c.intervalResult);
             double meanRR = intervalResult / divisor;
-            EPSLog(@"Average RR = %.4g %@", meanRR, [c.calibration rawUnits]);
             double meanRate = [c rateResult:meanRR];
-            EPSLog(@"Average rate = %.4g bpm", meanRate);
             if (alertView.tag == MEAN_RR_ALERTVIEW) {
                 UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
@@ -613,19 +662,17 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     return self.imageContainerView;
 }
 
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     [self clearCalibration];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    double ratio = size.height/size.width;
-    self.horizontalCalibration.currentOrientationRatio = ratio;
-    self.verticalCalibration.currentOrientationRatio = ratio;
-    [self.calipersView shiftCalipers:ratio forNewHeight:size.height];
+    InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
+    self.horizontalCalibration.orientation = orientation;
+    self.verticalCalibration.orientation = orientation;
+    [self.calipersView setNeedsDisplay];
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    
-    
 }
 
 

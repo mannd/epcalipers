@@ -14,4 +14,9 @@ typedef NS_ENUM(NSInteger, CaliperDirection) {
     Vertical
 };
 
+typedef NS_ENUM(NSInteger, InterfaceOrientation) {
+    Portrait,
+    Landscape
+};
+
 #endif
