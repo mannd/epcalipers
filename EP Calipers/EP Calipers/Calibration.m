@@ -34,12 +34,15 @@
 }
 
 - (NSString *)units {
-    if (self.displayRate)
-        return @"bpm";
-    else if ((self.orientation == Portrait && self.calibratedProtraitMode) ||
+    if ((self.orientation == Portrait && self.calibratedProtraitMode) ||
         (self.orientation == Landscape && self.calibratedLandscapeMode)) {
+        if (self.displayRate) {
+            return @"bpm";
+        }
+        else {
             return _units;
         }
+    }
     else
         return @"points";
 }
@@ -64,14 +67,20 @@
     self.multiplierForPortrait = 1.0;
     self.multiplierForLandscape = 1.0;
     self.displayRate = NO;
-    //self.orientation = Portrait;
 }
 
 - (BOOL)canDisplayRate {
     if (self.direction == Vertical) {
         return NO;
     }
+    else if (![self currentModeCalibrated]) {
+        return NO;
+    }
     return self.unitsAreMsec || self.unitsAreSeconds;
+}
+
+- (BOOL)currentModeCalibrated {
+    return ((self.calibratedProtraitMode && self.orientation == Portrait) || (self.calibratedLandscapeMode && self.orientation == Landscape));
 }
 
 - (BOOL)unitsAreSeconds {

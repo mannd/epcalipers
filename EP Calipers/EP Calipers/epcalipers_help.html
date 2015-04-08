@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title></title>
-<!-- 2015-04-07 Tue 17:45 -->
+<!-- 2015-04-08 Wed 21:43 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="David Mann" />
@@ -152,10 +152,10 @@ for the JavaScript code in this tag.
 <h2 id="unnumbered-2">Using the calipers</h2>
 <div class="outline-text-2" id="text-unnumbered-2">
 </div><div id="outline-container-unnumbered-3" class="outline-3">
-<h3 id="unnumbered-3">Caliper Mode versus Image Mode</h3>
+<h3 id="unnumbered-3">EP Calipers Mode versus Image Mode</h3>
 <div class="outline-text-3" id="text-unnumbered-3">
 <p>
-In <b>EP Calipers</b> you can manipulate calipers, or manipulate the image, but not both at the same time.  The app starts in <b>Caliper Mode</b> (with a sample image loaded).  You can create, delete, and  move calipers, as well as perform calculations such as mean heart rate and corrected QT interval in this mode.  Selecting <b>Image</b> on the toolbar switches to <b>Image Mode</b>.  Use this mode to load an image and zoom or scroll around in the image.  Exiting the Image toolbar by selecting <b>Done</b> returns to <b>Caliper Mode</b>.
+In <b>EP Calipers</b> you can manipulate calipers, or manipulate the image, but not both at the same time.  The title bar at the top of the screen indicates which mode you are in.  The app starts in <b>EP Calipers Mode</b> (with a sample image loaded).  You can create, delete, and  move calipers, as well as perform calculations such as mean heart rate and corrected QT interval in this mode.  Selecting <b>Switch Mode</b> on the title bar switches to <b>Image Mode</b>.  Use this mode to load an image and zoom or scroll around in the image using finger gestures.  Switch back to <b>EP Calipers</b> mode by selecting <b>Switch Mode</b> again.
 </p>
 </div>
 </div>
@@ -163,7 +163,12 @@ In <b>EP Calipers</b> you can manipulate calipers, or manipulate the image, but 
 <h3 id="unnumbered-4">Loading an image</h3>
 <div class="outline-text-3" id="text-unnumbered-4">
 <p>
-Select <b>Image</b> on the toolbar to display the <b>Image</b> menu.  Touch the <b>Camera</b> icon to take a photo of an ECG tracing and load it into the app.  Note that images captured this way are not saved in the Photos collection of the device.  Alternatively, Touch <b>Select</b> to chose an image that is already saved on your device.  Select <b>Done</b> to return to the main toolbar.
+If the title bar doesn't show <b>Image Mode</b> touch the <b>Switch Mode</b>
+button to change modes.  Touch the <b>Camera</b> icon to take a photo of an
+ECG tracing and load it into the app.  Note that images captured this
+way are not saved in the Photos collection of the device.
+Alternatively, Touch <b>Select</b> to chose an image that is already saved
+on your device.  Select <b>Done</b> to return to the main toolbar.
 </p>
 </div>
 </div>
@@ -171,7 +176,7 @@ Select <b>Image</b> on the toolbar to display the <b>Image</b> menu.  Touch the 
 <h3 id="unnumbered-5">Adjusting the image</h3>
 <div class="outline-text-3" id="text-unnumbered-5">
 <p>
-Select <b>Image</b> and adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the <b>Adjust</b> menu to rotate or flip the image.
+While in <b>Image Mode</b> you can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the <b>Adjust</b> menu to rotate or flip the image.
 </p>
 </div>
 </div>
@@ -211,7 +216,7 @@ Single tap a caliper to highlight it.  Its color will change.  Tap another calip
 <h3 id="unnumbered-10">Calibration</h3>
 <div class="outline-text-3" id="text-unnumbered-10">
 <p>
-Select <b>Calibration</b>.  Stretch a highlighted caliper over a known interval (such as 1000 msec for horizontal, or 10 mm for vertical calipers).  Select <b>Set</b>.  In the dialog box, make sure the interval matches what you are measuring.  It is best if you enter both the calibration interval and units (e.g. 400 msec, or 1 sec, or 1 mV).  Select <b>Set</b> in the dialog box to set the calibration.  Note that horizontal and vertical calibers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
+Select <b>Calibration</b>.  Stretch a highlighted caliper over a known interval (such as 1000 msec for horizontal, or 10 mm for vertical calipers).  Select <b>Set</b>.  In the dialog box, make sure the interval matches what you are measuring.  It is best if you enter both the calibration interval and units (e.g. 400 msec, or 1 sec, or 1 mV).  Select <b>Set</b> in the dialog box to set the calibration.  Note that horizontal and vertical calibers need to be calibrated separately. Also, if you are going to rotate your device from portrait to landscape mode, calibration needs to be done in each mode.   Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
 </p>
 </div>
 </div>
@@ -219,7 +224,7 @@ Select <b>Calibration</b>.  Stretch a highlighted caliper over a known interval 
 <h3 id="unnumbered-11">Changing calibration</h3>
 <div class="outline-text-3" id="text-unnumbered-11">
 <p>
-You can recalibrate at any time.  You can clear calibration by selecting <b>Clear</b> in the calibration toolbar.  Note that calibration is maintained if the device is rotated.  Going into <b>Image Mode</b> also will maintain calibration as long as the image is not zoomed (scrolling and rotating don't cause calibration to be lost).  If the image is zoomed, calibration is lost.  Units revert back to arbitrary "points" and it will be necessary to calibrate again.
+You can recalibrate at any time.  You can clear calibration by selecting <b>Clear</b> in the calibration toolbar.  Note that calibration is maintained if the device is rotated after you have calibrated in each mode (portrait and landscape).  Going into <b>Image Mode</b> will maintain calibration as long as the image is not zoomed (scrolling and rotating the image don't cause calibration to be lost).  If the image is zoomed, calibration is lost.  Units revert back to arbitrary "points" and it will be necessary to calibrate again.  Calipers will flash briefly upon loss of calibration.
 </p>
 </div>
 </div>

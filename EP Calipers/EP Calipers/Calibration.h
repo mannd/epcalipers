@@ -31,6 +31,7 @@
 - (instancetype)init;
 - (void)reset;
 - (BOOL)calibratedEitherMode;
+- (BOOL)currentModeCalibrated;
 - (NSString *)rawUnits;
 
 

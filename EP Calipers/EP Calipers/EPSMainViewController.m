@@ -672,6 +672,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.verticalCalibration.orientation = orientation;
     [self.calipersView setNeedsDisplay];
     
+    BOOL enable = [self.horizontalCalibration canDisplayRate];
+    [self.toggleIntervalRateButton setEnabled:enable];
+    [self.mRRButton setEnabled:enable];
+    [self.qtcButton setEnabled:enable];
+    
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
