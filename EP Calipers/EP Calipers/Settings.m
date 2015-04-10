@@ -52,10 +52,6 @@
     
     // doesn't matter if not set, will be NO which is the default anyway
     self.hideStartImage = [defaults boolForKey:@"hideStartImagePreference"];
-    
-    EPSLog(@"Color = %@, highlightColor = %@", colorName, highlightColor);
-
-    
 }
 
 @end

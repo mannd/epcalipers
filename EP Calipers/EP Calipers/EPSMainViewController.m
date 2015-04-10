@@ -56,11 +56,11 @@
     
     [self selectMainToolbar];
 
+    [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    
     self.scrollView.delegate = self;
-    self.scrollView.minimumZoomScale = 0.5;
+    self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.maximumZoomScale = 5.0;
-    [self.scrollView setZoomScale:1.0];
-
     
     self.horizontalCalibration = [[Calibration alloc] init];
     self.horizontalCalibration.direction = Horizontal;
@@ -87,12 +87,11 @@
     self.isCalipersView = YES;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
- }
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
-
 }
 
 - (InterfaceOrientation)viewOrientation {
@@ -273,8 +272,8 @@
     }
     else {
         Caliper *c = [self.calipersView activeCaliper];
-        float qt = fabsf([c intervalInSecs:c.intervalResult]);
-        float meanRR = fabsf(self.rrIntervalForQTc);  // already in secs
+        float qt = fabs([c intervalInSecs:c.intervalResult]);
+        float meanRR = fabs(self.rrIntervalForQTc);  // already in secs
         NSString *result = @"Invalid Result";
         EPSLog(@"RR in sec = %f, QT in sec = %f", meanRR, qt);
         if (meanRR > 0) {
@@ -629,7 +628,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             if (c == nil) {
                 return;
             }
-            double intervalResult = fabsf(c.intervalResult);
+            double intervalResult = fabs(c.intervalResult);
             double meanRR = intervalResult / divisor;
             double meanRate = [c rateResult:meanRR];
             if (alertView.tag == MEAN_RR_ALERTVIEW) {
