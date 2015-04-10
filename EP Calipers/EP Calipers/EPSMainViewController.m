@@ -72,9 +72,6 @@
     
     [self.calipersView setUserInteractionEnabled:YES];
     
-    // add a Caliper to start out
-    [self addHorizontalCaliper];
-    
     self.rrIntervalForQTc = 0.0;
     
     [self.imageView setHidden:self.settings.hideStartImage];
@@ -92,6 +89,11 @@
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
+    
+    // add a Caliper if there are none
+    if ([self.calipersView.calipers count] < 1) {
+        [self addHorizontalCaliper];
+    }
 }
 
 - (InterfaceOrientation)viewOrientation {
@@ -481,7 +483,7 @@
     else {
         caliper.calibration = self.verticalCalibration;
     }
-    [caliper setInitialPositionInRect:self.view.bounds];
+    [caliper setInitialPositionInRect:self.calipersView.bounds];
     
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
@@ -594,10 +596,12 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                     // separate calibration for portrait and landscape modes
                     if ([self isPortraitMode]) {
                         self.horizontalCalibration.multiplierForPortrait = value/c.valueInPoints;
+                        EPSLog(@"Multiplier for portrait = %f", value/c.valueInPoints);
                         self.horizontalCalibration.calibratedProtraitMode = YES;
                     }
                     else {
                         self.horizontalCalibration.multiplierForLandscape = value/c.valueInPoints;
+                        EPSLog(@"Multiplier for landscape = %f", value/c.valueInPoints);
                         self.horizontalCalibration.calibratedLandscapeMode = YES;
                     }
                 }
@@ -670,6 +674,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.horizontalCalibration.orientation = orientation;
     self.verticalCalibration.orientation = orientation;
     [self.calipersView setNeedsDisplay];
+    
+    EPSLog(@"Image width = %f, Image height = %f", self.imageView.image.size.width, self.imageView.image.size.height);
+    EPSLog(@"ImageView width = %f, ImageView height = %f", self.imageView.frame.size.width, self.imageView.frame.size.height);
     
     BOOL enable = [self.horizontalCalibration canDisplayRate];
     [self.toggleIntervalRateButton setEnabled:enable];
