@@ -16,7 +16,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet CalipersView *calipersView;
-@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIView *imageContainerView;
 
 @property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
@@ -40,6 +39,8 @@
 @property double rrIntervalForQTc;
 
 @property BOOL isCalipersView;
+
+@property float sizeDiff;   // difference between view width or height and imageView w or h
 
 @end
 

@@ -84,11 +84,22 @@
     self.isCalipersView = YES;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationChange:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
+    
+    self.sizeDiff = self.view.frame.size.width - self.imageView.frame.size.width;
+    // TODO height diff is negative and not the same as width diff
+    // TODO see if ration of new width/old width still holds if relative to margin not used for views
+    EPSLog(@"sizeDiff = %f", self.sizeDiff);
+    EPSLog(@"heightView = %f", self.view.frame.size.height);
+    EPSLog(@"heightImageView = %f", self.imageView.frame.size.height);
+    EPSLog(@"heightimageContainerView = %f", self.imageContainerView.frame.size.height);
     
     // add a Caliper if there are none
     if ([self.calipersView.calipers count] < 1) {
@@ -674,10 +685,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.horizontalCalibration.orientation = orientation;
     self.verticalCalibration.orientation = orientation;
     [self.calipersView setNeedsDisplay];
-    
-    EPSLog(@"Image width = %f, Image height = %f", self.imageView.image.size.width, self.imageView.image.size.height);
-    EPSLog(@"ImageView width = %f, ImageView height = %f", self.imageView.frame.size.width, self.imageView.frame.size.height);
-    
     BOOL enable = [self.horizontalCalibration canDisplayRate];
     [self.toggleIntervalRateButton setEnabled:enable];
     [self.mRRButton setEnabled:enable];
@@ -685,6 +692,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
+
+- (void)statusBarOrientationChange:(NSNotification *)notification {
+    UIInterfaceOrientation orient = [[UIApplication sharedApplication] statusBarOrientation];
+    
+    
+    // handle the interface orientation as needed
+}
+
 
 
 @end

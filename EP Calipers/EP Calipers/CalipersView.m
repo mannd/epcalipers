@@ -22,7 +22,6 @@
         UIPanGestureRecognizer *p = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragging:)];
         [self addGestureRecognizer:p];
         self.clearsContextBeforeDrawing = YES;
-        self.toolbar = ((EPSMainViewController *)self.superview).toolbar;
         self.locked = NO;
 //        [[NSNotificationCenter defaultCenter]
 //         addObserver:self

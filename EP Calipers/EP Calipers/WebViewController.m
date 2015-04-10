@@ -26,7 +26,11 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     [btn addTarget:self action:@selector(showAbout) forControlEvents:UIControlEventTouchUpInside];
-    [self.navigationItem setTitle:@"EP Calipers Help"];
+    NSString *title = @"Help";
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        title = @"EP Calipers Help";
+    }
+    [self.navigationItem setTitle:title];
     
     // centers view with navigationbar in place
     self.edgesForExtendedLayout = UIRectEdgeNone;
