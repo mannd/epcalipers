@@ -23,11 +23,6 @@
         [self addGestureRecognizer:p];
         self.clearsContextBeforeDrawing = YES;
         self.locked = NO;
-//        [[NSNotificationCenter defaultCenter]
-//         addObserver:self
-//         selector:@selector(deviceOrientationDidChangeNotification:)
-//         name:UIDeviceOrientationDidChangeNotification
-//         object:nil];
    }
     return self;
 }
@@ -163,14 +158,16 @@
 
 // Keeps calipers measuring same interval (though can move around with rotation).
 // Vertical calipers tend to go to screen edges.
-- (void)shiftCalipers:(double)ratio {
+- (void)shiftCalipers:(double)horizontalRatio forVerticalRatio:(double)verticalRatio {
     for (Caliper *c in self.calipers) {
         if (c != nil) {
-            double compensation = ratio;
-            c.bar1Position *= compensation;
-            c.bar2Position *= compensation;
-            if (c.direction == Vertical) {
-//                [self moveCaliperTowardsCenter:c forCenter:(double)height/2.0];
+            if (c.direction == Horizontal) {
+                c.bar1Position *= horizontalRatio;
+                c.bar2Position *= horizontalRatio;
+            }
+            else {
+                c.bar1Position *= verticalRatio;
+                c.bar2Position *= verticalRatio;
             }
         }
     }

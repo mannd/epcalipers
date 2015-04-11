@@ -23,6 +23,6 @@
 - (void)selectCaliper:(Caliper *)c;
 - (void)unselectCaliper:(Caliper *)c;
 
-- (void)shiftCalipers:(double)ratio;
+- (void)shiftCalipers:(double)ratio forVerticalRatio:(double)verticalRatio;
 
 @end

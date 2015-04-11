@@ -38,10 +38,10 @@
                                 <rect key="frame" x="8" y="0.0" width="584" height="600"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c" userLabel="containerView">
-                                        <rect key="frame" x="0.0" y="-8" width="584" height="616"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="584" height="600"/>
                                         <subviews>
                                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Normal 12_Lead ECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
-                                                <rect key="frame" x="0.0" y="0.0" width="584" height="616"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="584" height="600"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
@@ -54,8 +54,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="blB-p5-m1c" firstAttribute="topMargin" secondItem="X5X-Yr-OYx" secondAttribute="top" id="DHj-WM-deL"/>
-                                    <constraint firstAttribute="bottom" secondItem="blB-p5-m1c" secondAttribute="bottomMargin" id="MTN-Ls-Xwe"/>
+                                    <constraint firstItem="blB-p5-m1c" firstAttribute="topMargin" secondItem="X5X-Yr-OYx" secondAttribute="topMargin" id="DHj-WM-deL"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="blB-p5-m1c" secondAttribute="bottomMargin" id="MTN-Ls-Xwe"/>
                                     <constraint firstItem="blB-p5-m1c" firstAttribute="leadingMargin" secondItem="X5X-Yr-OYx" secondAttribute="leadingMargin" id="Qnl-B3-iKU"/>
                                     <constraint firstAttribute="centerY" secondItem="blB-p5-m1c" secondAttribute="centerYWithinMargins" id="Wdz-hx-8QF"/>
                                     <constraint firstAttribute="trailing" secondItem="blB-p5-m1c" secondAttribute="trailingMargin" id="iP2-kK-xc9"/>

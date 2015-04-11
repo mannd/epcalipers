@@ -40,7 +40,8 @@
 
 @property BOOL isCalipersView;
 
-@property float sizeDiff;   // difference between view width or height and imageView w or h
+@property float sizeDiffWidth;
+@property float sizeDiffHeight;
 
 @end
 

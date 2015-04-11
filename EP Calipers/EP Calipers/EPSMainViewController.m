@@ -98,10 +98,12 @@
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
     
-    self.sizeDiff = self.view.frame.size.width - self.imageView.frame.size.width;
-    EPSLog(@"sizeDiff = %f", self.sizeDiff);
-    EPSLog(@"sizeDiffHeight = %f", self.view.frame.size.height - self.imageView.frame.size.height);
+    self.sizeDiffWidth = self.view.frame.size.width - self.imageView.frame.size.width;
+    self.sizeDiffHeight = self.view.frame.size.height - self.imageView.frame.size.height;
+    EPSLog(@"sizeDiff = %f", self.sizeDiffWidth);
+    EPSLog(@"sizeDiffHeight = %f", self.sizeDiffHeight);
     EPSLog(@"height = %f", self.imageView.frame.size.height);
+    EPSLog(@"width = %f", self.imageView.frame.size.width);
 
     // add a Caliper if there are none
     if ([self.calipersView.calipers count] < 1) {
@@ -684,9 +686,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
-    
-//    double ratio = 256/460.0;
-//    [self.calipersView shiftCalipers:ratio];
+
+    double horizontalRatio = (size.width - self.sizeDiffWidth) / self.imageView.frame.size.width;
+    double verticalRatio = (size.height - self.sizeDiffHeight) / self.imageView.frame.size.height;
+
+    [self.calipersView shiftCalipers:horizontalRatio forVerticalRatio:verticalRatio];
 
     
     self.horizontalCalibration.orientation = orientation;
