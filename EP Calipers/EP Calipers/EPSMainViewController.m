@@ -101,6 +101,7 @@
     self.sizeDiff = self.view.frame.size.width - self.imageView.frame.size.width;
     EPSLog(@"sizeDiff = %f", self.sizeDiff);
     EPSLog(@"sizeDiffHeight = %f", self.view.frame.size.height - self.imageView.frame.size.height);
+    EPSLog(@"height = %f", self.imageView.frame.size.height);
 
     // add a Caliper if there are none
     if ([self.calipersView.calipers count] < 1) {
@@ -683,6 +684,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
+    
+    double ratio = 256/460.0;
+    [self.calipersView shiftCalipers:ratio];
+
+    
     self.horizontalCalibration.orientation = orientation;
     self.verticalCalibration.orientation = orientation;
     [self.calipersView setNeedsDisplay];

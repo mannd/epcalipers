@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6xA-Uv-Lhv">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -34,27 +35,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx">
-                                <rect key="frame" x="8" y="20" width="584" height="580"/>
+                                <rect key="frame" x="8" y="12" width="584" height="596"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c" userLabel="containerView">
-                                        <rect key="frame" x="0.0" y="0.0" width="584" height="580"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
                                         <subviews>
                                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Normal 12_Lead ECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
-                                                <rect key="frame" x="0.0" y="0.0" width="584" height="580"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="584" height="596"/>
                                             </imageView>
-                                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView">
-                                                <rect key="frame" x="0.0" y="0.0" width="584" height="580"/>
-                                            </view>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" id="Hr7-Uj-Un9"/>
-                                            <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="blB-p5-m1c" secondAttribute="top" id="O47-aI-tK1"/>
                                             <constraint firstItem="H9Q-uG-yq7" firstAttribute="top" secondItem="blB-p5-m1c" secondAttribute="top" id="RdC-uQ-27Z"/>
-                                            <constraint firstAttribute="trailing" secondItem="D98-VW-HwH" secondAttribute="trailing" id="gb5-mG-cmc"/>
-                                            <constraint firstItem="D98-VW-HwH" firstAttribute="leading" secondItem="blB-p5-m1c" secondAttribute="leading" id="n97-rF-5av"/>
                                             <constraint firstItem="H9Q-uG-yq7" firstAttribute="leading" secondItem="blB-p5-m1c" secondAttribute="leading" id="o5l-yi-fn0"/>
                                             <constraint firstAttribute="centerY" secondItem="H9Q-uG-yq7" secondAttribute="centerY" id="oLv-Pb-WhB"/>
-                                            <constraint firstAttribute="bottom" secondItem="D98-VW-HwH" secondAttribute="bottom" id="yVs-lo-DyF"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -68,13 +62,20 @@
                                     <constraint firstAttribute="centerX" secondItem="blB-p5-m1c" secondAttribute="centerX" id="lqn-u9-9le"/>
                                 </constraints>
                             </scrollView>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView">
+                                <rect key="frame" x="8" y="-8" width="584" height="616"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="bottom" id="QQo-1h-4Op"/>
+                            <constraint firstItem="D98-VW-HwH" firstAttribute="leadingMargin" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="LYi-k1-VIy"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D98-VW-HwH" secondAttribute="bottomMargin" id="PfO-jL-w2x"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="bottomMargin" id="QQo-1h-4Op"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailingMargin" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="W4Y-nF-S1C"/>
+                            <constraint firstItem="D98-VW-HwH" firstAttribute="topMargin" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="ftB-Vq-N9m"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="leadingMargin" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="hMI-tG-xPa"/>
-                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="iyl-9C-lsw"/>
+                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="topMargin" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="iyl-9C-lsw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="D98-VW-HwH" secondAttribute="trailingMargin" id="jRB-iC-fz3"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zAQ-bd-wcX"/>

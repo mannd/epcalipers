@@ -23,4 +23,6 @@
 - (void)selectCaliper:(Caliper *)c;
 - (void)unselectCaliper:(Caliper *)c;
 
+- (void)shiftCalipers:(double)ratio;
+
 @end
