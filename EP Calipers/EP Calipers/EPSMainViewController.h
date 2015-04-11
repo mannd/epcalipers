@@ -43,5 +43,7 @@
 @property float sizeDiffWidth;
 @property float sizeDiffHeight;
 
+@property CGFloat lastZoomFactor;
+
 @end
 

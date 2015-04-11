@@ -65,6 +65,7 @@
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.maximumZoomScale = 5.0;
+    self.lastZoomFactor = self.scrollView.zoomScale;
     
     self.horizontalCalibration = [[Calibration alloc] init];
     self.horizontalCalibration.direction = Horizontal;
@@ -702,10 +703,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     EPSLog(@"Original zoomscale = %f", scrollView.zoomScale);
+    self.lastZoomFactor = scrollView.zoomScale;
+
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     EPSLog(@"New scale = %f", scale);
+    [self.calipersView zoomCalipers:self.lastZoomFactor toScale:scale];
+    [self.calipersView setNeedsDisplay];
     //[self clearCalibration];
 }
 
@@ -713,7 +718,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
 
     double horizontalRatio = (size.width - self.sizeDiffWidth) / self.imageView.frame.size.width;
-    double verticalRatio = horizontalRatio;
+    double verticalRatio = (size.height - self.sizeDiffHeight) / self.imageView.frame.size.height;
+    
+    EPSLog(@"containerview width = %f", self.imageContainerView.frame.size.width);
+    EPSLog(@"containerview height = %f", self.imageContainerView.frame.size.height);
 
     [self.calipersView shiftCalipers:horizontalRatio forVerticalRatio:verticalRatio];
 

@@ -24,5 +24,6 @@
 - (void)unselectCaliper:(Caliper *)c;
 
 - (void)shiftCalipers:(double)horizontalRatio forVerticalRatio:(double)verticalRatio;
+- (void)zoomCalipers:(CGFloat)initialScale toScale:(CGFloat)finalScale;
 
 @end
