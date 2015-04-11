@@ -180,10 +180,11 @@
 
 - (BOOL)pointNearCrossBar:(CGPoint)p {
     BOOL nearBar = NO;
+    float delta = DELTA + 5.0f; // make cross bar delta a little bigger
     if (self.direction == Horizontal) {
-        nearBar = (p.x > fmin(self.bar1Position, self.bar2Position) + DELTA && p.x < fmaxf(self.bar2Position, self.bar1Position) - DELTA && p.y > self.crossBarPosition - DELTA && p.y < self.crossBarPosition + DELTA);
+        nearBar = (p.x > fmin(self.bar1Position, self.bar2Position) + delta && p.x < fmaxf(self.bar2Position, self.bar1Position) - delta && p.y > self.crossBarPosition - delta && p.y < self.crossBarPosition + delta);
     } else {
-        nearBar = (p.y > fminf(self.bar1Position, self.bar2Position) + DELTA && p.y < fmaxf(self.bar2Position, self.bar1Position) - DELTA && p.x > self.crossBarPosition - DELTA && p.x < self.crossBarPosition + DELTA);
+        nearBar = (p.y > fminf(self.bar1Position, self.bar2Position) + delta && p.y < fmaxf(self.bar2Position, self.bar1Position) - delta && p.x > self.crossBarPosition - delta && p.x < self.crossBarPosition + delta);
     }
     return nearBar;
 }

@@ -119,9 +119,15 @@
     self.isCalipersView = !self.isCalipersView;
     self.navigationItem.title = (self.isCalipersView ? CALIPERS_VIEW_TITLE : IMAGE_VIEW_TITLE);
     if (self.isCalipersView) {
+        self.navigationController.navigationBar.barTintColor = nil;
+        self.navigationController.toolbar.barTintColor = nil;
+        [self unfadeCaliperView];
         [self selectMainToolbar];
     }
     else {
+        self.navigationController.navigationBar.barTintColor = [UIColor greenColor];
+        self.navigationController.toolbar.barTintColor = [UIColor greenColor];
+        [self fadeCaliperView];
         [self selectImageToolbar];
     }
 }
@@ -547,12 +553,24 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)flashCalipers {
-    [UIView animateWithDuration:0.2f delay:0.0f options:UIViewAnimationOptionAutoreverse animations:^ {
+    CGFloat originalAlpha = self.calipersView.alpha;
+    self.calipersView.alpha = 1.0f;
+    [UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionAutoreverse animations:^ {
         self.calipersView.alpha = 0.2f;
     } completion:^(BOOL finished) {
-        self.calipersView.alpha = 1.0f;
+        self.calipersView.alpha = originalAlpha;
     }];
 }
+
+- (void)fadeCaliperView {
+    self.calipersView.alpha = 0.5f;
+}
+
+- (void)unfadeCaliperView {
+    self.calipersView.alpha = 1.0f;
+}
+
+
 
 - (IBAction)flipImage:(id)sender {
     static BOOL horizontal = YES;
@@ -688,7 +706,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
 
     double horizontalRatio = (size.width - self.sizeDiffWidth) / self.imageView.frame.size.width;
-    double verticalRatio = (size.height - self.sizeDiffHeight) / self.imageView.frame.size.height;
+    double verticalRatio = horizontalRatio;
 
     [self.calipersView shiftCalipers:horizontalRatio forVerticalRatio:verticalRatio];
 

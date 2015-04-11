@@ -164,14 +164,34 @@
             if (c.direction == Horizontal) {
                 c.bar1Position *= horizontalRatio;
                 c.bar2Position *= horizontalRatio;
+                c.crossBarPosition *= 1/horizontalRatio;
             }
             else {
                 c.bar1Position *= verticalRatio;
                 c.bar2Position *= verticalRatio;
+                c.crossBarPosition *= verticalRatio;
             }
         }
     }
 }
+
+// not used yet...
+- (void)moveCaliperTowardsCenter:(Caliper *)caliper forCenter:(double)center {
+    // caliper straddles middle, leave it be
+    if (caliper.bar1Position < center && caliper.bar2Position > center) {
+        return;
+    }
+    if (caliper.bar1Position > center) {
+        double delta = caliper.bar1Position - center;
+        caliper.bar1Position -= delta;
+        caliper.bar2Position -= delta;
+    } else if (caliper.bar2Position < center) {
+        double delta = center - caliper.bar2Position;
+        caliper.bar1Position += delta;
+        caliper.bar2Position += delta;
+    }
+}
+
 
 
 @end
