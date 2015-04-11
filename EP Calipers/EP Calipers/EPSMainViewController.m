@@ -685,8 +685,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
     
-    double ratio = 256/460.0;
-    [self.calipersView shiftCalipers:ratio];
+//    double ratio = 256/460.0;
+//    [self.calipersView shiftCalipers:ratio];
 
     
     self.horizontalCalibration.orientation = orientation;
