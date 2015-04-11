@@ -158,6 +158,7 @@
 
 // Keeps calipers measuring same interval (though can move around with rotation).
 // Vertical calipers tend to go to screen edges.
+// TODO have addend factor that adds or subtracts points to correctly place calipers in view
 - (void)shiftCalipers:(double)horizontalRatio forVerticalRatio:(double)verticalRatio {
     for (Caliper *c in self.calipers) {
         if (c != nil) {

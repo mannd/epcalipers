@@ -33,6 +33,8 @@
 #define CALIPERS_VIEW_TITLE @"EP Calipers"
 #define IMAGE_VIEW_TITLE @"Image Mode"
 
+#define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
+
 @interface EPSMainViewController ()
 
 @end
@@ -125,8 +127,8 @@
         [self selectMainToolbar];
     }
     else {
-        self.navigationController.navigationBar.barTintColor = [UIColor greenColor];
-        self.navigationController.toolbar.barTintColor = [UIColor greenColor];
+        self.navigationController.navigationBar.barTintColor = IMAGE_TINT;
+        self.navigationController.toolbar.barTintColor = IMAGE_TINT;
         [self fadeCaliperView];
         [self selectImageToolbar];
     }
@@ -698,8 +700,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     return self.imageContainerView;
 }
 
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+    EPSLog(@"Original zoomscale = %f", scrollView.zoomScale);
+}
+
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
-    [self clearCalibration];
+    EPSLog(@"New scale = %f", scale);
+    //[self clearCalibration];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
