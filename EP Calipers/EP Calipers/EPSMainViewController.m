@@ -81,6 +81,9 @@
     [btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Switch Mode" style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.toolbar.translucent = NO;
+    
     self.isCalipersView = YES;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -97,9 +100,10 @@
     // TODO height diff is negative and not the same as width diff
     // TODO see if ration of new width/old width still holds if relative to margin not used for views
     EPSLog(@"sizeDiff = %f", self.sizeDiff);
-    EPSLog(@"heightView = %f", self.view.frame.size.height);
-    EPSLog(@"heightImageView = %f", self.imageView.frame.size.height);
-    EPSLog(@"heightimageContainerView = %f", self.imageContainerView.frame.size.height);
+    EPSLog(@"sizeDiffHeight = %f", self.view.frame.size.height - self.imageView.frame.size.height);
+//    EPSLog(@"widthView = %f, heightView = %f", self.view.frame.size.width, self.view.frame.size.height);
+//    EPSLog(@"heightImageView = %f", self.imageView.frame.size.height);
+//    EPSLog(@"heightimageContainerView = %f", self.imageContainerView.frame.size.height);
     
     // add a Caliper if there are none
     if ([self.calipersView.calipers count] < 1) {
