@@ -22,6 +22,8 @@
 #define MEAN_RATE_IPHONE @"mRate"
 #define HELP_IPAD @"Help"
 #define HELP_IPHONE @"?"
+#define SWITCH_IPAD @"Switch Mode"
+#define SWITCH_IPHONE @"Switch"
 
 // AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
@@ -79,14 +81,14 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     [btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Switch Mode" style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? SWITCH_IPAD : SWITCH_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.toolbar.translucent = NO;
     
     self.isCalipersView = YES;
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationChange:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
 
@@ -97,14 +99,9 @@
     [self.navigationController setToolbarHidden:NO];
     
     self.sizeDiff = self.view.frame.size.width - self.imageView.frame.size.width;
-    // TODO height diff is negative and not the same as width diff
-    // TODO see if ration of new width/old width still holds if relative to margin not used for views
     EPSLog(@"sizeDiff = %f", self.sizeDiff);
     EPSLog(@"sizeDiffHeight = %f", self.view.frame.size.height - self.imageView.frame.size.height);
-//    EPSLog(@"widthView = %f, heightView = %f", self.view.frame.size.width, self.view.frame.size.height);
-//    EPSLog(@"heightImageView = %f", self.imageView.frame.size.height);
-//    EPSLog(@"heightimageContainerView = %f", self.imageContainerView.frame.size.height);
-    
+
     // add a Caliper if there are none
     if ([self.calipersView.calipers count] < 1) {
         [self addHorizontalCaliper];
@@ -698,7 +695,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)statusBarOrientationChange:(NSNotification *)notification {
-    UIInterfaceOrientation orient = [[UIApplication sharedApplication] statusBarOrientation];
+    //UIInterfaceOrientation orient = [[UIApplication sharedApplication] statusBarOrientation];
     
     
     // handle the interface orientation as needed
