@@ -60,7 +60,7 @@
     
     [self selectMainToolbar];
 
-    [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    [self.imageView setContentMode:UIViewContentModeCenter];
     
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
@@ -80,6 +80,22 @@
     self.rrIntervalForQTc = 0.0;
     
     [self.imageView setHidden:self.settings.hideStartImage];
+    
+    // imageview testing
+    
+    UIImage *image = self.imageView.image;
+    CGFloat maxDimension = image.size.width;    // for now...
+    CGFloat ratio = maxDimension / self.imageView.frame.size.width;
+    
+    CGSize size = CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(1/ratio, 1/ratio));
+    
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    
+    self.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // end imageview testing
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
@@ -823,6 +839,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
+    
+    [self.calipersView setNeedsDisplay];
+    return;
 
     double horizontalRatio = (size.width - self.sizeDiffWidth) / self.imageView.frame.size.width;
     double verticalRatio = (size.height - self.sizeDiffHeight) / self.imageView.frame.size.height;
