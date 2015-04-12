@@ -165,13 +165,24 @@
             if (c.direction == Horizontal) {
                 c.bar1Position *= horizontalRatio;
                 c.bar2Position *= horizontalRatio;
-                c.crossBarPosition *= 1/horizontalRatio;
+                c.crossBarPosition *= verticalRatio;
             }
             else {
                 c.bar1Position *= verticalRatio;
                 c.bar2Position *= verticalRatio;
-                c.crossBarPosition *= verticalRatio;
+                c.crossBarPosition *= horizontalRatio;
             }
+        }
+    }
+}
+
+- (void)zoomCalipers:(CGFloat)initialScale toScale:(CGFloat)finalScale {
+    CGFloat zoomFactor = finalScale / initialScale;
+    for (Caliper *c in self.calipers) {
+        if (c != nil) {
+            c.bar1Position *= zoomFactor;
+            c.bar2Position *= zoomFactor;
+            c.crossBarPosition *= zoomFactor;
         }
     }
 }

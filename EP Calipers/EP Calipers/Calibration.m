@@ -52,12 +52,18 @@
 }
 
 - (double)multiplier {
-    if (self.orientation == Portrait) {
-        return self.multiplierForPortrait;
+    if (self.zCalibrated) {
+        return [self zCurrentCalFactor];
     }
-    else {
-        return self.multiplierForLandscape;
-    }
+    else
+        return 1.0;
+    
+//    if (self.orientation == Portrait) {
+//        return self.multiplierForPortrait;
+//    }
+//    else {
+//        return self.multiplierForLandscape;
+//    }
 }
 
 - (void)reset {
@@ -67,6 +73,12 @@
     self.multiplierForPortrait = 1.0;
     self.multiplierForLandscape = 1.0;
     self.displayRate = NO;
+    
+    self.zCurrentMaximum = 1.0;
+    self.zOriginalZoom = 1.0;
+    self.zCurrentZoom = 1.0;
+    self.zOriginalMaximum = 1.0;
+    self.zCalibrated = NO;
 }
 
 - (BOOL)canDisplayRate {
@@ -104,5 +116,16 @@
     return self.calibratedLandscapeMode || self.calibratedProtraitMode;
 }
 
+
+#pragma Z-functions
+- (CGFloat)zCurrentCalFactor {
+//    return (self.zOriginalMaximum * self.zOriginalZoom * self.zCurrentImageMaximum * self.zOriginalCalFactor) / (self.zCurrentMaximum * self.zOriginalImageMaximum * self.zCurrentZoom);
+    return (self.zOriginalMaximum * self.zOriginalZoom * self.zOriginalCalFactor) / (self.zCurrentMaximum * self.zCurrentZoom);
+
+}
+
+- (CGFloat)zCurrentVerticalCalFactor {
+    return 1.0;
+}
 
 @end
