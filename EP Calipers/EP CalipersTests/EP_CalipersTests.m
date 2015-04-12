@@ -52,6 +52,7 @@
 
 - (void)testCanDisplayRate {
     Calibration *cal = [[Calibration alloc] init];
+    cal.calibratedProtraitMode = YES;
     cal.units = @"msec";
     XCTAssert([cal canDisplayRate]);
     cal.units = @"milliseconds";
@@ -70,8 +71,18 @@
     XCTAssert([cal canDisplayRate]);
     cal.direction = Vertical;
     XCTAssert(![cal canDisplayRate]);
+}
 
-    
+- (void)testCurrentHorizontalCalFactor {
+    Calibration *cal = [[Calibration alloc] init];
+    cal.zOriginalZoom = 1.0;
+    cal.zOriginalMaximum = 500.0;
+    cal.zOriginalCalFactor = 0.5;
+    cal.zCurrentZoom = 1.0;
+    cal.zCurrentMaximum = 1000.0;
+    XCTAssert([cal zCurrentCalFactor] == 0.25);
+    cal.zCurrentZoom = 2.0;
+    XCTAssert([cal zCurrentCalFactor] == 0.125);
 }
 
 @end

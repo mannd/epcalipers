@@ -34,6 +34,15 @@
 - (BOOL)currentModeCalibrated;
 - (NSString *)rawUnits;
 
+@property (nonatomic) CGFloat zOriginalZoom;
+@property (nonatomic) CGFloat zCurrentZoom;
+@property (nonatomic) CGFloat zOriginalMaximum;
+@property (nonatomic) CGFloat zCurrentMaximum;
+@property (nonatomic) CGFloat zOriginalCalFactor;
+@property (nonatomic) BOOL zCalibrated;
+
+- (CGFloat)zCurrentCalFactor;
+
 
 + (BOOL)isPortraitOrientationForSize:(CGSize)size;
 

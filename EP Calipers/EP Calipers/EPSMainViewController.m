@@ -597,90 +597,104 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 #pragma mark - Delegate Methods
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
         return;
     }
     if (alertView.tag == CALIBRATION_ALERTVIEW) {
         NSString *rawText = [[alertView textFieldAtIndex:0] text];
         if (rawText.length > 0) {
-            float value = 0.0;
-            NSString *trimmedUnits = @"";
-            // commented lines can be used to test different locale behavior
-            // NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"FR"];
-            NSScanner *scanner = [NSScanner localizedScannerWithString:rawText];
-            // scanner.locale = locale;
-            [scanner scanFloat:&value];
-            trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-            EPSLog(@"Entered: %@, value = %f, units = %@", rawText, value, trimmedUnits);
-            // all calibrations must be positive
-            value = fabsf(value);
-            if (value > 0.0) {
-                EPSLog(@"view h = %f, view w = %f", self.view.frame.size.height, self.view.frame.size.width);
-                EPSLog(@"calipersView h = %f, w = %f", self.calipersView.frame.size.height, self.calipersView.frame.size.width);
-                
+            [self zCalibrateWithText:rawText];
+        }
+        else if (alertView.tag == MEAN_RR_ALERTVIEW || alertView.tag == MEAN_RR_FOR_QTC_ALERTVIEW) {
+            NSString *rawText = [[alertView textFieldAtIndex:0] text];
+            int divisor = [rawText intValue];
+            if (divisor > 0) {
                 Caliper *c = self.calipersView.activeCaliper;
-                if (c == nil || c.valueInPoints <= 0) {
+                if (c == nil) {
                     return;
                 }
-                if (c.direction == Horizontal) {
-                    self.horizontalCalibration.calibrationString = rawText;
-                    self.horizontalCalibration.units = trimmedUnits;
-                    if (!self.horizontalCalibration.canDisplayRate) {
-                        self.horizontalCalibration.displayRate = NO;
-                    }
-                    // separate calibration for portrait and landscape modes
-                    if ([self isPortraitMode]) {
-                        self.horizontalCalibration.multiplierForPortrait = value/c.valueInPoints;
-                        EPSLog(@"Multiplier for portrait = %f", value/c.valueInPoints);
-                        self.horizontalCalibration.calibratedProtraitMode = YES;
-                    }
-                    else {
-                        self.horizontalCalibration.multiplierForLandscape = value/c.valueInPoints;
-                        EPSLog(@"Multiplier for landscape = %f", value/c.valueInPoints);
-                        self.horizontalCalibration.calibratedLandscapeMode = YES;
-                    }
+                double intervalResult = fabs(c.intervalResult);
+                double meanRR = intervalResult / divisor;
+                double meanRate = [c rateResult:meanRR];
+                if (alertView.tag == MEAN_RR_ALERTVIEW) {
+                    UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                    resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
+                    [resultAlertView show];
                 }
                 else {
-                    self.verticalCalibration.calibrationString = rawText;
-                    self.verticalCalibration.units = trimmedUnits;
-                    if ([self isPortraitMode]) {
-                        self.verticalCalibration.multiplierForPortrait = value/c.valueInPoints;
-                        self.verticalCalibration.calibratedProtraitMode = YES;
-                    }
-                    else {
-                        self.verticalCalibration.multiplierForLandscape = value/c.valueInPoints;
-                        self.verticalCalibration.calibratedLandscapeMode = YES;
-                    }
-                    
+                    self.rrIntervalForQTc = [c intervalInSecs:meanRR];
                 }
-                [self.calipersView setNeedsDisplay];
-                [self selectMainToolbar];            
+                
             }
-            
         }
     }
-    else if (alertView.tag == MEAN_RR_ALERTVIEW || alertView.tag == MEAN_RR_FOR_QTC_ALERTVIEW) {
-        NSString *rawText = [[alertView textFieldAtIndex:0] text];
-        int divisor = [rawText intValue];
-        if (divisor > 0) {
+}
+
+- (void)zCalibrateWithText:(NSString *)rawText {
+    if (rawText.length > 0) {
+        float value = 0.0;
+        NSString *trimmedUnits = @"";
+        // commented lines can be used to test different locale behavior
+        // NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"FR"];
+        NSScanner *scanner = [NSScanner localizedScannerWithString:rawText];
+        // scanner.locale = locale;
+        [scanner scanFloat:&value];
+        trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        EPSLog(@"Entered: %@, value = %f, units = %@", rawText, value, trimmedUnits);
+        // all calibrations must be positive
+        value = fabsf(value);
+        if (value > 0.0) {
             Caliper *c = self.calipersView.activeCaliper;
-            if (c == nil) {
+            if (c == nil || c.valueInPoints <= 0) {
                 return;
             }
-            double intervalResult = fabs(c.intervalResult);
-            double meanRR = intervalResult / divisor;
-            double meanRate = [c rateResult:meanRR];
-            if (alertView.tag == MEAN_RR_ALERTVIEW) {
-                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
-                [resultAlertView show];
+            if (c.direction == Horizontal) {
+                self.horizontalCalibration.calibrationString = rawText;
+                self.horizontalCalibration.units = trimmedUnits;
+                if (!self.horizontalCalibration.canDisplayRate) {
+                    self.horizontalCalibration.displayRate = NO;
+                }
+                self.horizontalCalibration.zOriginalZoom = self.scrollView.zoomScale;
+                self.horizontalCalibration.zOriginalMaximum = self.imageView.frame.size.width;
+                self.horizontalCalibration.zOriginalCalFactor = value / c.valueInPoints;
+                self.horizontalCalibration.zCurrentMaximum = self.horizontalCalibration.zOriginalMaximum;
+                self.horizontalCalibration.zCurrentZoom = self.horizontalCalibration.zOriginalZoom;
+                self.horizontalCalibration.zCalibrated = YES;
+                // separate calibration for portrait and landscape modes
+                if ([self isPortraitMode]) {
+                    self.horizontalCalibration.multiplierForPortrait = value/c.valueInPoints;
+                    self.horizontalCalibration.calibratedProtraitMode = YES;
+                }
+                else {
+                    self.horizontalCalibration.multiplierForLandscape = value/c.valueInPoints;
+                    self.horizontalCalibration.calibratedLandscapeMode = YES;
+                }
             }
             else {
-                self.rrIntervalForQTc = [c intervalInSecs:meanRR];
+                self.verticalCalibration.calibrationString = rawText;
+                self.verticalCalibration.units = trimmedUnits;
+                self.verticalCalibration.zOriginalZoom = self.scrollView.zoomScale;
+                self.verticalCalibration.zOriginalMaximum = self.imageView.frame.size.height;
+                self.verticalCalibration.zOriginalCalFactor = value / c.valueInPoints;
+                self.verticalCalibration.zCurrentMaximum = self.verticalCalibration.zOriginalMaximum;
+                self.verticalCalibration.zCurrentZoom = self.verticalCalibration.zOriginalZoom;
+                self.verticalCalibration.zCalibrated = YES;
+
+                if ([self isPortraitMode]) {
+                    self.verticalCalibration.multiplierForPortrait = value/c.valueInPoints;
+                    self.verticalCalibration.calibratedProtraitMode = YES;
+                }
+                else {
+                    self.verticalCalibration.multiplierForLandscape = value/c.valueInPoints;
+                    self.verticalCalibration.calibratedLandscapeMode = YES;
+                }
+                
             }
-            
+            [self.calipersView setNeedsDisplay];
+            [self selectMainToolbar];
         }
+        
     }
 }
 
