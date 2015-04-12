@@ -105,8 +105,10 @@
     self.sizeDiffHeight = self.view.frame.size.height - self.imageView.frame.size.height;
     EPSLog(@"sizeDiff = %f", self.sizeDiffWidth);
     EPSLog(@"sizeDiffHeight = %f", self.sizeDiffHeight);
-    EPSLog(@"height = %f", self.imageView.frame.size.height);
-    EPSLog(@"width = %f", self.imageView.frame.size.width);
+    EPSLog(@"imageView height = %f", self.imageView.frame.size.height);
+    EPSLog(@"image height = %f", self.imageView.image.size.height);
+    EPSLog(@"imageView width = %f", self.imageView.frame.size.width);
+    EPSLog(@"image width = %f", self.imageView.image.size.width);
 
     // add a Caliper if there are none
     if ([self.calipersView.calipers count] < 1) {
@@ -301,7 +303,6 @@
         float qt = fabs([c intervalInSecs:c.intervalResult]);
         float meanRR = fabs(self.rrIntervalForQTc);  // already in secs
         NSString *result = @"Invalid Result";
-        EPSLog(@"RR in sec = %f, QT in sec = %f", meanRR, qt);
         if (meanRR > 0) {
             float sqrtRR = sqrtf(meanRR);
             float qtc = qt/sqrtRR;
@@ -641,7 +642,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         // scanner.locale = locale;
         [scanner scanFloat:&value];
         trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        EPSLog(@"Entered: %@, value = %f, units = %@", rawText, value, trimmedUnits);
         // all calibrations must be positive
         value = fabsf(value);
         if (value > 0.0) {
@@ -649,6 +649,15 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             if (c == nil || c.valueInPoints <= 0) {
                 return;
             }
+            
+            CGFloat maximumDimension = 1.0; // choose whether new size or width should be use to adjust cal factor
+            if (self.imageView.image.size.width > self.imageView.image.size.height) {
+                maximumDimension = self.imageView.frame.size.width;
+            }
+            else {
+                maximumDimension = self.imageView.frame.size.height;
+            }
+            
             if (c.direction == Horizontal) {
                 self.horizontalCalibration.calibrationString = rawText;
                 self.horizontalCalibration.units = trimmedUnits;
@@ -656,9 +665,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                     self.horizontalCalibration.displayRate = NO;
                 }
                 self.horizontalCalibration.zOriginalZoom = self.scrollView.zoomScale;
-                self.horizontalCalibration.zOriginalMaximum = self.imageView.frame.size.width;
+                self.horizontalCalibration.zOriginalMaximum = maximumDimension;
                 self.horizontalCalibration.zOriginalCalFactor = value / c.valueInPoints;
-                self.horizontalCalibration.zCurrentMaximum = self.horizontalCalibration.zOriginalMaximum;
+                self.horizontalCalibration.zCurrentMaximum = maximumDimension;
                 self.horizontalCalibration.zCurrentZoom = self.horizontalCalibration.zOriginalZoom;
                 self.horizontalCalibration.zCalibrated = YES;
                 // separate calibration for portrait and landscape modes
@@ -675,9 +684,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                 self.verticalCalibration.calibrationString = rawText;
                 self.verticalCalibration.units = trimmedUnits;
                 self.verticalCalibration.zOriginalZoom = self.scrollView.zoomScale;
-                self.verticalCalibration.zOriginalMaximum = self.imageView.frame.size.height;
+                self.verticalCalibration.zOriginalMaximum = maximumDimension;
                 self.verticalCalibration.zOriginalCalFactor = value / c.valueInPoints;
-                self.verticalCalibration.zCurrentMaximum = self.verticalCalibration.zOriginalMaximum;
+                self.verticalCalibration.zCurrentMaximum = maximumDimension;
                 self.verticalCalibration.zCurrentZoom = self.verticalCalibration.zOriginalZoom;
                 self.verticalCalibration.zCalibrated = YES;
 
@@ -723,9 +732,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     EPSLog(@"New scale = %f", scale);
-    [self.calipersView zoomCalipers:self.lastZoomFactor toScale:scale];
+    // don't move calipers, but do adjust calibration
+    self.horizontalCalibration.zCurrentZoom = scale;
+    self.verticalCalibration.zCurrentZoom = scale;
     [self.calipersView setNeedsDisplay];
-    //[self clearCalibration];
+    
+//    [self.calipersView zoomCalipers:self.lastZoomFactor toScale:scale];
+//    [self.calipersView setNeedsDisplay];
+//    //[self clearCalibration];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -734,8 +748,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     double horizontalRatio = (size.width - self.sizeDiffWidth) / self.imageView.frame.size.width;
     double verticalRatio = (size.height - self.sizeDiffHeight) / self.imageView.frame.size.height;
     
-    EPSLog(@"containerview width = %f", self.imageContainerView.frame.size.width);
-    EPSLog(@"containerview height = %f", self.imageContainerView.frame.size.height);
+    CGFloat maximumDimension = 1.0; // choose whether new size or width should be use to adjust cal factor
+    if (self.imageView.image.size.width > self.imageView.image.size.height) {
+        maximumDimension = size.width - self.sizeDiffWidth;
+    }
+    else {
+        maximumDimension = size.height - self.sizeDiffHeight;
+    }
+    
+    self.horizontalCalibration.zCurrentMaximum = maximumDimension;
+    self.verticalCalibration.zCurrentMaximum = maximumDimension;
 
     [self.calipersView shiftCalipers:horizontalRatio forVerticalRatio:verticalRatio];
 
