@@ -41,6 +41,9 @@
 @property (nonatomic) CGFloat zOriginalCalFactor;
 @property (nonatomic) BOOL zCalibrated;
 
+@property (nonatomic) CGFloat zOriginalImageMaximum;
+@property (nonatomic) CGFloat zCurrentImageMaximum;
+
 - (CGFloat)zCurrentCalFactor;
 
 

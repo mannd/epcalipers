@@ -119,7 +119,7 @@
 
 #pragma Z-functions
 - (CGFloat)zCurrentCalFactor {
-    return (self.zOriginalMaximum * self.zOriginalZoom * self.zOriginalCalFactor) / (self.zCurrentMaximum * self.zCurrentZoom);
+    return (self.zOriginalMaximum * self.zOriginalZoom * self.zCurrentImageMaximum * self.zOriginalCalFactor) / (self.zCurrentMaximum * self.zOriginalImageMaximum * self.zCurrentZoom);
 }
 
 - (CGFloat)zCurrentVerticalCalFactor {

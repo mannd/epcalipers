@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet CalipersView *calipersView;
 @property (strong, nonatomic) IBOutlet UIView *imageContainerView;
+@property (strong, nonatomic) UIImage *originalImage;
 
 @property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
 @property (strong, nonatomic) UIBarButtonItem *mRRButton;

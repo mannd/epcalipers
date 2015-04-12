@@ -61,6 +61,7 @@
     [self selectMainToolbar];
 
     [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
+    self.originalImage = self.imageView.image;
     
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
@@ -172,7 +173,7 @@
     UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"1°L" style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
     UIBarButtonItem *flipImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Flip" style:UIBarButtonItemStylePlain target:self action:@selector(flipImage:)];
     UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
-    UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectImageToolbar)];
+    UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     
     self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, flipImageButton, resetImageButton, backToImageMenuButton, nil];
     
@@ -547,10 +548,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(degrees));
     }];
-
+//    [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
+//    self.imageView.image = [self rotatedImageFromImageView:self.imageView forAngle:radians(degrees)];
 }
 
 - (IBAction)resetImage:(id)sender {
+//    if (self.originalImage != nil)
+//        self.imageView.image = self.originalImage;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         self.imageView.transform = CGAffineTransformIdentity;
     }];
@@ -592,9 +596,78 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }];
 }
 
+- (void)adjustImageDone {
+    CGFloat maxImageDimension = 0.0;
+    if (self.imageView.image.size.width > self.imageView.image.size.height) {
+        maxImageDimension = self.imageView.image.size.width;
+    }
+    else {
+        maxImageDimension = self.imageView.image.size.height;
+    }
+    self.horizontalCalibration.zCurrentImageMaximum = maxImageDimension;
+    self.verticalCalibration.zCurrentImageMaximum = maxImageDimension;
+    [self selectImageToolbar];
+    [self.calipersView setNeedsDisplay];
+}
+
 - (BOOL)isPortraitMode {
     return self.view.frame.size.height > self.view.frame.size.width;
 }
+
+
+// modified from http://stackoverflow.com/questions/10012406/how-to-set-a-uiviews-origin-reference
+- (UIImage *) rotatedImageFromImageView: (UIImageView *) imageView forAngle:(CGFloat)angle {
+    UIImage *rotatedImage;
+    
+    // Get image width, height of the bounding rectangle
+    CGRect boundingRect = [self getBoundingRectAfterRotation:CGRectMake(0, 0, imageView.image.size.width, imageView.image.size.height) byAngle:radians(angle)];
+    
+    // Create a graphics context the size of the bounding rectangle
+    UIGraphicsBeginImageContext(boundingRect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+ 
+
+    
+    [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
+
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    
+
+    transform = CGAffineTransformTranslate(transform, boundingRect.size.width/2, boundingRect.size.height/2);
+    transform = CGAffineTransformRotate(transform, angle);
+    transform = CGAffineTransformScale(transform, 1.0, -1.0);
+        
+        CGContextConcatCTM(context, transform);
+
+       }];
+    
+    
+    // Draw the image into the context
+    CGContextDrawImage(context, CGRectMake(-imageView.image.size.width/2, -imageView.image.size.height/2, imageView.image.size.width, imageView.image.size.height), imageView.image.CGImage);
+    
+    // Get an image from the context
+    rotatedImage = [UIImage imageWithCGImage: CGBitmapContextCreateImage(context)];
+    
+    // Clean up
+    UIGraphicsEndImageContext();
+    return rotatedImage;
+}
+
+- (CGRect) getBoundingRectAfterRotation: (CGRect) rectangle byAngle: (CGFloat) angleOfRotation {
+    // Calculate the width and height of the bounding rectangle using basic trig
+    CGFloat newWidth = rectangle.size.width * fabs(cosf(angleOfRotation)) + rectangle.size.height * fabs(sinf(angleOfRotation));
+    CGFloat newHeight = rectangle.size.height * fabs(cosf(angleOfRotation)) + rectangle.size.width * fabs(sinf(angleOfRotation));
+    
+    // Calculate the position of the origin
+    CGFloat newX = rectangle.origin.x + ((rectangle.size.width - newWidth) / 2);
+    CGFloat newY = rectangle.origin.y + ((rectangle.size.height - newHeight) / 2);
+    
+    // Return the rectangle
+    CGFloat maxDimension = (newWidth > newHeight) ? newWidth : newHeight;
+ //   return CGRectMake(newX, newY, newWidth, newHeight);
+    return CGRectMake(newX, newY, maxDimension, maxDimension);
+}
+
 
 #pragma mark - Delegate Methods
 
@@ -649,13 +722,15 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             if (c == nil || c.valueInPoints <= 0) {
                 return;
             }
-            
+            CGFloat maximumImageDimension = 1.0;
             CGFloat maximumDimension = 1.0; // choose whether new size or width should be use to adjust cal factor
             if (self.imageView.image.size.width > self.imageView.image.size.height) {
                 maximumDimension = self.imageView.frame.size.width;
+                maximumImageDimension = self.imageView.image.size.width;
             }
             else {
                 maximumDimension = self.imageView.frame.size.height;
+                maximumImageDimension = self.imageView.image.size.height;
             }
             
             if (c.direction == Horizontal) {
@@ -666,6 +741,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                 }
                 self.horizontalCalibration.zOriginalZoom = self.scrollView.zoomScale;
                 self.horizontalCalibration.zOriginalMaximum = maximumDimension;
+                self.horizontalCalibration.zOriginalImageMaximum = maximumImageDimension;
+                self.horizontalCalibration.zCurrentImageMaximum = maximumImageDimension;
                 self.horizontalCalibration.zOriginalCalFactor = value / c.valueInPoints;
                 self.horizontalCalibration.zCurrentMaximum = maximumDimension;
                 self.horizontalCalibration.zCurrentZoom = self.horizontalCalibration.zOriginalZoom;
@@ -685,6 +762,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                 self.verticalCalibration.units = trimmedUnits;
                 self.verticalCalibration.zOriginalZoom = self.scrollView.zoomScale;
                 self.verticalCalibration.zOriginalMaximum = maximumDimension;
+                self.verticalCalibration.zOriginalImageMaximum = maximumImageDimension;
+                self.verticalCalibration.zCurrentImageMaximum = maximumImageDimension;
                 self.verticalCalibration.zOriginalCalFactor = value / c.valueInPoints;
                 self.verticalCalibration.zCurrentMaximum = maximumDimension;
                 self.verticalCalibration.zCurrentZoom = self.verticalCalibration.zOriginalZoom;
