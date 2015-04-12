@@ -36,15 +36,16 @@
 @property (strong, nonatomic) Calibration *verticalCalibration;
 @property (strong, nonatomic) Settings *settings;
 
-@property BOOL isIpad;
-@property double rrIntervalForQTc;
+@property (nonatomic) BOOL isIpad;
+@property (nonatomic) double rrIntervalForQTc;
 
-@property BOOL isCalipersView;
+@property (nonatomic) BOOL isCalipersView;
 
-@property float sizeDiffWidth;
-@property float sizeDiffHeight;
+@property (nonatomic) CGFloat sizeDiffWidth;
+@property (nonatomic) CGFloat sizeDiffHeight;
 
-@property CGFloat lastZoomFactor;
+@property (nonatomic) CGFloat lastZoomFactor;
+@property (nonatomic) BOOL isRotatedImage;
 
 @end
 

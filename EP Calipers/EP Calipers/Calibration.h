@@ -34,6 +34,9 @@
 - (BOOL)currentModeCalibrated;
 - (NSString *)rawUnits;
 
+@property (nonatomic) BOOL useZCalibration; // if NO, require separate calibration
+                                            // for Portrait and Landscape modes
+
 @property (nonatomic) CGFloat zOriginalZoom;
 @property (nonatomic) CGFloat zCurrentZoom;
 @property (nonatomic) CGFloat zOriginalMaximum;
