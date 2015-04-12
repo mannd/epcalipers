@@ -61,7 +61,6 @@
     [self selectMainToolbar];
 
     [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
-    self.originalImage = self.imageView.image;
     
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
@@ -680,30 +679,31 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         if (rawText.length > 0) {
             [self zCalibrateWithText:rawText];
         }
-        else if (alertView.tag == MEAN_RR_ALERTVIEW || alertView.tag == MEAN_RR_FOR_QTC_ALERTVIEW) {
-            NSString *rawText = [[alertView textFieldAtIndex:0] text];
-            int divisor = [rawText intValue];
-            if (divisor > 0) {
-                Caliper *c = self.calipersView.activeCaliper;
-                if (c == nil) {
-                    return;
-                }
-                double intervalResult = fabs(c.intervalResult);
-                double meanRR = intervalResult / divisor;
-                double meanRate = [c rateResult:meanRR];
-                if (alertView.tag == MEAN_RR_ALERTVIEW) {
-                    UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                    resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
-                    [resultAlertView show];
-                }
-                else {
-                    self.rrIntervalForQTc = [c intervalInSecs:meanRR];
-                }
-                
+    }
+    else if (alertView.tag == MEAN_RR_ALERTVIEW || alertView.tag == MEAN_RR_FOR_QTC_ALERTVIEW) {
+        NSString *rawText = [[alertView textFieldAtIndex:0] text];
+        int divisor = [rawText intValue];
+        if (divisor > 0) {
+            Caliper *c = self.calipersView.activeCaliper;
+            if (c == nil) {
+                return;
             }
+            double intervalResult = fabs(c.intervalResult);
+            double meanRR = intervalResult / divisor;
+            double meanRate = [c rateResult:meanRR];
+            if (alertView.tag == MEAN_RR_ALERTVIEW) {
+                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
+                [resultAlertView show];
+            }
+            else {
+                self.rrIntervalForQTc = [c intervalInSecs:meanRR];
+            }
+            
         }
     }
 }
+
 
 - (void)zCalibrateWithText:(NSString *)rawText {
     if (rawText.length > 0) {
