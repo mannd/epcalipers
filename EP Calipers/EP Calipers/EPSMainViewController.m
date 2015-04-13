@@ -729,7 +729,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
-    EPSLog(@"Original zoomscale = %f", scrollView.zoomScale);
     self.lastZoomFactor = scrollView.zoomScale;
 }
 
