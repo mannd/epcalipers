@@ -35,13 +35,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx">
-                                <rect key="frame" x="8" y="0.0" width="584" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c" userLabel="containerView">
-                                        <rect key="frame" x="0.0" y="0.0" width="584" height="600"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <subviews>
                                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Normal 12_Lead ECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
-                                                <rect key="frame" x="0.0" y="0.0" width="584" height="600"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
@@ -63,19 +63,19 @@
                                 </constraints>
                             </scrollView>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView">
-                                <rect key="frame" x="8" y="0.0" width="584" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D98-VW-HwH" secondAttribute="bottom" id="10L-uH-NeD"/>
-                            <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="7mg-co-GHU"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="X5X-Yr-OYx" secondAttribute="bottom" id="Afo-Q6-Sib"/>
-                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="leadingMargin" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Rln-Xy-rlQ"/>
-                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailingMargin" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="W4Y-nF-S1C"/>
-                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="XQA-gU-Hse"/>
-                            <constraint firstItem="D98-VW-HwH" firstAttribute="leadingMargin" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="qp0-qs-gBY"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="D98-VW-HwH" secondAttribute="trailingMargin" id="tYO-h2-XFY"/>
+                            <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7mg-co-GHU"/>
+                            <constraint firstAttribute="bottom" secondItem="X5X-Yr-OYx" secondAttribute="bottom" id="Afo-Q6-Sib"/>
+                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Rln-Xy-rlQ"/>
+                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="W4Y-nF-S1C"/>
+                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="XQA-gU-Hse"/>
+                            <constraint firstItem="D98-VW-HwH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qp0-qs-gBY"/>
+                            <constraint firstAttribute="trailing" secondItem="D98-VW-HwH" secondAttribute="trailing" id="tYO-h2-XFY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zAQ-bd-wcX"/>

@@ -107,24 +107,28 @@
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
-
+    
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    
+    EPSLog(@"Screen height = %f", screenHeight);
+    EPSLog(@"Status bar height = %f", [UIApplication sharedApplication].statusBarFrame.size.height);
+    EPSLog(@"Navigation bar height = %f", self.navigationController.navigationBar.frame.size.height);
+    EPSLog(@"Toolbar height = %f", self.navigationController.toolbar.frame.size.height);
+    EPSLog(@"ImageView height = %f", self.imageView.frame.size.height);
+    
+    EPSLog(@"Screen width = %f", screenWidth);
+    EPSLog (@"ImageView width = %f", self.imageView.frame.size.width);
+           
+           
+    
     if (self.firstRun) {
-        
         //  scale image for imageView;
-        // autolayout not done in viewDidAppear
-        
-        UIImage *image = self.imageView.image;
-        // scale the largest image dimension to the smallest imageView dimension so will fit when rotated
-        CGFloat maxDimension = fmaxf(image.size.width, image.size.height);
-        CGFloat minImageViewDimension = fminf(self.imageView.frame.size.width, self.imageView.frame.size.height);
-        CGFloat ratio = minImageViewDimension / maxDimension;
-        self.imageView.image = [self scaleImageForImageView:image withRatio:ratio];
-        
-        // end imageview testing
+        // autolayout not done in viewDidLoad
+        self.imageView.image = [self scaleImageForImageView:self.imageView.image];
         self.firstRun = NO;
     }
-    
-
     
     self.sizeDiffWidth = self.view.frame.size.width - self.imageView.frame.size.width;
     self.sizeDiffHeight = self.view.frame.size.height - self.imageView.frame.size.height;
@@ -135,7 +139,11 @@
     }
 }
 
-- (UIImage *)scaleImageForImageView:(UIImage *)image withRatio:(CGFloat)ratio {
+- (UIImage *)scaleImageForImageView:(UIImage *)image {
+    
+    CGFloat maxImageDimension = fmaxf(image.size.width, image.size.height);
+    CGFloat minImageViewDimension = fminf(self.imageView.frame.size.width, self.imageView.frame.size.height);
+    CGFloat ratio = minImageViewDimension/maxImageDimension;
     
     CGSize size = CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(ratio, ratio));
     
@@ -824,7 +832,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     CGFloat maxDimension = fmaxf(chosenImage.size.width, chosenImage.size.height);
     CGFloat minImageViewDimension = fminf(self.imageView.frame.size.width, self.imageView.frame.size.height);
     CGFloat ratio = minImageViewDimension / maxDimension;
-    self.imageView.image = [self scaleImageForImageView:chosenImage withRatio:ratio];
+    self.imageView.image = [self scaleImageForImageView:chosenImage];
     
     [self.imageView setHidden:NO];
  
@@ -859,10 +867,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-
-   
-    EPSLog(@"self.imageView.frame.width = %f", self.imageView.frame.size.width);
-    EPSLog(@"self.imageView.bounds.width = %f", self.imageView.bounds.size.width);
 
     InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
     
