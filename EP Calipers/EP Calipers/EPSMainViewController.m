@@ -73,8 +73,6 @@
     self.verticalCalibration = [[Calibration alloc] init];
     self.verticalCalibration.direction = Vertical;
     
-    self.horizontalCalibration.orientation = self.verticalCalibration.orientation = [self viewOrientation];
-    
     [self.calipersView setUserInteractionEnabled:YES];
     
     self.rrIntervalForQTc = 0.0;
@@ -93,11 +91,7 @@
     self.isCalipersView = YES;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationChange:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
-    
     self.firstRun = YES;
-
 }
 
 - (void)viewDidLayoutSubviews {
@@ -107,57 +101,42 @@
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
-    
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
-    CGFloat screenHeight = screenRect.size.height;
-    
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
-    CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
-    CGFloat verticalSpace = statusBarHeight + navigationBarHeight + toolbarHeight;
-    
-    self.portraitWidth = fminf(screenHeight, screenWidth);
-    self.landscapeWidth = fmaxf(screenHeight, screenWidth);
-    self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
-    self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
-    
-    EPSLog(@"------------------------");
-    EPSLog(@"ImageView width = %f", self.imageView.frame.size.width);
-    EPSLog(@"ImageView height = %f", self.imageView.frame.size.height);
-    EPSLog(@"Portrait width = %f", self.portraitWidth);
-    EPSLog(@"Landscape width = %f", self.landscapeWidth);
-    EPSLog(@"Portrait height = %f", self.portraitHeight);
-    EPSLog(@"Landscape height = %f", self.landscapeHeight);
-   
 
     if (self.firstRun) {
         //  scale image for imageView;
         // autolayout not done in viewDidLoad
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = screenRect.size.width;
+        CGFloat screenHeight = screenRect.size.height;
+        
+        CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+        CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+        CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
+        CGFloat verticalSpace = statusBarHeight + navigationBarHeight + toolbarHeight;
+        
+        self.portraitWidth = fminf(screenHeight, screenWidth);
+        self.landscapeWidth = fmaxf(screenHeight, screenWidth);
+        self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
+        self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
+        
         self.imageView.image = [self scaleImageForImageView:self.imageView.image];
         [self.imageView setHidden:self.settings.hideStartImage];
-        self.firstRun = NO;
-    }
-    
-    self.sizeDiffWidth = self.view.frame.size.width - self.imageView.frame.size.width;
-    self.sizeDiffHeight = self.view.frame.size.height - self.imageView.frame.size.height;
-    
-    // add a Caliper if there are none
-    if ([self.calipersView.calipers count] < 1) {
+        
         [self addHorizontalCaliper];
+        self.firstRun = NO;
     }
 }
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
     
     CGFloat ratio;
+    // determine best fit for image
     if (image.size.width > image.size.height) {
         ratio = self.portraitWidth / image.size.width;
     }
     else {
         ratio = self.landscapeHeight / image.size.height;
     }
-   
     
     CGSize size = CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(ratio, ratio));
     
@@ -167,10 +146,6 @@
     UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return scaledImage;
-}
-
-- (InterfaceOrientation)viewOrientation {
-    return ([self isPortraitMode] ? Portrait : Landscape);
 }
 
 - (void)switchView {
@@ -546,8 +521,6 @@
     [self addCaliperWithDirection:Vertical];
 }
 
-//- (BOOL)noCalipers
-
 - (void)addCaliperWithDirection:(CaliperDirection)direction {
     Caliper *caliper = [[Caliper alloc] init];
     caliper.lineWidth = self.settings.lineWidth;
@@ -570,7 +543,7 @@
 
 - (void)resetCalibration {
     // don't bother if no calibration present
-    if ([self.horizontalCalibration calibratedEitherMode] || [self.verticalCalibration calibratedEitherMode]) {
+    if ([self.horizontalCalibration calibrated] || [self.verticalCalibration calibrated]) {
         [self flashCalipers];
         [self.horizontalCalibration reset];
         [self.verticalCalibration reset];
@@ -600,13 +573,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(degrees));
     }];
-//    [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
-//    self.imageView.image = [self rotatedImageFromImageView:self.imageView forAngle:radians(degrees)];
 }
 
 - (IBAction)resetImage:(id)sender {
-//    if (self.originalImage != nil)
-//        self.imageView.image = self.originalImage;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         self.imageView.transform = CGAffineTransformIdentity;
     }];
@@ -629,8 +598,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)unfadeCaliperView {
     self.calipersView.alpha = 1.0f;
 }
-
-
 
 - (IBAction)flipImage:(id)sender {
     static BOOL horizontal = YES;
@@ -656,8 +623,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     else {
         maxImageDimension = self.imageView.image.size.height;
     }
-    self.horizontalCalibration.zCurrentImageMaximum = maxImageDimension;
-    self.verticalCalibration.zCurrentImageMaximum = maxImageDimension;
     [self selectImageToolbar];
     [self.calipersView setNeedsDisplay];
 }
@@ -665,61 +630,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (BOOL)isPortraitMode {
     return self.view.frame.size.height > self.view.frame.size.width;
 }
-
-
-// modified from http://stackoverflow.com/questions/10012406/how-to-set-a-uiviews-origin-reference
-- (UIImage *) rotatedImageFromImageView: (UIImageView *) imageView forAngle:(CGFloat)angle {
-    UIImage *rotatedImage;
-    
-    // Get image width, height of the bounding rectangle
-    CGRect boundingRect = [self getBoundingRectAfterRotation:CGRectMake(0, 0, imageView.image.size.width, imageView.image.size.height) byAngle:radians(angle)];
-    
-    // Create a graphics context the size of the bounding rectangle
-    UIGraphicsBeginImageContext(boundingRect.size);
-    CGContextRef context = UIGraphicsGetCurrentContext();
- 
-
-    
-    [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
-
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    
-
-    transform = CGAffineTransformTranslate(transform, boundingRect.size.width/2, boundingRect.size.height/2);
-    transform = CGAffineTransformRotate(transform, angle);
-    transform = CGAffineTransformScale(transform, 1.0, -1.0);
-        
-        CGContextConcatCTM(context, transform);
-
-       }];
-    
-    
-    // Draw the image into the context
-    CGContextDrawImage(context, CGRectMake(-imageView.image.size.width/2, -imageView.image.size.height/2, imageView.image.size.width, imageView.image.size.height), imageView.image.CGImage);
-    
-    // Get an image from the context
-    rotatedImage = [UIImage imageWithCGImage: CGBitmapContextCreateImage(context)];
-    
-    // Clean up
-    UIGraphicsEndImageContext();
-    return rotatedImage;
-}
-
-- (CGRect) getBoundingRectAfterRotation: (CGRect) rectangle byAngle: (CGFloat) angleOfRotation {
-    // Calculate the width and height of the bounding rectangle using basic trig
-    CGFloat newWidth = rectangle.size.width * fabs(cosf(angleOfRotation)) + rectangle.size.height * fabs(sinf(angleOfRotation));
-    CGFloat newHeight = rectangle.size.height * fabs(cosf(angleOfRotation)) + rectangle.size.width * fabs(sinf(angleOfRotation));
-    
-    // Calculate the position of the origin
-    CGFloat newX = rectangle.origin.x + ((rectangle.size.width - newWidth) / 2);
-    CGFloat newY = rectangle.origin.y + ((rectangle.size.height - newHeight) / 2);
-    
-    // Return the rectangle
-    CGFloat maxDimension = (newWidth > newHeight) ? newWidth : newHeight;
- //   return CGRectMake(newX, newY, newWidth, newHeight);
-    return CGRectMake(newX, newY, maxDimension, maxDimension);
-}
-
 
 #pragma mark - Delegate Methods
 
@@ -757,7 +667,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
 }
 
-
 - (void)zCalibrateWithText:(NSString *)rawText {
     if (rawText.length > 0) {
         float value = 0.0;
@@ -775,81 +684,35 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             if (c == nil || c.valueInPoints <= 0) {
                 return;
             }
-            CGFloat maximumImageDimension = 1.0;
-            CGFloat maximumDimension = 1.0; // choose whether new size or width should be use to adjust cal factor
-            if (self.imageView.image.size.width > self.imageView.image.size.height) {
-                maximumDimension = self.imageView.frame.size.width;
-                maximumImageDimension = self.imageView.image.size.width;
-            }
-            else {
-                maximumDimension = self.imageView.frame.size.height;
-                maximumImageDimension = self.imageView.image.size.height;
-            }
-            
             if (c.direction == Horizontal) {
                 self.horizontalCalibration.calibrationString = rawText;
                 self.horizontalCalibration.units = trimmedUnits;
                 if (!self.horizontalCalibration.canDisplayRate) {
                     self.horizontalCalibration.displayRate = NO;
                 }
-                self.horizontalCalibration.zOriginalZoom = self.scrollView.zoomScale;
-                self.horizontalCalibration.zOriginalMaximum = maximumDimension;
-                self.horizontalCalibration.zOriginalImageMaximum = maximumImageDimension;
-                self.horizontalCalibration.zCurrentImageMaximum = maximumImageDimension;
-                self.horizontalCalibration.zOriginalCalFactor = value / c.valueInPoints;
-                self.horizontalCalibration.zCurrentMaximum = maximumDimension;
-                self.horizontalCalibration.zCurrentZoom = self.horizontalCalibration.zOriginalZoom;
-                self.horizontalCalibration.zCalibrated = YES;
-                // separate calibration for portrait and landscape modes
-                if ([self isPortraitMode]) {
-                    self.horizontalCalibration.multiplierForPortrait = value/c.valueInPoints;
-                    self.horizontalCalibration.calibratedProtraitMode = YES;
-                }
-                else {
-                    self.horizontalCalibration.multiplierForLandscape = value/c.valueInPoints;
-                    self.horizontalCalibration.calibratedLandscapeMode = YES;
-                }
+                self.horizontalCalibration.originalZoom = self.scrollView.zoomScale;
+                self.horizontalCalibration.originalCalFactor = value / c.valueInPoints;
+                self.horizontalCalibration.currentZoom = self.horizontalCalibration.originalZoom;
+                self.horizontalCalibration.calibrated = YES;
             }
             else {
                 self.verticalCalibration.calibrationString = rawText;
                 self.verticalCalibration.units = trimmedUnits;
-                self.verticalCalibration.zOriginalZoom = self.scrollView.zoomScale;
-                self.verticalCalibration.zOriginalMaximum = maximumDimension;
-                self.verticalCalibration.zOriginalImageMaximum = maximumImageDimension;
-                self.verticalCalibration.zCurrentImageMaximum = maximumImageDimension;
-                self.verticalCalibration.zOriginalCalFactor = value / c.valueInPoints;
-                self.verticalCalibration.zCurrentMaximum = maximumDimension;
-                self.verticalCalibration.zCurrentZoom = self.verticalCalibration.zOriginalZoom;
-                self.verticalCalibration.zCalibrated = YES;
-
-                if ([self isPortraitMode]) {
-                    self.verticalCalibration.multiplierForPortrait = value/c.valueInPoints;
-                    self.verticalCalibration.calibratedProtraitMode = YES;
-                }
-                else {
-                    self.verticalCalibration.multiplierForLandscape = value/c.valueInPoints;
-                    self.verticalCalibration.calibratedLandscapeMode = YES;
-                }
-                
+                self.verticalCalibration.originalZoom = self.scrollView.zoomScale;
+                self.verticalCalibration.originalCalFactor = value / c.valueInPoints;
+                self.verticalCalibration.currentZoom = self.verticalCalibration.originalZoom;
+                self.verticalCalibration.calibrated = YES;
             }
             [self.calipersView setNeedsDisplay];
             [self selectMainToolbar];
         }
-        
     }
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    
-    // scale the largest image dimension to the smallest imageView dimension so will fit when rotated
-    CGFloat maxDimension = fmaxf(chosenImage.size.width, chosenImage.size.height);
-    CGFloat minImageViewDimension = fminf(self.imageView.frame.size.width, self.imageView.frame.size.height);
-    CGFloat ratio = minImageViewDimension / maxDimension;
     self.imageView.image = [self scaleImageForImageView:chosenImage];
-    
     [self.imageView setHidden:NO];
- 
     [picker dismissViewControllerAnimated:YES completion:NULL];
     [self clearCalibration];
 }
@@ -865,63 +728,17 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     EPSLog(@"Original zoomscale = %f", scrollView.zoomScale);
     self.lastZoomFactor = scrollView.zoomScale;
-
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
-    EPSLog(@"New scale = %f", scale);
     // don't move calipers, but do adjust calibration
-    self.horizontalCalibration.zCurrentZoom = scale;
-    self.verticalCalibration.zCurrentZoom = scale;
+    self.horizontalCalibration.currentZoom = scale;
+    self.verticalCalibration.currentZoom = scale;
     [self.calipersView setNeedsDisplay];
-    
-//    [self.calipersView zoomCalipers:self.lastZoomFactor toScale:scale];
-//    [self.calipersView setNeedsDisplay];
-//    //[self clearCalibration];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-
-    InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
-    
     [self.calipersView setNeedsDisplay];
-    return;
-
-    double horizontalRatio = (size.width - self.sizeDiffWidth) / self.imageView.frame.size.width;
-    double verticalRatio = (size.height - self.sizeDiffHeight) / self.imageView.frame.size.height;
-    
-    CGFloat maximumDimension = 1.0; // choose whether new size or width should be use to adjust cal factor
-    if (self.imageView.image.size.width > self.imageView.image.size.height) {
-        maximumDimension = size.width - self.sizeDiffWidth;
-    }
-    else {
-        maximumDimension = size.height - self.sizeDiffHeight;
-    }
-    
-    self.horizontalCalibration.zCurrentMaximum = maximumDimension;
-    self.verticalCalibration.zCurrentMaximum = maximumDimension;
-
-    [self.calipersView shiftCalipers:horizontalRatio forVerticalRatio:verticalRatio];
-
-    
-    self.horizontalCalibration.orientation = orientation;
-    self.verticalCalibration.orientation = orientation;
-    [self.calipersView setNeedsDisplay];
-    BOOL enable = [self.horizontalCalibration canDisplayRate];
-    [self.toggleIntervalRateButton setEnabled:enable];
-    [self.mRRButton setEnabled:enable];
-    [self.qtcButton setEnabled:enable];
-    
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
-
-- (void)statusBarOrientationChange:(NSNotification *)notification {
-    //UIInterfaceOrientation orient = [[UIApplication sharedApplication] statusBarOrientation];
-    
-    
-    // handle the interface orientation as needed
-}
-
-
 
 @end

@@ -13,16 +13,16 @@
 #import "Defs.h"
 
 
-@property float bar1Position;
-@property float bar2Position;
-@property float crossBarPosition;
-@property CaliperDirection direction;
-@property UIColor *color;
-@property UIColor *unselectedColor;
-@property UIColor *selectedColor;
-@property NSInteger lineWidth;
+@property (nonatomic) float bar1Position;
+@property (nonatomic) float bar2Position;
+@property (nonatomic) float crossBarPosition;
+@property (nonatomic) CaliperDirection direction;
+@property (strong, nonatomic) UIColor *color;
+@property (strong, nonatomic) UIColor *unselectedColor;
+@property (strong, nonatomic) UIColor *selectedColor;
+@property (nonatomic) NSInteger lineWidth;
 @property (readonly) float valueInPoints;
-@property BOOL selected;
+@property (nonatomic) BOOL selected;
 @property (weak, nonatomic) Calibration *calibration;
 
 - (double)intervalResult;

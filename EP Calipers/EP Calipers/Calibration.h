@@ -12,44 +12,24 @@
 @interface Calibration : NSObject
 #import "Defs.h"
 
-@property BOOL calibratedProtraitMode;
-@property BOOL calibratedLandscapeMode;
-
-@property CaliperDirection direction;
-@property InterfaceOrientation orientation;
-@property double multiplierForPortrait;
-@property double multiplierForLandscape;
-@property (readonly) double multiplier;
+@property (nonatomic) CaliperDirection direction;
 @property (strong, nonatomic) NSString *units;
 @property (strong, nonatomic) NSString *calibrationString;
 @property (readonly) BOOL canDisplayRate;
 @property (readonly) BOOL unitsAreSeconds;
 @property (readonly) BOOL unitsAreMsec;
-@property BOOL displayRate;
+@property (nonatomic) BOOL displayRate;
 
 - (instancetype)initWithDirection:(CaliperDirection)direction;
 - (instancetype)init;
 - (void)reset;
-- (BOOL)calibratedEitherMode;
-- (BOOL)currentModeCalibrated;
 - (NSString *)rawUnits;
 
-@property (nonatomic) BOOL useZCalibration; // if NO, require separate calibration
-                                            // for Portrait and Landscape modes
+@property (nonatomic) CGFloat originalZoom;
+@property (nonatomic) CGFloat currentZoom;
+@property (nonatomic) CGFloat originalCalFactor;
+@property (nonatomic) BOOL calibrated;
 
-@property (nonatomic) CGFloat zOriginalZoom;
-@property (nonatomic) CGFloat zCurrentZoom;
-@property (nonatomic) CGFloat zOriginalMaximum;
-@property (nonatomic) CGFloat zCurrentMaximum;
-@property (nonatomic) CGFloat zOriginalCalFactor;
-@property (nonatomic) BOOL zCalibrated;
-
-@property (nonatomic) CGFloat zOriginalImageMaximum;
-@property (nonatomic) CGFloat zCurrentImageMaximum;
-
-- (CGFloat)zCurrentCalFactor;
-
-
-+ (BOOL)isPortraitOrientationForSize:(CGSize)size;
+- (CGFloat)currentCalFactor;
 
 @end
