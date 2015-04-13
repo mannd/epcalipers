@@ -47,5 +47,10 @@
 @property (nonatomic) CGFloat lastZoomFactor;
 @property (nonatomic) BOOL isRotatedImage;
 
+@property (nonatomic) CGFloat portraitWidth;
+@property (nonatomic) CGFloat portraitHeight;
+@property (nonatomic) CGFloat landscapeWidth;
+@property (nonatomic) CGFloat landscapeHeight;
+
 @end
 

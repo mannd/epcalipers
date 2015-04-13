@@ -79,7 +79,7 @@
     
     self.rrIntervalForQTc = 0.0;
     
-    [self.imageView setHidden:self.settings.hideStartImage];
+    [self.imageView setHidden:YES];  // hide view until it is rescaled
     
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
@@ -112,21 +112,30 @@
     CGFloat screenWidth = screenRect.size.width;
     CGFloat screenHeight = screenRect.size.height;
     
-    EPSLog(@"Screen height = %f", screenHeight);
-    EPSLog(@"Status bar height = %f", [UIApplication sharedApplication].statusBarFrame.size.height);
-    EPSLog(@"Navigation bar height = %f", self.navigationController.navigationBar.frame.size.height);
-    EPSLog(@"Toolbar height = %f", self.navigationController.toolbar.frame.size.height);
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
+    CGFloat verticalSpace = statusBarHeight + navigationBarHeight + toolbarHeight;
+    
+    self.portraitWidth = fminf(screenHeight, screenWidth);
+    self.landscapeWidth = fmaxf(screenHeight, screenWidth);
+    self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
+    self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
+    
+    EPSLog(@"------------------------");
+    EPSLog(@"ImageView width = %f", self.imageView.frame.size.width);
     EPSLog(@"ImageView height = %f", self.imageView.frame.size.height);
-    
-    EPSLog(@"Screen width = %f", screenWidth);
-    EPSLog (@"ImageView width = %f", self.imageView.frame.size.width);
-           
-           
-    
+    EPSLog(@"Portrait width = %f", self.portraitWidth);
+    EPSLog(@"Landscape width = %f", self.landscapeWidth);
+    EPSLog(@"Portrait height = %f", self.portraitHeight);
+    EPSLog(@"Landscape height = %f", self.landscapeHeight);
+   
+
     if (self.firstRun) {
         //  scale image for imageView;
         // autolayout not done in viewDidLoad
         self.imageView.image = [self scaleImageForImageView:self.imageView.image];
+        [self.imageView setHidden:self.settings.hideStartImage];
         self.firstRun = NO;
     }
     
@@ -141,9 +150,14 @@
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
     
-    CGFloat maxImageDimension = fmaxf(image.size.width, image.size.height);
-    CGFloat minImageViewDimension = fminf(self.imageView.frame.size.width, self.imageView.frame.size.height);
-    CGFloat ratio = minImageViewDimension/maxImageDimension;
+    CGFloat ratio;
+    if (image.size.width > image.size.height) {
+        ratio = self.portraitWidth / image.size.width;
+    }
+    else {
+        ratio = self.landscapeHeight / image.size.height;
+    }
+   
     
     CGSize size = CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(ratio, ratio));
     
