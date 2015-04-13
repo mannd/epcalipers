@@ -11,9 +11,7 @@
 
 @implementation Calibration
 
-@synthesize multiplier=_multiplier;
 @synthesize units=_units;
-
 
 - (instancetype)initWithDirection:(CaliperDirection)direction {
     self = [super init];
@@ -26,15 +24,20 @@
 
 - (instancetype)init {
     self = [self initWithDirection:Horizontal];
-
     return self;
 }
 
 - (NSString *)units {
-    if (self.displayRate)
-        return @"bpm";
+    if (self.calibrated) {
+        if (self.displayRate) {
+            return @"bpm";
+        }
+        else {
+            return _units;
+        }
+    }
     else
-        return _units;
+        return @"points";
 }
 
 - (NSString *)rawUnits {
@@ -42,40 +45,26 @@
 }
 
 - (double)multiplier {
-    double multiplier = 1.0;
-    if (!self.calibrated || self.currentOrientationRatio == self.calibratedOrientationRatio) {
-        multiplier = _multiplier;
+    if (self.calibrated) {
+        return [self currentCalFactor];
     }
-    else {
-        multiplier = _multiplier * self.currentOrientationRatio;
-    }
-//    if (self.displayRate && self.canDisplayRate) {
-//        if (self.unitsAreMsec) {
-//            multiplier = multiplier / 60000.0;
-//        }
-//        if (self.unitsAreSeconds) {
-//            multiplier = 60.0 / multiplier;
-//        }
-//    }
-    return multiplier;
-}
-
-- (void)setMultiplier:(double)multiplier {
-    _multiplier = multiplier;
+    else
+        return 1.0;
 }
 
 - (void)reset {
-    self.calibrated = NO;
     self.units = @"points";
-    self.multiplier = 1.0;
-    self.currentOrientationRatio = 1.0;
-    self.calibratedOrientationRatio = 1.0;
     self.displayRate = NO;
-    self.calibrated = NO; 
+    self.originalZoom = 1.0;
+    self.currentZoom = 1.0;
+    self.calibrated = NO;
 }
 
 - (BOOL)canDisplayRate {
     if (self.direction == Vertical) {
+        return NO;
+    }
+    else if (![self calibrated]) {
         return NO;
     }
     return self.unitsAreMsec || self.unitsAreSeconds;
@@ -96,6 +85,10 @@
     }
     NSString *units = [_units uppercaseString];
     return [units containsString:@"MSEC"] || [units isEqualToString:@"MS"] || [units containsString:@"MILLIS"];
+}
+
+- (CGFloat)currentCalFactor {
+    return (self.originalZoom * self.originalCalFactor) / self.currentZoom;
 }
 
 

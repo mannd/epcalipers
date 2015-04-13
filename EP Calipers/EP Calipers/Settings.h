@@ -9,11 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface Settings : NSObject
+
 @property (strong, nonatomic) UIColor *caliperColor;
 @property (strong, nonatomic) UIColor *highlightColor;
-@property NSInteger lineWidth;
+@property (nonatomic) NSInteger lineWidth;
 @property (strong, nonatomic) NSString *defaultCalibration;
-@property BOOL hideStartImage;
+@property (strong, nonatomic) NSString *defaultVerticalCalibration;
+@property (nonatomic) BOOL hideStartImage;
 
 - (instancetype)init;
 - (void)loadPreferences;

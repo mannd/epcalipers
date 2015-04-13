@@ -16,7 +16,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet CalipersView *calipersView;
-@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (strong, nonatomic) IBOutlet UIView *imageContainerView;
 
 @property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
@@ -36,8 +35,22 @@
 @property (strong, nonatomic) Calibration *verticalCalibration;
 @property (strong, nonatomic) Settings *settings;
 
-@property BOOL isIpad;
-@property double rrIntervalForQTc;
+@property (nonatomic) BOOL isIpad;
+@property (nonatomic) double rrIntervalForQTc;
+@property (nonatomic) BOOL firstRun;
+
+@property (nonatomic) BOOL isCalipersView;
+
+@property (nonatomic) CGFloat sizeDiffWidth;
+@property (nonatomic) CGFloat sizeDiffHeight;
+
+@property (nonatomic) CGFloat lastZoomFactor;
+@property (nonatomic) BOOL isRotatedImage;
+
+@property (nonatomic) CGFloat portraitWidth;
+@property (nonatomic) CGFloat portraitHeight;
+@property (nonatomic) CGFloat landscapeWidth;
+@property (nonatomic) CGFloat landscapeHeight;
 
 @end
 

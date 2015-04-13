@@ -18,6 +18,7 @@
         self.highlightColor = [UIColor redColor];
         self.lineWidth = 2;
         self.defaultCalibration = @"1000 msec";
+        self.defaultVerticalCalibration = @"10 mm";
         self.hideStartImage = NO;
     }
     return self;
@@ -39,6 +40,10 @@
     if (defaultCalibration != nil) {
         self.defaultCalibration = defaultCalibration;
     }
+    NSString *defaultVerticalCalibration = [defaults objectForKey:@"verticalCalibrationPreference"];
+    if (defaultVerticalCalibration != nil) {
+        self.defaultVerticalCalibration = defaultVerticalCalibration;
+    }
     NSString *colorName = [defaults objectForKey:@"caliperColorPreference"];
     NSString *highlightColorName = [defaults objectForKey:@"highlightColorPreference"];
     UIColor *caliperColor = [colorMap valueForKey:colorName];
@@ -52,10 +57,6 @@
     
     // doesn't matter if not set, will be NO which is the default anyway
     self.hideStartImage = [defaults boolForKey:@"hideStartImagePreference"];
-    
-    EPSLog(@"Color = %@, highlightColor = %@", colorName, highlightColor);
-
-    
 }
 
 @end

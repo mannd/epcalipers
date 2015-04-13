@@ -10,7 +10,6 @@
 
 @interface WebViewController : UIViewController
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
-@property (strong, nonatomic) IBOutlet UIToolbar *toolbar;
 
 
 @end

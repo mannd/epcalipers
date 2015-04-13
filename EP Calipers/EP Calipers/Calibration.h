@@ -12,23 +12,25 @@
 @interface Calibration : NSObject
 #import "Defs.h"
 
-@property BOOL calibrated;
-@property CaliperDirection direction;
-@property double multiplier;
+@property (nonatomic) CaliperDirection direction;
 @property (strong, nonatomic) NSString *units;
 @property (strong, nonatomic) NSString *calibrationString;
-@property float currentOrientationRatio;
-@property float calibratedOrientationRatio;
 @property (readonly) BOOL canDisplayRate;
 @property (readonly) BOOL unitsAreSeconds;
 @property (readonly) BOOL unitsAreMsec;
-@property BOOL displayRate;
-@property (strong, nonatomic) NSString *rawUnits;
+@property (nonatomic) BOOL displayRate;
+@property (readonly) double multiplier;
 
 - (instancetype)initWithDirection:(CaliperDirection)direction;
 - (instancetype)init;
 - (void)reset;
+- (NSString *)rawUnits;
 
+@property (nonatomic) CGFloat originalZoom;
+@property (nonatomic) CGFloat currentZoom;
+@property (nonatomic) CGFloat originalCalFactor;
+@property (nonatomic) BOOL calibrated;
 
+- (CGFloat)currentCalFactor;
 
 @end

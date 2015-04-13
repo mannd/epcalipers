@@ -13,14 +13,13 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder;
 
-@property (nonatomic, strong)NSMutableArray *calipers;
-@property (weak, nonatomic)IBOutlet UIToolbar *toolbar;
-@property BOOL locked;
+@property (nonatomic, strong) NSMutableArray *calipers;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (nonatomic) BOOL locked;
 
 - (void)selectCaliperIfNoneSelected;
 - (BOOL)noCaliperIsSelected;
 - (Caliper *)activeCaliper;
-- (void)shiftCalipers:(double)ratio forNewHeight:(double)height;
 - (void)selectCaliper:(Caliper *)c;
 - (void)unselectCaliper:(Caliper *)c;
 
