@@ -81,21 +81,6 @@
     
     [self.imageView setHidden:self.settings.hideStartImage];
     
-    // imageview testing
-    
-    UIImage *image = self.imageView.image;
-    CGFloat maxDimension = image.size.width;    // for now...
-    CGFloat ratio = maxDimension / self.imageView.frame.size.width;
-    
-    CGSize size = CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(1/ratio, 1/ratio));
-    
-    UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
-    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    
-    self.imageView.image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    // end imageview testing
     
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
@@ -110,26 +95,56 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarOrientationChange:) name:UIApplicationDidChangeStatusBarOrientationNotification object:nil];
+    
+    self.firstRun = YES;
+
+}
+
+- (void)viewDidLayoutSubviews {
 
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
+
+    if (self.firstRun) {
+        
+        //  scale image for imageView;
+        // autolayout not done in viewDidAppear
+        
+        UIImage *image = self.imageView.image;
+        // scale the largest image dimension to the smallest imageView dimension so will fit when rotated
+        CGFloat maxDimension = fmaxf(image.size.width, image.size.height);
+        CGFloat minImageViewDimension = fminf(self.imageView.frame.size.width, self.imageView.frame.size.height);
+        CGFloat ratio = minImageViewDimension / maxDimension;
+        self.imageView.image = [self scaleImageForImageView:image withRatio:ratio];
+        
+        // end imageview testing
+        self.firstRun = NO;
+    }
+    
+
     
     self.sizeDiffWidth = self.view.frame.size.width - self.imageView.frame.size.width;
     self.sizeDiffHeight = self.view.frame.size.height - self.imageView.frame.size.height;
-    EPSLog(@"sizeDiff = %f", self.sizeDiffWidth);
-    EPSLog(@"sizeDiffHeight = %f", self.sizeDiffHeight);
-    EPSLog(@"imageView height = %f", self.imageView.frame.size.height);
-    EPSLog(@"image height = %f", self.imageView.image.size.height);
-    EPSLog(@"imageView width = %f", self.imageView.frame.size.width);
-    EPSLog(@"image width = %f", self.imageView.image.size.width);
-
+    
     // add a Caliper if there are none
     if ([self.calipersView.calipers count] < 1) {
         [self addHorizontalCaliper];
     }
+}
+
+- (UIImage *)scaleImageForImageView:(UIImage *)image withRatio:(CGFloat)ratio {
+    
+    CGSize size = CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(ratio, ratio));
+    
+    UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return scaledImage;
 }
 
 - (InterfaceOrientation)viewOrientation {
@@ -804,7 +819,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
-    self.imageView.image = chosenImage;
+    
+    // scale the largest image dimension to the smallest imageView dimension so will fit when rotated
+    CGFloat maxDimension = fmaxf(chosenImage.size.width, chosenImage.size.height);
+    CGFloat minImageViewDimension = fminf(self.imageView.frame.size.width, self.imageView.frame.size.height);
+    CGFloat ratio = minImageViewDimension / maxDimension;
+    self.imageView.image = [self scaleImageForImageView:chosenImage withRatio:ratio];
+    
     [self.imageView setHidden:NO];
  
     [picker dismissViewControllerAnimated:YES completion:NULL];
@@ -838,6 +859,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+
+   
+    EPSLog(@"self.imageView.frame.width = %f", self.imageView.frame.size.width);
+    EPSLog(@"self.imageView.bounds.width = %f", self.imageView.bounds.size.width);
+
     InterfaceOrientation orientation = ([Calibration isPortraitOrientationForSize:size] ? Portrait : Landscape);
     
     [self.calipersView setNeedsDisplay];

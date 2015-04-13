@@ -37,6 +37,7 @@
 
 @property (nonatomic) BOOL isIpad;
 @property (nonatomic) double rrIntervalForQTc;
+@property (nonatomic) BOOL firstRun;
 
 @property (nonatomic) BOOL isCalipersView;
 
