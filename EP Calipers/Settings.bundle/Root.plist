@@ -28,9 +28,25 @@
 			<key>KeyboardType</key>
 			<string>Alphabet</string>
 			<key>Title</key>
-			<string>Default Calibration</string>
+			<string>Default Time Calibration</string>
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Default Amplitude Calibration</string>
+			<key>Key</key>
+			<string>verticalCalibrationPreference</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>DefaultValue</key>
+			<string>10 mm</string>
+			<key>IsSecure</key>
+			<false/>
+			<key>KeyboardType</key>
+			<string>Alphabet</string>
 		</dict>
 		<dict>
 			<key>Type</key>

@@ -18,6 +18,7 @@
         self.highlightColor = [UIColor redColor];
         self.lineWidth = 2;
         self.defaultCalibration = @"1000 msec";
+        self.defaultVerticalCalibration = @"10 mm";
         self.hideStartImage = NO;
     }
     return self;
@@ -38,6 +39,10 @@
     NSString *defaultCalibration = [defaults objectForKey:@"calibrationPreference"];
     if (defaultCalibration != nil) {
         self.defaultCalibration = defaultCalibration;
+    }
+    NSString *defaultVerticalCalibration = [defaults objectForKey:@"verticalCalibrationPreference"];
+    if (defaultVerticalCalibration != nil) {
+        self.defaultVerticalCalibration = defaultVerticalCalibration;
     }
     NSString *colorName = [defaults objectForKey:@"caliperColorPreference"];
     NSString *highlightColorName = [defaults objectForKey:@"highlightColorPreference"];

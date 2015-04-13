@@ -416,6 +416,9 @@
     if ([self.horizontalCalibration.calibrationString length] < 1) {
         self.horizontalCalibration.calibrationString = self.settings.defaultCalibration;
     }
+    if ([self.verticalCalibration.calibrationString length] < 1) {
+        self.verticalCalibration.calibrationString = self.settings.defaultVerticalCalibration;
+    }
     if (c != nil) {
         CaliperDirection direction = c.direction;
         if (direction == Horizontal) {
