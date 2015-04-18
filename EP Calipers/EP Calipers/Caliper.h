@@ -24,6 +24,9 @@
 @property (readonly) float valueInPoints;
 @property (nonatomic) BOOL selected;
 @property (weak, nonatomic) Calibration *calibration;
+@property (strong, nonatomic) UIFont *textFont;
+@property (strong, nonatomic) NSMutableParagraphStyle *paragraphStyle;
+@property (strong, nonatomic) NSMutableDictionary *attributes;
 
 - (double)intervalResult;
 - (double)rateResult:(double)interval;
