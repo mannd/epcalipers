@@ -237,6 +237,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 32)];
     [label setText:@"QT interval?"];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
+    // TODO this button is mislabeled (should be measureQTButton)
     UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
