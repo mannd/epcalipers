@@ -120,6 +120,7 @@
         self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
         
         self.imageView.image = [self scaleImageForImageView:self.imageView.image];
+        
         [self.imageView setHidden:self.settings.hideStartImage];
         
         [self addHorizontalCaliper];
@@ -128,7 +129,7 @@
 }
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
-    
+
     CGFloat ratio;
     // determine best fit for image
     if (image.size.width > image.size.height) {
@@ -137,14 +138,10 @@
     else {
         ratio = self.landscapeHeight / image.size.height;
     }
-    
-    CGSize size = CGSizeApplyAffineTransform(image.size, CGAffineTransformMakeScale(ratio, ratio));
-    
-    UIGraphicsBeginImageContextWithOptions(size, YES, 0.0);
-    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    
-    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
+    // use scaling rather than resizing to get sharper image
+    CGImageRef imageRef = image.CGImage;
+    UIImage *scaledImage = [UIImage imageWithCGImage:(CGImageRef)imageRef scale:1/ratio orientation:UIImageOrientationUp];
+
     return scaledImage;
 }
 
@@ -237,6 +234,7 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 32)];
     [label setText:@"QT interval?"];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
+    // TODO this button is mislabeled (should be measureQTButton)
     UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
@@ -737,6 +735,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.horizontalCalibration.currentZoom = scale;
     self.verticalCalibration.currentZoom = scale;
     [self.calipersView setNeedsDisplay];
+    
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

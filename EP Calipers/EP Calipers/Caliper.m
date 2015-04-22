@@ -29,6 +29,9 @@
         self.color = [UIColor blueColor];
         self.lineWidth = 2;
         self.selected = NO;
+        self.textFont = [UIFont fontWithName:@"Helvetica" size:18.0];
+        self.paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        self.attributes = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -85,22 +88,19 @@
     }
     CGContextStrokePath(context);
     NSString *text = [self measurement];
-    UIFont *textFont = [UIFont fontWithName:@"Helvetica" size:18.0];
-    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
-    paragraphStyle.alignment = (self.direction == Horizontal ? NSTextAlignmentCenter : NSTextAlignmentLeft);
+    self.paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.paragraphStyle.alignment = (self.direction == Horizontal ? NSTextAlignmentCenter : NSTextAlignmentLeft);
 
-    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-    [attributes setObject:textFont forKey:NSFontAttributeName];
-    [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
-    [attributes setObject:self.color forKey:NSForegroundColorAttributeName];
+    [self.attributes setObject:self.textFont forKey:NSFontAttributeName];
+    [self.attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [self.attributes setObject:self.color forKey:NSForegroundColorAttributeName];
 
     if (self.direction == Horizontal) {
         // the math here insures that the label doesn't get so small that it can't be read
-        [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position - 25: self.bar2Position - 25), self.crossBarPosition - 20,  fmaxf(50.0, fabsf(self.bar2Position - self.bar1Position) + 50), 20)  withAttributes:attributes];
+        [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position - 25: self.bar2Position - 25), self.crossBarPosition - 20,  fmaxf(50.0, fabsf(self.bar2Position - self.bar1Position) + 50), 20)  withAttributes:self.attributes];
     }
     else {
-        [text drawInRect:CGRectMake(self.crossBarPosition + 5, self.bar1Position + (self.bar2Position - self.bar1Position)/2, 140, 20) withAttributes:attributes];
+        [text drawInRect:CGRectMake(self.crossBarPosition + 5, self.bar1Position + (self.bar2Position - self.bar1Position)/2, 140, 20) withAttributes:self.attributes];
     }
     
 }
