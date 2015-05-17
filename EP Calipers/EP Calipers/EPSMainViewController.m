@@ -18,8 +18,8 @@
 #define CALIBRATE_IPHONE @"Cal"
 #define TOGGLE_INT_RATE_IPAD @"Interval/Rate"
 #define TOGGLE_INT_RATE_IPHONE @"I/R"
-#define MEAN_RATE_IPAD @"meanRate"
-#define MEAN_RATE_IPHONE @"mRate"
+#define MEAN_RATE_IPAD @"Mean Rate"
+#define MEAN_RATE_IPHONE @"MRate"
 #define HELP_IPAD @"Help"
 #define HELP_IPHONE @"?"
 #define SWITCH_IPAD @"Switch Mode"
@@ -204,8 +204,8 @@
 }
 
 - (void)createAddCalipersToolbar {
-    UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Horizontal" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
-    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Vertical" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
+    UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Time" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
+    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Amplitude" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, cancelButton, nil];
