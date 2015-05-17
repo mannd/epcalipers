@@ -14,9 +14,9 @@
 #+LINK_HOME: 
 #+XSLT:
 * Overview
-*EP Calipers* provides electronic calipers to measure intervals on images of ECGs or electrophysiologic recordings.  In today's practice of medicine, it is common for doctors, nurses and medical technicians to photograph and send ECGs to each other via email and messaging using smart phones and tablets.  As an example, a physician on-call may be asked to review the QT measurement on an ECG to determine whether or not it is safe to continue a QT-prolonging drug such as dofetilide.  It is more difficult to make measurements on these images than it is on paper ECG recordings.  *EP Calipers* can be used to make these measurements and to do mean heart rate and corrected QT interval calculations, using electronic calipers similar to those in electrophysiologic recording systems.
+*EP Calipers* provides electronic calipers to measure intervals on images of ECGs or electrophysiologic recordings.  In today's practice of medicine it is common for doctors, nurses and medical technicians to photograph and send ECGs to each other via email and messaging using smart phones and tablets.  It is more difficult to make measurements on these images than it is on paper ECG recordings.  *EP Calipers* can be used to make these measurements and to do mean heart rate and corrected QT interval calculations, using electronic calipers similar to those in electrophysiologic recording systems.
 * Using the calipers
-** EP Calipers Mode versus Image Mode
+** Switching modes
 In *EP Calipers* you can manipulate caliper or manipulate the image,
 but not both at the same time.  The title bar at the top of the screen
 indicates which mode you are in.  The app starts in *EP Calipers Mode*
@@ -37,21 +37,21 @@ on your device.  Select *Done* to return to the main toolbar.
 ** Adjusting the image
 While in *Image Mode* you can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the *Adjust* menu to rotate or flip the image.
 ** Moving calipers
-Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of vertical calipers) to stretch or shrink the calipers.  Note that you cannot pinch both bars at the same time.
+Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers.  Note that you cannot pinch both bars at the same time.
 ** Making measurements
 The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units ("points").
 ** Adding and deleting calipers
-Select *+* to add new calipers.  Calipers can be horizontal (time measurements) or vertical (amplitude measurements).  Select *Horizontal* or *Vertical* to add the type of caliper you want.  Double-tap a caliper to delete it.
+Select *+* to add new calipers.  Calipers can be horizontal (time measurements) or vertical (amplitude measurements).  Select *Time* or *Amplitude* to add the type of caliper you want.  Double-tap a caliper to delete it.
 ** Highlighting a caliper
 Single tap a caliper to highlight it.  Its color will change.  Tap another caliper to change the highlight to that caliper.  Only one caliper can be highlighted at a time.  Touch any place where there is not a caliper to remove highlighting.  Tap a highlighted caliper (when not in the middle of a calculation) and it will be deleted. In some cases a caliper will be highlighted automatically (for example to do calibration) if you have not already highlighted one.  If you want to highlight a different caliper, just tap another caliper.   A caliper needs to be highlighted to do calibrations and calculations, and it is the highlighted caliper that is used for these measurements.
 ** Calibration
-Select *Calibration*.  Stretch a highlighted caliper over a known interval (such as 1000 msec for horizontal, or 10 mm for vertical calipers).  Select *Set*.  In the dialog box, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 400 msec, or 1 sec, or 1 mV).  Select *Set* in the dialog box to set the calibration.  Note that horizontal and vertical calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
+Select *Cal* or *Calibration*.  Stretch a highlighted caliper over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select *Set*.  In the dialog box, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 400 msec, or 1 sec, or 1 mV).  Select *Set* in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
 ** Changing calibration
 You can recalibrate at any time.  You can clear all calibration by selecting *Clear* in the calibration toolbar.  Note that calibration is maintained if the device is rotated or the image is rotated, shifted, or zoomed.  Selecting a new image will reset calibration.
 ** Interval/Rate
 Once a time (horizontal) caliper is calibrated, provided you use time units (such as msec or sec) for the calibration, it is possible to toggle between interval measurements (e.g. 600 msec) and heart rate measurements (e.g. 100 bpm) by selecting *Interval/Rate* on iPads (or *I/R* on iPhones).
 ** Mean rate and interval calculation
-Select a calibrated caliper and stretch it over a number of intervals.  Select *meanRate* or *mRate* and enter the number of intervals measured.  A dialog box will show the calculated mean heart rate and interval.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
+Select a calibrated caliper and stretch it over a number of intervals.  Select *Mean Rate* or *MRate* and enter the number of intervals measured.  A dialog box will show the calculated mean heart rate and interval.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
 ** QTc calculation
 Stretch a time caliper over one or more intervals and select *QTc*.  After measuring the interval/rate, measure the QT.  A dialog box will give the calculated QTc using Bazett's formula.
 ** Settings

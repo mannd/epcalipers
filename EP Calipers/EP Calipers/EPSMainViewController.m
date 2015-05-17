@@ -18,8 +18,8 @@
 #define CALIBRATE_IPHONE @"Cal"
 #define TOGGLE_INT_RATE_IPAD @"Interval/Rate"
 #define TOGGLE_INT_RATE_IPHONE @"I/R"
-#define MEAN_RATE_IPAD @"meanRate"
-#define MEAN_RATE_IPHONE @"mRate"
+#define MEAN_RATE_IPAD @"Mean Rate"
+#define MEAN_RATE_IPHONE @"MRate"
 #define HELP_IPAD @"Help"
 #define HELP_IPHONE @"?"
 #define SWITCH_IPAD @"Switch Mode"
@@ -125,6 +125,21 @@
         
         [self addHorizontalCaliper];
         self.firstRun = NO;
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+        {
+            // app already launched
+            EPSLog(@"Not first launch");
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            // This is the first launch ever
+            EPSLog(@"First launch");
+            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"Tap *Switch* at the upper left to switch modes between manipulating/loading images and manipulating calipers.\n\nUse your finger to move and position calipers or move and zoom the image depending on the mode.\n\nAdd calipers with the *+* menu item, single tap a caliper to highlight it, remove highlighting by tapping a spot without a caliper, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nTap the info button at the upper right for full help information." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [noSelectionAlert show];
+        }
+
     }
 }
 
@@ -204,8 +219,8 @@
 }
 
 - (void)createAddCalipersToolbar {
-    UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Horizontal" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
-    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Vertical" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
+    UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Time" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
+    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Amplitude" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, cancelButton, nil];
