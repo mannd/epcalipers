@@ -14,7 +14,7 @@
 #+LINK_HOME: 
 #+XSLT:
 * Overview
-*EP Calipers* provides electronic calipers to measure intervals on images of ECGs or electrophysiologic recordings.  In today's practice of medicine, it is common for doctors, nurses and medical technicians to photograph and send ECGs to each other via email and messaging using smart phones and tablets.  As an example, a physician on-call may be asked to review the QT measurement on an ECG to determine whether or not it is safe to continue a QT-prolonging drug such as dofetilide.  It is more difficult to make measurements on these images than it is on paper ECG recordings.  *EP Calipers* can be used to make these measurements and to do mean heart rate and corrected QT interval calculations, using electronic calipers similar to those in electrophysiologic recording systems.
+*EP Calipers* provides electronic calipers to measure intervals on images of ECGs or electrophysiologic recordings.  In today's practice of medicine, it is common for doctors, nurses and medical technicians to photograph and send ECGs to each other via email and messaging using smart phones and tablets.  It is more difficult to make measurements on these images than it is on paper ECG recordings.  *EP Calipers* can be used to make these measurements and to do mean heart rate and corrected QT interval calculations, using electronic calipers similar to those in electrophysiologic recording systems.
 * Using the calipers
 ** EP Calipers Mode versus Image Mode
 In *EP Calipers* you can manipulate caliper or manipulate the image,
