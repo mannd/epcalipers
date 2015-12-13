@@ -124,6 +124,8 @@
         [self.imageView setHidden:self.settings.hideStartImage];
         
         [self addHorizontalCaliper];
+        // Initial caliper is selected now by default
+        [self.calipersView selectCaliperIfNoneSelected];
         self.firstRun = NO;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
         {
