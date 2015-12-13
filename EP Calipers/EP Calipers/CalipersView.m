@@ -27,6 +27,17 @@
     return self;
 }
 
+
+//TESTEST!!!!!!!!!
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:point]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void)drawRect:(CGRect)rect {
     CGContextRef con = UIGraphicsGetCurrentContext();
     for (Caliper *caliper in self.calipers) {
