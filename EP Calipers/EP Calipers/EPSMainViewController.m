@@ -22,8 +22,9 @@
 #define MEAN_RATE_IPHONE @"MRate"
 #define HELP_IPAD @"Help"
 #define HELP_IPHONE @"?"
-#define SWITCH_IPAD @"Switch Mode"
-#define SWITCH_IPHONE @"Switch"
+#define SWITCH_IPAD @"Image"
+#define SWITCH_IPHONE @"Image"
+#define SWITCH_BACK @"Measure"
 
 // AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
@@ -124,6 +125,7 @@
         [self.imageView setHidden:self.settings.hideStartImage];
         
         [self addHorizontalCaliper];
+        // NB: new calipers are not selected 
         self.firstRun = NO;
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
         {
@@ -166,12 +168,14 @@
     if (self.isCalipersView) {
         self.navigationController.navigationBar.barTintColor = nil;
         self.navigationController.toolbar.barTintColor = nil;
+        [self.navigationItem.leftBarButtonItem setTitle:(self.isIpad ? SWITCH_IPAD : SWITCH_IPHONE)];
         [self unfadeCaliperView];
         [self selectMainToolbar];
     }
     else {
         self.navigationController.navigationBar.barTintColor = IMAGE_TINT;
         self.navigationController.toolbar.barTintColor = IMAGE_TINT;
+        [self.navigationItem.leftBarButtonItem setTitle:SWITCH_BACK];
         [self fadeCaliperView];
         [self selectImageToolbar];
     }
