@@ -60,9 +60,11 @@ Because of the limited nature of iOS multitasking, switching between this app an
 * Acknowledgments
 - Thanks to Dr. Michael Katz for the concept.
 - The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers][GitHub]].
-- *EP Calipers* is open source software and is licensed under the [[http://www.apache.org/licenses/LICENSE-2.0.html][Apache
-  License Version 2.0]].  No guarantees are made as to the accuracy of
-  the app, so use at your own risk.
+- *EP Calipers* is open source software and is licensed under the
+  [[https://www.apache.org/licenses/LICENSE-2.0.html][Apache License
+  Version 2.0]].  No guarantees are made as to the accuracy of the
+  app, so use at your own risk.
 - For questions, error reporting or suggestions contact
-  [[mailto:mannd@epstudiossoftware.com][EP Studios]].
-- Website: [[http://www.epstudiossoftware.com][epstudiossoftware.com]]
+  mannd@epstudiossoftware.com
+- Website: www.epstudiossoftware.com
+

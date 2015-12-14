@@ -14,7 +14,7 @@
 
 //:TODO: Make NO for release version
 // set to yes to always show startup screen
-#define TEST_QUICK_START YES
+//#define TEST_QUICK_START NO
 
 
 #define ANIMATION_DURATION 0.5
@@ -133,8 +133,8 @@
         // NB: new calipers are not selected 
         self.firstRun = NO;
         // for testing
-        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
-        {
+//        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
             // app already launched
             EPSLog(@"Not first launch");
         }
@@ -145,7 +145,7 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"What's New" message:@"What's new here....\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
+            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: It's easier to move the calipers and zoom and move the ECG image.  No need anymore to switch modes.  You can adjust everything on the same screen at the same time.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
                             delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [noSelectionAlert show];
         }
@@ -407,7 +407,7 @@
     else {
         self.toolbarItems = self.calibrateMenuItems;
         [self.calipersView selectCaliperIfNoneSelected];
-        self.calipersView.locked = YES;
+        self.calipersView.locked = NO;
     }
 }
 
