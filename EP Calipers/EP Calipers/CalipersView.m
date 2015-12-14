@@ -17,14 +17,30 @@
     if (self) {
         NSMutableArray *array = [[NSMutableArray alloc] init];
         self.calipers = array;
-        UITapGestureRecognizer *t = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
-        [self addGestureRecognizer:t];
-        UIPanGestureRecognizer *p = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragging:)];
-        [self addGestureRecognizer:p];
+        UIPanGestureRecognizer *draggingPanGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(dragging:)];
+        [self addGestureRecognizer:draggingPanGestureRecognizer];
+        UITapGestureRecognizer *singleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
+        singleTapGestureRecognizer.numberOfTapsRequired = 1;
+        [self addGestureRecognizer:singleTapGestureRecognizer];
+        UITapGestureRecognizer *doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2;
+        [self addGestureRecognizer:doubleTapGestureRecognizer];
+        [singleTapGestureRecognizer requireGestureRecognizerToFail:doubleTapGestureRecognizer];
         self.clearsContextBeforeDrawing = YES;
         self.locked = NO;
    }
     return self;
+}
+
+
+//TESTEST!!!!!!!!!
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:point]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (void)drawRect:(CGRect)rect {
@@ -50,18 +66,18 @@
 // deletion can be down with a quick double tap or more methodically, or cancelled by
 // unselecting the caliper.
 - (void)singleTap:(UITapGestureRecognizer *)t {
+    EPSLog(@"Single tap");
+    if (self.locked) {
+        return;
+    }
     CGPoint location = [t locationInView:self];
-    BOOL selectionMade = NO;
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
-        if ([(Caliper *)self.calipers[i] pointNearCaliper:location] && !selectionMade) {
-            if (((Caliper *)self.calipers[i]).selected && !self.locked ) {
-                [self.calipers removeObject:self.calipers[i]];
-                [self setNeedsDisplay];
-                return;
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
+            if (((Caliper *)self.calipers[i]).selected) {
+                [self unselectCaliper:(Caliper *)self.calipers[i]];
             }
             else  {
                 [self selectCaliper:(Caliper *)self.calipers[i]];
-                selectionMade = YES;
             }
         }
         else {
@@ -69,6 +85,23 @@
         }
     }
 }
+
+- (void)doubleTap:(UITapGestureRecognizer *)t {
+    EPSLog(@"Double tap");
+    if (self.locked) {
+        return;
+    }
+    CGPoint location = [t locationInView:self];
+    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
+            [self.calipers removeObject:self.calipers[i]];
+            [self setNeedsDisplay];
+            return;
+        }
+    }
+}
+
+
 
 - (void)dragging:(UIPanGestureRecognizer *)p {
     CGPoint location = [p locationInView:self];
