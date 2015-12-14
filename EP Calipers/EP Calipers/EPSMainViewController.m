@@ -12,6 +12,11 @@
 #import "EPSLogging.h"
 #include "Defs.h"
 
+//:TODO: Make NO for release version
+// set to yes to always show startup screen
+#define TEST_QUICK_START YES
+
+
 #define ANIMATION_DURATION 0.5
 
 #define CALIBRATE_IPAD @"Calibrate"
@@ -127,7 +132,8 @@
         [self addHorizontalCaliper];
         // NB: new calipers are not selected 
         self.firstRun = NO;
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+        // for testing
+        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
         {
             // app already launched
             EPSLog(@"Not first launch");
@@ -138,7 +144,9 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             // This is the first launch ever
             EPSLog(@"First launch");
-            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"Tap *Switch* at the upper left to switch modes between manipulating/loading images and manipulating calipers.\n\nUse your finger to move and position calipers or move and zoom the image depending on the mode.\n\nAdd calipers with the *+* menu item, single tap a caliper to highlight it, remove highlighting by tapping a spot without a caliper, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nTap the info button at the upper right for full help information." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            //TODO: Update with each version!!
+            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"What's New" message:@"What's new here....\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the info button at the upper right for full help."
+                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [noSelectionAlert show];
         }
 
@@ -263,7 +271,6 @@
 - (void)showHelp {
     [self performSegueWithIdentifier:@"WebViewSegue" sender:nil];
 }
-
 
 - (void)toggleIntervalRate {
     self.horizontalCalibration.displayRate = ! self.horizontalCalibration.displayRate;

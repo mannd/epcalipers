@@ -8,7 +8,10 @@
 
 #import "WebViewController.h"
 
+//TODO: Update with each new version!!
 #define VERSION @"1.2"
+
+#define HELP_URL @"epcalipers_help"
 
 @interface WebViewController ()
 
@@ -18,8 +21,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.   
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"epcalipers_help" ofType:@"html"] isDirectory:NO];
+    // Do any additional setup after loading the view.
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:HELP_URL ofType:@"html"] isDirectory:NO];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:requestObj];
     
@@ -34,8 +37,6 @@
     
     // centers view with navigationbar in place
     self.edgesForExtendedLayout = UIRectEdgeNone;
-
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
