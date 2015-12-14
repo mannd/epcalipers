@@ -3,16 +3,22 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<title></title>
-<!-- 2015-05-17 Sun 16:30 -->
+<!-- 2015-12-13 Sun 19:49 -->
 <meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
 <meta  name="generator" content="Org-mode" />
 <meta  name="author" content="David Mann" />
 <meta  name="description" content="EP Calipers Help"
  />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
@@ -20,9 +26,9 @@
             padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
-  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
   .underline { text-decoration: underline; }
   #postamble p, #preamble p { font-size: 90%; margin: .2em; }
   p.verse { margin-left: 3%; }
@@ -61,15 +67,14 @@
   caption.t-above { caption-side: top; }
   caption.t-bottom { caption-side: bottom; }
   td, th { vertical-align:top;  }
-  th.right  { text-align: center;  }
-  th.left   { text-align: center;   }
-  th.center { text-align: center; }
-  td.right  { text-align: right;  }
-  td.left   { text-align: left;   }
-  td.center { text-align: center; }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
   dt { font-weight: bold; }
-  .footpara:nth-child(2) { display: inline; }
-  .footpara { display: block; }
+  .footpara { display: inline; }
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
@@ -140,141 +145,148 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<div id="outline-container-unnumbered-1" class="outline-2">
-<h2 id="unnumbered-1">Overview</h2>
-<div class="outline-text-2" id="text-unnumbered-1">
+<div id="outline-container-orgheadline1" class="outline-2">
+<h2 id="orgheadline1">Overview</h2>
+<div class="outline-text-2" id="text-orgheadline1">
 <p>
-<b>EP Calipers</b> provides electronic calipers to measure intervals on images of ECGs or electrophysiologic recordings.  In today's practice of medicine it is common for doctors, nurses and medical technicians to photograph and send ECGs to each other via email and messaging using smart phones and tablets.  It is more difficult to make measurements on these images than it is on paper ECG recordings.  <b>EP Calipers</b> can be used to make these measurements and to do mean heart rate and corrected QT interval calculations, using electronic calipers similar to those in electrophysiologic recording systems.
+<b>EP Calipers</b> provides electronic calipers for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  It is common for doctors, nurses and medical technicians to take pictures of ECGs and send them to each other using smart phones and tablets.  It is more difficult to make measurements on these images than it is on paper ECG recordings.  <b>EP Calipers</b> makes these measurements very accurately and can calculate mean heart rates and corrected QT intervals using electronic calipers similar to those in electrophysiologic recording systems.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-2" class="outline-2">
-<h2 id="unnumbered-2">Using the calipers</h2>
-<div class="outline-text-2" id="text-unnumbered-2">
-</div><div id="outline-container-unnumbered-3" class="outline-3">
-<h3 id="unnumbered-3">Switching modes</h3>
-<div class="outline-text-3" id="text-unnumbered-3">
+<div id="outline-container-orgheadline16" class="outline-2">
+<h2 id="orgheadline16">Using the calipers</h2>
+<div class="outline-text-2" id="text-orgheadline16">
+</div><div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2">It's intuitive</h3>
+<div class="outline-text-3" id="text-orgheadline2">
 <p>
-In <b>EP Calipers</b> you can manipulate caliper or manipulate the image,
-but not both at the same time.  The title bar at the top of the screen
-indicates which mode you are in.  The app starts in <b>EP Calipers Mode</b>
-(with a sample image loaded).  You can create, delete, and move
-calipers, as well as perform calculations such as mean heart rate and
-corrected QT interval in this mode.  Selecting <b>Switch Mode</b> or
-<b>Switch</b> on the title bar switches to <b>Image Mode</b>.  Use this mode to
-load an image and zoom or scroll around in the image using finger
-gestures.  Switch back to <b>EP Calipers</b> mode by selecting <b>Switch
-Mode</b> again.
+When <b>EP Calipers</b> starts, a sample ECG and a time caliper
+are loaded.  Move the caliper around by touching the caliper's
+cross-bar and dragging it with your finger.  Expand and contract the
+caliper by putting your finger on either vertical bar and dragging.
+Pinch and zoom of the underlying ECG image as needed.  If the
+ECG is bigger than your screen, you can drag the image around with
+your finger.  The remainder of these instructions will go over how to
+load ECG images, add and delete calipers, calibrate the calipers and
+make advanced measurements like the corrected QT interval.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-4" class="outline-3">
-<h3 id="unnumbered-4">Loading an image</h3>
-<div class="outline-text-3" id="text-unnumbered-4">
+<div id="outline-container-orgheadline3" class="outline-3">
+<h3 id="orgheadline3">Loading an image</h3>
+<div class="outline-text-3" id="text-orgheadline3">
 <p>
-If the title bar doesn't show <b>Image Mode</b> touch the <b>Switch Mode</b>
-button to change modes.  Touch the <b>Camera</b> icon to take a photo of an
+Use the <b>Image</b> button at the top left of the screen to show the <b>Image</b> menu at the bottom of your screen.  With this menu you can load and
+fine-tune an ECG image.  Touch the <b>Camera</b> icon to take a photo of an
 ECG tracing and load it into the app.  Note that images captured this
 way are not saved in the Photos collection of the device.
 Alternatively, Touch <b>Select</b> to chose an image that is already saved
-on your device.  Select <b>Done</b> to return to the main toolbar.
+on your device.  Select <b>Done</b> to return to the main menu.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-5" class="outline-3">
-<h3 id="unnumbered-5">Adjusting the image</h3>
-<div class="outline-text-3" id="text-unnumbered-5">
+<div id="outline-container-orgheadline4" class="outline-3">
+<h3 id="orgheadline4">Adjusting the image</h3>
+<div class="outline-text-3" id="text-orgheadline4">
 <p>
-While in <b>Image Mode</b> you can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the <b>Adjust</b> menu to rotate or flip the image.
+As always you can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the <b>Adjust</b> menu to fine-tune your image further.  This is particularly useful if the image is rotated or not quite square to the screen.  Use the options presented to straighten the image.  You should recalibrate your calipers after rotating the image.  After adjusting the image select <b>Done</b> to return to the main menu.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-6" class="outline-3">
-<h3 id="unnumbered-6">Moving calipers</h3>
-<div class="outline-text-3" id="text-unnumbered-6">
+<div id="outline-container-orgheadline5" class="outline-3">
+<h3 id="orgheadline5">Moving calipers</h3>
+<div class="outline-text-3" id="text-orgheadline5">
 <p>
 Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers.  Note that you cannot pinch both bars at the same time.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-7" class="outline-3">
-<h3 id="unnumbered-7">Making measurements</h3>
-<div class="outline-text-3" id="text-unnumbered-7">
+<div id="outline-container-orgheadline6" class="outline-3">
+<h3 id="orgheadline6">Making measurements</h3>
+<div class="outline-text-3" id="text-orgheadline6">
 <p>
-The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units ("points").
+The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-8" class="outline-3">
-<h3 id="unnumbered-8">Adding and deleting calipers</h3>
-<div class="outline-text-3" id="text-unnumbered-8">
+<div id="outline-container-orgheadline7" class="outline-3">
+<h3 id="orgheadline7">Adding and deleting calipers</h3>
+<div class="outline-text-3" id="text-orgheadline7">
 <p>
 Select <b>+</b> to add new calipers.  Calipers can be horizontal (time measurements) or vertical (amplitude measurements).  Select <b>Time</b> or <b>Amplitude</b> to add the type of caliper you want.  Double-tap a caliper to delete it.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-9" class="outline-3">
-<h3 id="unnumbered-9">Highlighting a caliper</h3>
-<div class="outline-text-3" id="text-unnumbered-9">
+<div id="outline-container-orgheadline8" class="outline-3">
+<h3 id="orgheadline8">Selecting a caliper</h3>
+<div class="outline-text-3" id="text-orgheadline8">
 <p>
-Single tap a caliper to highlight it.  Its color will change.  Tap another caliper to change the highlight to that caliper.  Only one caliper can be highlighted at a time.  Touch any place where there is not a caliper to remove highlighting.  Tap a highlighted caliper (when not in the middle of a calculation) and it will be deleted. In some cases a caliper will be highlighted automatically (for example to do calibration) if you have not already highlighted one.  If you want to highlight a different caliper, just tap another caliper.   A caliper needs to be highlighted to do calibrations and calculations, and it is the highlighted caliper that is used for these measurements.
+When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red (You can change these colors if you want).  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) will unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another caliper.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-10" class="outline-3">
-<h3 id="unnumbered-10">Calibration</h3>
-<div class="outline-text-3" id="text-unnumbered-10">
+<div id="outline-container-orgheadline9" class="outline-3">
+<h3 id="orgheadline9">Calibration</h3>
+<div class="outline-text-3" id="text-orgheadline9">
 <p>
-Select <b>Cal</b> or <b>Calibration</b>.  Stretch a highlighted caliper over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select <b>Set</b>.  In the dialog box, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 400 msec, or 1 sec, or 1 mV).  Select <b>Set</b> in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
+Select <b>Cal</b> or <b>Calibration</b>.  Stretch the selected caliper over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select <b>Set</b>.  In the dialog box, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 500 msec, or 1 sec, or 1 mV).  Select <b>Set</b> in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-11" class="outline-3">
-<h3 id="unnumbered-11">Changing calibration</h3>
-<div class="outline-text-3" id="text-unnumbered-11">
+<div id="outline-container-orgheadline10" class="outline-3">
+<h3 id="orgheadline10">Changing calibration</h3>
+<div class="outline-text-3" id="text-orgheadline10">
 <p>
-You can recalibrate at any time.  You can clear all calibration by selecting <b>Clear</b> in the calibration toolbar.  Note that calibration is maintained if the device is rotated or the image is rotated, shifted, or zoomed.  Selecting a new image will reset calibration.
+You can recalibrate at any time.  You can clear all calibration by selecting <b>Clear</b> in the calibration toolbar.  Note that calibration is maintained if the device is rotated or the image is zoomed.  Selecting a new image will reset calibration.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-12" class="outline-3">
-<h3 id="unnumbered-12">Interval/Rate</h3>
-<div class="outline-text-3" id="text-unnumbered-12">
+<div id="outline-container-orgheadline11" class="outline-3">
+<h3 id="orgheadline11">Interval/Rate</h3>
+<div class="outline-text-3" id="text-orgheadline11">
 <p>
 Once a time (horizontal) caliper is calibrated, provided you use time units (such as msec or sec) for the calibration, it is possible to toggle between interval measurements (e.g. 600 msec) and heart rate measurements (e.g. 100 bpm) by selecting <b>Interval/Rate</b> on iPads (or <b>I/R</b> on iPhones).
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-13" class="outline-3">
-<h3 id="unnumbered-13">Mean rate and interval calculation</h3>
-<div class="outline-text-3" id="text-unnumbered-13">
+<div id="outline-container-orgheadline12" class="outline-3">
+<h3 id="orgheadline12">Mean rate and interval calculation</h3>
+<div class="outline-text-3" id="text-orgheadline12">
 <p>
 Select a calibrated caliper and stretch it over a number of intervals.  Select <b>Mean Rate</b> or <b>MRate</b> and enter the number of intervals measured.  A dialog box will show the calculated mean heart rate and interval.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-14" class="outline-3">
-<h3 id="unnumbered-14">QTc calculation</h3>
-<div class="outline-text-3" id="text-unnumbered-14">
+<div id="outline-container-orgheadline13" class="outline-3">
+<h3 id="orgheadline13">QTc calculation</h3>
+<div class="outline-text-3" id="text-orgheadline13">
 <p>
-Stretch a time caliper over one or more intervals and select <b>QTc</b>.  After measuring the interval/rate, measure the QT.  A dialog box will give the calculated QTc using Bazett's formula.
+Select <b>QTc</b>.  Stretch the selected caliper over one or more RR intervals and select <b>Measure</b>.  Enter the number of intervals the caliper is stretched over and select <b>Calculate</b>.  Then use the same caliper to measure the QT interval.  Select <b>Measure</b>.  A dialog box will give the calculated QTc using Bazett's formula.
 </p>
 </div>
 </div>
-<div id="outline-container-unnumbered-15" class="outline-3">
-<h3 id="unnumbered-15">Settings</h3>
-<div class="outline-text-3" id="text-unnumbered-15">
+<div id="outline-container-orgheadline14" class="outline-3">
+<h3 id="orgheadline14">Settings</h3>
+<div class="outline-text-3" id="text-orgheadline14">
 <p>
-Preferences such as caliper colors and default calibration interval can be selected in the Settings app of your device under <b>EP Calipers</b>.  Note that by the nature of iOS it is necessary to close the <b>EP Calipers</b> app before new settings take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
+Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under <b>EP Calipers</b>.  Note that by the nature of iOS it is necessary to close the <b>EP Calipers</b> app before new settings take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
+</p>
+</div>
+</div>
+<div id="outline-container-orgheadline15" class="outline-3">
+<h3 id="orgheadline15">Issues</h3>
+<div class="outline-text-3" id="text-orgheadline15">
+<p>
+Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Note also that images taken via the <b>Camera</b> icon in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-unnumbered-16" class="outline-2">
-<h2 id="unnumbered-16">Acknowledgements</h2>
-<div class="outline-text-2" id="text-unnumbered-16">
+<div id="outline-container-orgheadline17" class="outline-2">
+<h2 id="orgheadline17">Acknowledgments</h2>
+<div class="outline-text-2" id="text-orgheadline17">
 <ul class="org-ul">
-<li>Thanks to Dr. Michael Katz for the idea.</li>
+<li>Thanks to Dr. Michael Katz for the concept.</li>
 <li>The source code for <b>EP Calipers</b> is available on <a href="https://github.com/mannd/epcalipers">GitHub</a>.</li>
 <li><b>EP Calipers</b> is open source software and is licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache
 License Version 2.0</a>.  No guarantees are made as to the accuracy of
