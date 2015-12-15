@@ -21,7 +21,7 @@ When *EP Calipers* starts, a sample ECG and a time caliper
 are loaded.  Move the caliper around by touching the caliper's
 cross-bar and dragging it with your finger.  Expand and contract the
 caliper by putting your finger on either vertical bar and dragging.
-Pinch and zoom of the underlying ECG image as needed.  If the
+Pinch and zoom the underlying ECG image as needed.  If the
 ECG is bigger than your screen, you can drag the image around with
 your finger.  The remainder of these instructions will go over how to
 load ECG images, add and delete calipers, calibrate the calipers and
