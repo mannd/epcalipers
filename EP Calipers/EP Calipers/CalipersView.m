@@ -62,9 +62,9 @@
     [self setNeedsDisplay];
 }
 
-// Single tap initially highlites caliper, second tap deletes it.  Thus,
-// deletion can be down with a quick double tap or more methodically, or cancelled by
-// unselecting the caliper.
+// Single tap initially highlights (selects) caliper,
+// second tap unselects it.  Quick double tap is used
+// to delete caliper.  This is new behavior with v2.0+.
 - (void)singleTap:(UITapGestureRecognizer *)t {
     EPSLog(@"Single tap");
     if (self.locked) {
