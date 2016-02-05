@@ -533,12 +533,77 @@
 }
 
 - (void)selectPhoto {
+
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:picker animated:YES completion:NULL];
 }
+
+- (void)openURL:(NSURL *)url {
+    NSLog(@"URL is %@", url.pathExtension);
+    NSString *extension = [url.pathExtension uppercaseString];
+    if (![extension isEqualToString:@"PDF"]) {
+        self.imageView.image = [self scaleImageForImageView:[UIImage imageWithContentsOfFile:url.path]];
+
+
+    }
+    else {
+        CGPDFDocumentRef documentRef = getPDFDocumentRef(url.path.UTF8String);
+        if (documentRef == NULL) {
+            return;     // do nothing
+        }
+        // page 1 for now
+        for (int i = 0; i < CGPDFDocumentGetNumberOfPages(documentRef); i++) {
+            // concat images
+        }
+        CGPDFPageRef page = getPDFPage(documentRef, 1);
+        CGPDFPageRetain(page);
+        CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
+        //UIGraphicsBeginImageContext(CGSizeMake(sourceRect.size.width,sourceRect.size.height));
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, 0);
+        CGContextRef currentContext = UIGraphicsGetCurrentContext();
+        CGContextTranslateCTM(currentContext, 0.0, sourceRect.size.height);
+        CGContextScaleCTM(currentContext, 1.0, -1.0);
+        CGContextDrawPDFPage (currentContext, page);
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        CGPDFPageRelease(page);
+        self.imageView.image = [self scaleImageForImageView:image];
+        NSLog(@"PDF size = %f x %f", image.size.width, image.size.height);
+        
+    }
+    [self.imageView setHidden:NO];
+    [self clearCalibration];
+    [self selectMainToolbar];
+}
+
+CGPDFDocumentRef getPDFDocumentRef(const char *filename)
+{
+    CFStringRef path;
+    CFURLRef url;
+    CGPDFDocumentRef document;
+    size_t count;
+    
+    path = CFStringCreateWithCString (NULL, filename,
+                                      kCFStringEncodingUTF8);
+    url = CFURLCreateWithFileSystemPath (NULL, path, // 1
+                                         kCFURLPOSIXPathStyle, 0);
+    CFRelease (path);
+    document = CGPDFDocumentCreateWithURL (url);// 2
+    CFRelease(url);
+    count = CGPDFDocumentGetNumberOfPages (document);// 3
+    if (count == 0) {
+        return NULL;
+    }
+    return document;
+}
+
+CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
+    return CGPDFDocumentGetPage(document, pageNumber);
+}
+
 
 - (void)addHorizontalCaliper {
     [self addCaliperWithDirection:Horizontal];

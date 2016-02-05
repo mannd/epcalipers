@@ -52,5 +52,7 @@
 @property (nonatomic) CGFloat landscapeWidth;
 @property (nonatomic) CGFloat landscapeHeight;
 
+- (void)openURL:(NSURL *)url;
+
 @end
 
