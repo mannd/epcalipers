@@ -533,6 +533,7 @@
 }
 
 - (void)selectPhoto {
+
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
