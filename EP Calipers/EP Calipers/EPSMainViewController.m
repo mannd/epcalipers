@@ -555,10 +555,14 @@
             return;     // do nothing
         }
         // page 1 for now
+        for (int i = 0; i < CGPDFDocumentGetNumberOfPages(documentRef); i++) {
+            // concat images
+        }
         CGPDFPageRef page = getPDFPage(documentRef, 1);
         CGPDFPageRetain(page);
         CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
-        UIGraphicsBeginImageContext(CGSizeMake(sourceRect.size.width,sourceRect.size.height));
+        //UIGraphicsBeginImageContext(CGSizeMake(sourceRect.size.width,sourceRect.size.height));
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, 0);
         CGContextRef currentContext = UIGraphicsGetCurrentContext();
         CGContextTranslateCTM(currentContext, 0.0, sourceRect.size.height);
         CGContextScaleCTM(currentContext, 1.0, -1.0);
@@ -567,6 +571,7 @@
         UIGraphicsEndImageContext();
         CGPDFPageRelease(page);
         self.imageView.image = [self scaleImageForImageView:image];
+        NSLog(@"PDF size = %f x %f", image.size.width, image.size.height);
         
     }
     [self.imageView setHidden:NO];
