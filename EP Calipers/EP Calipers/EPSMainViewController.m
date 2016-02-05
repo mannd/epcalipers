@@ -545,14 +545,60 @@
     NSLog(@"URL is %@", url.pathExtension);
     NSString *extension = [url.pathExtension uppercaseString];
     if (![extension isEqualToString:@"PDF"]) {
-        self.imageView.image = [UIImage imageWithContentsOfFile:url.path];
-        [self.imageView setHidden:NO];
-        [self clearCalibration];
+        self.imageView.image = [self scaleImageForImageView:[UIImage imageWithContentsOfFile:url.path]];
+
+
     }
     else {
-        NSLog(@"Can't open PDF files yet...");
+        CGPDFDocumentRef documentRef = getPDFDocumentRef(url.path.UTF8String);
+        if (documentRef == NULL) {
+            return;     // do nothing
+        }
+        // page 1 for now
+        CGPDFPageRef page = getPDFPage(documentRef, 1);
+        CGPDFPageRetain(page);
+        CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
+        UIGraphicsBeginImageContext(CGSizeMake(sourceRect.size.width,sourceRect.size.height));
+        CGContextRef currentContext = UIGraphicsGetCurrentContext();
+        CGContextTranslateCTM(currentContext, 0.0, sourceRect.size.height);
+        CGContextScaleCTM(currentContext, 1.0, -1.0);
+        CGContextDrawPDFPage (currentContext, page);
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        CGPDFPageRelease(page);
+        self.imageView.image = [self scaleImageForImageView:image];
+        
     }
+    [self.imageView setHidden:NO];
+    [self clearCalibration];
+    [self selectMainToolbar];
 }
+
+CGPDFDocumentRef getPDFDocumentRef(const char *filename)
+{
+    CFStringRef path;
+    CFURLRef url;
+    CGPDFDocumentRef document;
+    size_t count;
+    
+    path = CFStringCreateWithCString (NULL, filename,
+                                      kCFStringEncodingUTF8);
+    url = CFURLCreateWithFileSystemPath (NULL, path, // 1
+                                         kCFURLPOSIXPathStyle, 0);
+    CFRelease (path);
+    document = CGPDFDocumentCreateWithURL (url);// 2
+    CFRelease(url);
+    count = CGPDFDocumentGetNumberOfPages (document);// 3
+    if (count == 0) {
+        return NULL;
+    }
+    return document;
+}
+
+CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
+    return CGPDFDocumentGetPage(document, pageNumber);
+}
+
 
 - (void)addHorizontalCaliper {
     [self addCaliperWithDirection:Horizontal];
