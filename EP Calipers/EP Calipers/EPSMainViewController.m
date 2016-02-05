@@ -543,6 +543,15 @@
 
 - (void)openURL:(NSURL *)url {
     NSLog(@"URL is %@", url.pathExtension);
+    NSString *extension = [url.pathExtension uppercaseString];
+    if (![extension isEqualToString:@"PDF"]) {
+        self.imageView.image = [UIImage imageWithContentsOfFile:url.path];
+        [self.imageView setHidden:NO];
+        [self clearCalibration];
+    }
+    else {
+        NSLog(@"Can't open PDF files yet...");
+    }
 }
 
 - (void)addHorizontalCaliper {
