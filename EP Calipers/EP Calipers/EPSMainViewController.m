@@ -541,6 +541,10 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
+- (void)openURL:(NSURL *)url {
+    NSLog(@"URL is %@", url.pathExtension);
+}
+
 - (void)addHorizontalCaliper {
     [self addCaliperWithDirection:Horizontal];
 }
