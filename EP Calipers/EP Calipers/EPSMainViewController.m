@@ -556,7 +556,7 @@
         }
         // page 1 for now
         for (int i = 0; i < CGPDFDocumentGetNumberOfPages(documentRef); i++) {
-            // concat images
+            // concat imagesn or just get array of pages
         }
         CGPDFPageRef page = getPDFPage(documentRef, 1);
         CGPDFPageRetain(page);
@@ -570,7 +570,7 @@
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         CGPDFPageRelease(page);
-        self.imageView.image = [self scaleImageForImageView:image];
+        self.imageView.image = image;
         NSLog(@"PDF size = %f x %f", image.size.width, image.size.height);
         
     }
