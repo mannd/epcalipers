@@ -108,6 +108,11 @@
     [super viewDidAppear:YES];
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
+    
+    if (self.lauchFromURL) {
+        NSLog(@"lauchFromURL");
+        self.lauchFromURL = NO;
+    }
 
     if (self.firstRun) {
         //  scale image for imageView;

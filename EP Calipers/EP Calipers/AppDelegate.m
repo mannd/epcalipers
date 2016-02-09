@@ -48,6 +48,7 @@
     EPSMainViewController *mainViewController = (EPSMainViewController *) [navigationController.viewControllers objectAtIndex:0];
 
     if (url != nil && [url isFileURL]) {
+        mainViewController.lauchFromURL = YES;
         [mainViewController openURL:url];
     }
     return YES;
