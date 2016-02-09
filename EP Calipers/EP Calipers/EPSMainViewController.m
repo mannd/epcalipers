@@ -109,11 +109,9 @@
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
     
-    if (self.lauchFromURL) {
-        NSLog(@"lauchFromURL");
-        self.lauchFromURL = NO;
-    }
+    NSLog(@"Runinng view DidAppear");
 
+    
     if (self.firstRun) {
         //  scale image for imageView;
         // autolayout not done in viewDidLoad
@@ -130,10 +128,17 @@
         self.landscapeWidth = fmaxf(screenHeight, screenWidth);
         self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
         self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
-        
-        self.imageView.image = [self scaleImageForImageView:self.imageView.image];
-        
-        [self.imageView setHidden:self.settings.hideStartImage];
+        // if running first time and opening URL then don't load sample ECG
+        if (self.launchFromURL) {
+            self.launchFromURL = NO;
+            if (self.launchURL != nil) {
+                [self openURL:self.launchURL];
+            }
+        }
+        else {
+            self.imageView.image = [self scaleImageForImageView:self.imageView.image];
+            [self.imageView setHidden:self.settings.hideStartImage];
+        }
         
         [self addHorizontalCaliper];
         // NB: new calipers are not selected 
@@ -562,7 +567,7 @@
 }
 
 - (void)openURL:(NSURL *)url {
-    NSLog(@"URL is %@", url.pathExtension);
+    NSLog(@"Running openURL: URL is %@", url.pathExtension);
     NSString *extension = [url.pathExtension uppercaseString];
     if (![extension isEqualToString:@"PDF"]) {
         self.imageView.image = [self scaleImageForImageView:[UIImage imageWithContentsOfFile:url.path]];

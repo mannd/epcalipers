@@ -38,7 +38,8 @@
 @property (nonatomic) BOOL isIpad;
 @property (nonatomic) double rrIntervalForQTc;
 @property (nonatomic) BOOL firstRun;
-@property (nonatomic) BOOL lauchFromURL;
+@property (nonatomic) BOOL launchFromURL;
+@property (strong, nonatomic) NSURL *launchURL;
 
 @property (nonatomic) BOOL isCalipersView;
 
