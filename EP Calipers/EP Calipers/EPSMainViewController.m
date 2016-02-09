@@ -105,6 +105,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
 
@@ -561,7 +562,6 @@
         CGPDFPageRef page = getPDFPage(documentRef, 1);
         CGPDFPageRetain(page);
         CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
-        //UIGraphicsBeginImageContext(CGSizeMake(sourceRect.size.width,sourceRect.size.height));
         UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, 0);
         CGContextRef currentContext = UIGraphicsGetCurrentContext();
         CGContextTranslateCTM(currentContext, 0.0, sourceRect.size.height);
@@ -570,6 +570,8 @@
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         CGPDFPageRelease(page);
+        
+        // FIXME: landscape image has cut off top and bottom
         self.imageView.image = image;
         NSLog(@"PDF size = %f x %f", image.size.width, image.size.height);
         
