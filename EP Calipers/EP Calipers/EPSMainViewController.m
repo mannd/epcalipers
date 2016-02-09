@@ -128,6 +128,7 @@
         self.landscapeWidth = fmaxf(screenHeight, screenWidth);
         self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
         self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
+        NSLog(@"portraitWidth = %f, portraitHeight = %f", self.portraitWidth, self.portraitHeight);
         // if running first time and opening URL then don't load sample ECG
         if (self.launchFromURL) {
             self.launchFromURL = NO;
@@ -572,7 +573,6 @@
     if (![extension isEqualToString:@"PDF"]) {
         self.imageView.image = [self scaleImageForImageView:[UIImage imageWithContentsOfFile:url.path]];
 
-
     }
     else {
         CGPDFDocumentRef documentRef = getPDFDocumentRef(url.path.UTF8String);
@@ -586,11 +586,13 @@
         CGPDFPageRef page = getPDFPage(documentRef, 1);
         CGPDFPageRetain(page);
         CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, 0);
+        // higher scale factor below makes for clearer image
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, 5.0);
+        NSLog(@"sourceRect width = %f, height = %f", sourceRect.size.width, sourceRect.size.height);
         CGContextRef currentContext = UIGraphicsGetCurrentContext();
         CGContextTranslateCTM(currentContext, 0.0, sourceRect.size.height);
         CGContextScaleCTM(currentContext, 1.0, -1.0);
-        CGContextDrawPDFPage (currentContext, page);
+        CGContextDrawPDFPage(currentContext, page);
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         CGPDFPageRelease(page);
@@ -602,7 +604,6 @@
     }
     [self.imageView setHidden:NO];
     [self clearCalibration];
-    [self selectMainToolbar];
 }
 
 CGPDFDocumentRef getPDFDocumentRef(const char *filename)
