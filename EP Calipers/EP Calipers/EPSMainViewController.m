@@ -533,7 +533,14 @@
 - (void)takePhoto {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    picker.allowsEditing = YES;
+    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        NSLog(@"is iPad");
+        picker.allowsEditing = NO;
+    }
+    else{
+        picker.allowsEditing = YES;
+    }
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:picker animated:YES completion:NULL];
 }
@@ -542,7 +549,14 @@
 
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    picker.allowsEditing = YES;
+    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        NSLog(@"is iPad");
+        picker.allowsEditing = NO;
+    }
+    else{
+        picker.allowsEditing = YES;
+    }
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:picker animated:YES completion:NULL];
 }
@@ -809,7 +823,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    UIImage *chosenImage = nil;
+    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        chosenImage = info[UIImagePickerControllerOriginalImage];
+    }
+    else {
+        chosenImage = info[UIImagePickerControllerEditedImage];
+        }
     self.imageView.image = [self scaleImageForImageView:chosenImage];
     [self.imageView setHidden:NO];
     [picker dismissViewControllerAnimated:YES completion:NULL];
