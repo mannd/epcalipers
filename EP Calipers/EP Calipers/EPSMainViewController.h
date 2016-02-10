@@ -21,6 +21,8 @@
 @property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
 @property (strong, nonatomic) UIBarButtonItem *mRRButton;
 @property (strong, nonatomic) UIBarButtonItem *qtcButton;
+@property (strong, nonatomic) UIBarButtonItem *previousPageButton;
+@property (strong, nonatomic) UIBarButtonItem *nextPageButton;
 
 @property (strong, nonatomic) NSArray *mainMenuItems;
 @property (strong, nonatomic) NSArray *photoMenuItems;
@@ -55,6 +57,10 @@
 @property (nonatomic) CGFloat landscapeHeight;
 
 - (void)openURL:(NSURL *)url;
+
+@property (nonatomic) CGPDFDocumentRef documentRef;
+@property (nonatomic) int pageNumber;
+@property (nonatomic) int numberOfPages;
 
 @end
 

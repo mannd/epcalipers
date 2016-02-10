@@ -35,6 +35,7 @@
 #define CALIBRATION_ALERTVIEW 20
 #define MEAN_RR_ALERTVIEW 30
 #define MEAN_RR_FOR_QTC_ALERTVIEW 43
+#define NUM_PDF_PAGES_ALERTVIEW 101
 
 #define CALIPERS_VIEW_TITLE @"EP Calipers"
 #define IMAGE_VIEW_TITLE @"Image Mode"
@@ -221,8 +222,11 @@
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
     UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
     UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
-
-    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, nil];
+    // these 2 buttons only enable for multipage PDFs
+    self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
+    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Previous" style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
+    [self enablePageButtons:NO];
+    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, self.previousPageButton, self.nextPageButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
@@ -567,50 +571,107 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
+// FIXME: make it work!
+// consider:
+//  retain documentRef (non-reference counted)
+//  Use dialog to open specific page
+//      or
+//  Next/Prev buttons on image menu to change page and automatically load first page
 - (void)openURL:(NSURL *)url {
-    NSLog(@"Running openURL: URL is %@", url.pathExtension);
     NSString *extension = [url.pathExtension uppercaseString];
     if (![extension isEqualToString:@"PDF"]) {
+        [self enablePageButtons:NO];
         self.imageView.image = [self scaleImageForImageView:[UIImage imageWithContentsOfFile:url.path]];
-
     }
     else {
-        CGPDFDocumentRef documentRef = getPDFDocumentRef(url.path.UTF8String);
-        if (documentRef == NULL) {
+        // release any previously loaded PDF
+        CGPDFDocumentRelease(self.documentRef);
+        self.numberOfPages = 0;
+        self.documentRef = getPDFDocumentRef(url.path.UTF8String);
+        if (self.documentRef == NULL) {
             return;     // do nothing
         }
-        // page 1 for now
-        for (int i = 0; i < CGPDFDocumentGetNumberOfPages(documentRef); i++) {
-            // concat imagesn or just get array of pages
+        CGPDFDocumentRetain(self.documentRef);
+        self.numberOfPages = (int)CGPDFDocumentGetNumberOfPages(self.documentRef);
+        if (self.numberOfPages < 1) {
+            return;
         }
-        CGPDFPageRef page = getPDFPage(documentRef, 1);
-        CGPDFPageRetain(page);
-        CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
-        // higher scale factor below makes for clearer image
-        CGFloat scaleFactor = 5.0;
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, scaleFactor);
-        CGContextRef currentContext = UIGraphicsGetCurrentContext();
-        CGContextTranslateCTM(currentContext, 0.0, sourceRect.size.height);
-        CGContextScaleCTM(currentContext, 1.0, -1.0);
-        CGContextDrawPDFPage(currentContext, page);
-        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-        // first scale as usual, but image still too large since scaled up when created for better quality
-        image = [self scaleImageForImageView:image];
-        // now correct for scale factor when creating image
-        image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:scaleFactor * image.scale orientation:UIImageOrientationUp];
-
-        self.imageView.image = image;
-        UIGraphicsEndImageContext();
-        CGPDFPageRelease(page);
-        
-        
+        // always start with page number 1
+        self.pageNumber = 1;
+        if (self.numberOfPages > 1) {
+            [self enablePageButtons:YES];
+        }
+        else {
+            // handle single page PDF
+            [self enablePageButtons:NO];
+        }
+        [self openPDFPage:self.documentRef atPage:self.pageNumber];
     }
     [self.imageView setHidden:NO];
     [self clearCalibration];
 }
 
-CGPDFDocumentRef getPDFDocumentRef(const char *filename)
-{
+- (void)enablePageButtons:(BOOL)enable {
+    self.previousPageButton.enabled = self.nextPageButton.enabled = enable;
+    if (enable) {
+        if (self.pageNumber <= 1) {
+            self.previousPageButton.enabled = NO;
+        }
+        if (self.pageNumber >= self.numberOfPages) {
+            self.nextPageButton.enabled = NO;
+        }
+    }
+}
+
+- (void)gotoPreviousPage {
+    self.pageNumber--;
+    if (self.pageNumber < 1) {
+        self.pageNumber = 1;
+    }
+    [self enablePageButtons:YES];
+    [self openPDFPage:self.documentRef atPage:self.pageNumber];
+}
+
+- (void)gotoNextPage {
+    self.pageNumber++;
+    if (self.pageNumber > self.numberOfPages) {
+        self.pageNumber = self.numberOfPages;
+    }
+    [self enablePageButtons:YES];
+    [self openPDFPage:self.documentRef atPage:self.pageNumber];
+}
+
+- (void)openPDFPage:(CGPDFDocumentRef) documentRef atPage:(int) pageNum {
+    if (documentRef == NULL) {
+        return;
+    }
+    CGPDFPageRef page = getPDFPage(documentRef, pageNum);
+    if (page == NULL) {
+        return;
+    }
+    CGPDFPageRetain(page);
+    CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
+    // higher scale factor below makes for clearer image
+    CGFloat scaleFactor = 5.0;
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, scaleFactor);
+    CGContextRef currentContext = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(currentContext, 0.0, sourceRect.size.height);
+    CGContextScaleCTM(currentContext, 1.0, -1.0);
+    CGContextDrawPDFPage(currentContext, page);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    // first scale as usual, but image still too large since scaled up when created for better quality
+    image = [self scaleImageForImageView:image];
+    // now correct for scale factor when creating image
+    image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:scaleFactor * image.scale orientation:UIImageOrientationUp];
+    
+    self.imageView.image = image;
+    UIGraphicsEndImageContext();
+    CGPDFPageRelease(page);
+}
+
+
+
+CGPDFDocumentRef getPDFDocumentRef(const char *filename) {
     CFStringRef path;
     CFURLRef url;
     CGPDFDocumentRef document;
@@ -844,6 +905,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self.imageView setHidden:NO];
     [picker dismissViewControllerAnimated:YES completion:NULL];
     [self clearCalibration];
+    [self enablePageButtons:NO];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
