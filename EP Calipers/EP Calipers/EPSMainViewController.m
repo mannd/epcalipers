@@ -70,7 +70,7 @@
     
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
-    self.scrollView.maximumZoomScale = 5.0;
+    self.scrollView.maximumZoomScale = 7.0;
     self.lastZoomFactor = self.scrollView.zoomScale;
     
     self.horizontalCalibration = [[Calibration alloc] init];
@@ -587,19 +587,22 @@
         CGPDFPageRetain(page);
         CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
         // higher scale factor below makes for clearer image
-        UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, 5.0);
-        NSLog(@"sourceRect width = %f, height = %f", sourceRect.size.width, sourceRect.size.height);
+        CGFloat scaleFactor = 5.0;
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, scaleFactor);
         CGContextRef currentContext = UIGraphicsGetCurrentContext();
         CGContextTranslateCTM(currentContext, 0.0, sourceRect.size.height);
         CGContextScaleCTM(currentContext, 1.0, -1.0);
         CGContextDrawPDFPage(currentContext, page);
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        // first scale as usual, but image still too large since scaled up when created for better quality
+        image = [self scaleImageForImageView:image];
+        // now correct for scale factor when creating image
+        image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:scaleFactor * image.scale orientation:UIImageOrientationUp];
+
+        self.imageView.image = image;
         UIGraphicsEndImageContext();
         CGPDFPageRelease(page);
         
-        // FIXME: landscape image has cut off top and bottom
-        self.imageView.image = image;
-        NSLog(@"PDF size = %f x %f", image.size.width, image.size.height);
         
     }
     [self.imageView setHidden:NO];
