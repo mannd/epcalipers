@@ -11,7 +11,7 @@
 //TODO: Update with each new version!!
 #define VERSION @"2.0"
 
-#define HELP_URL @"epcalipers_help"
+#define HELP_URL @"EPCalipers-help/epcalipers_help"
 
 @interface WebViewController ()
 

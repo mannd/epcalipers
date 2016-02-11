@@ -110,9 +110,6 @@
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
     
-    NSLog(@"Runinng view DidAppear");
-
-    
     if (self.firstRun) {
         //  scale image for imageView;
         // autolayout not done in viewDidLoad
@@ -129,7 +126,7 @@
         self.landscapeWidth = fmaxf(screenHeight, screenWidth);
         self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
         self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
-        NSLog(@"portraitWidth = %f, portraitHeight = %f", self.portraitWidth, self.portraitHeight);
+
         // if running first time and opening URL then don't load sample ECG
         if (self.launchFromURL) {
             self.launchFromURL = NO;
@@ -545,7 +542,6 @@
     picker.delegate = self;
     // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        NSLog(@"is iPad");
         picker.allowsEditing = NO;
     }
     else{
@@ -561,7 +557,6 @@
     picker.delegate = self;
     // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        NSLog(@"is iPad");
         picker.allowsEditing = NO;
     }
     else{
@@ -578,7 +573,7 @@
         self.imageView.image = [self scaleImageForImageView:[UIImage imageWithContentsOfFile:url.path]];
     }
     else {
-        // release any previously loaded PDF
+        // release any previously loaded PDF, noop if call with NULL argument
         CGPDFDocumentRelease(self.documentRef);
         self.numberOfPages = 0;
         self.documentRef = getPDFDocumentRef(url.path.UTF8String);
