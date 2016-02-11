@@ -571,12 +571,6 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
-// FIXME: make it work!
-// consider:
-//  retain documentRef (non-reference counted)
-//  Use dialog to open specific page
-//      or
-//  Next/Prev buttons on image menu to change page and automatically load first page
 - (void)openURL:(NSURL *)url {
     NSString *extension = [url.pathExtension uppercaseString];
     if (![extension isEqualToString:@"PDF"]) {
