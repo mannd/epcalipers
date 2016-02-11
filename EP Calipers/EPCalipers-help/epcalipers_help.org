@@ -13,6 +13,8 @@
 #+LINK_UP:   
 #+LINK_HOME: 
 #+XSLT:
+#+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
+* TODO Add full size images.  CSS code above will fit them to the screen.
 * You're on call, again
 It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is due to get his antiarrhythmic drug (who comes up with these crazy drug schedules?) and his ECG has a borderline prolonged QTc interval, at least according to the computer.  She's not sure if it is safe to give the drug.  The nurse wants to text you the ECG.
 
@@ -60,6 +62,8 @@ Scroll horizontally until you see the *Copy to EP Calipers* icon.  If you don't 
 #+CAPTION: Copy to EP Calipers will open the image in EP Calipers
 [[./img/copy_to_ep_calipers.png]]
 
+Test
+[[./img/Screen Shot 2016-02-11 at 2.41.41 PM.png]]
 * Adjusting the image
 As always you can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the *Adjust* menu to fine-tune your image further.  This is particularly useful if the image is rotated or not quite square to the screen.  Use the options presented to straighten the image.  You should recalibrate your calipers after rotating the image.  After adjusting the image select *Done* to return to the main menu.
 * Moving calipers
