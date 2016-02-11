@@ -158,7 +158,7 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: It's easier to move the calipers and zoom and move the ECG image.  No need anymore to switch modes.  You can adjust everything on the same screen at the same time.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
+            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Open PDF files (even those with multiple pages) from the Share menu of email attachments and from the AliveECG app.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
                             delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [noSelectionAlert show];
         }
