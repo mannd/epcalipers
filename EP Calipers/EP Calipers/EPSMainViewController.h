@@ -58,7 +58,7 @@
 
 - (void)openURL:(NSURL *)url;
 
-@property (nonatomic) CGPDFDocumentRef documentRef;
+//@property (nonatomic) CGPDFDocumentRef documentRef;
 @property (nonatomic) int pageNumber;
 @property (nonatomic) int numberOfPages;
 

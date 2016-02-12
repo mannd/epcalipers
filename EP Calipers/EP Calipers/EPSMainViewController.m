@@ -47,10 +47,13 @@
 @end
 
 @implementation EPSMainViewController
-
+{
+    CGPDFDocumentRef pdfRef;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    pdfRef = NULL;
     
     self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
 
@@ -162,6 +165,7 @@
 
     }
 }
+
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
 
@@ -552,7 +556,6 @@
 }
 
 - (void)selectPhoto {
-
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
@@ -566,6 +569,14 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
+- (void)clearPDF {
+    // when opening new image or PDF, clear out any old PDF
+    if (pdfRef != NULL) {
+        CGPDFDocumentRelease(pdfRef);
+        pdfRef = NULL;
+    }
+}
+
 - (void)openURL:(NSURL *)url {
     NSString *extension = [url.pathExtension uppercaseString];
     if (![extension isEqualToString:@"PDF"]) {
@@ -573,18 +584,14 @@
         self.imageView.image = [self scaleImageForImageView:[UIImage imageWithContentsOfFile:url.path]];
     }
     else {
-        // release any previously loaded PDF, noop if call with NULL argument
-        CGPDFDocumentRelease(self.documentRef);
         self.numberOfPages = 0;
-        self.documentRef = getPDFDocumentRef(url.path.UTF8String);
-        if (self.documentRef == NULL) {
-            return;     // do nothing
-        }
-        CGPDFDocumentRetain(self.documentRef);
-        self.numberOfPages = (int)CGPDFDocumentGetNumberOfPages(self.documentRef);
-        if (self.numberOfPages < 1) {
+        CGPDFDocumentRef tmpPDFRef = getPDFDocumentRef(url.path.UTF8String);
+        if (tmpPDFRef == NULL) {
             return;
         }
+        [self clearPDF];
+        pdfRef = tmpPDFRef;
+        self.numberOfPages = (int)CGPDFDocumentGetNumberOfPages(pdfRef);
         // always start with page number 1
         self.pageNumber = 1;
         if (self.numberOfPages > 1) {
@@ -594,7 +601,7 @@
             // handle single page PDF
             [self enablePageButtons:NO];
         }
-        [self openPDFPage:self.documentRef atPage:self.pageNumber];
+        [self openPDFPage:pdfRef atPage:self.pageNumber];
     }
     [self.imageView setHidden:NO];
     [self clearCalibration];
@@ -618,7 +625,7 @@
         self.pageNumber = 1;
     }
     [self enablePageButtons:YES];
-    [self openPDFPage:self.documentRef atPage:self.pageNumber];
+    [self openPDFPage:pdfRef atPage:self.pageNumber];
 }
 
 - (void)gotoNextPage {
@@ -627,7 +634,7 @@
         self.pageNumber = self.numberOfPages;
     }
     [self enablePageButtons:YES];
-    [self openPDFPage:self.documentRef atPage:self.pageNumber];
+    [self openPDFPage:pdfRef atPage:self.pageNumber];
 }
 
 - (void)openPDFPage:(CGPDFDocumentRef) documentRef atPage:(int) pageNum {
@@ -664,19 +671,12 @@ CGPDFDocumentRef getPDFDocumentRef(const char *filename) {
     CFStringRef path;
     CFURLRef url;
     CGPDFDocumentRef document;
-    size_t count;
     
-    path = CFStringCreateWithCString (NULL, filename,
-                                      kCFStringEncodingUTF8);
-    url = CFURLCreateWithFileSystemPath (NULL, path, // 1
-                                         kCFURLPOSIXPathStyle, 0);
-    CFRelease (path);
-    document = CGPDFDocumentCreateWithURL (url);// 2
+    path = CFStringCreateWithCString(NULL, filename, kCFStringEncodingUTF8);
+    url = CFURLCreateWithFileSystemPath(NULL, path, kCFURLPOSIXPathStyle, 0);
+    CFRelease(path);
+    document = CGPDFDocumentCreateWithURL(url);
     CFRelease(url);
-    count = CGPDFDocumentGetNumberOfPages (document);// 3
-    if (count == 0) {
-        return NULL;
-    }
     return document;
 }
 
@@ -788,13 +788,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)adjustImageDone {
-    CGFloat maxImageDimension = 0.0;
-    if (self.imageView.image.size.width > self.imageView.image.size.height) {
-        maxImageDimension = self.imageView.image.size.width;
-    }
-    else {
-        maxImageDimension = self.imageView.image.size.height;
-    }
+//    CGFloat maxImageDimension = 0.0;
+//    if (self.imageView.image.size.width > self.imageView.image.size.height) {
+//        maxImageDimension = self.imageView.image.size.width;
+//    }
+//    else {
+//        maxImageDimension = self.imageView.image.size.height;
+//    }
     [self selectImageToolbar];
     [self.calipersView setNeedsDisplay];
 }
@@ -895,6 +895,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [picker dismissViewControllerAnimated:YES completion:NULL];
     [self clearCalibration];
     [self enablePageButtons:NO];
+    // remove any prior PDF from memory
+    [self clearPDF];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
