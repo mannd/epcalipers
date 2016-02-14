@@ -16,6 +16,8 @@
 // set to yes to always show startup screen
 //#define TEST_QUICK_START NO
 
+// FIXME: when cancel out of RR measurement of QTc, go back to first step, not proceed to QTc measure
+
 
 #define ANIMATION_DURATION 0.5
 
