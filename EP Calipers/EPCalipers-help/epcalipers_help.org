@@ -14,18 +14,15 @@
 #+LINK_HOME: 
 #+XSLT:
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-* TODO Add full size images.  CSS code above will fit them to the screen.
-* You're on call, again
+* You're on call, again...
 It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is due to get his antiarrhythmic drug (who comes up with these crazy drug schedules?) and his ECG has a borderline prolonged QTc interval, at least according to the computer.  She's not sure if it is safe to give the drug.  The nurse wants to text you the ECG.
 
-You open the ECG on your phone.  You look at the QT interval.  You're not sure about the computer's measurement.  You really should double check it yourself.  You start counting little boxes.  You pull out the trusty old pair of mechanical calipers some drug rep gave you many years ago, back when such largesse was still legal.  You think to yourself: I live in a digital age.  Am I really making measurements on my iPhone with a physical pair of calipers?
+You open the ECG on your phone.  You look at the QT interval.  You're not sure about the computer's measurement.  You really should double check it.  You start counting little boxes.  You pull out the (t)rusty old pair of mechanical calipers some drug rep gave you many years ago, back when such largesse was still legal.  You think to yourself: I live in a digital age.  Am I really making measurements on my iPhone with a physical pair of calipers?
 * Electronic calipers
-*EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In this age of electronic health records, ECG recordings are created electronically and transmitted digitally.  Even in cases where hardcopies are created (e.g. telemetry strips), it is common for doctors, nurses and medical technicians to take pictures of these recordings and send them to each other using smart phones and tablets.  In the past ECG measurements were made with a pair of calipers, an often inaccurate tool, especially given the typical slow recording speeds of standard ECGs (25 mm/sec).  Automated ECG interval measurements are helpful, though they too are often inaccurate.  The human eye is better at estimating the end of the T wave than a computer!  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your iPhone or iPad.  ECG zooming allows more accurate measurements than can be obtained with mechanical calipers.   Accurate measurements are important, as the risk of drug-related complications like Torsade de Pointes can be avoided by carefully following the QTc interval, for example.  *EP Calipers* makes such measurements very easy!
-* Who's it for?
-*EP Calipers* is especially useful for electrophysiologists, cardiologists, and associated professions who routinely analyze ECGs.  Many other medical personnel need to analyze ECG recordings and rhythm strips and will find this app useful.  The app allows one to make measurements on figures from textbooks and academic papers, and thus is useful to anyone who reads the medical literature, from medical students to experienced researchers.
+*EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your iPhone or iPad.  The electronic calipers of *EP Calipers* are more accurate, easier to use, and less dangerous than mechanical calipers (they don't have sharp points!).
 * What's new?
 This new version of *EP Calipers* can be used to analyze PDF files, as well as standard image files.  Multi-page PDF files are supported.  Thus the app can be used to read AliveCor™ files as well as academic papers in PDF format.
-* It's intuitive
+* Quick start
 When *EP Calipers* starts, a sample ECG and a time caliper are loaded.
 Move the caliper around by touching the caliper's cross-bar and
 dragging it with your finger.  Expand and contract the caliper by
@@ -44,26 +41,49 @@ Use the *Image* button at the top left of the screen to show the *Image* menu at
 #+CAPTION: Image menu
 [[./img/image_menu.png]]
 
-With this menu you can load and fine-tune an ECG image.  There are several ways to load an ECG image.
+With this menu you can load and adjust an ECG image.  There are several ways to load an ECG image.
 ** Take a photo of an ECG
 [[./img/camera_icon.png]]Touch the *Camera* icon to take a photo of an
 ECG tracing and load it into the app.  Note that images captured this
-way are not saved in the photos collection of the device.
+way are not saved in the photos collection of the device.  It's best to use this option to make a quick measurement when you don't need to save the image.
 ** Select a photo from your photos collection
 Touch *Select* to chose an image that is already saved on your device in your photos collection (for example, an image file attached to an email that you saved or a photo that your previously took).
-** Select a photo or PDF using the Share menu
-*EP Calipers* can open image and PDF files regardless of where they are located on your device.  You can directly open email attachments, iCloud, Google Drive, and Dropbox files.  It is also easy to open ECG images directly from the AliveCor AliveECG™ app.  Let's walk you through this.
-*** Email attachments
-- Long press on the attachment.  You should see a pop-up menu appear like this:
-#+CAPTION: Share menu
-[[./img/share_menu1.png]]
+** Select a photo or PDF using the Share menu from other apps
+*EP Calipers* can open image and PDF files regardless of where they are located on your device.  You can directly open email attachments, iCloud, Google Drive, and Dropbox files.  It is also easy to open ECG images directly from the AliveCor™ AliveECG™ app.  The key to opening images in external apps is to use the Share icon.  It looks like this: [[./img/share_icon.png]]
 
-Scroll horizontally until you see the *Copy to EP Calipers* icon.  If you don't see the icon, Select *Quick Look* in the bottom row of icons and then click the Share button [[./img/share_icon.png]] at the top.  You should now be able to scroll horizontally to the *Copy to EP Calipers* icon.
+Depending on the app, this icon may appear at the top of the screen, or it may be necessary to do a long press on an image to open to share menu.  Here you can see the Share icon at the top right of the AliveECG screen:
+#+CAPTION: Share icon at top right
+[[./img/aliveecgtop.png]]
+
+Once the share menu is open, one of the options should be *Copy to EP Calipers*.  Selecting this option will open the image in the app.
+
 #+CAPTION: Copy to EP Calipers will open the image in EP Calipers
 [[./img/copy_to_ep_calipers.png]]
 
-Test
-[[./img/Screen Shot 2016-02-11 at 2.41.41 PM.png]]
+If the *Copy to EP Calipers* option does not appear, then try the *Quick Look* icon:
+
+#+CAPTION: The Quick Look icon is at the lower right
+[[./img/quicklook.png]]
+
+or in some cases an *Open In...* icon appears.  Selecting it should then open a window where *Copy to EP Calipers* appears.
+
+#+CAPTION: The Open In... icon allows the image to be opened in EP Calipers
+[[./img/openin.png]]
+
+*** Opening email attachments or Dropbox files
+For email attachments or Dropbox files, download the attachment or the file (the details depend on the email app you are using.  Then when viewing the attachment or file, tap or long press to make the *Share* icon appear.  Select *Share* and then select *Copy to EP Calipers* to open the image or PDF in the app.  
+
+*** AliveCor
+To view ECGs in the AliveCor AliveECG app, select *Journal*, then *Share* for the specific saved ECG you want to view.
+
+#+CAPTION: The AliveECG Share button uses an envelope icon
+[[./img/alive_ecg.png]]
+
+After selecting the *Share* button, select *PDF* from the options that appear.  Then select the *Share* button at the top right of the screen.  Select *Copy to EP Calipers* and you are ready to measure!
+
+** Multiple pages
+When PDF files have more than one page, the app will display the first page initially.  You can go to other pages by selecting *Previous* or *Next* in the Image menu.
+
 * Adjusting the image
 As always you can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the *Adjust* menu to fine-tune your image further.  This is particularly useful if the image is rotated or not quite square to the screen.  Use the options presented to straighten the image.  You should recalibrate your calipers after rotating the image.  After adjusting the image select *Done* to return to the main menu.
 * Moving calipers
