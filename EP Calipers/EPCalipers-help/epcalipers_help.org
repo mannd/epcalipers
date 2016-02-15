@@ -15,24 +15,24 @@
 #+XSLT:
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
 * You're on call, again...
-It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is due to get his antiarrhythmic drug (who comes up with these crazy drug schedules?) and his ECG has a borderline prolonged QTc interval, at least according to the computer.  She's not sure if it is safe to give the drug.  The nurse wants to text you the ECG.
+It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is due to get his antiarrhythmic drug (who comes up with these crazy drug schedules?) and his ECG has a borderline prolonged QTc interval, at least according to the computer.  She's not sure if it is safe to give the drug.  The nurse wants to send you the ECG.
 
 You open the ECG on your phone.  You look at the QT interval.  You're not sure about the computer's measurement.  You really should double check it.  You start counting little boxes.  You pull out the (t)rusty old pair of mechanical calipers some drug rep gave you many years ago, back when such largesse was still legal.  You think to yourself: I live in a digital age.  Am I really making measurements on my iPhone with a physical pair of calipers?
 * Electronic calipers
 *EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your iPhone or iPad.  The electronic calipers of *EP Calipers* are more accurate, easier to use, and less dangerous than mechanical calipers (they don't have sharp points!).
 * What's new?
-This new version of *EP Calipers* can be used to analyze PDF files, as well as standard image files.  Multi-page PDF files are supported.  Thus the app can be used to read /AliveCor™/ files as well as academic papers in PDF format.
+This new version of *EP Calipers* can be used to analyze PDF files, as well as standard image files.  Multi-page PDF files are supported.  Thus the app can be used to analyze /AliveCor™/ files as well as academic papers in PDF format.
 * Quick start
 When *EP Calipers* starts, a sample ECG and a time caliper are loaded.
 Move the caliper around by touching the caliper's cross-bar and
 dragging it with your finger.  Expand and contract the caliper by
 putting your finger on either vertical bar and dragging.  Pinch and
-zoom the underlying ECG image as needed.  If the ECG is bigger than
-your screen, you can drag the image around with your finger to choose
-a place to measure.  The remainder of these instructions will go over
-how to load ECG images, add and delete calipers, calibrate the
-calipers and make advanced measurements like the corrected QT
-interval.
+zoom the underlying ECG image as needed to enlarge or shrink it.  If
+the ECG is bigger than your screen, you can drag the image around with
+your finger to choose a place to measure.  The remainder of these
+instructions will go over how to load ECG images, add and delete
+calipers, calibrate the calipers and make advanced measurements like
+the corrected QT interval.
 * Loading an image
 #+CAPTION: *Image* button
 [[./img/image_button.png]]
@@ -65,7 +65,7 @@ If the *Copy to EP Calipers* option does not appear, then try the *Quick Look* b
 #+CAPTION: The *Quick Look* button is at the lower right
 [[./img/quicklook.png]]
 
-or in some cases an *Open In...* button appears.  Selecting it should then open a window where *Copy to EP Calipers* appears.
+or the *Open In...* button.  Selecting it should open a window where *Copy to EP Calipers* appears.
 
 #+CAPTION: The *Open In...* button allows the image to be opened in *EP Calipers*
 [[./img/openin.png]]
@@ -106,7 +106,7 @@ Calipers can be horizontal (time measurements) or vertical (amplitude measuremen
 #+CAPTION: Add caliper menu
 [[./img/add_caliper_menu.png]]
 * Selecting a caliper
-When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red (You can change these colors if you want).  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) will unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another.
+When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red (You can change these colors if you want).  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another.
 #+CAPTION: Two uncalibrated calipers, a time and amplitude.  The time caliper is selected.
 [[./img/selected_caliper.png]]
 * Calibration
@@ -122,7 +122,7 @@ Once a time (horizontal) caliper is calibrated, provided you use time units (suc
 * Mean rate and interval calculation
 Select a calibrated caliper and stretch it over a number of intervals.  Select *Mean Rate* or *MRate* and enter the number of intervals measured.  A dialog box will show the calculated mean heart rate and interval.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
 * QTc calculation
-Select *QTc*.  Stretch the selected caliper over one or more RR intervals and select *Measure*.  Enter the number of intervals the caliper is stretched over and select *Calculate*.  Then use the same caliper to measure the QT interval.  Select *Measure*.  A dialog box will give the calculated QTc using Bazett's formula.
+Select *QTc*.  Stretch the selected caliper over one or more RR intervals and select *Measure*.  Enter the number of intervals the caliper is stretched over and select *Continue*.  Then use the same caliper to measure the QT interval.  Select *Measure*.  A dialog box will give the calculated QTc using Bazett's formula.
 #+CAPTION: QTc measurement first step: measure 1 or more RR intervals
 [[./img/qtc_first_step.png]]
 #+CAPTION: QTc measurement second step: measure the QT interval
@@ -131,8 +131,11 @@ Select *QTc*.  Stretch the selected caliper over one or more RR intervals and se
 [[./img/qtc_result.png]]
 * Settings
 Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*.  Note that by the nature of iOS it is necessary to close the *EP Calipers* app before new settings take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
-* Issues
-Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Note also that images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
+* Issues and limitations
+- Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Be certain that the ECG you are measuring is indeed the one you selected and not the default normal ECG!  Future versions of the app will address this issue further.
+- Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
+- Rotation of the device will not preserve the relation between the ECG image and the calipers. However calibration /is/ preserved with rotation.
+- It is highly recommended that calipers be recalibrated if the image (not the device) is rotated.  The app though does not enforce this.  
 * Acknowledgments
 - Thanks to Dr. Michael Katz for the concept.
 - The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers][GitHub]].

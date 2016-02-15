@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2016-02-15 Mon 19:04 -->
+<!-- 2016-02-15 Mon 19:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title></title>
@@ -150,7 +150,7 @@ for the JavaScript code in this tag.
 <h2 id="orgheadline1">You're on call, again&#x2026;</h2>
 <div class="outline-text-2" id="text-orgheadline1">
 <p>
-It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is due to get his antiarrhythmic drug (who comes up with these crazy drug schedules?) and his ECG has a borderline prolonged QTc interval, at least according to the computer.  She's not sure if it is safe to give the drug.  The nurse wants to text you the ECG.
+It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is due to get his antiarrhythmic drug (who comes up with these crazy drug schedules?) and his ECG has a borderline prolonged QTc interval, at least according to the computer.  She's not sure if it is safe to give the drug.  The nurse wants to send you the ECG.
 </p>
 
 <p>
@@ -170,7 +170,7 @@ You open the ECG on your phone.  You look at the QT interval.  You're not sure a
 <h2 id="orgheadline3">What's new?</h2>
 <div class="outline-text-2" id="text-orgheadline3">
 <p>
-This new version of <b>EP Calipers</b> can be used to analyze PDF files, as well as standard image files.  Multi-page PDF files are supported.  Thus the app can be used to read <i>AliveCor™</i> files as well as academic papers in PDF format.
+This new version of <b>EP Calipers</b> can be used to analyze PDF files, as well as standard image files.  Multi-page PDF files are supported.  Thus the app can be used to analyze <i>AliveCor™</i> files as well as academic papers in PDF format.
 </p>
 </div>
 </div>
@@ -182,12 +182,12 @@ When <b>EP Calipers</b> starts, a sample ECG and a time caliper are loaded.
 Move the caliper around by touching the caliper's cross-bar and
 dragging it with your finger.  Expand and contract the caliper by
 putting your finger on either vertical bar and dragging.  Pinch and
-zoom the underlying ECG image as needed.  If the ECG is bigger than
-your screen, you can drag the image around with your finger to choose
-a place to measure.  The remainder of these instructions will go over
-how to load ECG images, add and delete calipers, calibrate the
-calipers and make advanced measurements like the corrected QT
-interval.
+zoom the underlying ECG image as needed to enlarge or shrink it.  If
+the ECG is bigger than your screen, you can drag the image around with
+your finger to choose a place to measure.  The remainder of these
+instructions will go over how to load ECG images, add and delete
+calipers, calibrate the calipers and make advanced measurements like
+the corrected QT interval.
 </p>
 </div>
 </div>
@@ -273,7 +273,7 @@ If the <b>Copy to EP Calipers</b> option does not appear, then try the <b>Quick 
 </div>
 
 <p>
-or in some cases an <b>Open In&#x2026;</b> button appears.  Selecting it should then open a window where <b>Copy to EP Calipers</b> appears.
+or the <b>Open In&#x2026;</b> button.  Selecting it should open a window where <b>Copy to EP Calipers</b> appears.
 </p>
 
 
@@ -401,7 +401,7 @@ Calipers can be horizontal (time measurements) or vertical (amplitude measuremen
 <h2 id="orgheadline17">Selecting a caliper</h2>
 <div class="outline-text-2" id="text-orgheadline17">
 <p>
-When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red (You can change these colors if you want).  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) will unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another.
+When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red (You can change these colors if you want).  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another.
 </p>
 
 <div class="figure">
@@ -459,7 +459,7 @@ Select a calibrated caliper and stretch it over a number of intervals.  Select <
 <h2 id="orgheadline22">QTc calculation</h2>
 <div class="outline-text-2" id="text-orgheadline22">
 <p>
-Select <b>QTc</b>.  Stretch the selected caliper over one or more RR intervals and select <b>Measure</b>.  Enter the number of intervals the caliper is stretched over and select <b>Calculate</b>.  Then use the same caliper to measure the QT interval.  Select <b>Measure</b>.  A dialog box will give the calculated QTc using Bazett's formula.
+Select <b>QTc</b>.  Stretch the selected caliper over one or more RR intervals and select <b>Measure</b>.  Enter the number of intervals the caliper is stretched over and select <b>Continue</b>.  Then use the same caliper to measure the QT interval.  Select <b>Measure</b>.  A dialog box will give the calculated QTc using Bazett's formula.
 </p>
 
 <div class="figure">
@@ -490,11 +490,14 @@ Preferences such as caliper colors and default calibration intervals can be sele
 </div>
 </div>
 <div id="outline-container-orgheadline24" class="outline-2">
-<h2 id="orgheadline24">Issues</h2>
+<h2 id="orgheadline24">Issues and limitations</h2>
 <div class="outline-text-2" id="text-orgheadline24">
-<p>
-Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Note also that images taken via the <b>Camera</b> button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
-</p>
+<ul class="org-ul">
+<li>Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Be certain that the ECG you are measuring is indeed the one you selected and not the default normal ECG!  Future versions of the app will address this issue further.</li>
+<li>Images taken via the <b>Camera</b> button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.</li>
+<li>Rotation of the device will not preserve the relation between the ECG image and the calipers. However calibration <i>is</i> preserved with rotation.</li>
+<li>It is highly recommended that calipers be recalibrated if the image (not the device) is rotated.  The app though does not enforce this.</li>
+</ul>
 </div>
 </div>
 <div id="outline-container-orgheadline25" class="outline-2">
