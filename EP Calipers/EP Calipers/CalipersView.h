@@ -22,5 +22,7 @@
 - (Caliper *)activeCaliper;
 - (void)selectCaliper:(Caliper *)c;
 - (void)unselectCaliper:(Caliper *)c;
+- (void)selectCaliperNoNeedsDisplay:(Caliper *)c;
+- (void)unselectCaliperNoNeedsDisplay:(Caliper *)c;
 
 @end

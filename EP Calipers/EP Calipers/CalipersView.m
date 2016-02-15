@@ -50,15 +50,23 @@
     }
 }
 
-- (void)selectCaliper:(Caliper *)c {
+- (void)selectCaliperNoNeedsDisplay:(Caliper *)c {
     c.color = c.selectedColor;
     c.selected = YES;
-    [self setNeedsDisplay];    
+}
+
+- (void)unselectCaliperNoNeedsDisplay:(Caliper *)c {
+    c.color = c.unselectedColor;
+    c.selected = NO;
+}
+
+- (void)selectCaliper:(Caliper *)c {
+    [self selectCaliperNoNeedsDisplay:c];
+    [self setNeedsDisplay];
 }
 
 - (void)unselectCaliper:(Caliper *)c {
-    c.color = c.unselectedColor;
-    c.selected = NO;
+    [self unselectCaliperNoNeedsDisplay:c];
     [self setNeedsDisplay];
 }
 
@@ -71,24 +79,27 @@
         return;
     }
     CGPoint location = [t locationInView:self];
-//    Caliper *c = getSelectedCaliper(location);
     BOOL caliperToggled = NO;
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
         if ([(Caliper *)self.calipers[i] pointNearCaliper:location] && !caliperToggled) {
             caliperToggled = YES;
             if (((Caliper *)self.calipers[i]).selected) {
-                [self unselectCaliper:(Caliper *)self.calipers[i]];
+                [self unselectCaliperNoNeedsDisplay:(Caliper *)self.calipers[i]];
             }
             else  {
-                [self selectCaliper:(Caliper *)self.calipers[i]];
+                [self selectCaliperNoNeedsDisplay:(Caliper *)self.calipers[i]];
             }
         }
         else {
-            [self unselectCaliper:(Caliper *)self.calipers[i]];
+            [self unselectCaliperNoNeedsDisplay:(Caliper *)self.calipers[i]];
         }
+    }
+    if (caliperToggled) {
+        [self setNeedsDisplay];
     }
 }
 
+// method not used at present
 - (Caliper *)getSelectedCaliper:(CGPoint) point {
     Caliper *foundCaliper = nil;
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {

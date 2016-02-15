@@ -509,9 +509,10 @@
     if (self.calipersView.calipers.count > 1) {
         for (Caliper *caliper in self.calipersView.calipers) {
             if (caliper != c) {
-                [self.calipersView unselectCaliper:caliper];
+                [self.calipersView unselectCaliperNoNeedsDisplay:caliper];
             }
         }
+        [self.calipersView setNeedsDisplay];
     }
 }
 
