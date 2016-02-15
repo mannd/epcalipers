@@ -443,6 +443,11 @@
         return;
     }
     Caliper* c = self.calipersView.activeCaliper;
+    if (c.valueInPoints <= 0) {
+        UIAlertView *negativeValueAlertView = [[UIAlertView alloc] initWithTitle:@"Negatively Valued Caliper" message:@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [negativeValueAlertView show];
+        return;
+    }
     NSString *example = @"";
     if (c!= nil && c.direction == Vertical) {
         example = @"1 mV";
@@ -807,7 +812,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)showBadValueDialog {
-    UIAlertView *badValueAlertView = [[UIAlertView alloc] initWithTitle:@"Bad Input" message:@"Empty input or other bad input." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    UIAlertView *badValueAlertView = [[UIAlertView alloc] initWithTitle:@"Bad Input" message:@"Empty input, negative number input, or other bad input." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     [badValueAlertView show];
 }
 
@@ -874,8 +879,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         // scanner.locale = locale;
         [scanner scanFloat:&value];
         trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        // all calibrations must be positive
-        value = fabsf(value);
+        // reject negative values (showBadValueDialog}
+        // value = fabsf(value);
         if (value > 0.0) {
             Caliper *c = self.calipersView.activeCaliper;
             if (c == nil || c.valueInPoints <= 0) {

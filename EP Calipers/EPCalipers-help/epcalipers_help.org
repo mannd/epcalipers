@@ -43,35 +43,35 @@ Use the *Image* button at the top left of the screen to show the *Image* menu at
 
 With this menu you can load and adjust an ECG image.  There are several ways to load an ECG image.
 ** Take a photo of an ECG
-[[./img/camera_icon.png]]Touch the *Camera* icon to take a photo of an
+[[./img/camera_icon.png]]Touch the *Camera* button to take a photo of an
 ECG tracing and load it into the app.  Note that images captured this
 way are not saved in the photos collection of the device.  It's best to use this option to make a quick measurement when you don't need to save the image.
 ** Select a photo from your photos collection
 Touch *Select* to chose an image that is already saved on your device in your photos collection (for example, an image file attached to an email that you saved or a photo that your previously took).
 ** Select a photo or PDF using the *Share* menu from other apps
-*EP Calipers* can open image and PDF files regardless of where they are located on your device.  You can directly open email attachments, iCloud, Google Drive, and Dropbox files.  It is also easy to open ECG images directly from the /AliveCor AliveECG™/ app.  The key to opening images in external apps is to use the Share icon.  It looks like this: [[./img/share_icon.png]]
+*EP Calipers* can open image and PDF files regardless of where they are located on your device.  You can directly open email attachments, iCloud, Google Drive, and Dropbox files.  It is also easy to open ECG images directly from the /AliveCor AliveECG™/ app.  The key to opening images in external apps is to use the *Share* button.  It looks like this: [[./img/share_icon.png]]
 
-Depending on the app, this icon may appear at the top of the screen, or it may be necessary to do a long press on an image to open to share menu.  Here you can see the Share icon at the top right of the /AliveECG/ screen:
-#+CAPTION: *Share* icon at top right
+Depending on the app, this button may appear at the top of the screen, or it may be necessary to do a long press on an image to open the *Share* menu.  Here you can see the *Share* button at the top right of the /AliveECG/ screen:
+#+CAPTION: *Share* button at top right
 [[./img/aliveecgtop.png]]
 
-Once the share menu is open, one of the options should be *Copy to EP Calipers*.  Selecting this option will open the image in the app.
+Once the *Share* menu is open, one of the options should be *Copy to EP Calipers*.  Selecting this option will open the image in the app.
 
 #+CAPTION: *Copy to EP Calipers* will open the image in *EP Calipers*
 [[./img/copy_to_ep_calipers.png]]
 
-If the *Copy to EP Calipers* option does not appear, then try the *Quick Look* icon:
+If the *Copy to EP Calipers* option does not appear, then try the *Quick Look* button:
 
-#+CAPTION: The *Quick Look* icon is at the lower right
+#+CAPTION: The *Quick Look* button is at the lower right
 [[./img/quicklook.png]]
 
-or in some cases an *Open In...* icon appears.  Selecting it should then open a window where *Copy to EP Calipers* appears.
+or in some cases an *Open In...* button appears.  Selecting it should then open a window where *Copy to EP Calipers* appears.
 
-#+CAPTION: The *Open In...* icon allows the image to be opened in *EP Calipers*
+#+CAPTION: The *Open In...* button allows the image to be opened in *EP Calipers*
 [[./img/openin.png]]
 
 *** Opening email attachments or Dropbox files
-For email attachments or Dropbox files, download the attachment or the file (the details depend on the email app you are using.  Then when viewing the attachment or file, tap or long press to make the *Share* icon appear.  Select *Share* and then select *Copy to EP Calipers* to open the image or PDF in the app.  
+For email attachments or Dropbox files, download the attachment or the file (the details depend on the email app you are using.  Then when viewing the attachment or file, tap or long press to make the *Share* button appear.  Select *Share* and then select *Copy to EP Calipers* to open the image or PDF in the app.  
 
 *** /AliveCor/
 To view ECGs in the /AliveCor AliveECG/ app, select *Journal*, then *SHARE* for the specific saved ECG you want to view.
@@ -89,7 +89,7 @@ You can adjust the positioning of the image using pinch-to-zoom gestures and fin
 [[./img/adjust_menu.png]]
 * Exiting Image mode
 After loading and adjusting the image, you need to exit Image mode so that you can use the calipers.  Select the *Measure* button at the top left of the screen to return to the *EP Calipers* main screen.
-#+CAPTION: Use the *Measure* button to exit Image mode
+#+CAPTION: Use the *Measure* button to exit *Image* mode
 [[./img/measure_button.png]]
 * Moving calipers
 Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers.  Note that you cannot pinch both bars at the same time.
@@ -132,7 +132,7 @@ Select *QTc*.  Stretch the selected caliper over one or more RR intervals and se
 * Settings
 Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*.  Note that by the nature of iOS it is necessary to close the *EP Calipers* app before new settings take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
 * Issues
-Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Note also that images taken via the *Camera* icon in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
+Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Note also that images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
 * Acknowledgments
 - Thanks to Dr. Michael Katz for the concept.
 - The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers][GitHub]].
