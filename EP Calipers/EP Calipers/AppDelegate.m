@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "EPSMainViewController.h"
 
 @interface AppDelegate ()
 
@@ -40,6 +41,21 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    UINavigationController *navigationController = (UINavigationController *)  self.window.rootViewController;
+    EPSMainViewController *mainViewController = (EPSMainViewController *) [navigationController.viewControllers objectAtIndex:0];
+
+
+    if (url != nil && [url isFileURL]) {
+        // Note that openURL won't run the first time program loads, so we pass the relevant info
+        // to mainViewController which calls openURL in viewDidLoad.
+        mainViewController.launchFromURL = YES;
+        mainViewController.launchURL = url;
+        [mainViewController openURL:url];
+    }
+    return YES;
 }
 
 @end

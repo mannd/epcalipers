@@ -9,9 +9,9 @@
 #import "WebViewController.h"
 
 //TODO: Update with each new version!!
-#define VERSION @"2.0"
+#define VERSION @"2.1"
 
-#define HELP_URL @"epcalipers_help"
+#define HELP_URL @"EPCalipers-help/epcalipers_help"
 
 @interface WebViewController ()
 
@@ -61,7 +61,7 @@
 */
 
 - (void)showAbout {
-    UIAlertView *aboutAlertView = [[UIAlertView alloc] initWithTitle:@"EP Calipers" message:[NSString stringWithFormat:@"Copyright \u00a9 2015 EP Studios, Inc.\nAll rights reserved.\nVersion %@" , VERSION] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *aboutAlertView = [[UIAlertView alloc] initWithTitle:@"EP Calipers" message:[NSString stringWithFormat:@"Copyright \u00a9 2015, 2016 EP Studios, Inc.\nAll rights reserved.\nVersion %@" , VERSION] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     aboutAlertView.alertViewStyle = UIAlertViewStyleDefault;
     [aboutAlertView show];
     

@@ -16,6 +16,8 @@
 // set to yes to always show startup screen
 //#define TEST_QUICK_START NO
 
+// FIXME: when cancel out of RR measurement of QTc, go back to first step, not proceed to QTc measure
+
 
 #define ANIMATION_DURATION 0.5
 
@@ -35,6 +37,7 @@
 #define CALIBRATION_ALERTVIEW 20
 #define MEAN_RR_ALERTVIEW 30
 #define MEAN_RR_FOR_QTC_ALERTVIEW 43
+#define NUM_PDF_PAGES_ALERTVIEW 101
 
 #define CALIPERS_VIEW_TITLE @"EP Calipers"
 #define IMAGE_VIEW_TITLE @"Image Mode"
@@ -46,10 +49,13 @@
 @end
 
 @implementation EPSMainViewController
-
+{
+    CGPDFDocumentRef pdfRef;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    pdfRef = NULL;
     
     self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
 
@@ -70,7 +76,7 @@
     
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
-    self.scrollView.maximumZoomScale = 5.0;
+    self.scrollView.maximumZoomScale = 7.0;
     self.lastZoomFactor = self.scrollView.zoomScale;
     
     self.horizontalCalibration = [[Calibration alloc] init];
@@ -105,9 +111,10 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:YES];
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
-
+    
     if (self.firstRun) {
         //  scale image for imageView;
         // autolayout not done in viewDidLoad
@@ -124,10 +131,18 @@
         self.landscapeWidth = fmaxf(screenHeight, screenWidth);
         self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
         self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
-        
-        self.imageView.image = [self scaleImageForImageView:self.imageView.image];
-        
-        [self.imageView setHidden:self.settings.hideStartImage];
+
+        // if running first time and opening URL then don't load sample ECG
+        if (self.launchFromURL) {
+            self.launchFromURL = NO;
+            if (self.launchURL != nil) {
+                [self openURL:self.launchURL];
+            }
+        }
+        else {
+            self.imageView.image = [self scaleImageForImageView:self.imageView.image];
+            [self.imageView setHidden:self.settings.hideStartImage];
+        }
         
         [self addHorizontalCaliper];
         // NB: new calipers are not selected 
@@ -145,13 +160,14 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: It's easier to move the calipers and zoom and move the ECG image.  No need anymore to switch modes.  You can adjust everything on the same screen at the same time.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
-                            delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Open PDF files (even those with multiple pages) from the Share menu of email attachments and from the AliveECG™ app.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
+                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [noSelectionAlert show];
         }
 
     }
 }
+
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
 
@@ -209,8 +225,11 @@
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
     UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
     UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
-
-    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, nil];
+    // these 2 buttons only enable for multipage PDFs
+    self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
+    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Previous" style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
+    [self enablePageButtons:NO];
+    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, self.previousPageButton, self.nextPageButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
@@ -289,14 +308,14 @@
         [self unselectCalipersExcept:singleHorizontalCaliper];
     }
     if ([self.calipersView noCaliperIsSelected]) {
-        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
         [noSelectionAlert show];
         return;
     }
     Caliper* c = self.calipersView.activeCaliper;
     if (c.direction == Vertical) {
-        UIAlertView *noHorizontalCaliberAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *noHorizontalCaliberAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         noHorizontalCaliberAlert.alertViewStyle = UIAlertViewStyleDefault;
         [noHorizontalCaliberAlert show];
         return;
@@ -333,15 +352,15 @@
         [self showNoTimeCaliperSelectedAlertView];
     }
     else {
-        UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Calculate", nil];
+        UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Continue", nil];
         calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
         calculateMeanRRAlertView.tag = MEAN_RR_FOR_QTC_ALERTVIEW;
-        [calculateMeanRRAlertView show];
         
         [[calculateMeanRRAlertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
         [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"3"];
         [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
-        
+        [calculateMeanRRAlertView show];
+
         self.toolbarItems = self.qtcStep2MenuItems;
     }
 }
@@ -366,7 +385,7 @@
             }
             result = [NSString stringWithFormat:@"Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett's formula)", meanRR, c.calibration.units, qt, c.calibration.units, qtc, c.calibration.units];
         }
-        UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:@"Calculated QTc" message:result delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:@"Calculated QTc" message:result delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         qtcResultAlertView.alertViewStyle = UIAlertViewStyleDefault;
         [qtcResultAlertView show];
         [self selectMainToolbar];
@@ -378,7 +397,7 @@
 }
 
 - (void)showNoTimeCaliperSelectedAlertView {
-    UIAlertView *nothingToMeasureAlertView = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Use a selected (highlighted) caliper to measure one or more RR intervals." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    UIAlertView *nothingToMeasureAlertView = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Use a selected (highlighted) caliper to measure one or more RR intervals." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     nothingToMeasureAlertView.alertViewStyle = UIAlertActionStyleDefault;
     [nothingToMeasureAlertView show];
 }
@@ -418,12 +437,17 @@
         return;
     }
     if ([self.calipersView noCaliperIsSelected]) {
-        UIAlertView *noSelectionAlertView = [[UIAlertView alloc] initWithTitle:@"No Caliper Selected" message:@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *noSelectionAlertView = [[UIAlertView alloc] initWithTitle:@"No Caliper Selected" message:@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         noSelectionAlertView.alertViewStyle = UIAlertViewStyleDefault;
         [noSelectionAlertView show];
         return;
     }
     Caliper* c = self.calipersView.activeCaliper;
+    if (c.valueInPoints <= 0) {
+        UIAlertView *negativeValueAlertView = [[UIAlertView alloc] initWithTitle:@"Negatively Valued Caliper" message:@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [negativeValueAlertView show];
+        return;
+    }
     NSString *example = @"";
     if (c!= nil && c.direction == Vertical) {
         example = @"1 mV";
@@ -461,7 +485,7 @@
 }
 
 - (void)showNoCalipersAlert {
-    UIAlertView *noCalipersAlert = [[UIAlertView alloc] initWithTitle:@"No Calipers To Use" message:@"Add one or more calipers first before proceeding." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *noCalipersAlert = [[UIAlertView alloc] initWithTitle:@"No Calipers To Use" message:@"Add one or more calipers first before proceeding." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     noCalipersAlert.alertViewStyle = UIAlertViewStyleDefault;
     [noCalipersAlert show];
 }
@@ -490,9 +514,10 @@
     if (self.calipersView.calipers.count > 1) {
         for (Caliper *caliper in self.calipersView.calipers) {
             if (caliper != c) {
-                [self.calipersView unselectCaliper:caliper];
+                [self.calipersView unselectCaliperNoNeedsDisplay:caliper];
             }
         }
+        [self.calipersView setNeedsDisplay];
     }
 }
 
@@ -527,7 +552,13 @@
 - (void)takePhoto {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    picker.allowsEditing = YES;
+    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        picker.allowsEditing = NO;
+    }
+    else{
+        picker.allowsEditing = YES;
+    }
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:picker animated:YES completion:NULL];
 }
@@ -535,10 +566,132 @@
 - (void)selectPhoto {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    picker.allowsEditing = YES;
+    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        picker.allowsEditing = NO;
+    }
+    else{
+        picker.allowsEditing = YES;
+    }
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:picker animated:YES completion:NULL];
 }
+
+- (void)clearPDF {
+    // when opening new image or PDF, clear out any old PDF
+    if (pdfRef != NULL) {
+        CGPDFDocumentRelease(pdfRef);
+        pdfRef = NULL;
+    }
+}
+
+- (void)openURL:(NSURL *)url {
+    NSString *extension = [url.pathExtension uppercaseString];
+    if (![extension isEqualToString:@"PDF"]) {
+        [self enablePageButtons:NO];
+        self.imageView.image = [self scaleImageForImageView:[UIImage imageWithContentsOfFile:url.path]];
+    }
+    else {
+        self.numberOfPages = 0;
+        CGPDFDocumentRef tmpPDFRef = getPDFDocumentRef(url.path.UTF8String);
+        if (tmpPDFRef == NULL) {
+            return;
+        }
+        [self clearPDF];
+        pdfRef = tmpPDFRef;
+        self.numberOfPages = (int)CGPDFDocumentGetNumberOfPages(pdfRef);
+        // always start with page number 1
+        self.pageNumber = 1;
+        if (self.numberOfPages > 1) {
+            [self enablePageButtons:YES];
+        }
+        else {
+            // handle single page PDF
+            [self enablePageButtons:NO];
+        }
+        [self openPDFPage:pdfRef atPage:self.pageNumber];
+    }
+    [self.imageView setHidden:NO];
+    [self clearCalibration];
+}
+
+- (void)enablePageButtons:(BOOL)enable {
+    self.previousPageButton.enabled = self.nextPageButton.enabled = enable;
+    if (enable) {
+        if (self.pageNumber <= 1) {
+            self.previousPageButton.enabled = NO;
+        }
+        if (self.pageNumber >= self.numberOfPages) {
+            self.nextPageButton.enabled = NO;
+        }
+    }
+}
+
+- (void)gotoPreviousPage {
+    self.pageNumber--;
+    if (self.pageNumber < 1) {
+        self.pageNumber = 1;
+    }
+    [self enablePageButtons:YES];
+    [self openPDFPage:pdfRef atPage:self.pageNumber];
+}
+
+- (void)gotoNextPage {
+    self.pageNumber++;
+    if (self.pageNumber > self.numberOfPages) {
+        self.pageNumber = self.numberOfPages;
+    }
+    [self enablePageButtons:YES];
+    [self openPDFPage:pdfRef atPage:self.pageNumber];
+}
+
+- (void)openPDFPage:(CGPDFDocumentRef) documentRef atPage:(int) pageNum {
+    if (documentRef == NULL) {
+        return;
+    }
+    CGPDFPageRef page = getPDFPage(documentRef, pageNum);
+    if (page == NULL) {
+        return;
+    }
+    CGPDFPageRetain(page);
+    CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
+    // higher scale factor below makes for clearer image
+    CGFloat scaleFactor = 5.0;
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, scaleFactor);
+    CGContextRef currentContext = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(currentContext, 0.0, sourceRect.size.height);
+    CGContextScaleCTM(currentContext, 1.0, -1.0);
+    CGContextDrawPDFPage(currentContext, page);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    // first scale as usual, but image still too large since scaled up when created for better quality
+    image = [self scaleImageForImageView:image];
+    // now correct for scale factor when creating image
+    image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:scaleFactor * image.scale orientation:UIImageOrientationUp];
+    
+    self.imageView.image = image;
+    UIGraphicsEndImageContext();
+    CGPDFPageRelease(page);
+}
+
+
+
+CGPDFDocumentRef getPDFDocumentRef(const char *filename) {
+    CFStringRef path;
+    CFURLRef url;
+    CGPDFDocumentRef document;
+    
+    path = CFStringCreateWithCString(NULL, filename, kCFStringEncodingUTF8);
+    url = CFURLCreateWithFileSystemPath(NULL, path, kCFURLPOSIXPathStyle, 0);
+    CFRelease(path);
+    document = CGPDFDocumentCreateWithURL(url);
+    CFRelease(url);
+    return document;
+}
+
+CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
+    return CGPDFDocumentGetPage(document, pageNumber);
+}
+
 
 - (void)addHorizontalCaliper {
     [self addCaliperWithDirection:Horizontal];
@@ -643,13 +796,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)adjustImageDone {
-    CGFloat maxImageDimension = 0.0;
-    if (self.imageView.image.size.width > self.imageView.image.size.height) {
-        maxImageDimension = self.imageView.image.size.width;
-    }
-    else {
-        maxImageDimension = self.imageView.image.size.height;
-    }
+//    CGFloat maxImageDimension = 0.0;
+//    if (self.imageView.image.size.width > self.imageView.image.size.height) {
+//        maxImageDimension = self.imageView.image.size.width;
+//    }
+//    else {
+//        maxImageDimension = self.imageView.image.size.height;
+//    }
     [self selectImageToolbar];
     [self.calipersView setNeedsDisplay];
 }
@@ -658,16 +811,29 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     return self.view.frame.size.height > self.view.frame.size.width;
 }
 
+- (void)showBadValueDialog {
+    UIAlertView *badValueAlertView = [[UIAlertView alloc] initWithTitle:@"Bad Input" message:@"Empty input, negative number input, or other bad input." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [badValueAlertView show];
+}
+
 #pragma mark - Delegate Methods
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    BOOL badValue = NO;
     if (buttonIndex == 0) {
+        if (alertView.tag != CALIBRATION_ALERTVIEW) {
+            // calibrate cancel returns to calibrate menu, otherwise...
+            [self selectMainToolbar];
+        }
         return;
     }
     if (alertView.tag == CALIBRATION_ALERTVIEW) {
         NSString *rawText = [[alertView textFieldAtIndex:0] text];
         if (rawText.length > 0) {
             [self zCalibrateWithText:rawText];
+        }
+        else {
+            badValue = YES;
         }
     }
     else if (alertView.tag == MEAN_RR_ALERTVIEW || alertView.tag == MEAN_RR_FOR_QTC_ALERTVIEW) {
@@ -682,14 +848,23 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             double meanRR = intervalResult / divisor;
             double meanRate = [c rateResult:meanRR];
             if (alertView.tag == MEAN_RR_ALERTVIEW) {
-                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
                 [resultAlertView show];
             }
             else {
                 self.rrIntervalForQTc = [c intervalInSecs:meanRR];
             }
-            
+        }
+        else {
+            badValue = YES;
+        }
+    }
+    if (badValue) {
+        [self showBadValueDialog];
+        if (alertView.tag != CALIBRATION_ALERTVIEW) {
+            // calibrate cancel returns to calibrate menu, otherwise...
+            [self selectMainToolbar];
         }
     }
 }
@@ -704,8 +879,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         // scanner.locale = locale;
         [scanner scanFloat:&value];
         trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        // all calibrations must be positive
-        value = fabsf(value);
+        // reject negative values (showBadValueDialog}
+        // value = fabsf(value);
         if (value > 0.0) {
             Caliper *c = self.calipersView.activeCaliper;
             if (c == nil || c.valueInPoints <= 0) {
@@ -733,15 +908,28 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             [self.calipersView setNeedsDisplay];
             [self selectMainToolbar];
         }
+        else {
+            [self showBadValueDialog];
+        }
     }
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
+    UIImage *chosenImage = nil;
+    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        chosenImage = info[UIImagePickerControllerOriginalImage];
+    }
+    else {
+        chosenImage = info[UIImagePickerControllerEditedImage];
+        }
     self.imageView.image = [self scaleImageForImageView:chosenImage];
     [self.imageView setHidden:NO];
     [picker dismissViewControllerAnimated:YES completion:NULL];
     [self clearCalibration];
+    [self enablePageButtons:NO];
+    // remove any prior PDF from memory
+    [self clearPDF];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {

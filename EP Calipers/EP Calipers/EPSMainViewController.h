@@ -21,6 +21,8 @@
 @property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
 @property (strong, nonatomic) UIBarButtonItem *mRRButton;
 @property (strong, nonatomic) UIBarButtonItem *qtcButton;
+@property (strong, nonatomic) UIBarButtonItem *previousPageButton;
+@property (strong, nonatomic) UIBarButtonItem *nextPageButton;
 
 @property (strong, nonatomic) NSArray *mainMenuItems;
 @property (strong, nonatomic) NSArray *photoMenuItems;
@@ -38,6 +40,8 @@
 @property (nonatomic) BOOL isIpad;
 @property (nonatomic) double rrIntervalForQTc;
 @property (nonatomic) BOOL firstRun;
+@property (nonatomic) BOOL launchFromURL;
+@property (strong, nonatomic) NSURL *launchURL;
 
 @property (nonatomic) BOOL isCalipersView;
 
@@ -51,6 +55,12 @@
 @property (nonatomic) CGFloat portraitHeight;
 @property (nonatomic) CGFloat landscapeWidth;
 @property (nonatomic) CGFloat landscapeHeight;
+
+- (void)openURL:(NSURL *)url;
+
+//@property (nonatomic) CGPDFDocumentRef documentRef;
+@property (nonatomic) int pageNumber;
+@property (nonatomic) int numberOfPages;
 
 @end
 

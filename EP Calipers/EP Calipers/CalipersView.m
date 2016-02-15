@@ -50,40 +50,64 @@
     }
 }
 
-- (void)selectCaliper:(Caliper *)c {
+- (void)selectCaliperNoNeedsDisplay:(Caliper *)c {
     c.color = c.selectedColor;
     c.selected = YES;
-    [self setNeedsDisplay];    
 }
 
-- (void)unselectCaliper:(Caliper *)c {
+- (void)unselectCaliperNoNeedsDisplay:(Caliper *)c {
     c.color = c.unselectedColor;
     c.selected = NO;
+}
+
+- (void)selectCaliper:(Caliper *)c {
+    [self selectCaliperNoNeedsDisplay:c];
     [self setNeedsDisplay];
 }
 
-// Single tap initially highlites caliper, second tap deletes it.  Thus,
-// deletion can be down with a quick double tap or more methodically, or cancelled by
-// unselecting the caliper.
+- (void)unselectCaliper:(Caliper *)c {
+    [self unselectCaliperNoNeedsDisplay:c];
+    [self setNeedsDisplay];
+}
+
+// Single tap initially highlights (selects) caliper,
+// second tap unselects it.  Quick double tap is used
+// to delete caliper.  This is new behavior with v2.0+.
 - (void)singleTap:(UITapGestureRecognizer *)t {
     EPSLog(@"Single tap");
     if (self.locked) {
         return;
     }
     CGPoint location = [t locationInView:self];
+    BOOL caliperToggled = NO;
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
-        if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:location] && !caliperToggled) {
+            caliperToggled = YES;
             if (((Caliper *)self.calipers[i]).selected) {
-                [self unselectCaliper:(Caliper *)self.calipers[i]];
+                [self unselectCaliperNoNeedsDisplay:(Caliper *)self.calipers[i]];
             }
             else  {
-                [self selectCaliper:(Caliper *)self.calipers[i]];
+                [self selectCaliperNoNeedsDisplay:(Caliper *)self.calipers[i]];
             }
         }
         else {
-            [self unselectCaliper:(Caliper *)self.calipers[i]];
+            [self unselectCaliperNoNeedsDisplay:(Caliper *)self.calipers[i]];
         }
     }
+    if (caliperToggled) {
+        [self setNeedsDisplay];
+    }
+}
+
+// method not used at present
+- (Caliper *)getSelectedCaliper:(CGPoint) point {
+    Caliper *foundCaliper = nil;
+    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:point] && foundCaliper == nil) {
+            foundCaliper = (Caliper *)self.calipers[i];
+        }
+    }
+    return foundCaliper;
 }
 
 - (void)doubleTap:(UITapGestureRecognizer *)t {
