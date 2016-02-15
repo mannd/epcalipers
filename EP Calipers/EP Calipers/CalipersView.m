@@ -71,8 +71,11 @@
         return;
     }
     CGPoint location = [t locationInView:self];
+//    Caliper *c = getSelectedCaliper(location);
+    BOOL caliperToggled = NO;
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
-        if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:location] && !caliperToggled) {
+            caliperToggled = YES;
             if (((Caliper *)self.calipers[i]).selected) {
                 [self unselectCaliper:(Caliper *)self.calipers[i]];
             }
@@ -84,6 +87,16 @@
             [self unselectCaliper:(Caliper *)self.calipers[i]];
         }
     }
+}
+
+- (Caliper *)getSelectedCaliper:(CGPoint) point {
+    Caliper *foundCaliper = nil;
+    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:point] && foundCaliper == nil) {
+            foundCaliper = (Caliper *)self.calipers[i];
+        }
+    }
+    return foundCaliper;
 }
 
 - (void)doubleTap:(UITapGestureRecognizer *)t {
