@@ -57,8 +57,6 @@
     // Do any additional setup after loading the view, typically from a nib.
     pdfRef = NULL;
     
-    self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
-
     self.settings = [[Settings alloc] init];
     [self.settings loadPreferences];
 
@@ -95,7 +93,7 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     [btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? SWITCH_IPAD : SWITCH_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SWITCH_IPAD : SWITCH_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.toolbar.translucent = NO;
@@ -192,7 +190,7 @@
     if (self.isCalipersView) {
         self.navigationController.navigationBar.barTintColor = nil;
         self.navigationController.toolbar.barTintColor = nil;
-        [self.navigationItem.leftBarButtonItem setTitle:(self.isIpad ? SWITCH_IPAD : SWITCH_IPHONE)];
+        [self.navigationItem.leftBarButtonItem setTitle:([self isRegularSizeClass] ? SWITCH_IPAD : SWITCH_IPHONE)];
         [self unfadeCaliperView];
         [self selectMainToolbar];
     }
@@ -213,12 +211,12 @@
 // Create toolbars
 - (void)createMainToolbar {
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
-    UIBarButtonItem *calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? CALIBRATE_IPAD : CALIBRATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
-    self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
-    self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:(self.isIpad ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
+    self.calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? CALIBRATE_IPAD : CALIBRATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
+    self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
+    self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)   ];
    
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, nil];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, nil];
 }
 
 - (void)createImageToolbar {
@@ -953,6 +951,20 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [self.calipersView setNeedsDisplay];
+}
+
+- (BOOL)isCompactSizeClass {
+    return (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
+}
+
+- (BOOL)isRegularSizeClass {
+    return ![self isCompactSizeClass];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [self.toggleIntervalRateButton setTitle:[self isCompactSizeClass] ? TOGGLE_INT_RATE_IPHONE : TOGGLE_INT_RATE_IPAD];
+    [self.mRRButton setTitle:[self isCompactSizeClass] ? MEAN_RATE_IPHONE : MEAN_RATE_IPAD];
+    [self.calibrateCalipersButton setTitle:[self isCompactSizeClass] ? CALIBRATE_IPHONE : CALIBRATE_IPAD];
 }
 
 @end
