@@ -9,7 +9,7 @@
 #import "WebViewController.h"
 
 //TODO: Update with each new version!!
-#define VERSION @"2.1"
+#define VERSION @"2.2"
 
 #define HELP_URL @"EPCalipers-help/epcalipers_help"
 
