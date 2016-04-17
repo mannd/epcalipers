@@ -21,6 +21,7 @@
 @property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
 @property (strong, nonatomic) UIBarButtonItem *mRRButton;
 @property (strong, nonatomic) UIBarButtonItem *qtcButton;
+@property (strong, nonatomic) UIBarButtonItem *calibrateCalipersButton;
 @property (strong, nonatomic) UIBarButtonItem *previousPageButton;
 @property (strong, nonatomic) UIBarButtonItem *nextPageButton;
 
