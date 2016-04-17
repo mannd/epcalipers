@@ -74,7 +74,6 @@
 // second tap unselects it.  Quick double tap is used
 // to delete caliper.  This is new behavior with v2.0+.
 - (void)singleTap:(UITapGestureRecognizer *)t {
-    EPSLog(@"Single tap");
     if (self.locked) {
         return;
     }
@@ -111,7 +110,6 @@
 }
 
 - (void)doubleTap:(UITapGestureRecognizer *)t {
-    EPSLog(@"Double tap");
     if (self.locked) {
         return;
     }
