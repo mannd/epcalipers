@@ -17,8 +17,10 @@
 			</array>
 		</dict>
 		<dict>
+			<key>CFBundleTypeIconFiles</key>
+			<array/>
 			<key>CFBundleTypeName</key>
-			<string>image</string>
+			<string>Image</string>
 			<key>LSHandlerRank</key>
 			<string>Alternate</string>
 			<key>LSItemContentTypes</key>
@@ -54,12 +56,13 @@
 		<string>armv7</string>
 	</array>
 	<key>UIRequiresFullScreen</key>
-	<true/>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
