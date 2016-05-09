@@ -18,6 +18,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    // This key defaults to YES, so must be registered here.  Other keys are NO or Settings.m takes
+    // care of loading defaults.
+    // TODO: consider registering all keys here, to simplify Settings.m
+    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"roundMsecRatePreference"];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
+
+    
     return YES;
 }
 

@@ -704,6 +704,7 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
     caliper.unselectedColor = self.settings.caliperColor;
     caliper.selectedColor = self.settings.highlightColor;
     caliper.color = caliper.unselectedColor;
+    caliper.roundMsecRate = self.settings.roundMsecRate;
     caliper.direction = direction;
     if (direction == Horizontal) {
         caliper.calibration = self.horizontalCalibration;
