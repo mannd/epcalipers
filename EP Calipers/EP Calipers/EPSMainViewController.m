@@ -16,8 +16,6 @@
 // set to yes to always show startup screen
 //#define TEST_QUICK_START NO
 
-// FIXME: when cancel out of RR measurement of QTc, go back to first step, not proceed to QTc measure
-
 
 #define ANIMATION_DURATION 0.5
 
@@ -158,7 +156,7 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Support for split screen and multitasking in iOS 9.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
+            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Intervals in msec and heart rates rounded to closest integer.  Old behavior (up to 3 significant figures) still available via app settings.  Default number of RR intervals for QTc measurement is now 1 interval.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
                             delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [noSelectionAlert show];
         }
@@ -354,7 +352,7 @@
         calculateMeanRRAlertView.tag = MEAN_RR_FOR_QTC_ALERTVIEW;
         
         [[calculateMeanRRAlertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
-        [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"3"];
+        [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"1"];
         [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
         [calculateMeanRRAlertView show];
 
