@@ -32,6 +32,7 @@
         self.textFont = [UIFont fontWithName:@"Helvetica" size:18.0];
         self.paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         self.attributes = [[NSMutableDictionary alloc] init];
+        self.roundMsecRate = YES;
     }
     return self;
 }
@@ -129,6 +130,9 @@
     if (result != 0 && self.calibration.displayRate && self.calibration.canDisplayRate) {
         result = [self rateResult:result];
     }
+    else if (self.roundMsecRate && self.calibration.unitsAreMsec) {
+        result = round(result);
+    }
     return result;
 }
 
@@ -144,6 +148,9 @@
         if (self.calibration.unitsAreSeconds) {
             interval = 60.0 / interval;
         }
+    }
+    if (self.roundMsecRate) {
+        interval = round(interval);
     }
     return interval;
 }

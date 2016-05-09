@@ -8,6 +8,16 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
+			<string>Round Msec and Rate</string>
+			<key>Key</key>
+			<string>roundMsecRatePreference</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
 			<string>Hide Start Image</string>
 			<key>Key</key>
 			<string>hideStartImagePreference</string>

@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *defaultCalibration;
 @property (strong, nonatomic) NSString *defaultVerticalCalibration;
 @property (nonatomic) BOOL hideStartImage;
+@property (nonatomic) BOOL roundMsecRate;
 
 - (instancetype)init;
 - (void)loadPreferences;

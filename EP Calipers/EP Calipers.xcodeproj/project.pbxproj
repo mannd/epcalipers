@@ -20,11 +20,8 @@
 		8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */; };
 		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
 		8E9A333C1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */; };
-		8EB3DE361AC5B12A009376AD /* Caliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0208A61AC2A8B300FE7EC5 /* Caliper.m */; };
 		8EB3DE391AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
-		8EB3DE3A1AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
 		8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE3D1AC616C0009376AD /* Settings.m */; };
-		8EB3DE3F1AC616C0009376AD /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE3D1AC616C0009376AD /* Settings.m */; };
 		8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB3DE401AC9A488009376AD /* Settings.bundle */; };
 		8EDECB4A1C6CF93700EF0B89 /* EPCalipers-help in Resources */ = {isa = PBXBuildFile; fileRef = 8EDECB491C6CF93700EF0B89 /* EPCalipers-help */; };
 /* End PBXBuildFile section */
@@ -290,9 +287,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8EB3DE361AC5B12A009376AD /* Caliper.m in Sources */,
-				8EB3DE3A1AC603A3009376AD /* Calibration.m in Sources */,
-				8EB3DE3F1AC616C0009376AD /* Settings.m in Sources */,
 				8E1423781AB5F16A00CC15BC /* EP_CalipersTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

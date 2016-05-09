@@ -71,7 +71,7 @@
 }
 
 - (BOOL)unitsAreSeconds {
-    if (_units.length < 1) {
+    if (_units.length < 1 || self.direction == Vertical) {
         return NO;
     }
     NSString *units = [_units uppercaseString];
@@ -80,7 +80,7 @@
 }
 
 - (BOOL)unitsAreMsec {
-    if (_units.length < 1) {
+    if (_units.length < 1 || self.direction == Vertical) {
         return NO;
     }
     NSString *units = [_units uppercaseString];

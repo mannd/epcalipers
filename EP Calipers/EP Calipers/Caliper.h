@@ -27,6 +27,7 @@
 @property (strong, nonatomic) UIFont *textFont;
 @property (strong, nonatomic) NSMutableParagraphStyle *paragraphStyle;
 @property (strong, nonatomic) NSMutableDictionary *attributes;
+@property (nonatomic) BOOL roundMsecRate;
 
 - (double)intervalResult;
 - (double)rateResult:(double)interval;

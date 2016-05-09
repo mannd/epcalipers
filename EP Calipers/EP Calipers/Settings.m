@@ -20,6 +20,7 @@
         self.defaultCalibration = @"1000 msec";
         self.defaultVerticalCalibration = @"10 mm";
         self.hideStartImage = NO;
+        self.roundMsecRate = YES;
     }
     return self;
 }
@@ -57,6 +58,8 @@
     
     // doesn't matter if not set, will be NO which is the default anyway
     self.hideStartImage = [defaults boolForKey:@"hideStartImagePreference"];
+    
+    self.roundMsecRate = [defaults boolForKey:@"roundMsecRatePreference"];
 }
 
 @end
