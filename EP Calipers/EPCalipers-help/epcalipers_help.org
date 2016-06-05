@@ -145,5 +145,5 @@ Preferences such as caliper colors and default calibration intervals can be sele
   app, so use at your own risk.
 - For questions, error reporting or suggestions contact
   mannd@epstudiossoftware.com
-- Website: www.epstudiossoftware.com
+- Website: https://www.epstudiossoftware.com
 
