@@ -242,15 +242,16 @@
     UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
     UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     
-    self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, moreAdjustButton, resetImageButton, backToImageMenuButton, nil];
+    self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, resetImageButton, moreAdjustButton, backToImageMenuButton, nil];
 }
 
 - (void)createMoreAdjustImageToolbar {
     UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:@"0.1°R" style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
     UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"0.1°L" style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
     UIBarButtonItem *flipImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Flip" style:UIBarButtonItemStylePlain target:self action:@selector(flipImage:)];
+    UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
     UIBarButtonItem *backToAdjustImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(moreAdjustImageDone)];
-    self.moreAdjustImageMenuItems = [NSArray arrayWithObjects:microTweakRightButton, microTweakLeftButton, flipImageButton, backToAdjustImageMenuButton, nil];
+    self.moreAdjustImageMenuItems = [NSArray arrayWithObjects:microTweakRightButton, microTweakLeftButton, flipImageButton, resetImageButton, backToAdjustImageMenuButton, nil];
 }
 
 - (void)createAddCalipersToolbar {
@@ -570,6 +571,7 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
+// see http://stackoverflow.com/questions/37925583/uiimagepickercontroller-crashes-app-swift3-xcode8
 - (void)selectPhoto {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
