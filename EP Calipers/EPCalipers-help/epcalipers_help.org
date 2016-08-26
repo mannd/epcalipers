@@ -5,7 +5,7 @@
 #+DESCRIPTION: EP Calipers Help
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -84,7 +84,7 @@ After selecting the *Share* button, select *PDF* from the options that appear.  
 ** Multiple page PDFs
 When PDF files have more than one page, the app will display the first page initially.  You can go to other pages by selecting *Previous* or *Next* in the Image menu.
 * Adjusting the image
-You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the *Adjust* menu to fine-tune your image further.  You can rotate the image by 90° in either direction, or by increments of 1°.  This is particularly useful if the image is rotated or not quite square to the screen.  Use the options presented to straighten the image.  You should recalibrate your calipers after rotating the image.  If you need to go back to the original position use *Reset*.  After adjusting the image select *Done* to return to the main image menu.
+You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the *Adjust* menu to fine-tune your image further.  You can rotate the image by 90° in either direction, or by increments of 0.1° or 1°.  This is particularly useful if the image is rotated or not quite square to the screen.  Use the options presented to straighten the image.  You should recalibrate your calipers after rotating the image.  If you need to go back to the original position use *Reset*.  After adjusting the image select *Done* to return to the main image menu.
 #+CAPTION: The *Adjust* menu
 [[./img/adjust_menu.png]]
 * Exiting Image mode
