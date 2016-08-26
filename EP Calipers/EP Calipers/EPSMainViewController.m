@@ -61,6 +61,7 @@
     [self createMainToolbar];
     [self createImageToolbar];
     [self createAdjustImageToolbar];
+    [self createMoreAdjustImageToolbar];
     [self createAddCalipersToolbar];
     [self createSetupCalibrationToolbar];
     [self createQTcStep1Toolbar];
@@ -156,7 +157,7 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Intervals in msec and heart rates rounded to closest integer.  Old behavior (up to 3 significant figures) still available via app settings.  Default number of RR intervals for QTc measurement is now 1 interval.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
+            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Fine tune ECG image rotation by as little as 0.1 degree.  Help page now has a table of contents for easier naviation.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
                             delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [noSelectionAlert show];
         }
@@ -237,12 +238,20 @@
     UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"90°L" style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
     UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:@"1°R" style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
     UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"1°L" style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
-    UIBarButtonItem *flipImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Flip" style:UIBarButtonItemStylePlain target:self action:@selector(flipImage:)];
+    UIBarButtonItem *moreAdjustButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreAdjustImageToolbar)];
     UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
     UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     
-    self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, flipImageButton, resetImageButton, backToImageMenuButton, nil];
-    
+    self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, resetImageButton, moreAdjustButton, backToImageMenuButton, nil];
+}
+
+- (void)createMoreAdjustImageToolbar {
+    UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:@"0.1°R" style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
+    UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"0.1°L" style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
+    UIBarButtonItem *flipImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Flip" style:UIBarButtonItemStylePlain target:self action:@selector(flipImage:)];
+    UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
+    UIBarButtonItem *backToAdjustImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(moreAdjustImageDone)];
+    self.moreAdjustImageMenuItems = [NSArray arrayWithObjects:microTweakRightButton, microTweakLeftButton, flipImageButton, resetImageButton, backToAdjustImageMenuButton, nil];
 }
 
 - (void)createAddCalipersToolbar {
@@ -540,6 +549,10 @@
     self.toolbarItems = self.adjustImageMenuItems;
 }
 
+- (void)selectMoreAdjustImageToolbar {
+    self.toolbarItems = self.moreAdjustImageMenuItems;
+}
+
 - (void)selectCalibrateToolbar {
     self.toolbarItems = self.calibrateMenuItems;
 }
@@ -558,6 +571,7 @@
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
+// see http://stackoverflow.com/questions/37925583/uiimagepickercontroller-crashes-app-swift3-xcode8
 - (void)selectPhoto {
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
@@ -745,6 +759,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self rotateImage:-1];
 }
 
+- (IBAction)microTweakImageRight:(id)sender {
+    [self rotateImage:0.1];
+}
+
+- (IBAction)microTweakImageLeft:(id)sender {
+    [self rotateImage:-0.1];
+}
+
 - (void)rotateImage:(double)degrees {
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(degrees));
@@ -801,6 +823,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 //    }
     [self selectImageToolbar];
     [self.calipersView setNeedsDisplay];
+}
+
+- (void)moreAdjustImageDone {
+    [self selectAdjustImageToolbar];
 }
 
 - (BOOL)isPortraitMode {
