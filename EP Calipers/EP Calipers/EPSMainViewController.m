@@ -101,6 +101,25 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
     self.firstRun = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(viewBackToForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification object:nil];
+
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)viewBackToForeground {
+    EPSLog(@"ViewBackToForeground");
+    [self.settings loadPreferences];
+    [self.calipersView setNeedsDisplay];
+    // TODO: refresh calipers that are already there
+    // Cancel calibration temporarily set to Settings
+    // need to make sure all new settings take effect
+    // need to have a settings button
+    // need to modify help file
 }
 
 - (void)viewDidLayoutSubviews {
@@ -109,6 +128,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
+    EPSLog(@"ViewDidAppear");
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
     
@@ -407,8 +427,12 @@
 }
 
 - (void)clearCalibration {
-    [self resetCalibration];
-    [self.calipersView setNeedsDisplay];
+    [self openSettings];
+    
+    
+    return;
+  //  [self resetCalibration];
+  //  [self.calipersView setNeedsDisplay];
 }
 
 - (BOOL)horizontalCalipersAvailable {
@@ -555,6 +579,10 @@
 
 - (void)selectCalibrateToolbar {
     self.toolbarItems = self.calibrateMenuItems;
+}
+
+- (void)openSettings {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
 }
 
 - (void)takePhoto {
