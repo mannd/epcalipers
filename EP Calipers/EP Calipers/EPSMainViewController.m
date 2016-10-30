@@ -84,6 +84,9 @@
     self.verticalCalibration = [[Calibration alloc] init];
     self.verticalCalibration.direction = Vertical;
     
+    self.defaultHorizontalCalChanged = NO;
+    self.defaultVerticalCalChanged = NO;
+    
     [self.calipersView setUserInteractionEnabled:YES];
     
     self.rrIntervalForQTc = 0.0;
@@ -115,13 +118,14 @@
 
 - (void)viewBackToForeground {
     EPSLog(@"ViewBackToForeground");
+    NSString *priorHorizontalDefaultCal = [NSString stringWithString:self.settings.defaultCalibration];
+    NSString *priorVerticalDefaultCal = [NSString stringWithString:self.settings.defaultVerticalCalibration];
     [self.settings loadPreferences];
+    self.defaultHorizontalCalChanged = ![priorHorizontalDefaultCal isEqualToString:self.settings.defaultCalibration];
+    self.defaultVerticalCalChanged = ![priorVerticalDefaultCal isEqualToString:self.settings.defaultVerticalCalibration];
+    [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate];
     [self.calipersView setNeedsDisplay];
-    // TODO: refresh calipers that are already there
-    // Cancel calibration temporarily set to Settings
-    // need to make sure all new settings take effect
-    // need to have a settings button
-    // need to modify help file
+    
 }
 
 - (void)viewDidLayoutSubviews {
@@ -487,10 +491,10 @@
     alert.tag = CALIBRATION_ALERTVIEW;
     NSString *calibrationString = @"";
     // set initial calibration time calibration to default
-    if ([self.horizontalCalibration.calibrationString length] < 1) {
+    if ([self.horizontalCalibration.calibrationString length] < 1 || self.defaultHorizontalCalChanged) {
         self.horizontalCalibration.calibrationString = self.settings.defaultCalibration;
     }
-    if ([self.verticalCalibration.calibrationString length] < 1) {
+    if ([self.verticalCalibration.calibrationString length] < 1 || self.defaultVerticalCalChanged) {
         self.verticalCalibration.calibrationString = self.settings.defaultVerticalCalibration;
     }
     if (c != nil) {
@@ -736,13 +740,17 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
     [self addCaliperWithDirection:Vertical];
 }
 
-- (void)addCaliperWithDirection:(CaliperDirection)direction {
-    Caliper *caliper = [[Caliper alloc] init];
+- (void)updateCaliperSettings:(Caliper *)caliper {
     caliper.lineWidth = self.settings.lineWidth;
     caliper.unselectedColor = self.settings.caliperColor;
     caliper.selectedColor = self.settings.highlightColor;
-    caliper.color = caliper.unselectedColor;
     caliper.roundMsecRate = self.settings.roundMsecRate;
+}
+
+- (void)addCaliperWithDirection:(CaliperDirection)direction {
+    Caliper *caliper = [[Caliper alloc] init];
+    [self updateCaliperSettings:caliper];
+    caliper.color = caliper.unselectedColor;
     caliper.direction = direction;
     if (direction == Horizontal) {
         caliper.calibration = self.horizontalCalibration;

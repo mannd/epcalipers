@@ -65,5 +65,8 @@
 @property (nonatomic) int pageNumber;
 @property (nonatomic) int numberOfPages;
 
+@property (nonatomic) BOOL defaultHorizontalCalChanged;
+@property (nonatomic) BOOL defaultVerticalCalChanged;
+
 @end
 

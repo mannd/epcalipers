@@ -211,4 +211,20 @@
     return c;
 }
 
+- (void)updateCaliperPreferences:(UIColor *)unselectedColor selectedColor:(UIColor*)selectedColor lineWidth:(NSInteger)lineWidth roundMsec:(BOOL)roundMsec {
+    for(Caliper *c in self.calipers) {
+        c.selectedColor = selectedColor;
+        c.unselectedColor = unselectedColor;
+        if (c.selected) {
+            c.color = selectedColor;
+        }
+        else {
+            c.color = unselectedColor;
+        }
+        c.lineWidth = lineWidth;
+        c.roundMsecRate = roundMsec;
+    }
+}
+
+
 @end
