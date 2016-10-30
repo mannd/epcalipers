@@ -101,7 +101,7 @@ Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bar
 The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).
 * Adding and deleting calipers
 Select *+* to add new calipers.  
-#+CAPTION: Main menu, prior to calibration
+#+CAPTION: Main menu
 [[./img/main_menu2.png]]
 
 Calipers can be horizontal (time measurements) or vertical (amplitude measurements).  Select *Time* or *Amplitude* to add the type of caliper you want.  Double-tap a caliper to delete it.
