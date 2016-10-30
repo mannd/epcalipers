@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11198.2" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="6xA-Uv-Lhv">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6xA-Uv-Lhv">
     <dependencies>
         <deployment identifier="iOS"/>
-        <development version="7000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -33,18 +33,14 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx">
                                 <subviews>
-                                    <view opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c" userLabel="containerView">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c" userLabel="containerView">
                                         <subviews>
-                                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="Normal 12_Lead ECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                                            </imageView>
+                                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Normal 12_Lead ECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView"/>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" id="Hr7-Uj-Un9"/>
@@ -54,7 +50,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="blB-p5-m1c" firstAttribute="topMargin" secondItem="X5X-Yr-OYx" secondAttribute="topMargin" id="DHj-WM-deL"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="blB-p5-m1c" secondAttribute="bottomMargin" id="MTN-Ls-Xwe"/>
@@ -64,11 +60,9 @@
                                     <constraint firstAttribute="centerX" secondItem="blB-p5-m1c" secondAttribute="centerXWithinMargins" id="lqn-u9-9le"/>
                                 </constraints>
                             </scrollView>
-                            <view opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
-                            </view>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView"/>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D98-VW-HwH" secondAttribute="bottom" id="10L-uH-NeD"/>
                             <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7mg-co-GHU"/>
@@ -102,15 +96,14 @@
                         <viewControllerLayoutGuide type="bottom" id="OfB-zJ-Qqw"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GR2-WM-Ksu">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-Iu-ikC">
-                                <rect key="frame" x="16" y="20" width="288" height="460"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-Iu-ikC">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="dhT-Iu-ikC" firstAttribute="top" secondItem="oyL-zp-Gbv" secondAttribute="bottom" id="Cg8-WD-7HJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dhT-Iu-ikC" secondAttribute="trailing" id="MRz-og-kWW"/>
