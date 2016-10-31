@@ -21,7 +21,8 @@
     // This key defaults to YES, so must be registered here.  Other keys are NO or Settings.m takes
     // care of loading defaults.
     // TODO: consider registering all keys here, to simplify Settings.m
-    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:@"roundMsecRatePreference"];
+    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"roundMsecRatePreference", [NSNumber numberWithBool:NO], @"hideStartImagePreference", [NSNumber numberWithInt:2], @"lineWidthPreference", @"1000 msec", @"calibrationPreference", @"10 mm", @"verticalCalibrationPreference", @"Blue", @"caliperColorPreference", @"Red", @"highlightColorPreference", nil];
+    
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
 
     
