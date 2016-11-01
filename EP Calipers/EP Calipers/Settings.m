@@ -32,33 +32,16 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
-    // until user changes defaults, they don't work
-    int lineWidth = [[defaults objectForKey:@"lineWidthPreference"] intValue];
-    if (lineWidth > 1) {
-        self.lineWidth = lineWidth;
-    }
-    NSString *defaultCalibration = [defaults objectForKey:@"calibrationPreference"];
-    if (defaultCalibration != nil) {
-        self.defaultCalibration = defaultCalibration;
-    }
-    NSString *defaultVerticalCalibration = [defaults objectForKey:@"verticalCalibrationPreference"];
-    if (defaultVerticalCalibration != nil) {
-        self.defaultVerticalCalibration = defaultVerticalCalibration;
-    }
+    self.lineWidth = [[defaults objectForKey:@"lineWidthPreference"] intValue];
+    self.defaultCalibration = [defaults objectForKey:@"calibrationPreference"];
+    self.defaultVerticalCalibration = [defaults objectForKey:@"verticalCalibrationPreference"];
+    
     NSString *colorName = [defaults objectForKey:@"caliperColorPreference"];
     NSString *highlightColorName = [defaults objectForKey:@"highlightColorPreference"];
-    UIColor *caliperColor = [colorMap valueForKey:colorName];
-    if (caliperColor != nil) {
-        self.caliperColor = caliperColor;
-    }
-    UIColor *highlightColor = [colorMap valueForKey:highlightColorName];
-    if (highlightColor != nil) {
-        self.highlightColor = highlightColor;
-    }
-    
-    // doesn't matter if not set, will be NO which is the default anyway
+    self.caliperColor = [colorMap valueForKey:colorName];
+    self.highlightColor = [colorMap valueForKey:highlightColorName];
+
     self.hideStartImage = [defaults boolForKey:@"hideStartImagePreference"];
-    
     self.roundMsecRate = [defaults boolForKey:@"roundMsecRatePreference"];
 }
 

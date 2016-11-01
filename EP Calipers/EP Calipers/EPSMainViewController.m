@@ -30,6 +30,8 @@
 #define SWITCH_IPAD @"Image"
 #define SWITCH_IPHONE @"Image"
 #define SWITCH_BACK @"Measure"
+#define SETTINGS_IPAD @"Preferences"
+#define SETTINGS_IPHONE @"Prefs"
 
 // AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
@@ -82,6 +84,9 @@
     self.verticalCalibration = [[Calibration alloc] init];
     self.verticalCalibration.direction = Vertical;
     
+    self.defaultHorizontalCalChanged = NO;
+    self.defaultVerticalCalChanged = NO;
+    
     [self.calipersView setUserInteractionEnabled:YES];
     
     self.rrIntervalForQTc = 0.0;
@@ -101,6 +106,26 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
     self.firstRun = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(viewBackToForeground)
+                                                 name:UIApplicationWillEnterForegroundNotification object:nil];
+
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+}
+
+- (void)viewBackToForeground {
+    EPSLog(@"ViewBackToForeground");
+    NSString *priorHorizontalDefaultCal = [NSString stringWithString:self.settings.defaultCalibration];
+    NSString *priorVerticalDefaultCal = [NSString stringWithString:self.settings.defaultVerticalCalibration];
+    [self.settings loadPreferences];
+    self.defaultHorizontalCalChanged = ![priorHorizontalDefaultCal isEqualToString:self.settings.defaultCalibration];
+    self.defaultVerticalCalChanged = ![priorVerticalDefaultCal isEqualToString:self.settings.defaultVerticalCalibration];
+    [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate];
+    [self.calipersView setNeedsDisplay];
+    
 }
 
 - (void)viewDidLayoutSubviews {
@@ -109,6 +134,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
+    EPSLog(@"ViewDidAppear");
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
     
@@ -157,9 +183,9 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Fine tune ECG image rotation by as little as 0.1 degree.  Help page now has a table of contents for easier naviation.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
+            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Change app settings directly from the app, using the new *Preferences* menu item.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
                             delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [noSelectionAlert show];
+            [quickStartAlert show];
         }
 
     }
@@ -213,9 +239,9 @@
     self.calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? CALIBRATE_IPAD : CALIBRATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
-    self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)   ];
-   
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, nil];
+    self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
+    self.settingsButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SETTINGS_IPAD : SETTINGS_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, self.settingsButton, nil];
 }
 
 - (void)createImageToolbar {
@@ -465,10 +491,10 @@
     alert.tag = CALIBRATION_ALERTVIEW;
     NSString *calibrationString = @"";
     // set initial calibration time calibration to default
-    if ([self.horizontalCalibration.calibrationString length] < 1) {
+    if ([self.horizontalCalibration.calibrationString length] < 1 || self.defaultHorizontalCalChanged) {
         self.horizontalCalibration.calibrationString = self.settings.defaultCalibration;
     }
-    if ([self.verticalCalibration.calibrationString length] < 1) {
+    if ([self.verticalCalibration.calibrationString length] < 1 || self.defaultVerticalCalChanged) {
         self.verticalCalibration.calibrationString = self.settings.defaultVerticalCalibration;
     }
     if (c != nil) {
@@ -555,6 +581,10 @@
 
 - (void)selectCalibrateToolbar {
     self.toolbarItems = self.calibrateMenuItems;
+}
+
+- (void)openSettings {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
 }
 
 - (void)takePhoto {
@@ -710,13 +740,17 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
     [self addCaliperWithDirection:Vertical];
 }
 
-- (void)addCaliperWithDirection:(CaliperDirection)direction {
-    Caliper *caliper = [[Caliper alloc] init];
+- (void)updateCaliperSettings:(Caliper *)caliper {
     caliper.lineWidth = self.settings.lineWidth;
     caliper.unselectedColor = self.settings.caliperColor;
     caliper.selectedColor = self.settings.highlightColor;
-    caliper.color = caliper.unselectedColor;
     caliper.roundMsecRate = self.settings.roundMsecRate;
+}
+
+- (void)addCaliperWithDirection:(CaliperDirection)direction {
+    Caliper *caliper = [[Caliper alloc] init];
+    [self updateCaliperSettings:caliper];
+    caliper.color = caliper.unselectedColor;
     caliper.direction = direction;
     if (direction == Horizontal) {
         caliper.calibration = self.horizontalCalibration;

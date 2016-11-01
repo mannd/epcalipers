@@ -101,8 +101,8 @@ Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bar
 The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).
 * Adding and deleting calipers
 Select *+* to add new calipers.  
-#+CAPTION: Main menu, prior to calibration
-[[./img/main_menu1.png]]
+#+CAPTION: Main menu
+[[./img/main_menu2.png]]
 
 Calipers can be horizontal (time measurements) or vertical (amplitude measurements).  Select *Time* or *Amplitude* to add the type of caliper you want.  Double-tap a caliper to delete it.
 #+CAPTION: Add caliper menu
@@ -131,8 +131,8 @@ Select *QTc*.  Stretch the selected caliper over one or more RR intervals and se
 [[./img/qtc_second_step.png]]
 #+CAPTION: QTc result
 [[./img/qtc_result.png]]
-* Settings
-Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*.  Note that by the nature of iOS it is necessary to close the *EP Calipers* app before new settings take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
+* Preferences
+Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*. You can also change preferences by selecting the *Preferences* or *Prefs* item on the main menu of the app.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.  With some preferences it is necessary to close the *EP Calipers* app before they take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
 * Issues and limitations
 - Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Be certain that the ECG you are measuring is indeed the one you selected and not the default normal ECG!  Future versions of the app will address this issue further.
 - Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.

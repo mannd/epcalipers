@@ -24,6 +24,7 @@
 @property (strong, nonatomic) UIBarButtonItem *calibrateCalipersButton;
 @property (strong, nonatomic) UIBarButtonItem *previousPageButton;
 @property (strong, nonatomic) UIBarButtonItem *nextPageButton;
+@property (strong, nonatomic) UIBarButtonItem *settingsButton;
 
 @property (strong, nonatomic) NSArray *mainMenuItems;
 @property (strong, nonatomic) NSArray *photoMenuItems;
@@ -63,6 +64,9 @@
 //@property (nonatomic) CGPDFDocumentRef documentRef;
 @property (nonatomic) int pageNumber;
 @property (nonatomic) int numberOfPages;
+
+@property (nonatomic) BOOL defaultHorizontalCalChanged;
+@property (nonatomic) BOOL defaultVerticalCalChanged;
 
 @end
 
