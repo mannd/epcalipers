@@ -32,6 +32,9 @@
     CGContextMoveToPoint(context, self.position.x, self.position.y);
     CGContextAddLineToPoint(context, rect.size.width, self.position.y);
     
+    CGContextStrokePath(context);
+
+    
 }
 
 - (BOOL)pointNearBar:(CGPoint)p forBarPosition:(float)barPosition {

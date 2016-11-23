@@ -127,6 +127,8 @@
 				8E9A33391AC09DE90037E694 /* CalipersView.m */,
 				8E0208A51AC2A8B300FE7EC5 /* Caliper.h */,
 				8E0208A61AC2A8B300FE7EC5 /* Caliper.m */,
+				8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */,
+				8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */,
 				8EB3DE371AC603A3009376AD /* Calibration.h */,
 				8EB3DE381AC603A3009376AD /* Calibration.m */,
 				8EB3DE3B1AC604FB009376AD /* Defs.h */,
@@ -138,8 +140,6 @@
 				8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */,
 				8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */,
 				8E559EA81ACD9262004A6F91 /* Launch Screen.xib */,
-				8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */,
-				8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */,
 			);
 			path = "EP Calipers";
 			sourceTree = "<group>";
