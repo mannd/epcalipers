@@ -8,6 +8,7 @@
 
 #import "EPSMainViewController.h"
 #import "Caliper.h"
+#import "AngleCaliper.h"
 #import "Settings.h"
 #import "EPSLogging.h"
 #include "Defs.h"
@@ -283,9 +284,10 @@
 - (void)createAddCalipersToolbar {
     UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Time" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
     UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Amplitude" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
+    UIBarButtonItem *angleButton = [[UIBarButtonItem alloc] initWithTitle:@"Angle" style:UIBarButtonItemStylePlain target:self action:@selector(addAngleCaliper)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
-    self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, cancelButton, nil];
+    self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, angleButton, cancelButton, nil];
 }
 
 - (void)createSetupCalibrationToolbar {
@@ -738,6 +740,19 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
 
 - (void)addVerticalCaliper {
     [self addCaliperWithDirection:Vertical];
+}
+
+- (void)addAngleCaliper {
+    // TODO: add angle caliper
+    // Caliper *caliper = [[AngleCaliper alloc] init];
+    AngleCaliper *caliper = [[AngleCaliper alloc] init];
+    [self updateCaliperSettings:caliper];
+    caliper.color = caliper.unselectedColor;
+    caliper.direction = Horizontal;
+    caliper.calibration = self.horizontalCalibration;
+    [self.calipersView.calipers addObject:caliper];
+    [self.calipersView setNeedsDisplay];
+    [self selectMainToolbar];
 }
 
 - (void)updateCaliperSettings:(Caliper *)caliper {
