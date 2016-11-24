@@ -12,7 +12,6 @@
 
 @property (nonatomic) double angleBar1;
 @property (nonatomic) double angleBar2;
-@property (nonatomic) CGPoint position;
 
 - (instancetype)init;
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;
