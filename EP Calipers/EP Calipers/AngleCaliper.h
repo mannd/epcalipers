@@ -15,9 +15,12 @@
 
 - (instancetype)init;
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;
-- (BOOL)pointNearBar:(CGPoint)p forBarPosition:(float)barPosition;
+//- (BOOL)pointNearBar:(CGPoint)p forBarPosition:(float)barPosition;
 - (BOOL)pointNearCrossBar:(CGPoint)p;
 - (BOOL)pointNearCaliper:(CGPoint)p;
+
+- (BOOL)pointNearBar:(CGPoint)p forBarAngle:(double)barAngle;
+
 
 
 @end

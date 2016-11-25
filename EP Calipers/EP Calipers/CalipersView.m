@@ -140,11 +140,11 @@
                     crossBarSelected = YES;
                     selectionMade = YES;
                 }
-                else if ([selectedCaliper pointNearBar:location forBarPosition:selectedCaliper.bar1Position]) {
+                else if ([selectedCaliper pointNearBar1:location]) {
                     bar1Selected = YES;
                     selectionMade = YES;
                 }
-                else if ([selectedCaliper pointNearBar:location forBarPosition:selectedCaliper.bar2Position]) {
+                else if ([selectedCaliper pointNearBar2:location]) {
                     bar2Selected = YES;
                     selectionMade = YES;
                 }
