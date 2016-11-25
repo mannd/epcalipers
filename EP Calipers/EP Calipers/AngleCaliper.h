@@ -18,9 +18,8 @@
 //- (BOOL)pointNearBar:(CGPoint)p forBarPosition:(float)barPosition;
 - (BOOL)pointNearCrossBar:(CGPoint)p;
 - (BOOL)pointNearCaliper:(CGPoint)p;
-
 - (BOOL)pointNearBar:(CGPoint)p forBarAngle:(double)barAngle;
-
-
+- (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location;
+- (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location;
 
 @end

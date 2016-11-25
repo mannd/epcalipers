@@ -96,8 +96,20 @@
 - (NSString *)measurement {
     double angle = self.angleBar1 - self.angleBar2;
     double degrees = angle * 180.0 / M_PI;
-    NSString *text = [NSString stringWithFormat:@"%.4g°", degrees];
+    NSString *text = [NSString stringWithFormat:@"%.1f°", degrees];
     return text;
+}
+
+- (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location {
+    CGPoint newPosition = CGPointMake(location.x + delta.x, location.y + delta.y);
+    double theta = [self relativeTheta:newPosition];
+    self.angleBar1 = theta;
+}
+
+- (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location {
+    CGPoint newPosition = CGPointMake(location.x + delta.x, location.y + delta.y);
+    double theta = [self relativeTheta:newPosition];
+    self.angleBar2 = theta;
 }
 
 @end

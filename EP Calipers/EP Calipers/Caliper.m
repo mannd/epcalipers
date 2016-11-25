@@ -212,4 +212,18 @@
     return ([self pointNearCrossBar:p] || [self pointNearBar:p forBarPosition:self.bar1Position] || [self pointNearBar:p forBarPosition:self.bar2Position]);
 }
 
+- (void)moveCrossBar:(CGPoint)delta {
+    self.bar1Position += delta.x;
+    self.bar2Position += delta.x;
+    self.crossBarPosition += delta.y;
+}
+
+- (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location {
+    self.bar1Position += delta.x;
+}
+
+- (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location {
+    self.bar2Position += delta.x;
+}
+
 @end

@@ -160,22 +160,20 @@
     }
     if (selectedCaliper != nil) {
         CGPoint delta = [p translationInView:self];
-        // swap delta x and y for vertical
+        // swap delta x and y for vertical caliper
         if (selectedCaliper.direction == Vertical) {
             float tmp = delta.x;
             delta.x = delta.y;
             delta.y = tmp;
         }
         if (crossBarSelected) {
-            selectedCaliper.bar1Position += delta.x;
-            selectedCaliper.bar2Position += delta.x;
-            selectedCaliper.crossBarPosition += delta.y;
+            [selectedCaliper moveCrossBar:delta];
         }
         else if (bar1Selected) {
-            selectedCaliper.bar1Position += delta.x;
+            [selectedCaliper moveBar1:delta forLocation:location];
         }
         else if (bar2Selected) {
-            selectedCaliper.bar2Position += delta.x;
+            [selectedCaliper moveBar2:delta forLocation:location];
         }
         [p setTranslation:CGPointZero inView:self];
         [self setNeedsDisplay];
