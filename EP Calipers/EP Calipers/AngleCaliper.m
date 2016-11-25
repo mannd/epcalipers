@@ -6,9 +6,13 @@
 //  Copyright © 2016 EP Studios. All rights reserved.
 //
 
+// Angle calipers are primarily useful for measuring beta angle in Brugada syndrome.
+// see http://content.onlinejacc.org/article.aspx?articleid=1147780
+
 #import "AngleCaliper.h"
 
 #define DELTA 20.0
+#define ANGLE_DELTA 0.1
 
 @implementation AngleCaliper
 
@@ -59,7 +63,7 @@
 
 - (BOOL)pointNearBar:(CGPoint)p forBarAngle:(double)barAngle {
     double theta = [self relativeTheta:p];
-    return theta < barAngle + 0.1 && theta > barAngle - 0.1;
+    return theta < barAngle + ANGLE_DELTA && theta > barAngle - ANGLE_DELTA;
 }
 
 - (double)relativeTheta:(CGPoint)p {
@@ -77,7 +81,7 @@
 }
 
 - (BOOL)pointNearCrossBar:(CGPoint)p {
-    float delta = 20.0f;
+    float delta = 40.0f;
     return (p.x > self.bar1Position - delta && p.x < self.bar1Position + delta && p.y > self.crossBarPosition - delta && p.y < self.crossBarPosition + delta);
 }
 
@@ -101,15 +105,16 @@
 }
 
 - (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location {
-    CGPoint newPosition = CGPointMake(location.x + delta.x, location.y + delta.y);
-    double theta = [self relativeTheta:newPosition];
-    self.angleBar1 = theta;
+    self.angleBar1 = [self moveBarAngle:delta forLocation:location];
 }
 
 - (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location {
+    self.angleBar2 = [self moveBarAngle:delta forLocation:location];
+}
+
+- (double)moveBarAngle:(CGPoint)delta forLocation:(CGPoint)location {
     CGPoint newPosition = CGPointMake(location.x + delta.x, location.y + delta.y);
-    double theta = [self relativeTheta:newPosition];
-    self.angleBar2 = theta;
+    return [self relativeTheta:newPosition];
 }
 
 @end
