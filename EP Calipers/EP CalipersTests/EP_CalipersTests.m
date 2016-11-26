@@ -119,8 +119,10 @@
 - (void)testIsAngleCaliber {
     Caliper *caliper = [[Caliper alloc] init];
     XCTAssert([caliper requiresCalibration]);
+    XCTAssert(!caliper.isAngleCaliper);
     Caliper *angleCaliper = [[AngleCaliper alloc] init];
     XCTAssert(![angleCaliper requiresCalibration]);
+    XCTAssert(angleCaliper.isAngleCaliper);
 }
 
 @end

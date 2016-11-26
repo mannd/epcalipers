@@ -25,6 +25,7 @@
 @property (strong, nonatomic) UIBarButtonItem *previousPageButton;
 @property (strong, nonatomic) UIBarButtonItem *nextPageButton;
 @property (strong, nonatomic) UIBarButtonItem *settingsButton;
+@property (strong, nonatomic) UIBarButtonItem *brugadaButton;
 
 @property (strong, nonatomic) NSArray *mainMenuItems;
 @property (strong, nonatomic) NSArray *photoMenuItems;

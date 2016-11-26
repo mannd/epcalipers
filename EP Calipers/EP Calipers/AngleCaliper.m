@@ -33,6 +33,19 @@
     return self;
 }
 
+- (void)setInitialPositionInRect:(CGRect)rect {
+    static float differential = 0;
+    self.bar1Position = (rect.size.width/3) + differential;
+    self.bar2Position = self.bar1Position;
+    self.crossBarPosition = (rect.size.height/3) + differential * 1.5;
+    
+    differential += 20;
+    if (differential > 100) {
+        differential = 0;
+    }
+}
+
+
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect {
     
     CGContextSetStrokeColorWithColor(context, [self.color CGColor]);
@@ -129,6 +142,10 @@
 
 - (BOOL)requiresCalibration {
     return NO;
+}
+
+- (BOOL)isAngleCaliper {
+    return YES;
 }
 
 @end

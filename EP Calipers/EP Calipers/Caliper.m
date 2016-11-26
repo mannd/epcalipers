@@ -230,4 +230,8 @@
     return YES;
 }
 
+- (BOOL)isAngleCaliper {
+    return NO;
+}
+
 @end

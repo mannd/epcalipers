@@ -34,6 +34,8 @@
 #define SWITCH_BACK @"Measure"
 #define SETTINGS_IPAD @"Preferences"
 #define SETTINGS_IPHONE @"Prefs"
+#define BRUGADA_IPAD @"Brugada"
+#define BRUGADA_IPHONE @"BrS"
 
 // AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
@@ -242,8 +244,9 @@
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
+    self.brugadaButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? BRUGADA_IPAD : BRUGADA_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(doBrugadaCalculations)];
     self.settingsButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SETTINGS_IPAD : SETTINGS_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, self.settingsButton, nil];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, self.brugadaButton, self.settingsButton, nil];
 }
 
 - (void)createImageToolbar {
@@ -320,6 +323,7 @@
     self.qtcStep2MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureQTButton, cancelButton, nil];
 }
 
+
 - (void)showHelp {
     [self performSegueWithIdentifier:@"WebViewSegue" sender:nil];
 }
@@ -340,19 +344,20 @@
         [self.calipersView selectCaliper:singleHorizontalCaliper];
         [self unselectCalipersExcept:singleHorizontalCaliper];
     }
-    if ([self.calipersView noCaliperIsSelected]) {
+    // TODO: refactor duplicate alertview code
+    if ([self noTimeCaliperSelected]) {
         UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
         [noSelectionAlert show];
         return;
     }
-    Caliper* c = self.calipersView.activeCaliper;
-    if (c.direction == Vertical) {
-        UIAlertView *noHorizontalCaliberAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        noHorizontalCaliberAlert.alertViewStyle = UIAlertViewStyleDefault;
-        [noHorizontalCaliberAlert show];
-        return;
-    }
+//    Caliper* c = self.calipersView.activeCaliper;
+//    if (c.direction == Vertical) {
+//        UIAlertView *noHorizontalCaliberAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        noHorizontalCaliberAlert.alertViewStyle = UIAlertViewStyleDefault;
+//        [noHorizontalCaliberAlert show];
+//        return;
+//    }
     UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Calculate", nil];
     calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     calculateMeanRRAlertView.tag = MEAN_RR_ALERTVIEW;
@@ -425,8 +430,44 @@
     }
 }
 
+- (void)doBrugadaCalculations {
+    if (self.calipersView.calipers.count < 1) {
+        [self showNoCalipersAlert];
+        [self selectMainToolbar];
+        return;
+    }
+    Caliper *singleAngleCaliper = [self getLoneAngleCaliper];
+    if (singleAngleCaliper != nil) {
+        [self.calipersView selectCaliper:singleAngleCaliper];
+        [self unselectCalipersExcept:singleAngleCaliper];
+    }
+    // TODO: refactor duplicate alertview code
+    if ([self noAngleCaliperSelected]) {
+        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Angle Caliper Selected" message:@"Select a angle caliper by single-tapping it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
+        [noSelectionAlert show];
+        return;
+    }
+    Caliper* c = self.calipersView.activeCaliper;
+//    if (!c.isAngleCaliper) {
+//        UIAlertView *noAngleCaliberAlert = [[UIAlertView alloc] initWithTitle:@"No Angle Caliper Selected" message:@"Select an angle caliper by single-tapping it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        noAngleCaliberAlert.alertViewStyle = UIAlertViewStyleDefault;
+//        [noAngleCaliberAlert show];
+//        return;
+//    }
+
+    
+    // show dialog result here
+
+}
+
 - (BOOL)noTimeCaliperSelected {
-    return (self.calipersView.calipers.count < 1 || [self.calipersView noCaliperIsSelected]  || [self.calipersView activeCaliper].direction == Vertical);
+    return (self.calipersView.calipers.count < 1 || [self.calipersView noCaliperIsSelected]  || [self.calipersView activeCaliper].direction == Vertical) || [[self.calipersView activeCaliper] isAngleCaliper];
+}
+
+- (BOOL)noAngleCaliperSelected {
+    return (self.calipersView.calipers.count < 1 || [self.calipersView noCaliperIsSelected] || ![[self.calipersView activeCaliper] isAngleCaliper]);
+    
 }
 
 - (void)showNoTimeCaliperSelectedAlertView {
@@ -546,6 +587,26 @@
     else {
         return nil;
     }
+}
+
+- (Caliper *)getLoneAngleCaliper {
+    Caliper *c = nil;
+    int n = 0;
+    if (self.calipersView.calipers.count > 0) {
+        for (Caliper *caliper in self.calipersView.calipers) {
+            if (caliper.isAngleCaliper) {
+                c = caliper;
+                n++;
+            }
+        }
+    }
+    if (n == 1) {
+        return c;
+    }
+    else {
+        return nil;
+    }
+    
 }
 
 - (void)unselectCalipersExcept:(Caliper *)c {
@@ -752,11 +813,12 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
 - (void)addAngleCaliper {
     // TODO: add angle caliper
     // Caliper *caliper = [[AngleCaliper alloc] init];
-    AngleCaliper *caliper = [[AngleCaliper alloc] init];
+    Caliper *caliper = [[AngleCaliper alloc] init];
     [self updateCaliperSettings:caliper];
     caliper.color = caliper.unselectedColor;
     caliper.direction = Horizontal;
-    caliper.calibration = self.horizontalCalibration;
+    //caliper.calibration = self.horizontalCalibration;
+    [caliper setInitialPositionInRect:self.calipersView.bounds];
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
     [self selectMainToolbar];

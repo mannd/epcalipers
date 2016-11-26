@@ -29,6 +29,7 @@
 @property (strong, nonatomic) NSMutableDictionary *attributes;
 @property (nonatomic) BOOL roundMsecRate;
 @property (readonly) BOOL requiresCalibration;
+@property (readonly) BOOL isAngleCaliper;
 
 - (double)intervalResult;
 - (double)rateResult:(double)interval;
