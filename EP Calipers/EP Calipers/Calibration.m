@@ -91,5 +91,13 @@
     return (self.originalZoom * self.originalCalFactor) / self.currentZoom;
 }
 
+- (BOOL)unitsAreMM {
+    if (self.units.length < 1 || self.direction != Vertical) {
+        return NO;
+    }
+    NSString *units = [self.units uppercaseString];
+    return [units isEqualToString:@"MM"] || [units containsString:@"MILLIM"];
+}
+
 
 @end

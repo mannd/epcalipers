@@ -28,6 +28,7 @@
 @property (strong, nonatomic) NSMutableParagraphStyle *paragraphStyle;
 @property (strong, nonatomic) NSMutableDictionary *attributes;
 @property (nonatomic) BOOL roundMsecRate;
+@property (readonly) BOOL requiresCalibration;
 
 - (double)intervalResult;
 - (double)rateResult:(double)interval;

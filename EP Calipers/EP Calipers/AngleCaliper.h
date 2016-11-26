@@ -21,5 +21,6 @@
 - (BOOL)pointNearBar:(CGPoint)p forBarAngle:(double)barAngle;
 - (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location;
 - (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location;
+- (double)radiansToDegrees:(double)radians;
 
 @end

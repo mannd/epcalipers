@@ -10,6 +10,7 @@
 #import <XCTest/XCTest.h>
 #import "Caliper.h"
 #import "Calibration.h"
+#import "AngleCaliper.h"
 
 @interface EP_CalipersTests : XCTestCase
 
@@ -81,6 +82,45 @@
     XCTAssert([cal currentCalFactor] == 0.5);
     cal.currentZoom = 2.0;
     XCTAssert([cal currentCalFactor] == 0.25);
+}
+
+- (void)testUnitsAreMM {
+    Calibration *cal = [[Calibration alloc] init];
+    cal.calibrated = YES;
+    cal.direction = Vertical;
+    cal.units = @"mm";
+    XCTAssert([cal unitsAreMM]);
+    cal.units = @"millimeters";
+    XCTAssert([cal unitsAreMM]);
+    cal.units = @"Millimeter";
+    XCTAssert([cal unitsAreMM]);
+    cal.units = @"MM";
+    XCTAssert([cal unitsAreMM]);
+    cal.units = @"milliM";
+    XCTAssert([cal unitsAreMM]);
+    cal.units = @"milliVolts";
+    XCTAssert(![cal unitsAreMM]);
+    cal.units = @"mV";
+    XCTAssert(![cal unitsAreMM]);
+    cal.units = @"msec";
+    XCTAssert(![cal unitsAreMM]);
+}
+
+- (void)testRadiansToDegrees {
+    AngleCaliper *caliper = [[AngleCaliper alloc] init];
+    double angle = 0;
+    XCTAssert([caliper radiansToDegrees:angle] == 0.0);
+    angle = M_PI / 2.0;
+    XCTAssert([caliper radiansToDegrees:angle] == 90.0);
+    angle = M_PI;
+    XCTAssert([caliper radiansToDegrees:angle] == 180.0);
+}
+
+- (void)testIsAngleCaliber {
+    Caliper *caliper = [[Caliper alloc] init];
+    XCTAssert([caliper requiresCalibration]);
+    Caliper *angleCaliper = [[AngleCaliper alloc] init];
+    XCTAssert(![angleCaliper requiresCalibration]);
 }
 
 @end

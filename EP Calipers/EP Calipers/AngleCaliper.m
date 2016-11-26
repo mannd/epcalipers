@@ -12,7 +12,7 @@
 #import "AngleCaliper.h"
 
 #define DELTA 20.0
-#define ANGLE_DELTA 0.1
+#define ANGLE_DELTA 0.2
 
 @implementation AngleCaliper
 
@@ -99,9 +99,19 @@
 
 - (NSString *)measurement {
     double angle = self.angleBar1 - self.angleBar2;
-    double degrees = angle * 180.0 / M_PI;
+    double degrees = [self radiansToDegrees:angle];
     NSString *text = [NSString stringWithFormat:@"%.1f°", degrees];
     return text;
+}
+
+- (double)alphaAngle {
+    // the angle between bar2 and a vertical
+    double angle = 0.5 * M_PI - self.angleBar2;
+    return [self radiansToDegrees:angle];
+}
+
+- (double)radiansToDegrees:(double)radians {
+    return radians * 180.0 / M_PI;
 }
 
 - (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location {
@@ -115,6 +125,10 @@
 - (double)moveBarAngle:(CGPoint)delta forLocation:(CGPoint)location {
     CGPoint newPosition = CGPointMake(location.x + delta.x, location.y + delta.y);
     return [self relativeTheta:newPosition];
+}
+
+- (BOOL)requiresCalibration {
+    return NO;
 }
 
 @end

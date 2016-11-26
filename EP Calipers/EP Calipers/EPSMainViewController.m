@@ -19,6 +19,7 @@
 
 
 #define ANIMATION_DURATION 0.5
+#define MAX_ZOOM 10.0
 
 #define CALIBRATE_IPAD @"Calibrate"
 #define CALIBRATE_IPHONE @"Cal"
@@ -76,7 +77,7 @@
     
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
-    self.scrollView.maximumZoomScale = 7.0;
+    self.scrollView.maximumZoomScale = MAX_ZOOM;
     self.lastZoomFactor = self.scrollView.zoomScale;
     
     self.horizontalCalibration = [[Calibration alloc] init];
@@ -475,6 +476,12 @@
         return;
     }
     Caliper* c = self.calipersView.activeCaliper;
+    // Angle calipers don't require calibration
+    if (![c requiresCalibration]) {
+        UIAlertView *angleCaliperAlertView = [[UIAlertView alloc] initWithTitle:@"Angle Caliper" message:@"Angle calipers don't require calibration.  Only Time or Amplitude calipers need to be calibrated." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [angleCaliperAlertView show];
+        return;
+    }
     if (c.valueInPoints <= 0) {
         UIAlertView *negativeValueAlertView = [[UIAlertView alloc] initWithTitle:@"Negatively Valued Caliper" message:@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [negativeValueAlertView show];

@@ -226,4 +226,8 @@
     self.bar2Position += delta.x;
 }
 
+- (BOOL)requiresCalibration {
+    return YES;
+}
+
 @end
