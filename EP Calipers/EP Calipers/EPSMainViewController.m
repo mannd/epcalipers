@@ -441,12 +441,40 @@
         [noSelectionAlert show];
         return;
     }
-    Caliper* c = self.calipersView.activeCaliper;
+    // TODO: this had better be true
+    AngleCaliper* c = (AngleCaliper*)self.calipersView.activeCaliper;
     // intervalResult holds angle in radians with angle calipers
     double angleInRadians = [c intervalResult];
     double angleInDegrees = [AngleCaliper radiansToDegrees:angleInRadians];
-
-    NSString *message = [NSString stringWithFormat:@"Beta angle = %.1f°", angleInDegrees];
+    BOOL amplitudeCalibratedInMM = [self.verticalCalibration unitsAreMM];
+    BOOL timeCalibratedInMsec = [self.horizontalCalibration unitsAreMsec];
+    NSString *calibrationStatement = @"";
+    // TODO: not working quite right yet
+    if (amplitudeCalibratedInMM && timeCalibratedInMsec) {
+        // calculate length of triangle base 5 mm away from apex of angle
+        double pointsPerMM =  1.0 / self.verticalCalibration.multiplier;
+        double pointsPerMsec = 1.0 / self.horizontalCalibration.multiplier;
+        double apexX = c.bar1Position;
+        double apexY = c.crossBarPosition;
+        // base of the triangle
+        double baseY = apexY + 5.0 * pointsPerMM;
+        double theta1 = c.angleBar1;
+        double theta2 = c.angleBar2;
+        double length2 = baseY * (sin(0.5 * M_PI - theta2)) / sin(theta2);
+        double length1 = baseY * (sin(0.5 * M_PI - theta1)) / sin(M_PI - theta1);
+        double length = length1 + length2;
+        length *= pointsPerMsec;
+        // calculate each segment of the base of the triangle
+        NSLog(@"length = %f", length);
+    }
+    else {
+        calibrationStatement = @"\n\nFurther risk calculations can be made if you calibrate time calipers in milliseconds (msec) and amplitude calipers in millimeters (mm).";
+    }
+    NSString *riskStatement = @"Low risk of Brugada syndrome";
+    if (angleInDegrees > 58.0) {
+        riskStatement = @"Increased risk of Brugada syndrome";
+    }
+    NSString *message = [NSString stringWithFormat:@"Beta angle = %.1f°\n\n%@%@", angleInDegrees, riskStatement, calibrationStatement];
     UIAlertView *brugadaResultAlert = [[UIAlertView alloc] initWithTitle:@"Brugada Syndrome Results" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [brugadaResultAlert show];
     

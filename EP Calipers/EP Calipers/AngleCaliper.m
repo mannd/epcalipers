@@ -12,7 +12,7 @@
 #import "AngleCaliper.h"
 
 #define DELTA 20.0
-#define ANGLE_DELTA 0.2
+#define ANGLE_DELTA 0.15
 
 @implementation AngleCaliper
 
