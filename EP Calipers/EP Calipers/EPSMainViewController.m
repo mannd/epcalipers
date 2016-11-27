@@ -344,20 +344,14 @@
         [self.calipersView selectCaliper:singleHorizontalCaliper];
         [self unselectCalipersExcept:singleHorizontalCaliper];
     }
-    // TODO: refactor duplicate alertview code
+    // TODO: there is an alertview method similar to this used in measuring RR for QTc
     if ([self noTimeCaliperSelected]) {
-        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
-        [noSelectionAlert show];
+        [self showNoTimeCaliperSelectedAlertView];
+//        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
+//        [noSelectionAlert show];
         return;
     }
-//    Caliper* c = self.calipersView.activeCaliper;
-//    if (c.direction == Vertical) {
-//        UIAlertView *noHorizontalCaliberAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        noHorizontalCaliberAlert.alertViewStyle = UIAlertViewStyleDefault;
-//        [noHorizontalCaliberAlert show];
-//        return;
-//    }
     UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Calculate", nil];
     calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     calculateMeanRRAlertView.tag = MEAN_RR_ALERTVIEW;
@@ -441,24 +435,21 @@
         [self.calipersView selectCaliper:singleAngleCaliper];
         [self unselectCalipersExcept:singleAngleCaliper];
     }
-    // TODO: refactor duplicate alertview code
     if ([self noAngleCaliperSelected]) {
-        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Angle Caliper Selected" message:@"Select a angle caliper by single-tapping it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Angle Caliper Selected" message:@"Select an angle caliper." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
         [noSelectionAlert show];
         return;
     }
     Caliper* c = self.calipersView.activeCaliper;
-//    if (!c.isAngleCaliper) {
-//        UIAlertView *noAngleCaliberAlert = [[UIAlertView alloc] initWithTitle:@"No Angle Caliper Selected" message:@"Select an angle caliper by single-tapping it." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        noAngleCaliberAlert.alertViewStyle = UIAlertViewStyleDefault;
-//        [noAngleCaliberAlert show];
-//        return;
-//    }
+    // intervalResult holds angle in radians with angle calipers
+    double angleInRadians = [c intervalResult];
+    double angleInDegrees = [AngleCaliper radiansToDegrees:angleInRadians];
 
+    NSString *message = [NSString stringWithFormat:@"Beta angle = %.1f°", angleInDegrees];
+    UIAlertView *brugadaResultAlert = [[UIAlertView alloc] initWithTitle:@"Brugada Syndrome Results" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [brugadaResultAlert show];
     
-    // show dialog result here
-
 }
 
 - (BOOL)noTimeCaliperSelected {
@@ -471,7 +462,7 @@
 }
 
 - (void)showNoTimeCaliperSelectedAlertView {
-    UIAlertView *nothingToMeasureAlertView = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Use a selected (highlighted) caliper to measure one or more RR intervals." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    UIAlertView *nothingToMeasureAlertView = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper to measure one or more RR intervals." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     nothingToMeasureAlertView.alertViewStyle = UIAlertActionStyleDefault;
     [nothingToMeasureAlertView show];
 }
@@ -811,8 +802,6 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
 }
 
 - (void)addAngleCaliper {
-    // TODO: add angle caliper
-    // Caliper *caliper = [[AngleCaliper alloc] init];
     Caliper *caliper = [[AngleCaliper alloc] init];
     [self updateCaliperSettings:caliper];
     caliper.color = caliper.unselectedColor;

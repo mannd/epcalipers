@@ -112,18 +112,26 @@
 
 - (NSString *)measurement {
     double angle = self.angleBar1 - self.angleBar2;
-    double degrees = [self radiansToDegrees:angle];
+    double degrees = [AngleCaliper radiansToDegrees:angle];
     NSString *text = [NSString stringWithFormat:@"%.1f°", degrees];
     return text;
 }
 
-- (double)alphaAngle {
-    // the angle between bar2 and a vertical
-    double angle = 0.5 * M_PI - self.angleBar2;
-    return [self radiansToDegrees:angle];
+// override intervalResult to give angle in radians to calling functions
+- (double)intervalResult {
+    return self.angleBar1 - self.angleBar2;
 }
 
-- (double)radiansToDegrees:(double)radians {
+- (NSString *)alphaAngle {
+    // the angle between bar2 and a vertical
+    double angle = 0.5 * M_PI - self.angleBar2;
+    double degrees = [AngleCaliper radiansToDegrees:angle];
+    NSString *text = [NSString stringWithFormat:@"%.1f°", degrees];
+    return text;
+}
+
+// provide this a utility to calling classes
++ (double)radiansToDegrees:(double)radians {
     return radians * 180.0 / M_PI;
 }
 
