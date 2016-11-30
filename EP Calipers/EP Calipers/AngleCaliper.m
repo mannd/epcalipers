@@ -174,4 +174,19 @@
     return base;
 }
 
+// Note all angles in radians
++ (double)brugadaRiskV1ForBetaAngle:(double)betaAngle andBase:(double)base {
+    betaAngle = [AngleCaliper radiansToDegrees:betaAngle];
+    double numerator = pow(M_E, 6.297 + (-0.1714 * betaAngle) + (-0.0399 * base));
+    double denominator = 1 + numerator;
+    return numerator / denominator;
+}
+
++ (double)brugadaRiskV2ForBetaAngle:(double)betaAngle andBase:(double)base {
+    betaAngle = [AngleCaliper radiansToDegrees:betaAngle];
+    double numerator = pow(M_E, 5.9756 + (-0.3568 * betaAngle) + (-0.9332 * base));
+    double denominator = 1 + numerator;
+    return numerator / denominator;
+}
+
 @end

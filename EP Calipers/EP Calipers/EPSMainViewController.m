@@ -344,12 +344,8 @@
         [self.calipersView selectCaliper:singleHorizontalCaliper];
         [self unselectCalipersExcept:singleHorizontalCaliper];
     }
-    // TODO: there is an alertview method similar to this used in measuring RR for QTc
     if ([self noTimeCaliperSelected]) {
         [self showNoTimeCaliperSelectedAlertView];
-//        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
-//        [noSelectionAlert show];
         return;
     }
     UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Calculate", nil];
@@ -441,31 +437,36 @@
         [noSelectionAlert show];
         return;
     }
-    // TODO: this had better be true
+    // this had better be true
     AngleCaliper* c = (AngleCaliper*)self.calipersView.activeCaliper;
+    NSAssert(c.isAngleCaliper, @"Wrong type of caliper");
     // intervalResult holds angle in radians with angle calipers
     double angleInRadians = [c intervalResult];
     double angleInDegrees = [AngleCaliper radiansToDegrees:angleInRadians];
     BOOL amplitudeCalibratedInMM = [self.verticalCalibration unitsAreMM];
     BOOL timeCalibratedInMsec = [self.horizontalCalibration unitsAreMsec];
     NSString *calibrationStatement = @"";
-    // TODO: not working quite right yet
+    NSString *riskStatement = @"Low risk of Brugada syndrome";
     if (amplitudeCalibratedInMM && timeCalibratedInMsec) {
         // calculate length of triangle base 5 mm away from apex of angle
         double pointsPerMM = 1.0 / self.verticalCalibration.multiplier;
         double pointsPerMsec = 1.0 / self.horizontalCalibration.multiplier;
         double base = [AngleCaliper calculateBaseFromHeight:5 * pointsPerMM andAngle1:c.angleBar1 andAngle2:c.angleBar2];
+        double baseInMM = base / pointsPerMM;
         base /= pointsPerMsec;
         calibrationStatement = [NSString stringWithFormat:@"\n\nBase of triangle 5 mm from apex = %.1f msec.", base];
+        // TODO: should base be in mm or msec?
+        double riskV1 = [AngleCaliper brugadaRiskV1ForBetaAngle:angleInRadians andBase:baseInMM];
+        double riskV2 = [AngleCaliper brugadaRiskV2ForBetaAngle:angleInRadians andBase:baseInMM];
+        riskStatement = [NSString stringWithFormat:@"V1 risk is %f.  V2 risk is %f.", riskV1, riskV2];
     }
     else {
         calibrationStatement = @"\n\nFurther risk calculations can be made if you calibrate time calipers in milliseconds (msec) and amplitude calipers in millimeters (mm).";
     }
-    NSString *riskStatement = @"Low risk of Brugada syndrome";
-    if (angleInDegrees > 58.0) {
-        riskStatement = @"Increased risk of Brugada syndrome";
-    }
-    NSString *message = [NSString stringWithFormat:@"Beta angle = %.1f°%@", angleInDegrees, calibrationStatement];
+//    if (angleInDegrees > 58.0) {
+//        riskStatement = @"Increased risk of Brugada syndrome";
+//    }
+    NSString *message = [NSString stringWithFormat:@"Beta angle = %.1f°%@%@", angleInDegrees, calibrationStatement, riskStatement];
     UIAlertView *brugadaResultAlert = [[UIAlertView alloc] initWithTitle:@"Brugada Syndrome Results" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [brugadaResultAlert show];
     
