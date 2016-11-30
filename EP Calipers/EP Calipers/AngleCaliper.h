@@ -22,6 +22,8 @@
 - (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location;
 - (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location;
 + (double)radiansToDegrees:(double)radians;
++ (double)calculateBaseFromHeight:(double)height andAngle1:(double)angle1 andAngle2:(double)angle2;
+
 
 
 @end

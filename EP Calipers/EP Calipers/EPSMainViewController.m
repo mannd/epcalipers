@@ -454,7 +454,7 @@
         // calculate length of triangle base 5 mm away from apex of angle
         double pointsPerMM = 1.0 / self.verticalCalibration.multiplier;
         double pointsPerMsec = 1.0 / self.horizontalCalibration.multiplier;
-        double base = [EPSMainViewController calculateBaseFromHeight:5 * pointsPerMM andAngle1:c.angleBar1 andAngle2:c.angleBar2];
+        double base = [AngleCaliper calculateBaseFromHeight:5 * pointsPerMM andAngle1:c.angleBar1 andAngle2:c.angleBar2];
         base /= pointsPerMsec;
         calibrationStatement = [NSString stringWithFormat:@"\n\nBase of triangle 5 mm from apex = %.1f msec.", base];
     }
@@ -469,24 +469,6 @@
     UIAlertView *brugadaResultAlert = [[UIAlertView alloc] initWithTitle:@"Brugada Syndrome Results" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [brugadaResultAlert show];
     
-}
-
-// height of triangle in points, angle1 is angle of bar1, angle2 of bar2, in radians
-// returns length of base of triangle in points
-+ (double)calculateBaseFromHeight:(double)height andAngle1:(double)angle1 andAngle2:(double)angle2 {
-    // alpha, beta, gamma are 3 angles of the triangle, starting at apex, going clockwise
-    // a, b, c are vertices of triangle
-    // m is intersection of height segment with base
-    // alpha = angle1 - angle2;
-    // alpha1 is angle between bar1 and height, alpha2 between height and bar2
-    double alpha1 = angle1 - M_PI_2;
-    double alpha2 = M_PI_2 - angle2;
-    double beta = M_PI_2 - alpha2;
-    double gamma = M_PI_2 - alpha1;
-    double mb = height * sin(alpha2) / sin(beta);
-    double cm = height * sin(alpha1) / sin(gamma);
-    double base = cm + mb;
-    return base;
 }
 
 - (BOOL)noTimeCaliperSelected {

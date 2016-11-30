@@ -130,11 +130,11 @@
     double height = 5.0;
     double angle1 = M_PI_2 * 4 / 3;
     double angle2 = M_PI_2 * 2 / 3;
-    double base = [EPSMainViewController calculateBaseFromHeight:height andAngle1:angle1 andAngle2:angle2];
+    double base = [AngleCaliper calculateBaseFromHeight:height andAngle1:angle1 andAngle2:angle2];
     XCTAssertEqualWithAccuracy(base, 2 * height / sqrt(3.0), 0.001);
     // arbitrary values from an online triangle calculator http://keisan.casio.com/exec/system/1273847553
     height = 16.9;
-    base = [EPSMainViewController calculateBaseFromHeight:height andAngle1:angle1 andAngle2:angle2];
+    base = [AngleCaliper calculateBaseFromHeight:height andAngle1:angle1 andAngle2:angle2];
     XCTAssertEqualWithAccuracy(base, 19.51443, 0.001);
     // scalene triangle
 }

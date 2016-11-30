@@ -69,7 +69,5 @@
 @property (nonatomic) BOOL defaultHorizontalCalChanged;
 @property (nonatomic) BOOL defaultVerticalCalChanged;
 
-+ (double)calculateBaseFromHeight:(double)height andAngle1:(double)angle1 andAngle2:(double)angle2;
-
 @end
 
