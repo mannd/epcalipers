@@ -72,7 +72,7 @@
     CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
     CGContextAddLineToPoint(context, endPointBar2.x, endPointBar2.y);
 
-    if (DRAW_BASE) {
+    if (DRAW_BASE && [self angleInSouthernHemisphere:self.angleBar1] && [self angleInSouthernHemisphere:self.angleBar2]) {
         // draw base
         CGPoint point1 = [self getBasePoint1ForHeight:100.0];
         CGPoint point2 = [self getBasePoint2ForHeight:100.0];
@@ -83,6 +83,12 @@
     CGContextStrokePath(context);
     [self caliperText];
 
+}
+
+// test if angle is in inferior half of unit circle
+// these are the only angles relevant for Brugada triangle base measurement
+- (BOOL)angleInSouthernHemisphere:(double)angle {
+    return 0 <= angle && angle <= M_PI;
 }
 
 - (BOOL)pointNearBar:(CGPoint)p forBarAngle:(double)barAngle {
