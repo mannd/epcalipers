@@ -14,6 +14,9 @@
 #define DELTA 20.0
 #define ANGLE_DELTA 0.15
 
+// TODO: remove
+#define DRAW_BASE YES
+
 @implementation AngleCaliper
 
 - (instancetype)init {
@@ -69,9 +72,17 @@
     CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
     CGContextAddLineToPoint(context, endPointBar2.x, endPointBar2.y);
 
+    if (DRAW_BASE) {
+        // draw base
+        CGPoint point1 = [self getBasePoint1ForHeight:100.0];
+        CGPoint point2 = [self getBasePoint2ForHeight:100.0];
+        CGContextMoveToPoint(context, point1.x, point1.y);
+        CGContextAddLineToPoint(context, point2.x, point2.y);
+    }
     // actually does the drawing
     CGContextStrokePath(context);
     [self caliperText];
+
 }
 
 - (BOOL)pointNearBar:(CGPoint)p forBarAngle:(double)barAngle {
@@ -187,6 +198,27 @@
     double numerator = pow(M_E, 5.9756 + (-0.3568 * betaAngle) + (-0.9332 * base));
     double denominator = 1 + numerator;
     return numerator / denominator;
+}
+
+// figure out base coordinates
+- (CGPoint)getBasePoint2ForHeight:(double)height {
+    double pointY = self.crossBarPosition + height;
+    double pointX = 0.0;
+    pointX = height * (sin(M_PI_2 - self.angleBar2) / sin(self.angleBar2));
+    pointX += self.bar1Position;
+    CGPoint point = CGPointMake(pointX, pointY);
+    NSLog(@"X = %f, Point 2 = (%f, %f)", self.bar1Position, pointX, pointY);
+    return point;
+}
+
+- (CGPoint)getBasePoint1ForHeight:(double)height {
+    double pointY = self.crossBarPosition + height;
+    double pointX = 0.0;
+    pointX = height * (sin(self.angleBar1 - M_PI_2) / sin(M_PI - self.angleBar1));
+    pointX = self.bar1Position - pointX;
+    CGPoint point = CGPointMake(pointX, pointY);
+    NSLog(@"Point 1 = (%f, %f)", pointX, pointY);
+    return point;
 }
 
 @end
