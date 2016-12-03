@@ -14,6 +14,9 @@
 #define DELTA 20.0
 #define ANGLE_DELTA 0.15
 
+// TODO: remove
+#define DRAW_BASE YES
+
 @implementation AngleCaliper
 
 - (instancetype)init {
@@ -68,10 +71,43 @@
     CGPoint endPointBar2 = [self endPointForPosition:CGPointMake(self.bar2Position, self.crossBarPosition) forAngle:self.angleBar2 andLength:length];
     CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
     CGContextAddLineToPoint(context, endPointBar2.x, endPointBar2.y);
-
-    // actually does the drawing
     CGContextStrokePath(context);
+
+    if (DRAW_BASE && [self angleInSouthernHemisphere:self.angleBar1] && [self angleInSouthernHemisphere:self.angleBar2]) {
+        [self drawTriangleBase:context forHeight:100.0];
+        // draw label
+    }
+    // actually does the drawing
     [self caliperText];
+
+}
+
+- (void)drawTriangleBase:(CGContextRef)context forHeight:(double)height {
+    CGPoint point1 = [self getBasePoint1ForHeight:height];
+    CGPoint point2 = [self getBasePoint2ForHeight:height];
+    double lengthInPoints = point2.x - point1.x;
+    CGContextMoveToPoint(context, point1.x, point1.y);
+    CGContextAddLineToPoint(context, point2.x, point2.y);
+    CGContextStrokePath(context);
+    
+    NSString *text = [NSString stringWithFormat:@"%.1f points", lengthInPoints];
+    // TODO: refactor these attributes to init ??
+    self.paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.paragraphStyle.alignment = NSTextAlignmentCenter;  
+    
+    [self.attributes setObject:self.textFont forKey:NSFontAttributeName];
+    [self.attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [self.attributes setObject:self.color forKey:NSForegroundColorAttributeName];
+    
+    // same positioning as
+    [text drawInRect:CGRectMake((point2.x > point1.x ? point1.x - 25: point2.x - 25), point1.y - 20,  fmax(100.0, fabs(point2.x - point1.x) + 50), 20)  withAttributes:self.attributes];
+
+}
+
+// test if angle is in inferior half of unit circle
+// these are the only angles relevant for Brugada triangle base measurement
+- (BOOL)angleInSouthernHemisphere:(double)angle {
+    return 0 <= angle && angle <= M_PI;
 }
 
 - (BOOL)pointNearBar:(CGPoint)p forBarAngle:(double)barAngle {
@@ -187,6 +223,25 @@
     double numerator = pow(M_E, 5.9756 + (-0.3568 * betaAngle) + (-0.9332 * base));
     double denominator = 1 + numerator;
     return numerator / denominator;
+}
+
+// figure out base coordinates
+- (CGPoint)getBasePoint2ForHeight:(double)height {
+    double pointY = self.crossBarPosition + height;
+    double pointX = 0.0;
+    pointX = height * (sin(M_PI_2 - self.angleBar2) / sin(self.angleBar2));
+    pointX += self.bar1Position;
+    CGPoint point = CGPointMake(pointX, pointY);
+    return point;
+}
+
+- (CGPoint)getBasePoint1ForHeight:(double)height {
+    double pointY = self.crossBarPosition + height;
+    double pointX = 0.0;
+    pointX = height * (sin(self.angleBar1 - M_PI_2) / sin(M_PI - self.angleBar1));
+    pointX = self.bar1Position - pointX;
+    CGPoint point = CGPointMake(pointX, pointY);
+    return point;
 }
 
 @end
