@@ -71,17 +71,36 @@
     CGPoint endPointBar2 = [self endPointForPosition:CGPointMake(self.bar2Position, self.crossBarPosition) forAngle:self.angleBar2 andLength:length];
     CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
     CGContextAddLineToPoint(context, endPointBar2.x, endPointBar2.y);
+    CGContextStrokePath(context);
 
     if (DRAW_BASE && [self angleInSouthernHemisphere:self.angleBar1] && [self angleInSouthernHemisphere:self.angleBar2]) {
-        // draw base
-        CGPoint point1 = [self getBasePoint1ForHeight:100.0];
-        CGPoint point2 = [self getBasePoint2ForHeight:100.0];
-        CGContextMoveToPoint(context, point1.x, point1.y);
-        CGContextAddLineToPoint(context, point2.x, point2.y);
+        [self drawTriangleBase:context forHeight:100.0];
+        // draw label
     }
     // actually does the drawing
-    CGContextStrokePath(context);
     [self caliperText];
+
+}
+
+- (void)drawTriangleBase:(CGContextRef)context forHeight:(double)height {
+    CGPoint point1 = [self getBasePoint1ForHeight:height];
+    CGPoint point2 = [self getBasePoint2ForHeight:height];
+    double lengthInPoints = point2.x - point1.x;
+    CGContextMoveToPoint(context, point1.x, point1.y);
+    CGContextAddLineToPoint(context, point2.x, point2.y);
+    CGContextStrokePath(context);
+    
+    NSString *text = [NSString stringWithFormat:@"%.1f points", lengthInPoints];
+    // TODO: refactor these attributes to init ??
+    self.paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.paragraphStyle.alignment = NSTextAlignmentCenter;  
+    
+    [self.attributes setObject:self.textFont forKey:NSFontAttributeName];
+    [self.attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [self.attributes setObject:self.color forKey:NSForegroundColorAttributeName];
+    
+    // same positioning as
+    [text drawInRect:CGRectMake((point2.x > point1.x ? point1.x - 25: point2.x - 25), point1.y - 20,  fmax(100.0, fabs(point2.x - point1.x) + 50), 20)  withAttributes:self.attributes];
 
 }
 
@@ -213,7 +232,6 @@
     pointX = height * (sin(M_PI_2 - self.angleBar2) / sin(self.angleBar2));
     pointX += self.bar1Position;
     CGPoint point = CGPointMake(pointX, pointY);
-    NSLog(@"X = %f, Point 2 = (%f, %f)", self.bar1Position, pointX, pointY);
     return point;
 }
 
@@ -223,7 +241,6 @@
     pointX = height * (sin(self.angleBar1 - M_PI_2) / sin(M_PI - self.angleBar1));
     pointX = self.bar1Position - pointX;
     CGPoint point = CGPointMake(pointX, pointY);
-    NSLog(@"Point 1 = (%f, %f)", pointX, pointY);
     return point;
 }
 
