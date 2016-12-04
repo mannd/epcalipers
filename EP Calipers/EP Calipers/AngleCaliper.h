@@ -12,6 +12,8 @@
 
 @property (nonatomic) double angleBar1;
 @property (nonatomic) double angleBar2;
+// used to draw triangle base
+@property (nonatomic) double pointPerMM;
 
 - (instancetype)init;
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;

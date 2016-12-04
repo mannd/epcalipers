@@ -77,7 +77,6 @@
         [self drawTriangleBase:context forHeight:100.0];
         // draw label
     }
-    // actually does the drawing
     [self caliperText];
 
 }
@@ -90,7 +89,7 @@
     CGContextAddLineToPoint(context, point2.x, point2.y);
     CGContextStrokePath(context);
     
-    NSString *text = [NSString stringWithFormat:@"%.1f points", lengthInPoints];
+    NSString *text = [self baseMeasurement:lengthInPoints];
     // TODO: refactor these attributes to init ??
     self.paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
     self.paragraphStyle.alignment = NSTextAlignmentCenter;  
@@ -108,6 +107,20 @@
 // these are the only angles relevant for Brugada triangle base measurement
 - (BOOL)angleInSouthernHemisphere:(double)angle {
     return 0 <= angle && angle <= M_PI;
+}
+
+- (double)calibratedBaseResult:(double)lengthInPoints {
+    lengthInPoints = lengthInPoints * self.calibration.multiplier;
+    if (self.roundMsecRate && self.calibration.unitsAreMsec) {
+        lengthInPoints = round(lengthInPoints);
+    }
+    return lengthInPoints;
+}
+
+- (NSString *)baseMeasurement:(double)lengthInPoints {
+    NSString *s = [NSString stringWithFormat:@"%.4g %@", [self calibratedBaseResult:lengthInPoints], self.calibration.units];
+    return s;
+
 }
 
 - (BOOL)pointNearBar:(CGPoint)p forBarAngle:(double)barAngle {
