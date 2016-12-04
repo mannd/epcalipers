@@ -32,6 +32,7 @@
         self.bar1Position = 100.0f;
         self.bar2Position = 100.0f;
         self.crossBarPosition = 100.0f;
+        self.verticalCalibration = nil;
     }
     return self;
 }
@@ -72,13 +73,15 @@
     CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
     CGContextAddLineToPoint(context, endPointBar2.x, endPointBar2.y);
     CGContextStrokePath(context);
-
-    if (DRAW_BASE && [self angleInSouthernHemisphere:self.angleBar1] && [self angleInSouthernHemisphere:self.angleBar2]) {
-        [self drawTriangleBase:context forHeight:100.0];
-        // draw label
-    }
     [self caliperText];
 
+    if (self.verticalCalibration.calibrated && self.verticalCalibration.unitsAreMM) {
+        if ([self angleInSouthernHemisphere:self.angleBar1] && [self angleInSouthernHemisphere:self.angleBar2]) {
+            double pointsPerMM = 1.0 / self.verticalCalibration.multiplier;
+            [self drawTriangleBase:context forHeight:5 * pointsPerMM];
+            // draw label
+        }
+    }
 }
 
 - (void)drawTriangleBase:(CGContextRef)context forHeight:(double)height {

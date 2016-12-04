@@ -822,11 +822,12 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
 }
 
 - (void)addAngleCaliper {
-    Caliper *caliper = [[AngleCaliper alloc] init];
+    AngleCaliper *caliper = [[AngleCaliper alloc] init];
     [self updateCaliperSettings:caliper];
     caliper.color = caliper.unselectedColor;
     caliper.direction = Horizontal;
     caliper.calibration = self.horizontalCalibration;
+    caliper.verticalCalibration = self.verticalCalibration;
     [caliper setInitialPositionInRect:self.calipersView.bounds];
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
