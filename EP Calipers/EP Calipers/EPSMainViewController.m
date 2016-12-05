@@ -244,9 +244,10 @@
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
-    self.brugadaButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? BRUGADA_IPAD : BRUGADA_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(doBrugadaCalculations)];
+    // Note Brugada button will be next version
+//    self.brugadaButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? BRUGADA_IPAD : BRUGADA_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(doBrugadaCalculations)];
     self.settingsButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SETTINGS_IPAD : SETTINGS_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, self.brugadaButton, self.settingsButton, nil];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton,  /* self.brugadaButton, */ self.settingsButton, nil];
 }
 
 - (void)createImageToolbar {
@@ -420,6 +421,8 @@
     }
 }
 
+// this is not used in current version, and in next version will be modified to provide
+// dialog with beta angle, base length, and probability of Brugada pattern ECG
 - (void)doBrugadaCalculations {
     if (self.calipersView.calipers.count < 1) {
         [self showNoCalipersAlert];
@@ -455,7 +458,6 @@
         double baseInMM = base / pointsPerMM;
         base /= pointsPerMsec;
         calibrationStatement = [NSString stringWithFormat:@"\n\nBase of triangle 5 mm from apex = %.1f msec.", base];
-        // TODO: should base be in mm or msec?
         double riskV1 = [AngleCaliper brugadaRiskV1ForBetaAngle:angleInRadians andBase:baseInMM];
         double riskV2 = [AngleCaliper brugadaRiskV2ForBetaAngle:angleInRadians andBase:baseInMM];
         riskStatement = [NSString stringWithFormat:@"V1 risk is %f.  V2 risk is %f.", riskV1, riskV2];
