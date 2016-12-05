@@ -144,7 +144,7 @@ Preferences such as caliper colors and default calibration intervals can be sele
 - Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
 - Rotation of the device will not preserve the relation between the ECG image and the calipers. However calibration /is/ preserved with rotation.
 - It is highly recommended that calipers be recalibrated if the image (not the device) is rotated.  The app though does not enforce this.  
-* Acknowledgements
+* Acknowledgments
 - Thanks to Dr. Michael Katz for the concept.
 - Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.
 - The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers][GitHub]].
