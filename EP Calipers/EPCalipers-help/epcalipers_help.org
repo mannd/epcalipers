@@ -21,7 +21,7 @@ You open the ECG on your phone.  You look at the QT interval.  You're not sure a
 * Electronic calipers
 *EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your iPhone or iPad.  The electronic calipers of *EP Calipers* are more accurate, easier to use, and less dangerous than mechanical calipers (they don't have sharp points!).
 * What's new?
-This new version of *EP Calipers* can be used to analyze PDF files, as well as standard image files.  Multi-page PDF files are supported.  Thus the app can be used to analyze /AliveCor™/ files as well as academic papers in PDF format.
+This new version of EP Calipers contains new angle measurement calipers and a [[Brugadometer]].
 * Quick start
 When *EP Calipers* starts, a sample ECG and a time caliper are loaded.
 Move the caliper around by touching the caliper's cross-bar and
@@ -97,14 +97,16 @@ After loading and adjusting the image, you need to exit Image mode so that you c
 Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers.  Note that you cannot pinch both bars at the same time.
 #+CAPTION: Single unselected uncalibrated time caliper
 [[./img/uncalibrated_caliper.png]]
+
+Angle calipers are moved as a unit by dragging at the apex of just above the apex of the angle.  Dragging either bar of an angle caliper will open or close the angle.
 * Making measurements
-The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).
+The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurment of the current angle in degrees.
 * Adding and deleting calipers
 Select *+* to add new calipers.  
 #+CAPTION: Main menu
 [[./img/main_menu2.png]]
 
-Calipers can be horizontal (time measurements) or vertical (amplitude measurements).  Select *Time* or *Amplitude* to add the type of caliper you want.  Double-tap a caliper to delete it.
+Calipers can be horizontal (time measurements), vertical (amplitude measurements) or angle (measurements in degrees).  Select *Time*, *Amplitude*, or *Angle* to add the type of caliper you want.  Double-tap a caliper to delete it.
 #+CAPTION: Add caliper menu
 [[./img/add_caliper_menu.png]]
 * Selecting a caliper
@@ -117,6 +119,8 @@ Select *Cal* or *Calibration*.  Stretch the selected caliper over a known interv
 [[./img/pre_calibration.png]]
 #+CAPTION: Calibrated time caliper
 [[./img/post_calibration.png]]
+
+Angle calipers do not need to be calibrated.  However, after calibration of time and amplitude calipers, angle calipers can be used as a [[Brugadometer]].
 * Changing calibration
 You can recalibrate at any time.  You can clear all calibration by selecting *Clear* in the calibration toolbar.  Note that calibration is maintained if the device is rotated or the image is zoomed.  Selecting a new image will reset calibration.
 * Interval/Rate
@@ -131,6 +135,8 @@ Select *QTc*.  Stretch the selected caliper over one or more RR intervals and se
 [[./img/qtc_second_step.png]]
 #+CAPTION: QTc result
 [[./img/qtc_result.png]]
+* Brugadometer
+The Brugadometer is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between Brugada syndrome pattern ECGs and ECGs with incomplete right bundle branch block.  This tool is under development in EP Calipers and will probably evolve in future updates.  In order to use the Brugadometer, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper preferably in msec or mm.  After doing so, angle calipers will appear to have a triangle at their apex as shown below.  The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called 𝞫 angle and the triangle base.  ECGs with 𝞫 angle > 58° and/or triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) are at increased probability of having a Brugada ECG.  Please see [[http://europace.oxfordjournals.org/content/16/11/1639][this article]] for further information.
 * Preferences
 Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*. You can also change preferences by selecting the *Preferences* or *Prefs* item on the main menu of the app.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.  With some preferences it is necessary to close the *EP Calipers* app before they take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
 * Issues and limitations
@@ -138,8 +144,9 @@ Preferences such as caliper colors and default calibration intervals can be sele
 - Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
 - Rotation of the device will not preserve the relation between the ECG image and the calipers. However calibration /is/ preserved with rotation.
 - It is highly recommended that calipers be recalibrated if the image (not the device) is rotated.  The app though does not enforce this.  
-* Acknowledgments
+* Acknowledgements
 - Thanks to Dr. Michael Katz for the concept.
+- Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.
 - The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers][GitHub]].
 - *EP Calipers* is open source software and is licensed under the
   [[https://www.apache.org/licenses/LICENSE-2.0.html][Apache License

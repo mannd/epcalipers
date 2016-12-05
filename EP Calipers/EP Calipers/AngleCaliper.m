@@ -93,7 +93,6 @@
     CGContextStrokePath(context);
     
     NSString *text = [self baseMeasurement:lengthInPoints];
-    // TODO: refactor these attributes to init ??
     self.paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
     self.paragraphStyle.alignment = NSTextAlignmentCenter;  
     
