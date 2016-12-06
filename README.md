@@ -10,7 +10,7 @@ EP Calipers for iOS is open source, and licensed under the
 ## Copyright
 Copyright © 2015, 2016 [EP Studios, Inc.](http://www.epstudiossoftware.com)
 
-## Acknowledgements
+## Acknowledgments
 The *Brugadometer* is based on the work of Dr. Adrian Baranchuk and his colleagues at Queen's University
 Kingston, Ontario, Canada.  It is used with Dr. Baranchuk's permission and encouragement.  Please see [this article](http://europace.oxfordjournals.org/content/16/11/1639) for more information.
 
