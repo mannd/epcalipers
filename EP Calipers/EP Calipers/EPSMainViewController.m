@@ -532,7 +532,7 @@
     Caliper* c = self.calipersView.activeCaliper;
     // Angle calipers don't require calibration
     if (![c requiresCalibration]) {
-        UIAlertView *angleCaliperAlertView = [[UIAlertView alloc] initWithTitle:@"Angle Caliper" message:@"Angle calipers don't require calibration.  Only Time or Amplitude calipers need to be calibrated." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *angleCaliperAlertView = [[UIAlertView alloc] initWithTitle:@"Angle Caliper" message:@"Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [angleCaliperAlertView show];
         return;
     }
