@@ -145,7 +145,7 @@ The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collab
 #+CAPTION: Brugadometer showing triangle base 5 mm below apex of caliper
 [[./img/brugadometer1.png]]
 
-The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  A triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see [[http://europace.oxfordjournals.org/content/16/11/1639][this article]] for further information.
+The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  A triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] for further information.
 * Preferences
 Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*. You can also change preferences by selecting the *Preferences* or *Prefs* item on the main menu of the app.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.  With some preferences it is necessary to close the *EP Calipers* app before they take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
 * Issues and limitations
@@ -158,8 +158,7 @@ Preferences such as caliper colors and default calibration intervals can be sele
 - Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.
 - The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers][GitHub]].
 - *EP Calipers* is open source software and is licensed under the
-  [[https://www.apache.org/licenses/LICENSE-2.0.html][Apache License
-  Version 2.0]].  No guarantees are made as to the accuracy of the
+  [[https://www.apache.org/licenses/LICENSE-2.0.html][Apache License Version 2.0]].  No guarantees are made as to the accuracy of the
   app, so use at your own risk.
 - For questions, error reporting or suggestions contact
   mannd@epstudiossoftware.com
