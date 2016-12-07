@@ -28,6 +28,8 @@
 @property (strong, nonatomic) NSMutableParagraphStyle *paragraphStyle;
 @property (strong, nonatomic) NSMutableDictionary *attributes;
 @property (nonatomic) BOOL roundMsecRate;
+@property (readonly) BOOL requiresCalibration;
+@property (readonly) BOOL isAngleCaliper;
 
 - (double)intervalResult;
 - (double)rateResult:(double)interval;
@@ -39,10 +41,14 @@
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;
 - (void)setInitialPositionInRect:(CGRect)rect;
 - (CGRect)rect:(CGRect)containerRect;
-- (BOOL)pointNearBar:(CGPoint)p forBarPosition:(float)barPosition;
+- (BOOL)pointNearBar1:(CGPoint)p;
+- (BOOL)pointNearBar2:(CGPoint)p;
 - (BOOL)pointNearCrossBar:(CGPoint)p;
 - (BOOL)pointNearCaliper:(CGPoint)p;
-
+- (void)moveCrossBar:(CGPoint)delta;
+- (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location;
+- (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location;
 - (float)barCoord:(CGPoint)p;
+- (void)caliperText;
 
 @end

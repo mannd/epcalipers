@@ -8,6 +8,7 @@
 
 #import "EPSMainViewController.h"
 #import "Caliper.h"
+#import "AngleCaliper.h"
 #import "Settings.h"
 #import "EPSLogging.h"
 #include "Defs.h"
@@ -18,6 +19,7 @@
 
 
 #define ANIMATION_DURATION 0.5
+#define MAX_ZOOM 10.0
 
 #define CALIBRATE_IPAD @"Calibrate"
 #define CALIBRATE_IPHONE @"Cal"
@@ -32,6 +34,8 @@
 #define SWITCH_BACK @"Measure"
 #define SETTINGS_IPAD @"Preferences"
 #define SETTINGS_IPHONE @"Prefs"
+#define BRUGADA_IPAD @"Brugada"
+#define BRUGADA_IPHONE @"BrS"
 
 // AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
@@ -75,7 +79,7 @@
     
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
-    self.scrollView.maximumZoomScale = 7.0;
+    self.scrollView.maximumZoomScale = MAX_ZOOM;
     self.lastZoomFactor = self.scrollView.zoomScale;
     
     self.horizontalCalibration = [[Calibration alloc] init];
@@ -183,7 +187,7 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Change app settings directly from the app, using the new *Preferences* menu item.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
+            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Use angle calipers to make angle measurements.  Evaluate ECGs for Brugada pattern using new Brugadometer.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
                             delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [quickStartAlert show];
         }
@@ -240,8 +244,10 @@
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
+    // Note Brugada button will be next version
+//    self.brugadaButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? BRUGADA_IPAD : BRUGADA_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(doBrugadaCalculations)];
     self.settingsButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SETTINGS_IPAD : SETTINGS_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, self.settingsButton, nil];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton,  /* self.brugadaButton, */ self.settingsButton, nil];
 }
 
 - (void)createImageToolbar {
@@ -283,9 +289,10 @@
 - (void)createAddCalipersToolbar {
     UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Time" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
     UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Amplitude" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
+    UIBarButtonItem *angleButton = [[UIBarButtonItem alloc] initWithTitle:@"Angle" style:UIBarButtonItemStylePlain target:self action:@selector(addAngleCaliper)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
-    self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, cancelButton, nil];
+    self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, angleButton, cancelButton, nil];
 }
 
 - (void)createSetupCalibrationToolbar {
@@ -317,6 +324,7 @@
     self.qtcStep2MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureQTButton, cancelButton, nil];
 }
 
+
 - (void)showHelp {
     [self performSegueWithIdentifier:@"WebViewSegue" sender:nil];
 }
@@ -337,17 +345,8 @@
         [self.calipersView selectCaliper:singleHorizontalCaliper];
         [self unselectCalipersExcept:singleHorizontalCaliper];
     }
-    if ([self.calipersView noCaliperIsSelected]) {
-        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
-        [noSelectionAlert show];
-        return;
-    }
-    Caliper* c = self.calipersView.activeCaliper;
-    if (c.direction == Vertical) {
-        UIAlertView *noHorizontalCaliberAlert = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper by single-tapping it.  Stretch the caliper over several intervals to get an average interval and rate." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        noHorizontalCaliberAlert.alertViewStyle = UIAlertViewStyleDefault;
-        [noHorizontalCaliberAlert show];
+    if ([self noTimeCaliperSelected]) {
+        [self showNoTimeCaliperSelectedAlertView];
         return;
     }
     UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Calculate", nil];
@@ -422,12 +421,70 @@
     }
 }
 
+// this is not used in current version, and in next version will be modified to provide
+// dialog with beta angle, base length, and probability of Brugada pattern ECG
+- (void)doBrugadaCalculations {
+    if (self.calipersView.calipers.count < 1) {
+        [self showNoCalipersAlert];
+        [self selectMainToolbar];
+        return;
+    }
+    Caliper *singleAngleCaliper = [self getLoneAngleCaliper];
+    if (singleAngleCaliper != nil) {
+        [self.calipersView selectCaliper:singleAngleCaliper];
+        [self unselectCalipersExcept:singleAngleCaliper];
+    }
+    if ([self noAngleCaliperSelected]) {
+        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Angle Caliper Selected" message:@"Select an angle caliper." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
+        [noSelectionAlert show];
+        return;
+    }
+    // this had better be true
+    AngleCaliper* c = (AngleCaliper*)self.calipersView.activeCaliper;
+    NSAssert(c.isAngleCaliper, @"Wrong type of caliper");
+    // intervalResult holds angle in radians with angle calipers
+    double angleInRadians = [c intervalResult];
+    double angleInDegrees = [AngleCaliper radiansToDegrees:angleInRadians];
+    BOOL amplitudeCalibratedInMM = [self.verticalCalibration unitsAreMM];
+    BOOL timeCalibratedInMsec = [self.horizontalCalibration unitsAreMsec];
+    NSString *calibrationStatement = @"";
+    NSString *riskStatement = @"Low risk of Brugada syndrome";
+    if (amplitudeCalibratedInMM && timeCalibratedInMsec) {
+        // calculate length of triangle base 5 mm away from apex of angle
+        double pointsPerMM = 1.0 / self.verticalCalibration.multiplier;
+        double pointsPerMsec = 1.0 / self.horizontalCalibration.multiplier;
+        double base = [AngleCaliper calculateBaseFromHeight:5 * pointsPerMM andAngle1:c.angleBar1 andAngle2:c.angleBar2];
+        double baseInMM = base / pointsPerMM;
+        base /= pointsPerMsec;
+        calibrationStatement = [NSString stringWithFormat:@"\n\nBase of triangle 5 mm from apex = %.1f msec.", base];
+        double riskV1 = [AngleCaliper brugadaRiskV1ForBetaAngle:angleInRadians andBase:baseInMM];
+        double riskV2 = [AngleCaliper brugadaRiskV2ForBetaAngle:angleInRadians andBase:baseInMM];
+        riskStatement = [NSString stringWithFormat:@"V1 risk is %f.  V2 risk is %f.", riskV1, riskV2];
+    }
+    else {
+        calibrationStatement = @"\n\nFurther risk calculations can be made if you calibrate time calipers in milliseconds (msec) and amplitude calipers in millimeters (mm).";
+    }
+//    if (angleInDegrees > 58.0) {
+//        riskStatement = @"Increased risk of Brugada syndrome";
+//    }
+    NSString *message = [NSString stringWithFormat:@"Beta angle = %.1f°%@%@", angleInDegrees, calibrationStatement, riskStatement];
+    UIAlertView *brugadaResultAlert = [[UIAlertView alloc] initWithTitle:@"Brugada Syndrome Results" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [brugadaResultAlert show];
+    
+}
+
 - (BOOL)noTimeCaliperSelected {
-    return (self.calipersView.calipers.count < 1 || [self.calipersView noCaliperIsSelected]  || [self.calipersView activeCaliper].direction == Vertical);
+    return (self.calipersView.calipers.count < 1 || [self.calipersView noCaliperIsSelected]  || [self.calipersView activeCaliper].direction == Vertical) || [[self.calipersView activeCaliper] isAngleCaliper];
+}
+
+- (BOOL)noAngleCaliperSelected {
+    return (self.calipersView.calipers.count < 1 || [self.calipersView noCaliperIsSelected] || ![[self.calipersView activeCaliper] isAngleCaliper]);
+    
 }
 
 - (void)showNoTimeCaliperSelectedAlertView {
-    UIAlertView *nothingToMeasureAlertView = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Use a selected (highlighted) caliper to measure one or more RR intervals." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    UIAlertView *nothingToMeasureAlertView = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper to measure one or more RR intervals." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     nothingToMeasureAlertView.alertViewStyle = UIAlertActionStyleDefault;
     [nothingToMeasureAlertView show];
 }
@@ -473,6 +530,12 @@
         return;
     }
     Caliper* c = self.calipersView.activeCaliper;
+    // Angle calipers don't require calibration
+    if (![c requiresCalibration]) {
+        UIAlertView *angleCaliperAlertView = [[UIAlertView alloc] initWithTitle:@"Angle Caliper" message:@"Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [angleCaliperAlertView show];
+        return;
+    }
     if (c.valueInPoints <= 0) {
         UIAlertView *negativeValueAlertView = [[UIAlertView alloc] initWithTitle:@"Negatively Valued Caliper" message:@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [negativeValueAlertView show];
@@ -537,6 +600,26 @@
     else {
         return nil;
     }
+}
+
+- (Caliper *)getLoneAngleCaliper {
+    Caliper *c = nil;
+    int n = 0;
+    if (self.calipersView.calipers.count > 0) {
+        for (Caliper *caliper in self.calipersView.calipers) {
+            if (caliper.isAngleCaliper) {
+                c = caliper;
+                n++;
+            }
+        }
+    }
+    if (n == 1) {
+        return c;
+    }
+    else {
+        return nil;
+    }
+    
 }
 
 - (void)unselectCalipersExcept:(Caliper *)c {
@@ -738,6 +821,19 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
 
 - (void)addVerticalCaliper {
     [self addCaliperWithDirection:Vertical];
+}
+
+- (void)addAngleCaliper {
+    AngleCaliper *caliper = [[AngleCaliper alloc] init];
+    [self updateCaliperSettings:caliper];
+    caliper.color = caliper.unselectedColor;
+    caliper.direction = Horizontal;
+    caliper.calibration = self.horizontalCalibration;
+    caliper.verticalCalibration = self.verticalCalibration;
+    [caliper setInitialPositionInRect:self.calipersView.bounds];
+    [self.calipersView.calipers addObject:caliper];
+    [self.calipersView setNeedsDisplay];
+    [self selectMainToolbar];
 }
 
 - (void)updateCaliperSettings:(Caliper *)caliper {

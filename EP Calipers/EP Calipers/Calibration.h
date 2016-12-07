@@ -20,6 +20,7 @@
 @property (readonly) BOOL unitsAreMsec;
 @property (nonatomic) BOOL displayRate;
 @property (readonly) double multiplier;
+@property (readonly) BOOL unitsAreMM;
 
 - (instancetype)initWithDirection:(CaliperDirection)direction;
 - (instancetype)init;

@@ -88,22 +88,25 @@
         CGContextAddLineToPoint(context, self.crossBarPosition, self.bar1Position);
     }
     CGContextStrokePath(context);
+    [self caliperText];
+}
+
+- (void)caliperText {
     NSString *text = [self measurement];
     self.paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
     self.paragraphStyle.alignment = (self.direction == Horizontal ? NSTextAlignmentCenter : NSTextAlignmentLeft);
-
+    
     [self.attributes setObject:self.textFont forKey:NSFontAttributeName];
     [self.attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
     [self.attributes setObject:self.color forKey:NSForegroundColorAttributeName];
-
+    
     if (self.direction == Horizontal) {
         // the math here insures that the label doesn't get so small that it can't be read
-        [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position - 25: self.bar2Position - 25), self.crossBarPosition - 20,  fmaxf(50.0, fabsf(self.bar2Position - self.bar1Position) + 50), 20)  withAttributes:self.attributes];
+        [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position - 25: self.bar2Position - 25), self.crossBarPosition - 20,  fmaxf(100.0, fabsf(self.bar2Position - self.bar1Position) + 50), 20)  withAttributes:self.attributes];
     }
     else {
         [text drawInRect:CGRectMake(self.crossBarPosition + 5, self.bar1Position + (self.bar2Position - self.bar1Position)/2, 140, 20) withAttributes:self.attributes];
     }
-    
 }
 
 // returns significant bar coordinate depending on direction of caliper
@@ -185,6 +188,14 @@
     return [self barCoord:p] > barPosition - DELTA && [self barCoord:p] < barPosition + DELTA;
 }
 
+- (BOOL)pointNearBar1:(CGPoint)p {
+    return [self pointNearBar:p forBarPosition:self.bar1Position];
+}
+
+- (BOOL)pointNearBar2:(CGPoint)p {
+    return [self pointNearBar:p forBarPosition:self.bar2Position];
+}
+
 - (BOOL)pointNearCrossBar:(CGPoint)p {
     BOOL nearBar = NO;
     float delta = DELTA + 5.0f; // make cross bar delta a little bigger
@@ -199,6 +210,28 @@
 
 - (BOOL)pointNearCaliper:(CGPoint)p {
     return ([self pointNearCrossBar:p] || [self pointNearBar:p forBarPosition:self.bar1Position] || [self pointNearBar:p forBarPosition:self.bar2Position]);
+}
+
+- (void)moveCrossBar:(CGPoint)delta {
+    self.bar1Position += delta.x;
+    self.bar2Position += delta.x;
+    self.crossBarPosition += delta.y;
+}
+
+- (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location {
+    self.bar1Position += delta.x;
+}
+
+- (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location {
+    self.bar2Position += delta.x;
+}
+
+- (BOOL)requiresCalibration {
+    return YES;
+}
+
+- (BOOL)isAngleCaliper {
+    return NO;
 }
 
 @end
