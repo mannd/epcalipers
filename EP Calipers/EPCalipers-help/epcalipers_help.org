@@ -49,9 +49,9 @@ way are not saved in the photos collection of the device.  It's best to use this
 ** Select a photo from your photos collection
 Touch *Select* to chose an image that is already saved on your device in your photos collection (for example, an image file attached to an email that you saved or a photo that your previously took).
 ** Select a photo or PDF using the *Share* menu from other apps
-*EP Calipers* can open image and PDF files regardless of where they are located on your device.  You can directly open email attachments, iCloud, Google Drive, and Dropbox files.  It is also easy to open ECG images directly from the /AliveCor AliveECG™/ app.  The key to opening images in external apps is to use the *Share* button.  It looks like this: [[./img/share_icon.png]]
+*EP Calipers* can open image and PDF files regardless of where they are located on your device.  You can directly open email attachments, iCloud, Google Drive, and Dropbox files.  It is also easy to open ECG images directly from the /AliveCor Kardia™/ app.  The key to opening images in external apps is to use the *Share* button.  It looks like this: [[./img/share_icon.png]]
 
-Depending on the app, this button may appear at the top of the screen, or it may be necessary to do a long press on an image to open the *Share* menu.  Here you can see the *Share* button at the top right of the /AliveECG/ screen:
+Depending on the app, this button may appear at the top of the screen, or it may be necessary to do a long press on an image to open the *Share* menu.  Here you can see the *Share* button at the top right of the /Kardia/ screen:
 #+CAPTION: *Share* button at top right
 [[./img/aliveecgtop.png]]
 
@@ -74,9 +74,9 @@ or the *Open In...* button.  Selecting it should open a window where *Copy to EP
 For email attachments or Dropbox files, download the attachment or the file (the details depend on the email app you are using.  Then when viewing the attachment or file, tap or long press to make the *Share* button appear.  Select *Share* and then select *Copy to EP Calipers* to open the image or PDF in the app.  
 
 *** /AliveCor/
-To view ECGs in the /AliveCor AliveECG/ app, select *Journal*, then *SHARE* for the specific saved ECG you want to view.
+To view ECGs in the /AliveCor Kardia/ app, select *Journal*, then *SHARE* for the specific saved ECG you want to view.
 
-#+CAPTION: The AliveECG *SHARE* button uses an envelope icon
+#+CAPTION: The /Kardia/ *SHARE* button uses an envelope icon
 [[./img/alive_ecg.png]]
 
 After selecting the *Share* button, select *PDF* from the options that appear.  Then select the *Share* button at the top right of the screen.  Select *Copy to EP Calipers* and you are ready to measure!
@@ -101,11 +101,11 @@ Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bar
 #+CAPTION: Single unselected uncalibrated time caliper
 [[./img/uncalibrated_caliper.png]]
 ** Angle calipers
-Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  The apex is where the two lines joing together.  Dragging either bar of an angle caliper a little distance away from the apex will open or close the angle.
+Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  The apex is where the two lines join together.  Dragging either bar of an angle caliper a little distance away from the apex will open or close the angle.
 #+CAPTION: Angle caliper
 [[./img/angle_caliper.png]]
 * Making measurements
-The interval measured by each caliper is displayed on top of or next to the crossbar of the caliper.  Until the calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurment of the current angle in degrees.
+The interval measured by time or amplitude calipers is displayed on top of or next to the crossbar of the caliper.  Until these calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
 * Adding and deleting calipers
 Select *+* to add new calipers.  
 #+CAPTION: Main menu
@@ -141,15 +141,15 @@ Select *QTc*.  Stretch the selected caliper over one or more RR intervals and se
 #+CAPTION: QTc result
 [[./img/qtc_result.png]]
 * Brugadometer
-The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between ECGs with a Brugada syndrome pattern in leads V1 or V2 and ECGs with incomplete right bundle branch block.  This tool is under development in *EP Calipers* and will likely evolve in future updates.  In order to use the Brugadometer, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper preferably in msec or mm.  After doing so, an angle caliper will appear to have a triangle at its apex as shown below.
+The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between ECGs with a Brugada syndrome pattern in leads V1 or V2 and ECGs with incomplete right bundle branch block.  This tool is under development in *EP Calipers* and will likely evolve in future updates.  In order to use the *Brugadometer*, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper preferably in msec or mm.  After doing so, an angle caliper will appear to have a triangle at its apex as shown below.
 #+CAPTION: Brugadometer showing triangle base 5 mm below apex of caliper
 [[./img/brugadometer1.png]]
 
-The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  ECGs with triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) have an increased probability of having a Brugada ECG, and this may be a better criterion than the beta angle.   Please see [[http://europace.oxfordjournals.org/content/16/11/1639][this article]] for further information.
+The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  A triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see [[http://europace.oxfordjournals.org/content/16/11/1639][this article]] for further information.
 * Preferences
 Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*. You can also change preferences by selecting the *Preferences* or *Prefs* item on the main menu of the app.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.  With some preferences it is necessary to close the *EP Calipers* app before they take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
 * Issues and limitations
-- Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Be certain that the ECG you are measuring is indeed the one you selected and not the default normal ECG!  Future versions of the app will address this issue further.
+- Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Be certain that the ECG you are measuring is indeed the one you selected and not the default normal ECG!
 - Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
 - Rotation of the device will not preserve the relation between the ECG image and the calipers. However calibration /is/ preserved with rotation.
 - It is highly recommended that calipers be recalibrated if the image (not the device) is rotated.  The app though does not enforce this.  
