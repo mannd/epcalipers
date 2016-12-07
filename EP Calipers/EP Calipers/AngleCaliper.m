@@ -14,9 +14,6 @@
 #define DELTA 20.0
 #define ANGLE_DELTA 0.15
 
-// TODO: remove
-#define DRAW_BASE YES
-
 @implementation AngleCaliper
 
 - (instancetype)init {
