@@ -40,17 +40,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.6</string>
+	<string>2.6.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>15</string>
+	<string>16</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>YES</string>
+	<string>Used to import images of ECGs</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to take pictures of ECGs</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>YES</string>
+	<string>Used to import photos of ECGs</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile</key>

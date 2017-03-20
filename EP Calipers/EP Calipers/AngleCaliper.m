@@ -53,7 +53,7 @@
     CGContextSetLineWidth(context, self.lineWidth);
     
     // This ensures caliper always extends past the screen edges
-    CGFloat length = MAX(rect.size.height, rect.size.height) * 2;
+    CGFloat length = MAX(rect.size.height, rect.size.width) * 2;
     
     // Make sure focal point never too close to screen edges
     self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - DELTA);
@@ -105,7 +105,7 @@
 // test if angle is in inferior half of unit circle
 // these are the only angles relevant for Brugada triangle base measurement
 - (BOOL)angleInSouthernHemisphere:(double)angle {
-    return 0 <= angle && angle <= M_PI;
+    return 0 < angle && angle < M_PI;
 }
 
 - (double)calibratedBaseResult:(double)lengthInPoints {
