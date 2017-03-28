@@ -72,6 +72,7 @@
     [self createSetupCalibrationToolbar];
     [self createQTcStep1Toolbar];
     [self createQTcStep2Toolbar];
+    [self createMoreToolbar];
     
     [self selectMainToolbar];
 
@@ -188,7 +189,7 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Use angle calipers to make angle measurements.  Evaluate ECGs for Brugada pattern using new Brugadometer.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
+            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Use angle calipers to make angle measurements.  Evaluate ECGs for Brugada pattern using new Brugadometer.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the menu button at the upper right for full help."
                             delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [quickStartAlert show];
         }
@@ -267,7 +268,7 @@
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
-    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreToolbar)];
     self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton,
                           self.calibrateCalipersButton,
                           self.toggleIntervalRateButton,
@@ -351,6 +352,14 @@
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     self.qtcStep2MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureQTButton, cancelButton, nil];
+}
+
+- (void)createMoreToolbar {
+    UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStylePlain target:self action:@selector(chooseColor)];
+    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tweak" style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
+    self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, cancelButton, nil];
+    
 }
 
 
@@ -689,6 +698,10 @@
 
 - (void)selectCalibrateToolbar {
     self.toolbarItems = self.calibrateMenuItems;
+}
+
+- (void)selectMoreToolbar {
+    self.toolbarItems = self.moreMenuItems;
 }
 
 - (void)openSettings {
