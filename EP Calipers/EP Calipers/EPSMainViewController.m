@@ -246,9 +246,17 @@
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
     // Note Brugada button will be next version
 //    self.brugadaButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? BRUGADA_IPAD : BRUGADA_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(doBrugadaCalculations)];
-    self.settingsButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SETTINGS_IPAD : SETTINGS_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton,  /* self.brugadaButton, */ self.settingsButton, nil];
+    self.settingsButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SETTINGS_IPAD : SETTINGS_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(chooseColor)];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton,
+                          self.calibrateCalipersButton,
+                          self.toggleIntervalRateButton,
+                          self.mRRButton,
+                          self.qtcButton,
+                          /* self.brugadaButton, */
+                          self.settingsButton, nil];
 }
+
+// openSettings
 
 - (void)createImageToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
@@ -588,7 +596,7 @@
     int n = 0;
     if (self.calipersView.calipers.count > 0) {
         for (Caliper *caliper in self.calipersView.calipers) {
-            if (caliper.direction == Horizontal) {
+            if (caliper.direction == Horizontal && !caliper.isAngleCaliper) {
                 c = caliper;
                 n++;
             }
@@ -1120,6 +1128,26 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self.toggleIntervalRateButton setTitle:[self isCompactSizeClass] ? TOGGLE_INT_RATE_IPHONE : TOGGLE_INT_RATE_IPAD];
     [self.mRRButton setTitle:[self isCompactSizeClass] ? MEAN_RATE_IPHONE : MEAN_RATE_IPAD];
     [self.calibrateCalipersButton setTitle:[self isCompactSizeClass] ? CALIBRATE_IPHONE : CALIBRATE_IPAD];
+}
+
+- (void)chooseColor {
+    FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
+    //colorPicker.color = self.color;
+    colorPicker.delegate = self;
+    
+    [colorPicker setModalPresentationStyle:UIModalPresentationFormSheet];
+    [self presentViewController:colorPicker animated:YES completion:nil];
+}
+
+#pragma mark - FCColorPickerViewControllerDelegate Methods
+
+-(void)colorPickerViewController:(FCColorPickerViewController *)colorPicker didSelectColor:(UIColor *)color {
+    //self.color = color;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)colorPickerViewControllerDidCancel:(FCColorPickerViewController *)colorPicker {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -23,6 +23,11 @@
 		8EB3DE391AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
 		8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE3D1AC616C0009376AD /* Settings.m */; };
 		8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB3DE401AC9A488009376AD /* Settings.bundle */; };
+		8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF581E89F54600288EDE /* FCColorPickerViewController.m */; };
+		8ECEDF5B1E89F54600288EDE /* FCColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ECEDF591E89F54600288EDE /* FCColorPickerViewController.xib */; };
+		8ECEDF5D1E89F62000288EDE /* colormap.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ECEDF5C1E89F62000288EDE /* colormap.png */; };
+		8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF611E89F83700288EDE /* FCBrightDarkGradView.m */; };
+		8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */; };
 		8EDECB4A1C6CF93700EF0B89 /* EPCalipers-help in Resources */ = {isa = PBXBuildFile; fileRef = 8EDECB491C6CF93700EF0B89 /* EPCalipers-help */; };
 		8EFCC6A71DE5FA5F00D1C58F /* AngleCaliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */; };
 /* End PBXBuildFile section */
@@ -68,6 +73,14 @@
 		8EB3DE3C1AC616C0009376AD /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		8EB3DE3D1AC616C0009376AD /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 		8EB3DE401AC9A488009376AD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		8ECEDF571E89F54600288EDE /* FCColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCColorPickerViewController.h; sourceTree = "<group>"; };
+		8ECEDF581E89F54600288EDE /* FCColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCColorPickerViewController.m; sourceTree = "<group>"; };
+		8ECEDF591E89F54600288EDE /* FCColorPickerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FCColorPickerViewController.xib; sourceTree = "<group>"; };
+		8ECEDF5C1E89F62000288EDE /* colormap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colormap.png; sourceTree = "<group>"; };
+		8ECEDF601E89F83700288EDE /* FCBrightDarkGradView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCBrightDarkGradView.h; sourceTree = "<group>"; };
+		8ECEDF611E89F83700288EDE /* FCBrightDarkGradView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCBrightDarkGradView.m; sourceTree = "<group>"; };
+		8ECEDF621E89F83700288EDE /* FCColorSwatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCColorSwatchView.h; sourceTree = "<group>"; };
+		8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCColorSwatchView.m; sourceTree = "<group>"; };
 		8EDECB491C6CF93700EF0B89 /* EPCalipers-help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "EPCalipers-help"; sourceTree = "<group>"; };
 		8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AngleCaliper.h; sourceTree = "<group>"; };
 		8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AngleCaliper.m; sourceTree = "<group>"; };
@@ -96,6 +109,7 @@
 			children = (
 				8EDECB491C6CF93700EF0B89 /* EPCalipers-help */,
 				8EB3DE401AC9A488009376AD /* Settings.bundle */,
+				8ECEDF561E89F4F800288EDE /* ColorPicker */,
 				8E14235A1AB5F16A00CC15BC /* EP Calipers */,
 				8E1423741AB5F16A00CC15BC /* EP CalipersTests */,
 				8E1423591AB5F16A00CC15BC /* Products */,
@@ -168,6 +182,21 @@
 				8E1423761AB5F16A00CC15BC /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8ECEDF561E89F4F800288EDE /* ColorPicker */ = {
+			isa = PBXGroup;
+			children = (
+				8ECEDF601E89F83700288EDE /* FCBrightDarkGradView.h */,
+				8ECEDF611E89F83700288EDE /* FCBrightDarkGradView.m */,
+				8ECEDF621E89F83700288EDE /* FCColorSwatchView.h */,
+				8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */,
+				8ECEDF5C1E89F62000288EDE /* colormap.png */,
+				8ECEDF571E89F54600288EDE /* FCColorPickerViewController.h */,
+				8ECEDF581E89F54600288EDE /* FCColorPickerViewController.m */,
+				8ECEDF591E89F54600288EDE /* FCColorPickerViewController.xib */,
+			);
+			name = ColorPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +286,10 @@
 				8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */,
 				8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */,
 				8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */,
+				8ECEDF5B1E89F54600288EDE /* FCColorPickerViewController.xib in Resources */,
 				8E9A333C1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg in Resources */,
 				8EDECB4A1C6CF93700EF0B89 /* EPCalipers-help in Resources */,
+				8ECEDF5D1E89F62000288EDE /* colormap.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,11 +307,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */,
+				8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */,
 				8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */,
 				8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */,
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
 				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
 				8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */,
+				8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */,
 				8E14235E1AB5F16A00CC15BC /* main.m in Sources */,
 				8EB3DE391AC603A3009376AD /* Calibration.m in Sources */,
 				8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */,
