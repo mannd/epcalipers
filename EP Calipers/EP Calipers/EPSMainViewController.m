@@ -73,6 +73,7 @@
     [self createQTcStep1Toolbar];
     [self createQTcStep2Toolbar];
     [self createMoreToolbar];
+    [self createColorToolbar];
     
     [self selectMainToolbar];
 
@@ -93,7 +94,7 @@
     self.defaultVerticalCalChanged = NO;
     
     [self.calipersView setUserInteractionEnabled:YES];
-    
+        
     self.rrIntervalForQTc = 0.0;
     
     [self.imageView setHidden:YES];  // hide view until it is rescaled
@@ -335,8 +336,9 @@
 }
 
 - (void)createQTcStep1Toolbar {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 32)];
+    UILabel *label = [[UILabel alloc] init];
     [label setText:@"RR interval(s)?"];
+    [label sizeToFit];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
@@ -345,8 +347,9 @@
 }
 
 - (void)createQTcStep2Toolbar {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 32)];
+    UILabel *label = [[UILabel alloc] init];
     [label setText:@"QT interval?"];
+    [label sizeToFit];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *measureQTButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
@@ -355,11 +358,19 @@
 }
 
 - (void)createMoreToolbar {
-    UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStylePlain target:self action:@selector(chooseColor)];
+    UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
     UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tweak" style:UIBarButtonItemStylePlain target:self action:nil];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, cancelButton, nil];
-    
+}
+
+- (void)createColorToolbar {
+    UILabel *label = [[UILabel alloc] init];
+    [label setText:@"Long press on caliper to set color"];
+    [label sizeToFit];
+    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
+    self.colorMenuItems = [NSArray arrayWithObjects:labelBarButtonItem, cancelButton, nil];
 }
 
 
@@ -682,6 +693,8 @@
     [self.mRRButton setEnabled:enable];
     [self.qtcButton setEnabled:enable];
     self.calipersView.locked = NO;
+    self.calipersView.allowColorChange = NO;
+    self.calipersView.allowTweakPosition = NO;
 }
 
 - (void)selectAddCalipersToolbar {
@@ -702,6 +715,11 @@
 
 - (void)selectMoreToolbar {
     self.toolbarItems = self.moreMenuItems;
+}
+
+- (void)selectColorToolbar {
+    self.toolbarItems = self.colorMenuItems;
+    self.calipersView.allowColorChange = YES;
 }
 
 - (void)openSettings {

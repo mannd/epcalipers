@@ -48,6 +48,8 @@
 - (void)moveCrossBar:(CGPoint)delta;
 - (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location;
 - (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location;
+- (void)moveBarInDirection:(MovementDirection)direction distance:(CGFloat)delta forComponent:(CaliperComponent)component;
+- (void)moveCrossbarInDirection:(MovementDirection)direction distance:(CGFloat)delta;
 - (float)barCoord:(CGPoint)p;
 - (void)caliperText;
 

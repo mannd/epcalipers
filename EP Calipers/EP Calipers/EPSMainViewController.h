@@ -37,6 +37,7 @@
 @property (strong, nonatomic) NSArray *qtcStep1MenuItems;
 @property (strong, nonatomic) NSArray *qtcStep2MenuItems;
 @property (strong, nonatomic) NSArray *moreMenuItems;
+@property (strong, nonatomic) NSArray *colorMenuItems;
 
 @property (strong, nonatomic) Calibration *horizontalCalibration;
 @property (strong, nonatomic) Calibration *verticalCalibration;

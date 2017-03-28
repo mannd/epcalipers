@@ -26,14 +26,18 @@
         doubleTapGestureRecognizer.numberOfTapsRequired = 2;
         [self addGestureRecognizer:doubleTapGestureRecognizer];
         [singleTapGestureRecognizer requireGestureRecognizerToFail:doubleTapGestureRecognizer];
+        
+        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress)];
+        [self addGestureRecognizer:longPressGestureRecognizer];
         self.clearsContextBeforeDrawing = YES;
         self.locked = NO;
+        self.allowColorChange = NO;
+        self.allowTweakPosition = NO;
    }
     return self;
 }
 
 
-//TESTEST!!!!!!!!!
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
         if ([(Caliper *)self.calipers[i] pointNearCaliper:point]) {
@@ -177,6 +181,15 @@
         }
         [p setTranslation:CGPointZero inView:self];
         [self setNeedsDisplay];
+    }
+}
+
+- (void)handleLongPress {
+    if (self.allowColorChange) {
+        EPSLog(@"Allow color change");
+    }
+    else if (self.allowTweakPosition) {
+        EPSLog(@"Allow tweak position");
     }
 }
 

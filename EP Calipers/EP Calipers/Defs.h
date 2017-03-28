@@ -16,4 +16,18 @@ typedef NS_ENUM(NSInteger, CaliperDirection) {
     Vertical
 };
 
+typedef NS_ENUM(NSInteger, CaliperComponent) {
+    Bar1,
+    Bar2,
+    Crossbar,
+    None
+};
+
+typedef NS_ENUM(NSInteger, MovementDirection) {
+    Up,
+    Down,
+    Left,
+    Right
+};
+
 #endif

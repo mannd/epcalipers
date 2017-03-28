@@ -183,6 +183,10 @@
     return radians * 180.0 / M_PI;
 }
 
++ (double)degreesToRadians:(double)degrees {
+    return (degrees * M_PI) / 180.0;
+}
+
 - (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location {
     self.angleBar1 = [self moveBarAngle:delta forLocation:location];
 }
@@ -194,6 +198,22 @@
 - (double)moveBarAngle:(CGPoint)delta forLocation:(CGPoint)location {
     CGPoint newPosition = CGPointMake(location.x + delta.x, location.y + delta.y);
     return [self relativeTheta:newPosition];
+}
+
+- (void)moveBarInDirection:(MovementDirection)direction distance:(CGFloat)delta forComponent:(CaliperComponent)component {
+    switch (component) {
+        case Bar1:
+            self.angleBar1 -= [AngleCaliper degreesToRadians:delta];
+            break;
+        case Bar2:
+            self.angleBar2 -= [AngleCaliper degreesToRadians:delta];
+            break;
+        case Crossbar:
+            [super moveCrossbarInDirection:direction distance:delta];
+            break;
+        default:
+            break;
+    }
 }
 
 - (BOOL)requiresCalibration {

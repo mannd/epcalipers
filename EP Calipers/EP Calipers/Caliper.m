@@ -226,6 +226,32 @@
     self.bar2Position += delta.x;
 }
 
+- (void)moveBarInDirection:(MovementDirection)direction distance:(CGFloat)delta forComponent:(CaliperComponent)component {
+    switch (component) {
+        case Bar1:
+            self.bar1Position += delta;
+            break;
+        case Bar2:
+            self.bar2Position += delta;
+            break;
+        case Crossbar:
+            [self moveCrossbarInDirection:direction distance:delta];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)moveCrossbarInDirection:(MovementDirection)direction distance:(CGFloat)delta {
+    if (direction == Up || direction == Down) {
+        self.crossBarPosition += delta;
+    }
+    else {
+        self.bar1Position += delta;
+        self.bar2Position += delta;
+    }
+}
+
 - (BOOL)requiresCalibration {
     return YES;
 }
