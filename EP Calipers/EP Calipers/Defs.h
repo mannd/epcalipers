@@ -9,6 +9,8 @@
 #ifndef EP_Calipers_Defs_h
 #define EP_Calipers_Defs_h
 
+
+
 typedef NS_ENUM(NSInteger, CaliperDirection) {
     Horizontal,
     Vertical

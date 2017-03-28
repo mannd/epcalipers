@@ -28,6 +28,7 @@
 		8ECEDF5D1E89F62000288EDE /* colormap.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ECEDF5C1E89F62000288EDE /* colormap.png */; };
 		8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF611E89F83700288EDE /* FCBrightDarkGradView.m */; };
 		8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */; };
+		8ECEDF681E8A1A1A00288EDE /* About.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF671E8A1A1A00288EDE /* About.m */; };
 		8EDECB4A1C6CF93700EF0B89 /* EPCalipers-help in Resources */ = {isa = PBXBuildFile; fileRef = 8EDECB491C6CF93700EF0B89 /* EPCalipers-help */; };
 		8EFCC6A71DE5FA5F00D1C58F /* AngleCaliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */; };
 /* End PBXBuildFile section */
@@ -81,6 +82,8 @@
 		8ECEDF611E89F83700288EDE /* FCBrightDarkGradView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCBrightDarkGradView.m; sourceTree = "<group>"; };
 		8ECEDF621E89F83700288EDE /* FCColorSwatchView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCColorSwatchView.h; sourceTree = "<group>"; };
 		8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCColorSwatchView.m; sourceTree = "<group>"; };
+		8ECEDF661E8A1A1A00288EDE /* About.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = About.h; sourceTree = "<group>"; };
+		8ECEDF671E8A1A1A00288EDE /* About.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = About.m; sourceTree = "<group>"; };
 		8EDECB491C6CF93700EF0B89 /* EPCalipers-help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "EPCalipers-help"; sourceTree = "<group>"; };
 		8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AngleCaliper.h; sourceTree = "<group>"; };
 		8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AngleCaliper.m; sourceTree = "<group>"; };
@@ -132,6 +135,8 @@
 				8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */,
 				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
 				8E1423601AB5F16A00CC15BC /* AppDelegate.m */,
+				8ECEDF661E8A1A1A00288EDE /* About.h */,
+				8ECEDF671E8A1A1A00288EDE /* About.m */,
 				8E1423621AB5F16A00CC15BC /* EPSMainViewController.h */,
 				8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */,
 				8E1423651AB5F16A00CC15BC /* Main.storyboard */,
@@ -314,6 +319,7 @@
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
 				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
 				8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */,
+				8ECEDF681E8A1A1A00288EDE /* About.m in Sources */,
 				8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */,
 				8E14235E1AB5F16A00CC15BC /* main.m in Sources */,
 				8EB3DE391AC603A3009376AD /* Calibration.m in Sources */,

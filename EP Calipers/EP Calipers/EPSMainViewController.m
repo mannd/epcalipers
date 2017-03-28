@@ -11,12 +11,12 @@
 #import "AngleCaliper.h"
 #import "Settings.h"
 #import "EPSLogging.h"
+#import "About.h"
 #include "Defs.h"
 
 //:TODO: Make NO for release version
 // set to yes to always show startup screen
 //#define TEST_QUICK_START NO
-
 
 #define ANIMATION_DURATION 0.5
 #define MAX_ZOOM 10.0
@@ -32,10 +32,10 @@
 #define SWITCH_IPAD @"Image"
 #define SWITCH_IPHONE @"Image"
 #define SWITCH_BACK @"Measure"
-#define SETTINGS_IPAD @"Preferences"
-#define SETTINGS_IPHONE @"Prefs"
-#define BRUGADA_IPAD @"Brugada"
-#define BRUGADA_IPHONE @"BrS"
+//#define SETTINGS_IPAD @"Preferences"
+//#define SETTINGS_IPHONE @"Prefs"
+//#define BRUGADA_IPAD @"Brugada"
+//#define BRUGADA_IPHONE @"BrS"
 
 // AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
@@ -98,9 +98,10 @@
     [self.imageView setHidden:YES];  // hide view until it is rescaled
     
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    [btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
+//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
+    self.navigationItem.rightBarButtonItem = btn;
+    //[btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SWITCH_IPAD : SWITCH_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = NO;
@@ -237,6 +238,28 @@
     // Dispose of any resources that can be recreated.
 }
 
+// Help menu, etc.
+- (void)showSecondaryMenu {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* preferencesAction = [UIAlertAction actionWithTitle:@"Preferences" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {[self openSettings];}];
+    [actionSheet addAction:preferencesAction];
+    UIAlertAction* helpAction = [UIAlertAction actionWithTitle:@"Help" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {[self performSegueWithIdentifier:@"WebViewSegue" sender:self];}];
+    [actionSheet addAction:helpAction];
+    UIAlertAction* aboutAction = [UIAlertAction actionWithTitle:@"About" style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * action) {[About show];}];
+    [actionSheet addAction:aboutAction];
+    
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    [actionSheet addAction:cancelAction];
+    
+    actionSheet.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItem;
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
+}
+
 // Create toolbars
 - (void)createMainToolbar {
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
@@ -244,16 +267,14 @@
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
-    // Note Brugada button will be next version
-//    self.brugadaButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? BRUGADA_IPAD : BRUGADA_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(doBrugadaCalculations)];
-    self.settingsButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SETTINGS_IPAD : SETTINGS_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(chooseColor)];
+    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:nil];
     self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton,
                           self.calibrateCalipersButton,
                           self.toggleIntervalRateButton,
                           self.mRRButton,
                           self.qtcButton,
-                          /* self.brugadaButton, */
-                          self.settingsButton, nil];
+                          /* self.brugadaButton ? */
+                          moreButton, nil];
 }
 
 // openSettings
@@ -332,10 +353,6 @@
     self.qtcStep2MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureQTButton, cancelButton, nil];
 }
 
-
-- (void)showHelp {
-    [self performSegueWithIdentifier:@"WebViewSegue" sender:nil];
-}
 
 - (void)toggleIntervalRate {
     self.horizontalCalibration.displayRate = ! self.horizontalCalibration.displayRate;
@@ -1132,7 +1149,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)chooseColor {
     FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
-    //colorPicker.color = self.color;
+    colorPicker.backgroundColor = [UIColor whiteColor];
+    colorPicker.color = self.settings.caliperColor;
     colorPicker.delegate = self;
     
     [colorPicker setModalPresentationStyle:UIModalPresentationFormSheet];
