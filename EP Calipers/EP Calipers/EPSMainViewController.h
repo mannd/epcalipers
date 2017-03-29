@@ -12,7 +12,7 @@
 #import "Settings.h"
 #import "FCColorPickerViewController.h"
 
-@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, FCColorPickerViewControllerDelegate>
+@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, FCColorPickerViewControllerDelegate, CalipersViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -70,6 +70,9 @@
 
 @property (nonatomic) BOOL defaultHorizontalCalChanged;
 @property (nonatomic) BOOL defaultVerticalCalChanged;
+
+- (void)chooseColor:(Caliper *)caliper;
+@property (nonatomic, weak) Caliper *choosenCaliper;
 
 @end
 

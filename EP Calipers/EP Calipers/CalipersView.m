@@ -8,7 +8,6 @@
 
 #import "CalipersView.h"
 #import "EPSLogging.h"
-#import "EPSMainViewController.h"
 
 @implementation CalipersView
 
@@ -27,12 +26,13 @@
         [self addGestureRecognizer:doubleTapGestureRecognizer];
         [singleTapGestureRecognizer requireGestureRecognizerToFail:doubleTapGestureRecognizer];
         
-        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress)];
+        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
         [self addGestureRecognizer:longPressGestureRecognizer];
         self.clearsContextBeforeDrawing = YES;
         self.locked = NO;
         self.allowColorChange = NO;
         self.allowTweakPosition = NO;
+        
    }
     return self;
 }
@@ -184,12 +184,20 @@
     }
 }
 
-- (void)handleLongPress {
-    if (self.allowColorChange) {
-        EPSLog(@"Allow color change");
-    }
-    else if (self.allowTweakPosition) {
-        EPSLog(@"Allow tweak position");
+- (void)handleLongPress:(UILongPressGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        if (self.allowColorChange) {
+            CGPoint location = [gesture locationInView:self];
+            for (Caliper *c in self.calipers) {
+                if ([c pointNearCaliper:location]) {
+                    [self.delegate chooseColor:c];
+                    break;
+                 }
+             }
+        }
+        else if (self.allowTweakPosition) {
+            EPSLog(@"Allow tweak position");
+        }
     }
 }
 

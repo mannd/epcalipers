@@ -94,6 +94,8 @@
     self.defaultVerticalCalChanged = NO;
     
     [self.calipersView setUserInteractionEnabled:YES];
+    
+    self.calipersView.delegate = self;
         
     self.rrIntervalForQTc = 0.0;
     
@@ -144,7 +146,7 @@
     EPSLog(@"ViewDidAppear");
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
-    
+        
     if (self.firstRun) {
         //  scale image for imageView;
         // autolayout not done in viewDidLoad
@@ -1178,10 +1180,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self.calibrateCalipersButton setTitle:[self isCompactSizeClass] ? CALIBRATE_IPHONE : CALIBRATE_IPAD];
 }
 
-- (void)chooseColor {
+- (void)chooseColor:(Caliper *)caliper {
     FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
     colorPicker.backgroundColor = [UIColor whiteColor];
-    colorPicker.color = self.settings.caliperColor;
+    self.choosenCaliper = caliper;
+    colorPicker.color = caliper.unselectedColor;
     colorPicker.delegate = self;
     
     [colorPicker setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -1191,7 +1194,12 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 #pragma mark - FCColorPickerViewControllerDelegate Methods
 
 -(void)colorPickerViewController:(FCColorPickerViewController *)colorPicker didSelectColor:(UIColor *)color {
-    //self.color = color;
+    if (self.choosenCaliper != nil) {
+        self.choosenCaliper.color = color;
+        self.choosenCaliper.unselectedColor = color;
+        self.choosenCaliper.selected = NO;
+        [self.calipersView setNeedsDisplay];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

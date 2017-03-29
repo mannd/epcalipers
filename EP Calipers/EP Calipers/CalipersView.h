@@ -9,10 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "Caliper.h"
 
+@protocol CalipersViewDelegate <NSObject>
+
+@required
+- (void)chooseColor:(Caliper *)caliper;
+
+@end
+
 @interface CalipersView : UIView
 
 - (id)initWithCoder:(NSCoder *)aDecoder;
 
+@property (nonatomic, weak) id<CalipersViewDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray *calipers;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (nonatomic) BOOL locked;
