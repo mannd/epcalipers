@@ -74,6 +74,7 @@
     [self createQTcStep2Toolbar];
     [self createMoreToolbar];
     [self createColorToolbar];
+    [self createTweakToolbar];
     
     [self selectMainToolbar];
 
@@ -361,18 +362,27 @@
 
 - (void)createMoreToolbar {
     UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
-    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tweak" style:UIBarButtonItemStylePlain target:self action:nil];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
+    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tweak" style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, cancelButton, nil];
 }
 
 - (void)createColorToolbar {
     UILabel *label = [[UILabel alloc] init];
-    [label setText:@"Long press on caliper to set color"];
+    [label setText:@"Long press caliper"];
     [label sizeToFit];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     self.colorMenuItems = [NSArray arrayWithObjects:labelBarButtonItem, cancelButton, nil];
+}
+
+- (void)createTweakToolbar {
+    UILabel *label = [UILabel new];
+    [label setText:@"Long press caliper component"];
+    [label sizeToFit];
+    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
+    self.tweakMenuItems = [NSArray arrayWithObjects:labelBarButtonItem, cancelButton, nil];
 }
 
 
@@ -722,6 +732,11 @@
 - (void)selectColorToolbar {
     self.toolbarItems = self.colorMenuItems;
     self.calipersView.allowColorChange = YES;
+}
+
+- (void)selectTweakToolbar {
+    self.toolbarItems = self.tweakMenuItems;
+    self.calipersView.allowTweakPosition = YES;
 }
 
 - (void)openSettings {

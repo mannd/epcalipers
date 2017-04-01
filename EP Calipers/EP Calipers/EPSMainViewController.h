@@ -26,6 +26,14 @@
 @property (strong, nonatomic) UIBarButtonItem *previousPageButton;
 @property (strong, nonatomic) UIBarButtonItem *nextPageButton;
 //@property (strong, nonatomic) UIBarButtonItem *brugadaButton;
+@property (strong, nonatomic) UIBarButtonItem *leftButton;
+@property (strong, nonatomic) UIBarButtonItem *rightButton;
+@property (strong, nonatomic) UIBarButtonItem *upButton;
+@property (strong, nonatomic) UIBarButtonItem *downButton;
+@property (strong, nonatomic) UIBarButtonItem *microLeftButton;
+@property (strong, nonatomic) UIBarButtonItem *microRightButton;
+@property (strong, nonatomic) UIBarButtonItem *microUpButton;
+@property (strong, nonatomic) UIBarButtonItem *microDownButton;
 
 @property (strong, nonatomic) NSArray *mainMenuItems;
 @property (strong, nonatomic) NSArray *photoMenuItems;
@@ -38,6 +46,7 @@
 @property (strong, nonatomic) NSArray *qtcStep2MenuItems;
 @property (strong, nonatomic) NSArray *moreMenuItems;
 @property (strong, nonatomic) NSArray *colorMenuItems;
+@property (strong, nonatomic) NSArray *tweakMenuItems;
 
 @property (strong, nonatomic) Calibration *horizontalCalibration;
 @property (strong, nonatomic) Calibration *verticalCalibration;
