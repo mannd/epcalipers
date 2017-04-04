@@ -277,21 +277,20 @@
 - (void)moveBarInDirection:(MovementDirection)direction distance:(CGFloat)delta forComponent:(CaliperComponent)component {
     if (component == Crossbar) {
         [self moveCrossbarInDirection:direction distance:delta];
+        return;
     }
-    else {
-        if (direction == Up || direction == Left) {
-            delta = -delta;
-        }
-        switch (component) {
-            case Bar1:
-                self.bar1Position += delta;
-                break;
-            case Bar2:
-                self.bar2Position += delta;
-                break;
-            default:
-                break;
-        }
+    if (direction == Up || direction == Left) {
+        delta = -delta;
+    }
+    switch (component) {
+        case Bar1:
+            self.bar1Position += delta;
+            break;
+        case Bar2:
+            self.bar2Position += delta;
+            break;
+        default:
+            break;
     }
 }
 

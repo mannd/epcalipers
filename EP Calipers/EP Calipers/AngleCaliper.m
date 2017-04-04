@@ -201,15 +201,19 @@
 }
 
 - (void)moveBarInDirection:(MovementDirection)direction distance:(CGFloat)delta forComponent:(CaliperComponent)component {
+    if (component == Crossbar) {
+        [super moveCrossbarInDirection:direction distance:delta];
+        return;
+    }
+    if (direction == Left) {
+        delta = -delta;
+    }
     switch (component) {
         case Bar1:
             self.angleBar1 -= [AngleCaliper degreesToRadians:delta];
             break;
         case Bar2:
             self.angleBar2 -= [AngleCaliper degreesToRadians:delta];
-            break;
-        case Crossbar:
-            [super moveCrossbarInDirection:direction distance:delta];
             break;
         default:
             break;
