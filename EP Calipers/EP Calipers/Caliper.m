@@ -13,13 +13,13 @@
 #define CROSSBAR @"Crossbar"
 #define CROSSBAR_SMALL @"Xbar"
 #define LEFT_BAR @"Left bar"
-#define LEFT_BAR_SMALL @"Lbar"
+#define LEFT_BAR_SMALL @"Left"
 #define RIGHT_BAR @"Right bar"
-#define RIGHT_BAR_SMALL @"Rbar"
-#define UP_BAR @"Upper bar"
-#define UP_BAR_SMALL @"Ubar"
+#define RIGHT_BAR_SMALL @"Right"
+#define UP_BAR @"Top bar"
+#define UP_BAR_SMALL @"Top"
 #define DOWN_BAR @"Bottom bar"
-#define DOWN_BAR_SMALL @"Bbar"
+#define DOWN_BAR_SMALL @"Bottom"
 #define APEX_BAR @"Apex"
 
 @implementation Caliper
@@ -275,28 +275,69 @@
 }
 
 - (void)moveBarInDirection:(MovementDirection)direction distance:(CGFloat)delta forComponent:(CaliperComponent)component {
-    switch (component) {
-        case Bar1:
-            self.bar1Position += delta;
+    if (component == Crossbar) {
+        [self moveCrossbarInDirection:direction distance:delta];
+    }
+    else {
+        if (direction == Up || direction == Left) {
+            delta = -delta;
+        }
+        switch (component) {
+            case Bar1:
+                self.bar1Position += delta;
+                break;
+            case Bar2:
+                self.bar2Position += delta;
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+// swaps up and down for right and left, when using vertical calipers
+- (MovementDirection)swapDirection:(MovementDirection)direction {
+    switch (direction) {
+        case Left:
+            return Up;
             break;
-        case Bar2:
-            self.bar2Position += delta;
+        case Right:
+            return Down;
             break;
-        case Crossbar:
-            [self moveCrossbarInDirection:direction distance:delta];
+        case Up:
+            return Left;
+            break;
+        case Down:
+            return Right;
             break;
         default:
+            return Stationary;
             break;
     }
 }
 
 - (void)moveCrossbarInDirection:(MovementDirection)direction distance:(CGFloat)delta {
-    if (direction == Up || direction == Down) {
-        self.crossBarPosition += delta;
+    // assume origin at upper left
+    if (self.direction == Vertical) {
+        direction = [self swapDirection:direction];
     }
-    else {
-        self.bar1Position += delta;
-        self.bar2Position += delta;
+    switch (direction) {
+        case Up:
+            self.crossBarPosition -= delta;
+            break;
+        case Down:
+            self.crossBarPosition += delta;
+            break;
+        case Left:
+            self.bar1Position -= delta;
+            self.bar2Position -= delta;
+            break;
+        case Right:
+            self.bar1Position += delta;
+            self.bar2Position += delta;
+            break;
+        default:
+            break;
     }
 }
 

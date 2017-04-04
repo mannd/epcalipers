@@ -27,7 +27,8 @@ typedef NS_ENUM(NSInteger, MovementDirection) {
     Up,
     Down,
     Left,
-    Right
+    Right,
+    Stationary
 };
 
 #endif

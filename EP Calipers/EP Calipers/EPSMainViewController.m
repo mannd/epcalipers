@@ -20,6 +20,8 @@
 
 #define ANIMATION_DURATION 0.5
 #define MAX_ZOOM 10.0
+#define MOVEMENT 1.0f
+#define MICRO_MOVEMENT 0.1f
 
 #define CALIBRATE_IPAD @"Calibrate"
 #define CALIBRATE_IPHONE @"Cal"
@@ -400,15 +402,15 @@
     [self.componentLabel setText:@"test"];
     [self.componentLabel sizeToFit];
     self.componentLabelButton = [[UIBarButtonItem alloc] initWithCustomView:self.componentLabel];
-    self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
-    self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
+    self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveLeft)];
+    self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveRight)];
     
-    self.upButton = [[UIBarButtonItem alloc] initWithTitle:UP_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
-    self.downButton = [[UIBarButtonItem alloc] initWithTitle:DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
-    self.microLeftButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
-    self.microRightButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
-    self.microUpButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_UP_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
-    self.microDownButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
+    self.upButton = [[UIBarButtonItem alloc] initWithTitle:UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveUp)];
+    self.downButton = [[UIBarButtonItem alloc] initWithTitle:DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveDown)];
+    self.microLeftButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveLeft)];
+    self.microRightButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveRight)];
+    self.microUpButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveUp)];
+    self.microDownButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveDown)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     self.movementMenuItems = [NSArray arrayWithObjects:self.componentLabelButton, self.leftButton, self.rightButton,
                               self.upButton,
@@ -1255,9 +1257,61 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.chosenCaliperComponent = component;
     [self.componentLabel setText:[caliper getComponentName:component smallSize:[self isCompactSizeClass]]];
     [self.componentLabel sizeToFit];
+    BOOL disableUpDown = caliper.direction == Horizontal && component != Crossbar;
+    BOOL disableLeftRight = caliper.direction == Vertical && component != Crossbar;
+    self.upButton.enabled = !disableUpDown;
+    self.microUpButton.enabled = !disableUpDown;
+    self.downButton.enabled = !disableUpDown;
+    self.microDownButton.enabled = !disableUpDown;
+    self.leftButton.enabled = !disableLeftRight;
+    self.microLeftButton.enabled = !disableLeftRight;
+    self.rightButton.enabled = !disableLeftRight;
+    self.microRightButton.enabled = !disableLeftRight;
     [self selectMovementToolbar];
+}
+
+- (void)moveComponent:(Caliper *)caliper component:(CaliperComponent)component distance:(CGFloat)distance direction:(MovementDirection)direction {
+    if (caliper == nil || component == None) {
+        return;
+    }
+    [caliper moveBarInDirection:direction distance:distance forComponent:component];
+    [self.calipersView setNeedsDisplay];
 
 }
+
+- (void)moveLeft {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MOVEMENT direction:Left];
+}
+
+- (void)moveRight {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MOVEMENT direction:Right];
+}
+
+- (void)moveUp {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MOVEMENT direction:Up];
+}
+
+- (void)moveDown {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MOVEMENT direction:Down];
+}
+
+- (void)microMoveLeft {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MICRO_MOVEMENT direction:Left];
+}
+
+- (void)microMoveRight {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MICRO_MOVEMENT direction:Right];
+}
+
+- (void)microMoveUp {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MICRO_MOVEMENT direction:Up];
+}
+
+- (void)microMoveDown {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MICRO_MOVEMENT direction:Down];
+}
+
+
 
 #pragma mark - FCColorPickerViewControllerDelegate Methods
 
