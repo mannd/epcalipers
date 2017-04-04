@@ -34,6 +34,8 @@
 @property (strong, nonatomic) UIBarButtonItem *microRightButton;
 @property (strong, nonatomic) UIBarButtonItem *microUpButton;
 @property (strong, nonatomic) UIBarButtonItem *microDownButton;
+@property (strong, nonatomic) UIBarButtonItem *componentLabelButton;
+@property (strong, nonatomic) UILabel *componentLabel;
 
 @property (strong, nonatomic) NSArray *mainMenuItems;
 @property (strong, nonatomic) NSArray *photoMenuItems;
@@ -47,6 +49,7 @@
 @property (strong, nonatomic) NSArray *moreMenuItems;
 @property (strong, nonatomic) NSArray *colorMenuItems;
 @property (strong, nonatomic) NSArray *tweakMenuItems;
+@property (strong, nonatomic) NSArray *movementMenuItems;
 
 @property (strong, nonatomic) Calibration *horizontalCalibration;
 @property (strong, nonatomic) Calibration *verticalCalibration;
@@ -81,7 +84,8 @@
 @property (nonatomic) BOOL defaultVerticalCalChanged;
 
 - (void)chooseColor:(Caliper *)caliper;
-@property (nonatomic, weak) Caliper *choosenCaliper;
+@property (nonatomic, weak) Caliper *chosenCaliper;
+@property (nonatomic) CaliperComponent chosenCaliperComponent;
 
 @end
 

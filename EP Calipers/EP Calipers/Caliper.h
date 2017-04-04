@@ -31,6 +31,7 @@
 @property (readonly) BOOL requiresCalibration;
 @property (readonly) BOOL isAngleCaliper;
 
+
 - (double)intervalResult;
 - (double)rateResult:(double)interval;
 - (double)calibratedResult;
@@ -52,5 +53,8 @@
 - (void)moveCrossbarInDirection:(MovementDirection)direction distance:(CGFloat)delta;
 - (float)barCoord:(CGPoint)p;
 - (void)caliperText;
+- (CaliperComponent)getCaliperComponent:(CGPoint)point;
+- (NSString *)getComponentName:(CaliperComponent)component smallSize:(BOOL)smallSize;
+
 
 @end

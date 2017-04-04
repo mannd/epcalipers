@@ -13,6 +13,7 @@
 
 @required
 - (void)chooseColor:(Caliper *)caliper;
+- (void)tweakComponent:(CaliperComponent)component forCaliper:(Caliper *)caliper;
 
 @end
 

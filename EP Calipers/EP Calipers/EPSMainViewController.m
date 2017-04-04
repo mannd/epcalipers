@@ -36,6 +36,14 @@
 //#define SETTINGS_IPHONE @"Prefs"
 //#define BRUGADA_IPAD @"Brugada"
 //#define BRUGADA_IPHONE @"BrS"
+#define LEFT_ARROW @"⇦"
+#define RIGHT_ARROW @"⇨"
+#define MICRO_LEFT_ARROW @"←"
+#define MICRO_RIGHT_ARROW @"→"
+#define UP_ARROW @"⇧"
+#define DOWN_ARROW @"⇩"
+#define MICRO_UP_ARROW @"↑"
+#define MICRO_DOWN_ARROW @"↓"
 
 // AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
@@ -63,19 +71,8 @@
     
     self.settings = [[Settings alloc] init];
     [self.settings loadPreferences];
+    [self createToolbars];
 
-    [self createMainToolbar];
-    [self createImageToolbar];
-    [self createAdjustImageToolbar];
-    [self createMoreAdjustImageToolbar];
-    [self createAddCalipersToolbar];
-    [self createSetupCalibrationToolbar];
-    [self createQTcStep1Toolbar];
-    [self createQTcStep2Toolbar];
-    [self createMoreToolbar];
-    [self createColorToolbar];
-    [self createTweakToolbar];
-    
     [self selectMainToolbar];
 
     [self.imageView setContentMode:UIViewContentModeCenter];
@@ -266,6 +263,21 @@
 }
 
 // Create toolbars
+- (void)createToolbars {
+    [self createMainToolbar];
+    [self createImageToolbar];
+    [self createAdjustImageToolbar];
+    [self createMoreAdjustImageToolbar];
+    [self createAddCalipersToolbar];
+    [self createSetupCalibrationToolbar];
+    [self createQTcStep1Toolbar];
+    [self createQTcStep2Toolbar];
+    [self createMoreToolbar];
+    [self createColorToolbar];
+    [self createTweakToolbar];
+    [self createMovementToolbar];
+}
+
 - (void)createMainToolbar {
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
     self.calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? CALIBRATE_IPAD : CALIBRATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
@@ -281,8 +293,6 @@
                           /* self.brugadaButton ? */
                           moreButton, nil];
 }
-
-// openSettings
 
 - (void)createImageToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
@@ -383,6 +393,27 @@
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     self.tweakMenuItems = [NSArray arrayWithObjects:labelBarButtonItem, cancelButton, nil];
+}
+
+- (void)createMovementToolbar {
+    self.componentLabel = [UILabel new];
+    [self.componentLabel setText:@"test"];
+    [self.componentLabel sizeToFit];
+    self.componentLabelButton = [[UIBarButtonItem alloc] initWithCustomView:self.componentLabel];
+    self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
+    self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
+    
+    self.upButton = [[UIBarButtonItem alloc] initWithTitle:UP_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
+    self.downButton = [[UIBarButtonItem alloc] initWithTitle:DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
+    self.microLeftButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
+    self.microRightButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
+    self.microUpButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_UP_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
+    self.microDownButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:nil];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
+    self.movementMenuItems = [NSArray arrayWithObjects:self.componentLabelButton, self.leftButton, self.rightButton,
+                              self.upButton,
+                              self.downButton, self.microLeftButton, self.microRightButton,
+                              self.microUpButton, self.microDownButton, doneButton, nil];
 }
 
 
@@ -707,6 +738,8 @@
     self.calipersView.locked = NO;
     self.calipersView.allowColorChange = NO;
     self.calipersView.allowTweakPosition = NO;
+    self.chosenCaliper = nil;
+    self.chosenCaliperComponent = None;
 }
 
 - (void)selectAddCalipersToolbar {
@@ -737,6 +770,10 @@
 - (void)selectTweakToolbar {
     self.toolbarItems = self.tweakMenuItems;
     self.calipersView.allowTweakPosition = YES;
+}
+
+- (void)selectMovementToolbar{
+    self.toolbarItems = self.movementMenuItems;
 }
 
 - (void)openSettings {
@@ -1190,15 +1227,22 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    EPSLog(@"traitCollectionDidChange");
     [self.toggleIntervalRateButton setTitle:[self isCompactSizeClass] ? TOGGLE_INT_RATE_IPHONE : TOGGLE_INT_RATE_IPAD];
     [self.mRRButton setTitle:[self isCompactSizeClass] ? MEAN_RATE_IPHONE : MEAN_RATE_IPAD];
     [self.calibrateCalipersButton setTitle:[self isCompactSizeClass] ? CALIBRATE_IPHONE : CALIBRATE_IPAD];
+    if (self.chosenCaliper != nil) {
+        [self.componentLabel setText:[self.chosenCaliper getComponentName:self.chosenCaliperComponent smallSize:[self isCompactSizeClass]]];
+        [self.componentLabel sizeToFit];
+    }
 }
+
+#pragma mark - CalipersViewDelegate Methods
 
 - (void)chooseColor:(Caliper *)caliper {
     FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
     colorPicker.backgroundColor = [UIColor whiteColor];
-    self.choosenCaliper = caliper;
+    self.chosenCaliper = caliper;
     colorPicker.color = caliper.unselectedColor;
     colorPicker.delegate = self;
     
@@ -1206,13 +1250,22 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self presentViewController:colorPicker animated:YES completion:nil];
 }
 
+- (void)tweakComponent:(CaliperComponent)component forCaliper:(Caliper *)caliper {
+    self.chosenCaliper = caliper;
+    self.chosenCaliperComponent = component;
+    [self.componentLabel setText:[caliper getComponentName:component smallSize:[self isCompactSizeClass]]];
+    [self.componentLabel sizeToFit];
+    [self selectMovementToolbar];
+
+}
+
 #pragma mark - FCColorPickerViewControllerDelegate Methods
 
 -(void)colorPickerViewController:(FCColorPickerViewController *)colorPicker didSelectColor:(UIColor *)color {
-    if (self.choosenCaliper != nil) {
-        self.choosenCaliper.color = color;
-        self.choosenCaliper.unselectedColor = color;
-        self.choosenCaliper.selected = NO;
+    if (self.chosenCaliper != nil) {
+        self.chosenCaliper.color = color;
+        self.chosenCaliper.unselectedColor = color;
+        self.chosenCaliper.selected = NO;
         [self.calipersView setNeedsDisplay];
     }
     [self dismissViewControllerAnimated:YES completion:nil];

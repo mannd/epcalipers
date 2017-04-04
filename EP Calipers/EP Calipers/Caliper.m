@@ -10,6 +10,17 @@
 #include <math.h>
 
 #define DELTA 20.0
+#define CROSSBAR @"Crossbar"
+#define CROSSBAR_SMALL @"Xbar"
+#define LEFT_BAR @"Left bar"
+#define LEFT_BAR_SMALL @"Lbar"
+#define RIGHT_BAR @"Right bar"
+#define RIGHT_BAR_SMALL @"Rbar"
+#define UP_BAR @"Upper bar"
+#define UP_BAR_SMALL @"Ubar"
+#define DOWN_BAR @"Bottom bar"
+#define DOWN_BAR_SMALL @"Bbar"
+#define APEX_BAR @"Apex"
 
 @implementation Caliper
 {
@@ -210,6 +221,43 @@
 
 - (BOOL)pointNearCaliper:(CGPoint)p {
     return ([self pointNearCrossBar:p] || [self pointNearBar:p forBarPosition:self.bar1Position] || [self pointNearBar:p forBarPosition:self.bar2Position]);
+}
+
+- (CaliperComponent)getCaliperComponent:(CGPoint)p{
+    if ([self pointNearCrossBar:p]) {
+        return Crossbar;
+    }
+    else if ([self pointNearBar1:p]) {
+        return Bar1;
+    }
+    else if ([self pointNearBar2:p]) {
+        return Bar2;
+    }
+    else {
+        return None;
+    }
+}
+
+- (NSString *)getComponentName:(CaliperComponent)component smallSize:(BOOL)smallSize {
+    NSString *crossBarName = smallSize ? CROSSBAR_SMALL : CROSSBAR;
+    NSString *leftBarName = smallSize ? LEFT_BAR_SMALL : LEFT_BAR;
+    NSString *rightBarName = smallSize ? RIGHT_BAR_SMALL : RIGHT_BAR;
+    NSString *upBarName = smallSize ? UP_BAR_SMALL : UP_BAR;
+    NSString *downBarName = smallSize ? DOWN_BAR_SMALL : DOWN_BAR;
+    switch (component) {
+        case Crossbar:
+            return (self.isAngleCaliper ? APEX_BAR : crossBarName);
+            break;
+        case Bar1:
+            return (self.direction == Horizontal ? leftBarName : upBarName);
+            break;
+        case Bar2:
+            return (self.direction == Horizontal ? rightBarName : downBarName);
+            break;
+        default:
+            return @"";
+            break;
+    }
 }
 
 - (void)moveCrossBar:(CGPoint)delta {

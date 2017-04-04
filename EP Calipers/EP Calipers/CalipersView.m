@@ -185,9 +185,9 @@
 }
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:self];
     if (gesture.state == UIGestureRecognizerStateBegan) {
         if (self.allowColorChange) {
-            CGPoint location = [gesture locationInView:self];
             for (Caliper *c in self.calipers) {
                 if ([c pointNearCaliper:location]) {
                     [self.delegate chooseColor:c];
@@ -196,10 +196,18 @@
              }
         }
         else if (self.allowTweakPosition) {
-            EPSLog(@"Allow tweak position");
+            for (Caliper *c in self.calipers) {
+                CaliperComponent component = [c getCaliperComponent:location];
+                if (component != None) {
+                    EPSLog(@"Near component");
+                    [self.delegate tweakComponent:component forCaliper:c];
+                    break;
+                }
+            }
         }
     }
 }
+
 
 - (void)selectCaliperIfNoneSelected {
     if (self.calipers.count > 0 && [self noCaliperIsSelected]) {
