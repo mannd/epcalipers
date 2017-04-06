@@ -27,6 +27,9 @@
 @property (nonatomic) BOOL locked;
 @property (nonatomic) BOOL allowColorChange;
 @property (nonatomic) BOOL allowTweakPosition;
+@property (nonatomic) BOOL lockImageScreen;
+@property (nonatomic, strong) UIColor *lockImageMessageForegroundColor;
+@property (nonatomic, strong) UIColor *lockImageMessageBackgroundColor;
 
 - (void)selectCaliperIfNoneSelected;
 - (BOOL)noCaliperIsSelected;

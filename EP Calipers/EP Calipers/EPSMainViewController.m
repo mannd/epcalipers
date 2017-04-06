@@ -375,8 +375,9 @@
 - (void)createMoreToolbar {
     UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
     UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tweak" style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
+    self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Lock" style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
-    self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, cancelButton, nil];
+    self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, self.lockImageButton, cancelButton, nil];
 }
 
 - (void)createColorToolbar {
@@ -412,10 +413,11 @@
     self.microUpButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveUp)];
     self.microDownButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveDown)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
-    self.movementMenuItems = [NSArray arrayWithObjects:self.componentLabelButton, self.leftButton, self.rightButton,
-                              self.upButton,
-                              self.downButton, self.microLeftButton, self.microRightButton,
-                              self.microUpButton, self.microDownButton, doneButton, nil];
+    self.movementMenuItems = [NSArray arrayWithObjects:self.componentLabelButton, self.leftButton,
+                              self.upButton, self.rightButton, self.downButton,
+                              self.microLeftButton, self.microUpButton,
+                              self.microRightButton,
+                              self.microDownButton, doneButton, nil];
 }
 
 
@@ -1237,6 +1239,18 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         [self.componentLabel setText:[self.chosenCaliper getComponentName:self.chosenCaliperComponent smallSize:[self isCompactSizeClass]]];
         [self.componentLabel sizeToFit];
     }
+}
+
+- (void)lockImage {
+    self.calipersView.lockImageScreen = !self.calipersView.lockImageScreen;
+    if (self.calipersView.lockImageScreen) {
+        self.lockImageButton.title = @"Unlock";
+    }
+    else {
+        self.lockImageButton.title = @"Lock";
+    }
+    [self.scrollView setUserInteractionEnabled:!self.calipersView.lockImageScreen];
+    [self.calipersView setNeedsDisplay];
 }
 
 #pragma mark - CalipersViewDelegate Methods

@@ -35,7 +35,9 @@
 @property (strong, nonatomic) UIBarButtonItem *microUpButton;
 @property (strong, nonatomic) UIBarButtonItem *microDownButton;
 @property (strong, nonatomic) UIBarButtonItem *componentLabelButton;
+@property (strong, nonatomic) UIBarButtonItem *lockImageButton;
 @property (strong, nonatomic) UILabel *componentLabel;
+
 
 @property (strong, nonatomic) NSArray *mainMenuItems;
 @property (strong, nonatomic) NSArray *photoMenuItems;

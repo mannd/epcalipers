@@ -9,6 +9,8 @@
 #import "CalipersView.h"
 #import "EPSLogging.h"
 
+#define IMAGE_LOCK @"IMAGE LOCK"
+
 @implementation CalipersView
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -32,7 +34,9 @@
         self.locked = NO;
         self.allowColorChange = NO;
         self.allowTweakPosition = NO;
-        
+        self.lockImageScreen = NO;
+        self.lockImageMessageForegroundColor = [UIColor whiteColor];
+        self.lockImageMessageBackgroundColor = [UIColor redColor];
    }
     return self;
 }
@@ -52,6 +56,27 @@
     for (Caliper *caliper in self.calipers) {
         [caliper drawWithContext:con inRect:rect];
     }
+    if (self.lockImageScreen) {
+        [self showLockImageWarning:rect];
+    }
+}
+
+- (void)showLockImageWarning:(CGRect)rect {
+    NSString *text = IMAGE_LOCK;
+    NSMutableDictionary *attributes = [NSMutableDictionary new];
+    UIFont *textFont = [UIFont fontWithName:@"Helvetica" size:14.0];
+
+//    NSMutableParagraphStyle paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+//    self.paragraphStyle.alignment = (self.direction == Horizontal ? NSTextAlignmentCenter : NSTextAlignmentLeft);
+//    
+    [attributes setObject:textFont forKey:NSFontAttributeName];
+//    [attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [attributes setObject:self.lockImageMessageForegroundColor forKey:NSForegroundColorAttributeName];
+    [attributes setObject:self.lockImageMessageBackgroundColor forKey:NSBackgroundColorAttributeName];
+    
+    rect = CGRectMake(rect.origin.x + 5, rect.origin.y + 5, rect.size.width, rect.size.height);
+    
+    [text drawInRect:rect withAttributes:attributes];
 }
 
 - (void)selectCaliperNoNeedsDisplay:(Caliper *)c {
