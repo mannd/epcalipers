@@ -125,6 +125,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
+// TODO: Is this needed?
 - (void)viewBackToForeground {
     EPSLog(@"ViewBackToForeground");
     NSString *priorHorizontalDefaultCal = [NSString stringWithString:self.settings.defaultCalibration];
@@ -1341,6 +1342,29 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 -(void)colorPickerViewControllerDidCancel:(FCColorPickerViewController *)colorPicker {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - restore view controller state
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    //[coder encodeObject:self.capital forKey:UYLKeyCapital];
+    EPSLog(@"encodeRestorableStateWithCoder");
+    [coder encodeObject:UIImagePNGRepresentation(self.imageView.image)
+                 forKey:@"YourImageKey"];
+    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomFactor"];
+    
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    //self.capital = [coder decodeObjectForKey:UYLKeyCapital];
+    EPSLog(@"decodeRestorableStateWithCoder");
+    self.imageView.image = [UIImage imageWithData:[coder decodeObjectForKey:@"YourImageKey"]];
+    self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomFactor"];
+    
+    [super decodeRestorableStateWithCoder:coder];
 }
 
 @end
