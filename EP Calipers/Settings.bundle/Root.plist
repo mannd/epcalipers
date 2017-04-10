@@ -122,12 +122,16 @@
 				<string>1 point</string>
 				<string>2 points</string>
 				<string>3 points</string>
+				<string>4 points</string>
+				<string>5 points</string>
 			</array>
 			<key>Values</key>
 			<array>
 				<string>1</string>
 				<string>2</string>
 				<string>3</string>
+				<string>4</string>
+				<string>5</string>
 			</array>
 		</dict>
 	</array>

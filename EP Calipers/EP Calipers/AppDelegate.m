@@ -18,10 +18,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"roundMsecRatePreference", [NSNumber numberWithBool:NO], @"hideStartImagePreference", [NSNumber numberWithInt:2], @"lineWidthPreference", @"1000 msec", @"calibrationPreference", @"10 mm", @"verticalCalibrationPreference", @"Blue", @"caliperColorPreference", @"Red", @"highlightColorPreference", nil];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
-
     
     return YES;
 }
