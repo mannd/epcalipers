@@ -54,6 +54,8 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    EPSLog(@"application:openURL:sourceApplication:annotation");
+    
     UINavigationController *navigationController = (UINavigationController *)  self.window.rootViewController;
     EPSMainViewController *mainViewController = (EPSMainViewController *) [navigationController.viewControllers objectAtIndex:0];
 

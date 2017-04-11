@@ -68,7 +68,6 @@
 @property (nonatomic) CGFloat sizeDiffWidth;
 @property (nonatomic) CGFloat sizeDiffHeight;
 
-@property (nonatomic) CGFloat lastZoomFactor;
 @property (nonatomic) BOOL isRotatedImage;
 
 @property (nonatomic) CGFloat portraitWidth;

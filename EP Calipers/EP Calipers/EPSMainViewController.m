@@ -68,6 +68,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    EPSLog(@"viewDidLoad");
     // Do any additional setup after loading the view, typically from a nib.
     pdfRef = NULL;
     
@@ -82,7 +83,6 @@
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.maximumZoomScale = MAX_ZOOM;
-    self.lastZoomFactor = self.scrollView.zoomScale;
     
     self.horizontalCalibration = [[Calibration alloc] init];
     self.horizontalCalibration.direction = Horizontal;
@@ -125,7 +125,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
-// TODO: Is this needed?
 - (void)viewBackToForeground {
     EPSLog(@"ViewBackToForeground");
     NSString *priorHorizontalDefaultCal = [NSString stringWithString:self.settings.defaultCalibration];
@@ -143,7 +142,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:YES];
+    [super viewDidAppear:animated];
     EPSLog(@"ViewDidAppear");
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
@@ -165,7 +164,7 @@
         self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
         self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
 
-        // if running first time and opening URL then don't load sample ECG
+        // if running first time and opening URL then overwrite old image
         if (self.launchFromURL) {
             self.launchFromURL = NO;
             if (self.launchURL != nil) {
@@ -173,6 +172,7 @@
             }
         }
         else {
+            // FIXME: hides all images at start if hideStartImage selected
             self.imageView.image = [self scaleImageForImageView:self.imageView.image];
             [self.imageView setHidden:self.settings.hideStartImage];
         }
@@ -301,11 +301,12 @@
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
     UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
     UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
+    UIBarButtonItem *clearImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(loadDefaultImage)];
     // these 2 buttons only enable for multipage PDFs
     self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
-    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Previous" style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
+    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? @"Previous" : @"Prev") style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
     [self enablePageButtons:NO];
-    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, self.previousPageButton, self.nextPageButton, nil];
+    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, clearImageButton, self.previousPageButton, self.nextPageButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
@@ -852,6 +853,12 @@
     [self clearCalibration];
 }
 
+- (void)loadDefaultImage {
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"Normal 12_Lead ECG" withExtension:@"jpg"];
+    [self openURL:url];
+    [self.imageView setHidden:self.settings.hideStartImage];
+}
+
 - (void)enablePageButtons:(BOOL)enable {
     self.previousPageButton.enabled = self.nextPageButton.enabled = enable;
     if (enable) {
@@ -1191,6 +1198,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         chosenImage = info[UIImagePickerControllerEditedImage];
         }
     self.imageView.image = [self scaleImageForImageView:chosenImage];
+    // reset zoom for new image
+    // FIXME: this is new : does it always work? what about PDFs?
+    self.scrollView.zoomScale = 1.0;
     [self.imageView setHidden:NO];
     [picker dismissViewControllerAnimated:YES completion:NULL];
     [self clearCalibration];
@@ -1205,10 +1215,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageContainerView;
-}
-
-- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
-    self.lastZoomFactor = scrollView.zoomScale;
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
@@ -1351,8 +1357,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     //[coder encodeObject:self.capital forKey:UYLKeyCapital];
     EPSLog(@"encodeRestorableStateWithCoder");
     [coder encodeObject:UIImagePNGRepresentation(self.imageView.image)
-                 forKey:@"YourImageKey"];
-    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomFactor"];
+                 forKey:@"SavedImageKey"];
+    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomFactorKey"];
     
     [super encodeRestorableStateWithCoder:coder];
 }
@@ -1361,8 +1367,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 {
     //self.capital = [coder decodeObjectForKey:UYLKeyCapital];
     EPSLog(@"decodeRestorableStateWithCoder");
-    self.imageView.image = [UIImage imageWithData:[coder decodeObjectForKey:@"YourImageKey"]];
-    self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomFactor"];
+    self.imageView.image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
+    self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomFactorKey"];
     
     [super decodeRestorableStateWithCoder:coder];
 }
