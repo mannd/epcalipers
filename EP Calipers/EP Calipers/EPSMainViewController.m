@@ -106,6 +106,7 @@
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
     self.navigationItem.rightBarButtonItem = btn;
     //[btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
+
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SWITCH_IPAD : SWITCH_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = NO;
@@ -850,6 +851,7 @@
         [self openPDFPage:pdfRef atPage:self.pageNumber];
     }
     [self.imageView setHidden:NO];
+    [self.scrollView setZoomScale:1.0f];
     [self clearCalibration];
 }
 
@@ -1199,7 +1201,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         }
     self.imageView.image = [self scaleImageForImageView:chosenImage];
     // reset zoom for new image
-    // FIXME: this is new : does it always work? what about PDFs?
     self.scrollView.zoomScale = 1.0;
     [self.imageView setHidden:NO];
     [picker dismissViewControllerAnimated:YES completion:NULL];
