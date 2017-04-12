@@ -101,12 +101,8 @@
     
     [self.imageView setHidden:YES];  // hide view until it is rescaled
     
-    
-//    UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
     self.navigationItem.rightBarButtonItem = btn;
-    //[btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
-
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SWITCH_IPAD : SWITCH_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = NO;
@@ -116,6 +112,8 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
     self.firstRun = YES;
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(viewBackToForeground)
                                                  name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -136,10 +134,6 @@
     [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate];
     [self.calipersView setNeedsDisplay];
     
-}
-
-- (void)viewDidLayoutSubviews {
-
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -173,13 +167,11 @@
             }
         }
         else {
-            // FIXME: hides all images at start if hideStartImage selected
             self.imageView.image = [self scaleImageForImageView:self.imageView.image];
-            [self.imageView setHidden:self.settings.hideStartImage];
+            //[self.imageView setHidden:self.settings.hideStartImage];
         }
-        
         [self addHorizontalCaliper];
-        // NB: new calipers are not selected 
+        
         self.firstRun = NO;
         // for testing
 //        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
@@ -302,7 +294,7 @@
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
     UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
     UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
-    UIBarButtonItem *clearImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(loadDefaultImage)];
+    UIBarButtonItem *clearImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Sample" style:UIBarButtonItemStylePlain target:self action:@selector(loadDefaultImage)];
     // these 2 buttons only enable for multipage PDFs
     self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
     self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? @"Previous" : @"Prev") style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
@@ -858,7 +850,6 @@
 - (void)loadDefaultImage {
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"Normal 12_Lead ECG" withExtension:@"jpg"];
     [self openURL:url];
-    [self.imageView setHidden:self.settings.hideStartImage];
 }
 
 - (void)enablePageButtons:(BOOL)enable {
@@ -1190,6 +1181,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
 }
 
+// Note this generates warning: [Generic] Creating an image format with an unknown type is an error
+// However, it still works, and no solution found with ObjC (though maybe works in Swift 3).
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = nil;
     // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
@@ -1355,21 +1348,19 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    //[coder encodeObject:self.capital forKey:UYLKeyCapital];
     EPSLog(@"encodeRestorableStateWithCoder");
     [coder encodeObject:UIImagePNGRepresentation(self.imageView.image)
                  forKey:@"SavedImageKey"];
-    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomFactorKey"];
+    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
     
     [super encodeRestorableStateWithCoder:coder];
 }
 
 - (void)decodeRestorableStateWithCoder:(NSCoder *)coder
 {
-    //self.capital = [coder decodeObjectForKey:UYLKeyCapital];
     EPSLog(@"decodeRestorableStateWithCoder");
     self.imageView.image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
-    self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomFactorKey"];
+    self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomScaleKey"];
     
     [super decodeRestorableStateWithCoder:coder];
 }
