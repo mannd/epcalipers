@@ -29,6 +29,7 @@
 		8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF611E89F83700288EDE /* FCBrightDarkGradView.m */; };
 		8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */; };
 		8ECEDF681E8A1A1A00288EDE /* About.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF671E8A1A1A00288EDE /* About.m */; };
+		8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */; };
 		8EDECB4A1C6CF93700EF0B89 /* EPCalipers-help in Resources */ = {isa = PBXBuildFile; fileRef = 8EDECB491C6CF93700EF0B89 /* EPCalipers-help */; };
 		8EFCC6A71DE5FA5F00D1C58F /* AngleCaliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */; };
 /* End PBXBuildFile section */
@@ -84,6 +85,7 @@
 		8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCColorSwatchView.m; sourceTree = "<group>"; };
 		8ECEDF661E8A1A1A00288EDE /* About.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = About.h; sourceTree = "<group>"; };
 		8ECEDF671E8A1A1A00288EDE /* About.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = About.m; sourceTree = "<group>"; };
+		8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sampleECG.jpg; sourceTree = "<group>"; };
 		8EDECB491C6CF93700EF0B89 /* EPCalipers-help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "EPCalipers-help"; sourceTree = "<group>"; };
 		8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AngleCaliper.h; sourceTree = "<group>"; };
 		8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AngleCaliper.m; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		8E14235A1AB5F16A00CC15BC /* EP Calipers */ = {
 			isa = PBXGroup;
 			children = (
+				8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */,
 				8EB3DE351AC344CC009376AD /* EPSLogging.h */,
 				8E9A333B1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg */,
 				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
@@ -295,6 +298,7 @@
 				8E9A333C1AC1EFEE0037E694 /* Normal 12_Lead ECG.jpg in Resources */,
 				8EDECB4A1C6CF93700EF0B89 /* EPCalipers-help in Resources */,
 				8ECEDF5D1E89F62000288EDE /* colormap.png in Resources */,
+				8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

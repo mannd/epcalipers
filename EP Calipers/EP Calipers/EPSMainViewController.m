@@ -168,9 +168,11 @@
         }
         else {
             self.imageView.image = [self scaleImageForImageView:self.imageView.image];
-            //[self.imageView setHidden:self.settings.hideStartImage];
         }
-        [self addHorizontalCaliper];
+        // When starting add a caliper if one isn't there already
+        if ([self.calipersView.calipers count] == 0) {
+            [self addHorizontalCaliper];
+        }
         
         self.firstRun = NO;
         // for testing
@@ -848,7 +850,7 @@
 }
 
 - (void)loadDefaultImage {
-    NSURL *url = [[NSBundle mainBundle] URLForResource:@"Normal 12_Lead ECG" withExtension:@"jpg"];
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"sampleECG" withExtension:@"jpg"];
     [self openURL:url];
 }
 
