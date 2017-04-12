@@ -169,6 +169,7 @@
         else {
             self.imageView.image = [self scaleImageForImageView:self.imageView.image];
         }
+        [self.imageView setHidden:NO];
         // When starting add a caliper if one isn't there already
         if ([self.calipersView.calipers count] == 0) {
             [self addHorizontalCaliper];
@@ -1099,7 +1100,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if (alertView.tag == CALIBRATION_ALERTVIEW) {
         NSString *rawText = [[alertView textFieldAtIndex:0] text];
         if (rawText.length > 0) {
-            [self zCalibrateWithText:rawText];
+            [self calibrateWithText:rawText];
         }
         else {
             badValue = YES;
@@ -1138,7 +1139,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
 }
 
-- (void)zCalibrateWithText:(NSString *)rawText {
+- (void)calibrateWithText:(NSString *)rawText {
     if (rawText.length > 0) {
         float value = 0.0;
         NSString *trimmedUnits = @"";
@@ -1355,6 +1356,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                  forKey:@"SavedImageKey"];
     [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
     
+    // calibration
+    [self.horizontalCalibration encodeCalibrationState:coder withPrefix:@"Horizontal"];
+    [self.verticalCalibration encodeCalibrationState:coder withPrefix:@"Vertical"];
+    
+    // calipers
+    [coder encodeInteger:[self.calipersView.calipers count] forKey:@"CalipersCount"];
+    
     [super encodeRestorableStateWithCoder:coder];
 }
 
@@ -1363,6 +1371,17 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     EPSLog(@"decodeRestorableStateWithCoder");
     self.imageView.image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
     self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomScaleKey"];
+    
+    // calibration
+    [self.horizontalCalibration decodeCalibrationState:coder withPrefix:@"Horizontal"];
+    [self.verticalCalibration decodeCalibrationState:coder withPrefix:@"Vertical"];
+    
+    // calipers
+    NSInteger calipersCount = [coder decodeIntegerForKey:@"CalipersCount"];
+    // fake it for now
+    for (int i = 0; i < calipersCount; i++) {
+        [self addHorizontalCaliper];
+    }
     
     [super decodeRestorableStateWithCoder:coder];
 }

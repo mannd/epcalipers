@@ -99,5 +99,28 @@
     return [units isEqualToString:@"MM"] || [units containsString:@"MILLIM"];
 }
 
+- (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key {
+    return [NSString stringWithFormat:@"%@%@", prefix, key];
+}
+
+- (void)encodeCalibrationState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    [coder encodeObject:self.units forKey:[self getPrefixedKey:prefix key:@"Units"]];
+    [coder encodeBool:self.displayRate forKey:[self getPrefixedKey:prefix key:@"DisplayRate"]];
+    [coder encodeBool:self.calibrated forKey:[self getPrefixedKey:prefix key:@"Calibrated"]];
+    [coder encodeDouble:self.originalZoom forKey:[self getPrefixedKey:prefix key:@"OriginalZoom"]];
+    [coder encodeDouble:self.currentZoom forKey:[self getPrefixedKey:prefix key:@"CurrentZoom"]];
+    [coder encodeDouble:self.originalCalFactor forKey:[self getPrefixedKey:prefix key:@"OriginalCalFactor"]];
+}
+
+- (void)decodeCalibrationState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    self.units = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"Units"]];
+    self.displayRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"DisplayRate"]];
+    self.calibrated = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Calibrated"]];
+    self.originalZoom = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"OriginalZoom"]];
+    self.currentZoom = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CurrentZoom"]];
+    self.originalCalFactor = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"OriginalCalFactor"]];
+}
+
+
 
 @end
