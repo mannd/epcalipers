@@ -87,7 +87,7 @@ When PDF files have more than one page, the app will display the first page init
 You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the *Adjust* menu to rotate or flip your image.  This is useful if the image is rotated or not quite square to the screen.  You can rotate the image by 90° in either direction, or by increments of 1°.  If you select the *More* menu you can fine-tune the image further, rotating it by as little as 0.1° or flipping the image if for some reason it's reversed (flipping ECGs can be a fun pastime in its own right). Return from the *More* menu back to the *Adjust* menu by selecting *Done*.  Using these various options you should be able to straighten the image so it is square to the calipers.  You should recalibrate your calipers after rotating the image.  If you need to go back to the original position and zoom setting use *Reset*.  After adjusting the image select *Done* to return to the main image menu.
 #+CAPTION: The *Adjust* menu
 [[./img/adjust_menu.png]]
-#+CAPTION: The *More* menu
+#+CAPTION: The *More* image menu
 [[./img/more_menu.png]]
 * Sample ECG
 Tap *Sample* to show the sample ECG that comes with *EP Calipers*.  This is a good way to practice using the app, or demonstrate it to others.
@@ -107,7 +107,7 @@ Angle calipers are moved as a unit by dragging at the apex or just above the ape
 #+CAPTION: Angle caliper
 [[./img/angle_caliper.png]]
 ** Tweaking calipers -- Micromovements
-Tap the *More* menu item to bring up a menu that contains some options that you might use less often.  These menu items include options to change individual caliper colors, tweak caliper positioning, and lock the underlying ECG image to allow for easier caliper movement. All these options are discussed later, under [[moreoptions][More options]].
+Tap the *More* menu item to bring up a menu that contains some options that you might use less often.  These menu items include options to change individual caliper colors, tweak caliper positioning, and lock the underlying ECG image to allow for easier caliper movement. All these options are discussed later, under [[moreoptions][More caliper options]].
 * Making measurements
 The interval measured by time or amplitude calipers is displayed on top of or next to the crossbar of the caliper.  Until these calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
 * Adding and deleting calipers
@@ -119,9 +119,26 @@ Select *Time*, *Amplitude*, or *Angle* to add the type of caliper you want.  Dou
 #+CAPTION: Add caliper menu
 [[./img/add_caliper_menu.png]]
 * Selecting a caliper
-When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red (You can change these colors if you want).  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another.
+When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red.  You can change these colors using [[app preferences]].  It is also possible to [[colors][change individual caliper colors]].  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another.
 #+CAPTION: Two uncalibrated calipers, a time and amplitude.  The time caliper is selected.
 [[./img/selected_caliper.png]]
+* <<moreoptions>>More caliper options
+** More menu
+[ image here ]
+#+CAPTION: The *More* caliper menu
+
+** <<colors>>Change caliper colors
+Initial caliper colors are set via [[app preferences]], and these colors apply to all newly added calipers.  However, once a caliper is added, its color can be changed, and each caliper can have a different color.  These color changes until the calipers are deleted or the app is stopped.  On the *More* menu, select the *Color* button.  Then long press a caliper to bring up a color selector.  Select a color and the caliper will change to that color.
+-#+CAPTION: Caliper color picker
+-[[./color_picker.png]
+
+** Tweak caliper position
+There is a button marked *Tweak* on the *More* menu.  Tap this button if you want very fine control over caliper positioning.  You can move either sidebar (or either angle of an angle caliper) or a caliper as a whole by gradations of a single point (≈ pixel) or a tenth of a point.  Just press a caliper component (crossbar, sidebar, or, in case of an angle caliper, the apex of the angle) for a half second or so and a menu with movement buttons will appear.  Buttons with left and right or up and down arrows move the selected caliper component or the whole caliper using micromovements.  Press the *Done* button to return to the main menu.
+-#+CAPTION: Buttons to tweak caliper positioning
+-[[./micromovements.png]
+
+** Lock the image in place
+When moving and adjusting calipers, you may sometimes inadvertently move the underlying image.  Select *Lock* to lock the image in place.  A message appears at the top of the screen indicating the image is locked.  Unlock the image by selecting *Unlock*.
 * Calibration
 Select *Cal* or *Calibration*.  Stretch the selected caliper over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select *Set*.  In the dialog box, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 500 msec, or 1 sec, or 1 mV).  Select *Set* in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
 #+CAPTION: Time caliper about to be calibrated
@@ -150,12 +167,7 @@ The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collab
 [[./img/brugadometer1.png]]
 
 The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  A triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] for further information.
-* <<moreoptions>>More options
-** More menuz
-** Change caliper colors
-** Tweak caliper position
-** Lock the image in place
-* Preferences
+* <<app preferences>>Preferences
 Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*. You can also change preferences by selecting the *Preferences* or *Prefs* item on the main menu of the app.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.  With some preferences it is necessary to close the *EP Calipers* app before they take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
 * Issues and limitations
 - Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.

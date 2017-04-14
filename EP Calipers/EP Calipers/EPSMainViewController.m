@@ -53,6 +53,7 @@
 #define MEAN_RR_ALERTVIEW 30
 #define MEAN_RR_FOR_QTC_ALERTVIEW 43
 #define NUM_PDF_PAGES_ALERTVIEW 101
+#define LAUNCHED_FROM_URL_ALERTVIEW 102
 
 #define CALIPERS_VIEW_TITLE @"EP Calipers"
 #define IMAGE_VIEW_TITLE @"Image Mode"
@@ -114,6 +115,8 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
     self.firstRun = YES;
     
+    self.wasLaunchedFromUrl = NO;
+    
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(viewBackToForeground)
@@ -159,7 +162,7 @@
         self.landscapeWidth = fmaxf(screenHeight, screenWidth);
         self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
         self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
-
+        
         // if running first time and opening URL then overwrite old image
         if (self.launchFromURL) {
             self.launchFromURL = NO;
@@ -170,6 +173,17 @@
         else {
             self.imageView.image = [self scaleImageForImageView:self.imageView.image];
         }
+        
+        if (self.wasLaunchedFromUrl) {
+            UIAlertView *launchedFromUrlAlert = [[UIAlertView alloc] initWithTitle:@"Multipage PDF" message:@"App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            launchedFromUrlAlert.tag = LAUNCHED_FROM_URL_ALERTVIEW;
+            [launchedFromUrlAlert show];
+            // only show this warning once
+            self.launchURL = nil;
+            self.numberOfPages = 0;
+            self.wasLaunchedFromUrl = NO;
+        }
+        
         [self.imageView setHidden:NO];
         // When starting add a caliper if one isn't there already
         if ([self.calipersView count] == 0) {
@@ -1205,6 +1219,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self enablePageButtons:NO];
     // remove any prior PDF from memory
     [self clearPDF];
+    self.launchURL = nil;
+    self.numberOfPages = 0;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -1353,6 +1369,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder
 {
     EPSLog(@"encodeRestorableStateWithCoder");
+    // possibly enable restart from URL
+    [coder encodeObject:self.launchURL forKey:@"LaunchURL"];
+    [coder encodeInteger:self.numberOfPages forKey:@"NumberOfPages"];
     [coder encodeObject:UIImagePNGRepresentation(self.imageView.image)
                  forKey:@"SavedImageKey"];
     [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
@@ -1375,6 +1394,12 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)decodeRestorableStateWithCoder:(NSCoder *)coder
 {
     EPSLog(@"decodeRestorableStateWithCoder");
+    self.launchURL = [coder decodeObjectForKey:@"LaunchURL"];
+    self.numberOfPages = (int)[coder decodeIntegerForKey:@"NumberOfPages"];
+    if (self.launchURL != nil && self.numberOfPages > 0) {
+        EPSLog(@"Multipage PDF");
+        self.wasLaunchedFromUrl = YES;
+    }
     self.imageView.image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
     self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomScaleKey"];
     

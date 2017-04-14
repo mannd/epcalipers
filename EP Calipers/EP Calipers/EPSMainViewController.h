@@ -88,5 +88,7 @@
 @property (nonatomic, weak) Caliper *chosenCaliper;
 @property (nonatomic) CaliperComponent chosenCaliperComponent;
 
+@property (nonatomic) BOOL wasLaunchedFromUrl;
+
 @end
 
