@@ -12,6 +12,7 @@
 #import "Settings.h"
 #import "EPSLogging.h"
 #import "About.h"
+#import "CaliperFactory.h"
 #include "Defs.h"
 
 //:TODO: Make NO for release version
@@ -171,7 +172,7 @@
         }
         [self.imageView setHidden:NO];
         // When starting add a caliper if one isn't there already
-        if ([self.calipersView.calipers count] == 0) {
+        if ([self.calipersView count] == 0) {
             [self addHorizontalCaliper];
         }
         
@@ -1361,7 +1362,12 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self.verticalCalibration encodeCalibrationState:coder withPrefix:@"Vertical"];
     
     // calipers
-    [coder encodeInteger:[self.calipersView.calipers count] forKey:@"CalipersCount"];
+    [coder encodeInteger:[self.calipersView count] forKey:@"CalipersCount"];
+    for (int i = 0; i < [self.calipersView count]; i++) {
+        [self.calipersView.calipers[i] encodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
+        [coder encodeBool:[self.calipersView.calipers[i] isAngleCaliper] forKey:[NSString stringWithFormat:@"%dIsAngleCaliper", i]];
+        EPSLog(@"calipers is Angle %d", [self.calipersView.calipers[i] isAngleCaliper]);
+    }
     
     [super encodeRestorableStateWithCoder:coder];
 }
@@ -1378,9 +1384,21 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     
     // calipers
     NSInteger calipersCount = [coder decodeIntegerForKey:@"CalipersCount"];
-    // fake it for now
     for (int i = 0; i < calipersCount; i++) {
-        [self addHorizontalCaliper];
+        BOOL isAngleCaliper = [coder decodeBoolForKey:[NSString stringWithFormat:@"%dIsAngleCaliper", i]];
+        CaliperType type = isAngleCaliper ? Angle : Interval;
+        Caliper *newCaliper = [CaliperFactory createCaliper:type];
+        [newCaliper decodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
+        if (newCaliper.direction == Horizontal) {
+            newCaliper.calibration = self.horizontalCalibration;
+        }
+        else {
+            newCaliper.calibration = self.verticalCalibration;
+        }
+        if ([newCaliper isAngleCaliper]) {
+            ((AngleCaliper *)newCaliper).verticalCalibration = self.verticalCalibration;
+        }
+        [self.calipersView.calipers addObject:newCaliper];
     }
     
     [super decodeRestorableStateWithCoder:coder];

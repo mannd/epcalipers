@@ -110,6 +110,7 @@
     [coder encodeDouble:self.originalZoom forKey:[self getPrefixedKey:prefix key:@"OriginalZoom"]];
     [coder encodeDouble:self.currentZoom forKey:[self getPrefixedKey:prefix key:@"CurrentZoom"]];
     [coder encodeDouble:self.originalCalFactor forKey:[self getPrefixedKey:prefix key:@"OriginalCalFactor"]];
+    
 }
 
 - (void)decodeCalibrationState:(NSCoder *)coder withPrefix:(NSString *)prefix {

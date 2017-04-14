@@ -39,5 +39,6 @@
 - (void)selectCaliperNoNeedsDisplay:(Caliper *)c;
 - (void)unselectCaliperNoNeedsDisplay:(Caliper *)c;
 - (void)updateCaliperPreferences:(UIColor *)unselectedColor selectedColor:(UIColor*)selectedColor lineWidth:(NSInteger)lineWidth roundMsec:(BOOL)roundMsec;
+- (NSUInteger)count;
 
 @end

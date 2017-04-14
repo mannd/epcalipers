@@ -28,8 +28,8 @@
 @property (strong, nonatomic) NSMutableParagraphStyle *paragraphStyle;
 @property (strong, nonatomic) NSMutableDictionary *attributes;
 @property (nonatomic) BOOL roundMsecRate;
-@property (readonly) BOOL requiresCalibration;
-@property (readonly) BOOL isAngleCaliper;
+@property (nonatomic, readonly) BOOL requiresCalibration;
+@property (nonatomic) BOOL isAngleCaliper;
 
 
 - (double)intervalResult;
@@ -55,6 +55,10 @@
 - (void)caliperText;
 - (CaliperComponent)getCaliperComponent:(CGPoint)point;
 - (NSString *)getComponentName:(CaliperComponent)component smallSize:(BOOL)smallSize;
+
+- (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key;
+- (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
+- (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
 
 
 @end

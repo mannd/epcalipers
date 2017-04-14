@@ -30,6 +30,7 @@
         self.bar2Position = 100.0f;
         self.crossBarPosition = 100.0f;
         self.verticalCalibration = nil;
+        self.isAngleCaliper = YES;
     }
     return self;
 }
@@ -224,10 +225,6 @@
     return NO;
 }
 
-- (BOOL)isAngleCaliper {
-    return YES;
-}
-
 // height of triangle in points, angle1 is angle of bar1, angle2 of bar2, in radians
 // returns length of base of triangle in points
 + (double)calculateBaseFromHeight:(double)height andAngle1:(double)angle1 andAngle2:(double)angle2 {
@@ -279,5 +276,21 @@
     CGPoint point = CGPointMake(pointX, pointY);
     return point;
 }
+
+- (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    [coder encodeDouble:self.angleBar1 forKey:[self getPrefixedKey:prefix key:@"AngleBar1"]];
+    [coder encodeDouble:self.angleBar2 forKey:[self getPrefixedKey:prefix key:@"AngleBar2"]];
+    
+    [super encodeCaliperState:coder withPrefix:prefix];
+}
+
+- (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    self.angleBar1 = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"AngleBar1"]];
+    self.angleBar2 = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"AngleBar2"]];
+    
+    [super decodeCaliperState:coder withPrefix:prefix];
+}
+
+
 
 @end

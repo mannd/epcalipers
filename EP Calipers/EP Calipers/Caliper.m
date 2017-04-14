@@ -44,6 +44,7 @@
         self.paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         self.attributes = [[NSMutableDictionary alloc] init];
         self.roundMsecRate = YES;
+        self.isAngleCaliper = NO;
     }
     return self;
 }
@@ -344,8 +345,42 @@
     return YES;
 }
 
-- (BOOL)isAngleCaliper {
-    return NO;
+// preserve state
+// duplicated in Calibration.m
+- (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key {
+    return [NSString stringWithFormat:@"%@%@", prefix, key];
 }
+
+- (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    [coder encodeBool:[self isAngleCaliper] forKey:[self getPrefixedKey:prefix key:@"IsAngleCaliper"]];
+    [coder encodeInteger:self.direction forKey:[self getPrefixedKey:prefix key:@"Direction"]];
+    [coder encodeDouble:self.bar1Position forKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
+    [coder encodeDouble:self.bar2Position forKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
+    [coder encodeDouble:self.crossBarPosition forKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
+    [coder encodeObject:self.unselectedColor forKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
+    [coder encodeBool:self.selected forKey:[self getPrefixedKey:prefix key:@"Selected"]];
+    [coder encodeInteger:self.lineWidth forKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
+    [coder encodeObject:self.color forKey:[self getPrefixedKey:prefix key:@"Color"]];
+    [coder encodeObject:self.selectedColor forKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
+    [coder encodeBool:self.roundMsecRate forKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
+    
+}
+
+// need to deal with two types of objects: angle and regular calipers
+// calling function to extract whether is angle caliper or not
+- (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    self.isAngleCaliper = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"IsAngleCaliper"]];
+    self.direction = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"Direction"]];
+    self.bar1Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
+    self.bar2Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
+    self.crossBarPosition = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
+    self.unselectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
+    self.selected = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Selected"]];
+    self.lineWidth = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
+    self.color = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"Color"]];
+    self.selectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
+    self.roundMsecRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
+}
+
 
 @end

@@ -30,7 +30,8 @@
 + (double)brugadaRiskV1ForBetaAngle:(double)betaAngle andBase:(double)base;
 + (double)brugadaRiskV2ForBetaAngle:(double)betaAngle andBase:(double)base;
 
-
+- (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
+- (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
 
 
 @end

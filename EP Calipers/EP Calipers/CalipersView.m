@@ -264,18 +264,24 @@
 }
 
 - (void)updateCaliperPreferences:(UIColor *)unselectedColor selectedColor:(UIColor*)selectedColor lineWidth:(NSInteger)lineWidth roundMsec:(BOOL)roundMsec {
+    // This method has been changed so that unselected color only applies to new calipers, since we can now change
+    // individual caliper colors.
     for(Caliper *c in self.calipers) {
         c.selectedColor = selectedColor;
-        c.unselectedColor = unselectedColor;
+        //c.unselectedColor = unselectedColor;
         if (c.selected) {
             c.color = selectedColor;
         }
-        else {
-            c.color = unselectedColor;
-        }
+//        else {
+//            c.color = unselectedColor;
+//        }
         c.lineWidth = lineWidth;
         c.roundMsecRate = roundMsec;
     }
+}
+
+- (NSUInteger)count {
+    return [self.calipers count];
 }
 
 
