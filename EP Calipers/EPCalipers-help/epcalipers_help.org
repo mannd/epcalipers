@@ -21,10 +21,10 @@ You open the ECG on your phone.  You look at the QT interval.  You're not sure a
 * Electronic calipers
 *EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your iPhone or iPad.  The electronic calipers of *EP Calipers* are more accurate, easier to use, and less dangerous than mechanical calipers (they don't have sharp points!).
 * What's new?
-This new version of *EP Calipers* contains new angle measurement calipers and a [[Brugadometer]].
+This new version of *EP Calipers* contains allows for individual calipers to be colored differently, and calipers can now be "micro-moved" using the new *Tweak* menu.  The image can be locked if desired to facilitate moving calipers without inadvertently moving the image.  The image and calipers are no longer reset when the app goes into the background and is terminated by iOS.
 * Quick start
 When *EP Calipers* starts, a sample ECG and a time caliper are loaded.
-Move the caliper around by touching the caliper's cross-bar and
+Move the caliper around by touching the caliper's crossbar and
 dragging it with your finger.  Expand and contract the caliper by
 putting your finger on either vertical bar and dragging.  Pinch and
 zoom the underlying ECG image as needed to enlarge or shrink it.  If
@@ -82,13 +82,15 @@ To view ECGs in the /AliveCor Kardia/ app, select *Journal*, then *SHARE* for th
 After selecting the *Share* button, select *PDF* from the options that appear.  Then select the *Share* button at the top right of the screen.  Select *Copy to EP Calipers* and you are ready to measure!
 
 ** Multiple page PDFs
-When PDF files have more than one page, the app will display the first page initially.  You can go to other pages by selecting *Previous* or *Next* in the Image menu.
+When PDF files have more than one page, the app will display the first page initially.  You can go to other pages by selecting *Previous* or *Next* in the Image menu.  Note that if you switch to another app and *EP Calipers* is terminated by iOS (as can happen automatically to save memory space), only the last page viewed will be available when the app is restarted.  To change pages, it will be necessary to reload the PDF.
 * Adjusting the image
 You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the *Adjust* menu to rotate or flip your image.  This is useful if the image is rotated or not quite square to the screen.  You can rotate the image by 90° in either direction, or by increments of 1°.  If you select the *More* menu you can fine-tune the image further, rotating it by as little as 0.1° or flipping the image if for some reason it's reversed (flipping ECGs can be a fun pastime in its own right). Return from the *More* menu back to the *Adjust* menu by selecting *Done*.  Using these various options you should be able to straighten the image so it is square to the calipers.  You should recalibrate your calipers after rotating the image.  If you need to go back to the original position and zoom setting use *Reset*.  After adjusting the image select *Done* to return to the main image menu.
 #+CAPTION: The *Adjust* menu
 [[./img/adjust_menu.png]]
 #+CAPTION: The *More* menu
 [[./img/more_menu.png]]
+* Sample ECG
+Tap *Sample* to show the sample ECG that comes with *EP Calipers*.  This is a good way to practice using the app, or demonstrate it to others.
 * Exiting Image mode
 After loading and adjusting the image, you need to exit Image mode so that you can use the calipers.  Select the *Measure* button at the top left of the screen to return to the *EP Calipers* main screen.
 #+CAPTION: Use the *Measure* button to exit *Image* mode
@@ -104,6 +106,8 @@ Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bar
 Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  The apex is where the two lines join together.  Dragging either bar of an angle caliper a little distance away from the apex will open or close the angle.
 #+CAPTION: Angle caliper
 [[./img/angle_caliper.png]]
+** Tweaking calipers -- Micromovements
+Tap the *More* menu item to bring up a menu that contains some options that you might use less often.  These menu items include options to change individual caliper colors, tweak caliper positioning, and lock the underlying ECG image to allow for easier caliper movement. All these options are discussed later, under [[moreoptions][More options]].
 * Making measurements
 The interval measured by time or amplitude calipers is displayed on top of or next to the crossbar of the caliper.  Until these calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
 * Adding and deleting calipers
@@ -146,10 +150,14 @@ The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collab
 [[./img/brugadometer1.png]]
 
 The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  A triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] for further information.
+* <<moreoptions>>More options
+** More menuz
+** Change caliper colors
+** Tweak caliper position
+** Lock the image in place
 * Preferences
 Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*. You can also change preferences by selecting the *Preferences* or *Prefs* item on the main menu of the app.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.  With some preferences it is necessary to close the *EP Calipers* app before they take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
 * Issues and limitations
-- Because of the limited nature of iOS multitasking, switching between this app and other apps may result in the image being reset to the default ECG image.  This may require reloading the image.  Be certain that the ECG you are measuring is indeed the one you selected and not the default normal ECG!
 - Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
 - Rotation of the device will not preserve the relation between the ECG image and the calipers. However calibration /is/ preserved with rotation.
 - It is highly recommended that calipers be recalibrated if the image (not the device) is rotated.  The app though does not enforce this.  

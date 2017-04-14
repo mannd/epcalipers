@@ -943,7 +943,7 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
 }
 
 - (void)addAngleCaliper {
-    AngleCaliper *caliper = [[AngleCaliper alloc] init];
+    AngleCaliper *caliper = (AngleCaliper *)[CaliperFactory createCaliper:Angle];
     [self updateCaliperSettings:caliper];
     caliper.color = caliper.unselectedColor;
     caliper.direction = Horizontal;
@@ -963,7 +963,7 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
 }
 
 - (void)addCaliperWithDirection:(CaliperDirection)direction {
-    Caliper *caliper = [[Caliper alloc] init];
+    Caliper *caliper = [CaliperFactory createCaliper:Interval];
     [self updateCaliperSettings:caliper];
     caliper.color = caliper.unselectedColor;
     caliper.direction = direction;
