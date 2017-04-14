@@ -124,18 +124,18 @@ When more than one caliper is present, it is necessary that one is selected to b
 [[./img/selected_caliper.png]]
 * <<moreoptions>>More caliper options
 ** More menu
-[ image here ]
 #+CAPTION: The *More* caliper menu
+[[./img/more_caliper_menu.png]]
 
 ** <<colors>>Change caliper colors
-Initial caliper colors are set via [[app preferences]], and these colors apply to all newly added calipers.  However, once a caliper is added, its color can be changed, and each caliper can have a different color.  These color changes until the calipers are deleted or the app is stopped.  On the *More* menu, select the *Color* button.  Then long press a caliper to bring up a color selector.  Select a color and the caliper will change to that color.
--#+CAPTION: Caliper color picker
--[[./color_picker.png]
+Initial caliper colors are set via [[app preferences][*App Preferences*]] and these colors apply to all newly added calipers.  However, once a caliper is added, its color can be changed, and each caliper can have a different color.  These color changes persist until the calipers are deleted or the app is stopped.  On the *More* menu, select the *Color* button.  Then long press a caliper to bring up a color selector.  Select a color and the caliper will change to that color.
+#+CAPTION: Caliper color picker
+[[./img/color_picker.png]]
 
 ** Tweak caliper position
 There is a button marked *Tweak* on the *More* menu.  Tap this button if you want very fine control over caliper positioning.  You can move either sidebar (or either angle of an angle caliper) or a caliper as a whole by gradations of a single point (≈ pixel) or a tenth of a point.  Just press a caliper component (crossbar, sidebar, or, in case of an angle caliper, the apex of the angle) for a half second or so and a menu with movement buttons will appear.  Buttons with left and right or up and down arrows move the selected caliper component or the whole caliper using micromovements.  Press the *Done* button to return to the main menu.
--#+CAPTION: Buttons to tweak caliper positioning
--[[./micromovements.png]
+#+CAPTION: Buttons to tweak caliper positioning
+[[./img/tweak_menu.png]]
 
 ** Lock the image in place
 When moving and adjusting calipers, you may sometimes inadvertently move the underlying image.  Select *Lock* to lock the image in place.  A message appears at the top of the screen indicating the image is locked.  Unlock the image by selecting *Unlock*.
@@ -168,11 +168,12 @@ The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collab
 
 The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  A triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] for further information.
 * <<app preferences>>Preferences
-Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*. You can also change preferences by selecting the *Preferences* or *Prefs* item on the main menu of the app.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.  With some preferences it is necessary to close the *EP Calipers* app before they take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
+Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*. You can also change preferences by selecting the *Preferences* menu item from the *Action* menu, opened by tapping this icon [[./img/share_icon.png]] at the top right of the screen.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.  With some preferences it is necessary to close the *EP Calipers* app before they take effect.  Close the app by double pressing the Home button and then swipe the app away in the app switching screen.  Restart the app and the new settings will take effect.
 * Issues and limitations
 - Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
 - Rotation of the device will not preserve the relation between the ECG image and the calipers. However calibration /is/ preserved with rotation.
-- It is highly recommended that calipers be recalibrated if the image (not the device) is rotated.  The app though does not enforce this.  
+- It is highly recommended that calipers be recalibrated if the image (not the device) is rotated.  The app though does not enforce this.
+- If the app is put in the background (e.g. by switching to another app) and then terminated by the operating system (something iOS does to preserve memory), /and/ if you have loaded a multi-page PDF image file, only the page you were last imaging will be available.  A warning dialog does appear when this happens.  If you need to switch pages in this situation, you will need to reload the PDF.
 * Acknowledgments
 - Thanks to Dr. Michael Katz for the concept.
 - Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.

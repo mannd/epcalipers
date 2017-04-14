@@ -204,7 +204,7 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Use angle calipers to make angle measurements.  Evaluate ECGs for Brugada pattern using new Brugadometer.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the menu button at the upper right for full help."
+            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Use angle calipers to make angle measurements.  Evaluate ECGs for Brugada pattern using new Brugadometer.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the action button at the upper right for full help."
                             delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [quickStartAlert show];
         }
