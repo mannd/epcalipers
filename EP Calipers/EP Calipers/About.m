@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 
 // TODO: update version
-#define VERSION @"2.6.1"
+#define VERSION @"2.7"
 
 @implementation About
 
