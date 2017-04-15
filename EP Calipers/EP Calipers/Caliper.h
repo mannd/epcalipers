@@ -28,8 +28,9 @@
 @property (strong, nonatomic) NSMutableParagraphStyle *paragraphStyle;
 @property (strong, nonatomic) NSMutableDictionary *attributes;
 @property (nonatomic) BOOL roundMsecRate;
-@property (readonly) BOOL requiresCalibration;
-@property (readonly) BOOL isAngleCaliper;
+@property (nonatomic, readonly) BOOL requiresCalibration;
+@property (nonatomic) BOOL isAngleCaliper;
+
 
 - (double)intervalResult;
 - (double)rateResult:(double)interval;
@@ -48,7 +49,16 @@
 - (void)moveCrossBar:(CGPoint)delta;
 - (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location;
 - (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location;
+- (void)moveBarInDirection:(MovementDirection)direction distance:(CGFloat)delta forComponent:(CaliperComponent)component;
+- (void)moveCrossbarInDirection:(MovementDirection)direction distance:(CGFloat)delta;
 - (float)barCoord:(CGPoint)p;
 - (void)caliperText;
+- (CaliperComponent)getCaliperComponent:(CGPoint)point;
+- (NSString *)getComponentName:(CaliperComponent)component smallSize:(BOOL)smallSize;
+
+- (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key;
+- (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
+- (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
+
 
 @end

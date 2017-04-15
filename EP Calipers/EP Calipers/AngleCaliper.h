@@ -22,12 +22,16 @@
 - (BOOL)pointNearBar:(CGPoint)p forBarAngle:(double)barAngle;
 - (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location;
 - (void)moveBar2:(CGPoint)delta forLocation:(CGPoint)location;
+- (void)moveBarInDirection:(MovementDirection)direction distance:(CGFloat)delta forComponent:(CaliperComponent)component;
+
 + (double)radiansToDegrees:(double)radians;
++ (double)degreesToRadians:(double)degrees;
 + (double)calculateBaseFromHeight:(double)height andAngle1:(double)angle1 andAngle2:(double)angle2;
 + (double)brugadaRiskV1ForBetaAngle:(double)betaAngle andBase:(double)base;
 + (double)brugadaRiskV2ForBetaAngle:(double)betaAngle andBase:(double)base;
 
-
+- (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
+- (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
 
 
 @end

@@ -10,8 +10,9 @@
 #import "CalipersView.h"
 #import "Calibration.h"
 #import "Settings.h"
+#import "FCColorPickerViewController.h"
 
-@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
+@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, FCColorPickerViewControllerDelegate, CalipersViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -24,8 +25,19 @@
 @property (strong, nonatomic) UIBarButtonItem *calibrateCalipersButton;
 @property (strong, nonatomic) UIBarButtonItem *previousPageButton;
 @property (strong, nonatomic) UIBarButtonItem *nextPageButton;
-@property (strong, nonatomic) UIBarButtonItem *settingsButton;
-@property (strong, nonatomic) UIBarButtonItem *brugadaButton;
+//@property (strong, nonatomic) UIBarButtonItem *brugadaButton;
+@property (strong, nonatomic) UIBarButtonItem *leftButton;
+@property (strong, nonatomic) UIBarButtonItem *rightButton;
+@property (strong, nonatomic) UIBarButtonItem *upButton;
+@property (strong, nonatomic) UIBarButtonItem *downButton;
+@property (strong, nonatomic) UIBarButtonItem *microLeftButton;
+@property (strong, nonatomic) UIBarButtonItem *microRightButton;
+@property (strong, nonatomic) UIBarButtonItem *microUpButton;
+@property (strong, nonatomic) UIBarButtonItem *microDownButton;
+@property (strong, nonatomic) UIBarButtonItem *componentLabelButton;
+@property (strong, nonatomic) UIBarButtonItem *lockImageButton;
+@property (strong, nonatomic) UILabel *componentLabel;
+
 
 @property (strong, nonatomic) NSArray *mainMenuItems;
 @property (strong, nonatomic) NSArray *photoMenuItems;
@@ -36,6 +48,10 @@
 @property (strong, nonatomic) NSArray *calibrateMenuItems;
 @property (strong, nonatomic) NSArray *qtcStep1MenuItems;
 @property (strong, nonatomic) NSArray *qtcStep2MenuItems;
+@property (strong, nonatomic) NSArray *moreMenuItems;
+@property (strong, nonatomic) NSArray *colorMenuItems;
+@property (strong, nonatomic) NSArray *tweakMenuItems;
+@property (strong, nonatomic) NSArray *movementMenuItems;
 
 @property (strong, nonatomic) Calibration *horizontalCalibration;
 @property (strong, nonatomic) Calibration *verticalCalibration;
@@ -52,7 +68,6 @@
 @property (nonatomic) CGFloat sizeDiffWidth;
 @property (nonatomic) CGFloat sizeDiffHeight;
 
-@property (nonatomic) CGFloat lastZoomFactor;
 @property (nonatomic) BOOL isRotatedImage;
 
 @property (nonatomic) CGFloat portraitWidth;
@@ -68,6 +83,13 @@
 
 @property (nonatomic) BOOL defaultHorizontalCalChanged;
 @property (nonatomic) BOOL defaultVerticalCalChanged;
+
+- (void)chooseColor:(Caliper *)caliper;
+@property (nonatomic, weak) Caliper *chosenCaliper;
+@property (nonatomic) CaliperComponent chosenCaliperComponent;
+
+@property (nonatomic) BOOL wasLaunchedFromUrl;
+@property (nonatomic) BOOL inQtc;
 
 @end
 

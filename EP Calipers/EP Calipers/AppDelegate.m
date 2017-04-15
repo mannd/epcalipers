@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "EPSMainViewController.h"
+#import "EPSLogging.h"
 
 @interface AppDelegate ()
 
@@ -18,10 +19,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"roundMsecRatePreference", [NSNumber numberWithBool:NO], @"hideStartImagePreference", [NSNumber numberWithInt:2], @"lineWidthPreference", @"1000 msec", @"calibrationPreference", @"10 mm", @"verticalCalibrationPreference", @"Blue", @"caliperColorPreference", @"Red", @"highlightColorPreference", nil];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
-
     
     return YES;
 }
@@ -34,6 +38,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    EPSLog(@"applicationDidEnterBackground");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -49,6 +54,8 @@
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    EPSLog(@"application:openURL:sourceApplication:annotation");
+    
     UINavigationController *navigationController = (UINavigationController *)  self.window.rootViewController;
     EPSMainViewController *mainViewController = (EPSMainViewController *) [navigationController.viewControllers objectAtIndex:0];
 
@@ -60,6 +67,16 @@
         mainViewController.launchURL = url;
         [mainViewController openURL:url];
     }
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+{
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+{
     return YES;
 }
 

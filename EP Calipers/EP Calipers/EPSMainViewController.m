@@ -11,15 +11,18 @@
 #import "AngleCaliper.h"
 #import "Settings.h"
 #import "EPSLogging.h"
+#import "About.h"
+#import "CaliperFactory.h"
 #include "Defs.h"
 
 //:TODO: Make NO for release version
 // set to yes to always show startup screen
 //#define TEST_QUICK_START NO
 
-
 #define ANIMATION_DURATION 0.5
 #define MAX_ZOOM 10.0
+#define MOVEMENT 1.0f
+#define MICRO_MOVEMENT 0.1f
 
 #define CALIBRATE_IPAD @"Calibrate"
 #define CALIBRATE_IPHONE @"Cal"
@@ -32,16 +35,25 @@
 #define SWITCH_IPAD @"Image"
 #define SWITCH_IPHONE @"Image"
 #define SWITCH_BACK @"Measure"
-#define SETTINGS_IPAD @"Preferences"
-#define SETTINGS_IPHONE @"Prefs"
-#define BRUGADA_IPAD @"Brugada"
-#define BRUGADA_IPHONE @"BrS"
+//#define SETTINGS_IPAD @"Preferences"
+//#define SETTINGS_IPHONE @"Prefs"
+//#define BRUGADA_IPAD @"Brugada"
+//#define BRUGADA_IPHONE @"BrS"
+#define LEFT_ARROW @"⇦"
+#define RIGHT_ARROW @"⇨"
+#define MICRO_LEFT_ARROW @"←"
+#define MICRO_RIGHT_ARROW @"→"
+#define UP_ARROW @"⇧"
+#define DOWN_ARROW @"⇩"
+#define MICRO_UP_ARROW @"↑"
+#define MICRO_DOWN_ARROW @"↓"
 
 // AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
 #define MEAN_RR_ALERTVIEW 30
 #define MEAN_RR_FOR_QTC_ALERTVIEW 43
 #define NUM_PDF_PAGES_ALERTVIEW 101
+#define LAUNCHED_FROM_URL_ALERTVIEW 102
 
 #define CALIPERS_VIEW_TITLE @"EP Calipers"
 #define IMAGE_VIEW_TITLE @"Image Mode"
@@ -58,29 +70,20 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    EPSLog(@"viewDidLoad");
     // Do any additional setup after loading the view, typically from a nib.
     pdfRef = NULL;
     
     self.settings = [[Settings alloc] init];
     [self.settings loadPreferences];
+    [self createToolbars];
 
-    [self createMainToolbar];
-    [self createImageToolbar];
-    [self createAdjustImageToolbar];
-    [self createMoreAdjustImageToolbar];
-    [self createAddCalipersToolbar];
-    [self createSetupCalibrationToolbar];
-    [self createQTcStep1Toolbar];
-    [self createQTcStep2Toolbar];
-    
-    [self selectMainToolbar];
 
     [self.imageView setContentMode:UIViewContentModeCenter];
     
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.maximumZoomScale = MAX_ZOOM;
-    self.lastZoomFactor = self.scrollView.zoomScale;
     
     self.horizontalCalibration = [[Calibration alloc] init];
     self.horizontalCalibration.direction = Horizontal;
@@ -93,14 +96,15 @@
     
     [self.calipersView setUserInteractionEnabled:YES];
     
+    self.calipersView.delegate = self;
+        
     self.rrIntervalForQTc = 0.0;
+    self.inQtc = NO;
     
     [self.imageView setHidden:YES];  // hide view until it is rescaled
     
-    
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    [btn addTarget:self action:@selector(showHelp) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
+    self.navigationItem.rightBarButtonItem = btn;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SWITCH_IPAD : SWITCH_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = NO;
@@ -110,6 +114,10 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
     self.firstRun = YES;
+    
+    self.wasLaunchedFromUrl = NO;
+    
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(viewBackToForeground)
                                                  name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -132,12 +140,8 @@
     
 }
 
-- (void)viewDidLayoutSubviews {
-
-}
-
 - (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:YES];
+    [super viewDidAppear:animated];
     EPSLog(@"ViewDidAppear");
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
@@ -158,8 +162,8 @@
         self.landscapeWidth = fmaxf(screenHeight, screenWidth);
         self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
         self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
-
-        // if running first time and opening URL then don't load sample ECG
+        
+        // if running first time and opening URL then overwrite old image
         if (self.launchFromURL) {
             self.launchFromURL = NO;
             if (self.launchURL != nil) {
@@ -168,14 +172,27 @@
         }
         else {
             self.imageView.image = [self scaleImageForImageView:self.imageView.image];
-            [self.imageView setHidden:self.settings.hideStartImage];
         }
         
-        [self addHorizontalCaliper];
-        // NB: new calipers are not selected 
+        if (self.wasLaunchedFromUrl) {
+            UIAlertView *launchedFromUrlAlert = [[UIAlertView alloc] initWithTitle:@"Multipage PDF" message:@"App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            launchedFromUrlAlert.tag = LAUNCHED_FROM_URL_ALERTVIEW;
+            [launchedFromUrlAlert show];
+            // only show this warning once
+            self.launchURL = nil;
+            self.numberOfPages = 0;
+            self.wasLaunchedFromUrl = NO;
+        }
+        
+        [self.imageView setHidden:NO];
+        // When starting add a caliper if one isn't there already
+        if ([self.calipersView count] == 0) {
+            [self addHorizontalCaliper];
+        }
+        
         self.firstRun = NO;
         // for testing
-//        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+        //        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
             // app already launched
             EPSLog(@"Not first launch");
@@ -187,10 +204,12 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Use angle calipers to make angle measurements.  Evaluate ECGs for Brugada pattern using new Brugadometer.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the *Info* button at the upper right for full help."
-                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Color calipers individually.  Use the *Tweak* menu to micro-move caliper components.  App maintains state when terminated by iOS and restored.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the action button at the upper right for full help."
+                                                                     delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [quickStartAlert show];
         }
+        
+        [self selectMainToolbar];
 
     }
 }
@@ -237,28 +256,70 @@
     // Dispose of any resources that can be recreated.
 }
 
+// Help menu, etc.
+- (void)showSecondaryMenu {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* preferencesAction = [UIAlertAction actionWithTitle:@"Preferences" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {[self openSettings];}];
+    [actionSheet addAction:preferencesAction];
+    UIAlertAction* helpAction = [UIAlertAction actionWithTitle:@"Help" style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * action) {[self performSegueWithIdentifier:@"WebViewSegue" sender:self];}];
+    [actionSheet addAction:helpAction];
+    UIAlertAction* aboutAction = [UIAlertAction actionWithTitle:@"About" style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction * action) {[About show];}];
+    [actionSheet addAction:aboutAction];
+    
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+                                                         handler:nil];
+    [actionSheet addAction:cancelAction];
+    
+    actionSheet.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItem;
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
+}
+
 // Create toolbars
+- (void)createToolbars {
+    [self createMainToolbar];
+    [self createImageToolbar];
+    [self createAdjustImageToolbar];
+    [self createMoreAdjustImageToolbar];
+    [self createAddCalipersToolbar];
+    [self createSetupCalibrationToolbar];
+    [self createQTcStep1Toolbar];
+    [self createQTcStep2Toolbar];
+    [self createMoreToolbar];
+    [self createColorToolbar];
+    [self createTweakToolbar];
+    [self createMovementToolbar];
+}
+
 - (void)createMainToolbar {
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
     self.calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? CALIBRATE_IPAD : CALIBRATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
-    // Note Brugada button will be next version
-//    self.brugadaButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? BRUGADA_IPAD : BRUGADA_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(doBrugadaCalculations)];
-    self.settingsButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SETTINGS_IPAD : SETTINGS_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton, self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton,  /* self.brugadaButton, */ self.settingsButton, nil];
+    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreToolbar)];
+    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton,
+                          self.calibrateCalipersButton,
+                          self.toggleIntervalRateButton,
+                          self.mRRButton,
+                          self.qtcButton,
+                          /* self.brugadaButton ? */
+                          moreButton, nil];
 }
 
 - (void)createImageToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
     UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
     UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
+    UIBarButtonItem *clearImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Sample" style:UIBarButtonItemStylePlain target:self action:@selector(loadDefaultImage)];
     // these 2 buttons only enable for multipage PDFs
     self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
-    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Previous" style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
+    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? @"Previous" : @"Prev") style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
     [self enablePageButtons:NO];
-    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, self.previousPageButton, self.nextPageButton, nil];
+    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, clearImageButton, self.previousPageButton, self.nextPageButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
@@ -305,8 +366,9 @@
 }
 
 - (void)createQTcStep1Toolbar {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 32)];
+    UILabel *label = [[UILabel alloc] init];
     [label setText:@"RR interval(s)?"];
+    [label sizeToFit];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
@@ -315,8 +377,9 @@
 }
 
 - (void)createQTcStep2Toolbar {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 120, 32)];
+    UILabel *label = [[UILabel alloc] init];
     [label setText:@"QT interval?"];
+    [label sizeToFit];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *measureQTButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
@@ -324,10 +387,54 @@
     self.qtcStep2MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureQTButton, cancelButton, nil];
 }
 
-
-- (void)showHelp {
-    [self performSegueWithIdentifier:@"WebViewSegue" sender:nil];
+- (void)createMoreToolbar {
+    UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
+    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tweak" style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
+    self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Lock" style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
+    self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, self.lockImageButton, cancelButton, nil];
 }
+
+- (void)createColorToolbar {
+    UILabel *label = [[UILabel alloc] init];
+    [label setText:@"Long press caliper"];
+    [label sizeToFit];
+    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
+    self.colorMenuItems = [NSArray arrayWithObjects:labelBarButtonItem, cancelButton, nil];
+}
+
+- (void)createTweakToolbar {
+    UILabel *label = [UILabel new];
+    [label setText:@"Long press caliper component"];
+    [label sizeToFit];
+    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
+    self.tweakMenuItems = [NSArray arrayWithObjects:labelBarButtonItem, cancelButton, nil];
+}
+
+- (void)createMovementToolbar {
+    self.componentLabel = [UILabel new];
+    [self.componentLabel setText:@"test"];
+    [self.componentLabel sizeToFit];
+    self.componentLabelButton = [[UIBarButtonItem alloc] initWithCustomView:self.componentLabel];
+    self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveLeft)];
+    self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveRight)];
+    
+    self.upButton = [[UIBarButtonItem alloc] initWithTitle:UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveUp)];
+    self.downButton = [[UIBarButtonItem alloc] initWithTitle:DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveDown)];
+    self.microLeftButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveLeft)];
+    self.microRightButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveRight)];
+    self.microUpButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveUp)];
+    self.microDownButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveDown)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTweaking)];
+    self.movementMenuItems = [NSArray arrayWithObjects:self.componentLabelButton, self.leftButton,
+                              self.upButton, self.rightButton, self.downButton,
+                              self.microLeftButton, self.microUpButton,
+                              self.microRightButton,
+                              self.microDownButton, doneButton, nil];
+}
+
 
 - (void)toggleIntervalRate {
     self.horizontalCalibration.displayRate = ! self.horizontalCalibration.displayRate;
@@ -391,6 +498,9 @@
         [calculateMeanRRAlertView show];
 
         self.toolbarItems = self.qtcStep2MenuItems;
+        self.calipersView.allowTweakPosition = self.settings.allowTweakDuringQtc;
+        self.inQtc = YES;
+        
     }
 }
 
@@ -588,7 +698,7 @@
     int n = 0;
     if (self.calipersView.calipers.count > 0) {
         for (Caliper *caliper in self.calipersView.calipers) {
-            if (caliper.direction == Horizontal) {
+            if (caliper.direction == Horizontal && !caliper.isAngleCaliper) {
                 c = caliper;
                 n++;
             }
@@ -640,6 +750,15 @@
     [self.calipersView setUserInteractionEnabled:NO];
 }
 
+- (void)doneTweaking {
+    if (self.inQtc && self.settings.allowTweakDuringQtc) {
+        self.toolbarItems = self.qtcStep2MenuItems;
+    }
+    else {
+        [self selectMainToolbar];
+    }
+}
+
 - (void)selectMainToolbar {
     self.toolbarItems  = self.mainMenuItems;
     [self.calipersView setUserInteractionEnabled:YES];
@@ -648,6 +767,11 @@
     [self.mRRButton setEnabled:enable];
     [self.qtcButton setEnabled:enable];
     self.calipersView.locked = NO;
+    self.calipersView.allowColorChange = NO;
+    self.calipersView.allowTweakPosition = NO;
+    self.inQtc = NO;
+    self.chosenCaliper = nil;
+    self.chosenCaliperComponent = None;
 }
 
 - (void)selectAddCalipersToolbar {
@@ -664,6 +788,24 @@
 
 - (void)selectCalibrateToolbar {
     self.toolbarItems = self.calibrateMenuItems;
+}
+
+- (void)selectMoreToolbar {
+    self.toolbarItems = self.moreMenuItems;
+}
+
+- (void)selectColorToolbar {
+    self.toolbarItems = self.colorMenuItems;
+    self.calipersView.allowColorChange = YES;
+}
+
+- (void)selectTweakToolbar {
+    self.toolbarItems = self.tweakMenuItems;
+    self.calipersView.allowTweakPosition = YES;
+}
+
+- (void)selectMovementToolbar{
+    self.toolbarItems = self.movementMenuItems;
 }
 
 - (void)openSettings {
@@ -734,7 +876,13 @@
         [self openPDFPage:pdfRef atPage:self.pageNumber];
     }
     [self.imageView setHidden:NO];
+    [self.scrollView setZoomScale:1.0f];
     [self clearCalibration];
+}
+
+- (void)loadDefaultImage {
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"sampleECG" withExtension:@"jpg"];
+    [self openURL:url];
 }
 
 - (void)enablePageButtons:(BOOL)enable {
@@ -824,7 +972,7 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
 }
 
 - (void)addAngleCaliper {
-    AngleCaliper *caliper = [[AngleCaliper alloc] init];
+    AngleCaliper *caliper = (AngleCaliper *)[CaliperFactory createCaliper:Angle];
     [self updateCaliperSettings:caliper];
     caliper.color = caliper.unselectedColor;
     caliper.direction = Horizontal;
@@ -844,7 +992,7 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
 }
 
 - (void)addCaliperWithDirection:(CaliperDirection)direction {
-    Caliper *caliper = [[Caliper alloc] init];
+    Caliper *caliper = [CaliperFactory createCaliper:Interval];
     [self updateCaliperSettings:caliper];
     caliper.color = caliper.unselectedColor;
     caliper.direction = direction;
@@ -982,7 +1130,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if (alertView.tag == CALIBRATION_ALERTVIEW) {
         NSString *rawText = [[alertView textFieldAtIndex:0] text];
         if (rawText.length > 0) {
-            [self zCalibrateWithText:rawText];
+            [self calibrateWithText:rawText];
         }
         else {
             badValue = YES;
@@ -1021,7 +1169,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
 }
 
-- (void)zCalibrateWithText:(NSString *)rawText {
+- (void)calibrateWithText:(NSString *)rawText {
     if (rawText.length > 0) {
         float value = 0.0;
         NSString *trimmedUnits = @"";
@@ -1066,6 +1214,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
 }
 
+// Note this generates warning: [Generic] Creating an image format with an unknown type is an error
+// However, it still works, and no solution found with ObjC (though maybe works in Swift 3).
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = nil;
     // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
@@ -1076,12 +1226,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         chosenImage = info[UIImagePickerControllerEditedImage];
         }
     self.imageView.image = [self scaleImageForImageView:chosenImage];
+    // reset zoom for new image
+    self.scrollView.zoomScale = 1.0;
     [self.imageView setHidden:NO];
     [picker dismissViewControllerAnimated:YES completion:NULL];
     [self clearCalibration];
     [self enablePageButtons:NO];
     // remove any prior PDF from memory
     [self clearPDF];
+    self.launchURL = nil;
+    self.numberOfPages = 0;
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -1090,10 +1244,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageContainerView;
-}
-
-- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
-    self.lastZoomFactor = scrollView.zoomScale;
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
@@ -1117,9 +1267,183 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    EPSLog(@"traitCollectionDidChange");
     [self.toggleIntervalRateButton setTitle:[self isCompactSizeClass] ? TOGGLE_INT_RATE_IPHONE : TOGGLE_INT_RATE_IPAD];
     [self.mRRButton setTitle:[self isCompactSizeClass] ? MEAN_RATE_IPHONE : MEAN_RATE_IPAD];
     [self.calibrateCalipersButton setTitle:[self isCompactSizeClass] ? CALIBRATE_IPHONE : CALIBRATE_IPAD];
+    if (self.chosenCaliper != nil) {
+        [self.componentLabel setText:[self.chosenCaliper getComponentName:self.chosenCaliperComponent smallSize:[self isCompactSizeClass]]];
+        [self.componentLabel sizeToFit];
+    }
+}
+
+- (void)lockImage {
+    self.calipersView.lockImageScreen = !self.calipersView.lockImageScreen;
+    if (self.calipersView.lockImageScreen) {
+        self.lockImageButton.title = @"Unlock";
+    }
+    else {
+        self.lockImageButton.title = @"Lock";
+    }
+    [self.scrollView setUserInteractionEnabled:!self.calipersView.lockImageScreen];
+    [self.calipersView setNeedsDisplay];
+}
+
+#pragma mark - CalipersViewDelegate Methods
+
+// from https://github.com/fcanas/ios-color-picker
+- (void)chooseColor:(Caliper *)caliper {
+    FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
+    colorPicker.backgroundColor = [UIColor whiteColor];
+    self.chosenCaliper = caliper;
+    colorPicker.color = caliper.unselectedColor;
+    colorPicker.delegate = self;
+    
+    [colorPicker setModalPresentationStyle:UIModalPresentationFormSheet];
+    [self presentViewController:colorPicker animated:YES completion:nil];
+}
+
+- (void)tweakComponent:(CaliperComponent)component forCaliper:(Caliper *)caliper {
+    self.chosenCaliper = caliper;
+    self.chosenCaliperComponent = component;
+    [self.componentLabel setText:[caliper getComponentName:component smallSize:[self isCompactSizeClass]]];
+    [self.componentLabel sizeToFit];
+    BOOL disableUpDown = caliper.direction == Horizontal && component != Crossbar;
+    BOOL disableLeftRight = caliper.direction == Vertical && component != Crossbar;
+    self.upButton.enabled = !disableUpDown;
+    self.microUpButton.enabled = !disableUpDown;
+    self.downButton.enabled = !disableUpDown;
+    self.microDownButton.enabled = !disableUpDown;
+    self.leftButton.enabled = !disableLeftRight;
+    self.microLeftButton.enabled = !disableLeftRight;
+    self.rightButton.enabled = !disableLeftRight;
+    self.microRightButton.enabled = !disableLeftRight;
+    [self selectMovementToolbar];
+}
+
+- (void)moveComponent:(Caliper *)caliper component:(CaliperComponent)component distance:(CGFloat)distance direction:(MovementDirection)direction {
+    if (caliper == nil || component == None) {
+        return;
+    }
+    [caliper moveBarInDirection:direction distance:distance forComponent:component];
+    [self.calipersView setNeedsDisplay];
+
+}
+
+- (void)moveLeft {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MOVEMENT direction:Left];
+}
+
+- (void)moveRight {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MOVEMENT direction:Right];
+}
+
+- (void)moveUp {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MOVEMENT direction:Up];
+}
+
+- (void)moveDown {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MOVEMENT direction:Down];
+}
+
+- (void)microMoveLeft {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MICRO_MOVEMENT direction:Left];
+}
+
+- (void)microMoveRight {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MICRO_MOVEMENT direction:Right];
+}
+
+- (void)microMoveUp {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MICRO_MOVEMENT direction:Up];
+}
+
+- (void)microMoveDown {
+    [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MICRO_MOVEMENT direction:Down];
+}
+
+
+
+#pragma mark - FCColorPickerViewControllerDelegate Methods
+
+-(void)colorPickerViewController:(FCColorPickerViewController *)colorPicker didSelectColor:(UIColor *)color {
+    if (self.chosenCaliper != nil) {
+        self.chosenCaliper.color = color;
+        self.chosenCaliper.unselectedColor = color;
+        self.chosenCaliper.selected = NO;
+        [self.calipersView setNeedsDisplay];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)colorPickerViewControllerDidCancel:(FCColorPickerViewController *)colorPicker {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - restore view controller state
+
+// see https://useyourloaf.com/blog/state-preservation-and-restoration/
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    EPSLog(@"encodeRestorableStateWithCoder");
+    // possibly enable restart from URL
+    [coder encodeObject:self.launchURL forKey:@"LaunchURL"];
+    [coder encodeInteger:self.numberOfPages forKey:@"NumberOfPages"];
+    [coder encodeObject:UIImagePNGRepresentation(self.imageView.image)
+                 forKey:@"SavedImageKey"];
+    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
+    
+    // calibration
+    [self.horizontalCalibration encodeCalibrationState:coder withPrefix:@"Horizontal"];
+    [self.verticalCalibration encodeCalibrationState:coder withPrefix:@"Vertical"];
+    
+    // calipers
+    [coder encodeInteger:[self.calipersView count] forKey:@"CalipersCount"];
+    for (int i = 0; i < [self.calipersView count]; i++) {
+        [self.calipersView.calipers[i] encodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
+        [coder encodeBool:[self.calipersView.calipers[i] isAngleCaliper] forKey:[NSString stringWithFormat:@"%dIsAngleCaliper", i]];
+        EPSLog(@"calipers is Angle %d", [self.calipersView.calipers[i] isAngleCaliper]);
+    }
+    
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+{
+    EPSLog(@"decodeRestorableStateWithCoder");
+    self.launchURL = [coder decodeObjectForKey:@"LaunchURL"];
+    self.numberOfPages = (int)[coder decodeIntegerForKey:@"NumberOfPages"];
+    if (self.launchURL != nil && self.numberOfPages > 0) {
+        EPSLog(@"Multipage PDF");
+        self.wasLaunchedFromUrl = YES;
+    }
+    self.imageView.image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
+    self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomScaleKey"];
+    
+    // calibration
+    [self.horizontalCalibration decodeCalibrationState:coder withPrefix:@"Horizontal"];
+    [self.verticalCalibration decodeCalibrationState:coder withPrefix:@"Vertical"];
+    
+    // calipers
+    NSInteger calipersCount = [coder decodeIntegerForKey:@"CalipersCount"];
+    for (int i = 0; i < calipersCount; i++) {
+        BOOL isAngleCaliper = [coder decodeBoolForKey:[NSString stringWithFormat:@"%dIsAngleCaliper", i]];
+        CaliperType type = isAngleCaliper ? Angle : Interval;
+        Caliper *newCaliper = [CaliperFactory createCaliper:type];
+        [newCaliper decodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
+        if (newCaliper.direction == Horizontal) {
+            newCaliper.calibration = self.horizontalCalibration;
+        }
+        else {
+            newCaliper.calibration = self.verticalCalibration;
+        }
+        if ([newCaliper isAngleCaliper]) {
+            ((AngleCaliper *)newCaliper).verticalCalibration = self.verticalCalibration;
+        }
+        [self.calipersView.calipers addObject:newCaliper];
+    }
+    
+    [super decodeRestorableStateWithCoder:coder];
 }
 
 @end

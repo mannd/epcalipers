@@ -7,9 +7,8 @@
 //
 
 #import "WebViewController.h"
-
-//TODO: Update with each new version!!
-#define VERSION @"2.6.1"
+#import "Defs.h"
+#import "About.h"
 
 #define HELP_URL @"EPCalipers-help/epcalipers_help"
 
@@ -50,20 +49,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 - (void)showAbout {
-    UIAlertView *aboutAlertView = [[UIAlertView alloc] initWithTitle:@"EP Calipers" message:[NSString stringWithFormat:@"Copyright \u00a9 2015 - 2017 EP Studios, Inc.\nAll rights reserved.\nVersion %@" , VERSION] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    aboutAlertView.alertViewStyle = UIAlertViewStyleDefault;
-    [aboutAlertView show];
-    
+    [About show];
 }
 @end

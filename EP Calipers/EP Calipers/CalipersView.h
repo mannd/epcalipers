@@ -9,13 +9,27 @@
 #import <UIKit/UIKit.h>
 #import "Caliper.h"
 
+@protocol CalipersViewDelegate <NSObject>
+
+@required
+- (void)chooseColor:(Caliper *)caliper;
+- (void)tweakComponent:(CaliperComponent)component forCaliper:(Caliper *)caliper;
+
+@end
+
 @interface CalipersView : UIView
 
 - (id)initWithCoder:(NSCoder *)aDecoder;
 
+@property (nonatomic, weak) id<CalipersViewDelegate> delegate;
 @property (nonatomic, strong) NSMutableArray *calipers;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (nonatomic) BOOL locked;
+@property (nonatomic) BOOL allowColorChange;
+@property (nonatomic) BOOL allowTweakPosition;
+@property (nonatomic) BOOL lockImageScreen;
+@property (nonatomic, strong) UIColor *lockImageMessageForegroundColor;
+@property (nonatomic, strong) UIColor *lockImageMessageBackgroundColor;
 
 - (void)selectCaliperIfNoneSelected;
 - (BOOL)noCaliperIsSelected;
@@ -25,5 +39,6 @@
 - (void)selectCaliperNoNeedsDisplay:(Caliper *)c;
 - (void)unselectCaliperNoNeedsDisplay:(Caliper *)c;
 - (void)updateCaliperPreferences:(UIColor *)unselectedColor selectedColor:(UIColor*)selectedColor lineWidth:(NSInteger)lineWidth roundMsec:(BOOL)roundMsec;
+- (NSUInteger)count;
 
 @end

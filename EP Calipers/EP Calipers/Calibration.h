@@ -34,4 +34,8 @@
 
 - (CGFloat)currentCalFactor;
 
+// encode/decode state
+- (void)encodeCalibrationState:(NSCoder *)coder withPrefix:(NSString *)prefix;
+- (void)decodeCalibrationState:(NSCoder *)coder withPrefix:(NSString *)prefix;
+
 @end

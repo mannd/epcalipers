@@ -18,9 +18,9 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string>Hide Start Image</string>
+			<string>Allow Tweak during QTc</string>
 			<key>Key</key>
-			<string>hideStartImagePreference</string>
+			<string>allowTweakDuringQtc</string>
 			<key>DefaultValue</key>
 			<false/>
 		</dict>
@@ -122,12 +122,16 @@
 				<string>1 point</string>
 				<string>2 points</string>
 				<string>3 points</string>
+				<string>4 points</string>
+				<string>5 points</string>
 			</array>
 			<key>Values</key>
 			<array>
 				<string>1</string>
 				<string>2</string>
 				<string>3</string>
+				<string>4</string>
+				<string>5</string>
 			</array>
 		</dict>
 	</array>

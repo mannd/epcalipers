@@ -15,8 +15,8 @@
 @property (nonatomic) NSInteger lineWidth;
 @property (strong, nonatomic) NSString *defaultCalibration;
 @property (strong, nonatomic) NSString *defaultVerticalCalibration;
-@property (nonatomic) BOOL hideStartImage;
 @property (nonatomic) BOOL roundMsecRate;
+@property (nonatomic) BOOL allowTweakDuringQtc;
 
 - (instancetype)init;
 - (void)loadPreferences;

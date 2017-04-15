@@ -30,6 +30,7 @@
         self.bar2Position = 100.0f;
         self.crossBarPosition = 100.0f;
         self.verticalCalibration = nil;
+        self.isAngleCaliper = YES;
     }
     return self;
 }
@@ -183,6 +184,10 @@
     return radians * 180.0 / M_PI;
 }
 
++ (double)degreesToRadians:(double)degrees {
+    return (degrees * M_PI) / 180.0;
+}
+
 - (void)moveBar1:(CGPoint)delta forLocation:(CGPoint)location {
     self.angleBar1 = [self moveBarAngle:delta forLocation:location];
 }
@@ -196,12 +201,28 @@
     return [self relativeTheta:newPosition];
 }
 
-- (BOOL)requiresCalibration {
-    return NO;
+- (void)moveBarInDirection:(MovementDirection)direction distance:(CGFloat)delta forComponent:(CaliperComponent)component {
+    if (component == Crossbar) {
+        [super moveCrossbarInDirection:direction distance:delta];
+        return;
+    }
+    if (direction == Left) {
+        delta = -delta;
+    }
+    switch (component) {
+        case Bar1:
+            self.angleBar1 -= [AngleCaliper degreesToRadians:delta];
+            break;
+        case Bar2:
+            self.angleBar2 -= [AngleCaliper degreesToRadians:delta];
+            break;
+        default:
+            break;
+    }
 }
 
-- (BOOL)isAngleCaliper {
-    return YES;
+- (BOOL)requiresCalibration {
+    return NO;
 }
 
 // height of triangle in points, angle1 is angle of bar1, angle2 of bar2, in radians
@@ -255,5 +276,21 @@
     CGPoint point = CGPointMake(pointX, pointY);
     return point;
 }
+
+- (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    [coder encodeDouble:self.angleBar1 forKey:[self getPrefixedKey:prefix key:@"AngleBar1"]];
+    [coder encodeDouble:self.angleBar2 forKey:[self getPrefixedKey:prefix key:@"AngleBar2"]];
+    
+    [super encodeCaliperState:coder withPrefix:prefix];
+}
+
+- (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    self.angleBar1 = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"AngleBar1"]];
+    self.angleBar2 = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"AngleBar2"]];
+    
+    [super decodeCaliperState:coder withPrefix:prefix];
+}
+
+
 
 @end

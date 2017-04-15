@@ -19,8 +19,8 @@
         self.lineWidth = 2;
         self.defaultCalibration = @"1000 msec";
         self.defaultVerticalCalibration = @"10 mm";
-        self.hideStartImage = NO;
         self.roundMsecRate = YES;
+        self.allowTweakDuringQtc = NO;
     }
     return self;
 }
@@ -41,8 +41,8 @@
     self.caliperColor = [colorMap valueForKey:colorName];
     self.highlightColor = [colorMap valueForKey:highlightColorName];
 
-    self.hideStartImage = [defaults boolForKey:@"hideStartImagePreference"];
     self.roundMsecRate = [defaults boolForKey:@"roundMsecRatePreference"];
+    self.allowTweakDuringQtc = [defaults boolForKey:@"allowTweakDuringQtc"];
 }
 
 @end

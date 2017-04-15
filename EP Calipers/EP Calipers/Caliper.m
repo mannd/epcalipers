@@ -10,6 +10,17 @@
 #include <math.h>
 
 #define DELTA 20.0
+#define CROSSBAR @"Crossbar"
+#define CROSSBAR_SMALL @"Xbar"
+#define LEFT_BAR @"Left bar"
+#define LEFT_BAR_SMALL @"Left"
+#define RIGHT_BAR @"Right bar"
+#define RIGHT_BAR_SMALL @"Right"
+#define UP_BAR @"Top bar"
+#define UP_BAR_SMALL @"Top"
+#define DOWN_BAR @"Bottom bar"
+#define DOWN_BAR_SMALL @"Bottom"
+#define APEX_BAR @"Apex"
 
 @implementation Caliper
 {
@@ -33,6 +44,7 @@
         self.paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         self.attributes = [[NSMutableDictionary alloc] init];
         self.roundMsecRate = YES;
+        self.isAngleCaliper = NO;
     }
     return self;
 }
@@ -212,6 +224,43 @@
     return ([self pointNearCrossBar:p] || [self pointNearBar:p forBarPosition:self.bar1Position] || [self pointNearBar:p forBarPosition:self.bar2Position]);
 }
 
+- (CaliperComponent)getCaliperComponent:(CGPoint)p{
+    if ([self pointNearCrossBar:p]) {
+        return Crossbar;
+    }
+    else if ([self pointNearBar1:p]) {
+        return Bar1;
+    }
+    else if ([self pointNearBar2:p]) {
+        return Bar2;
+    }
+    else {
+        return None;
+    }
+}
+
+- (NSString *)getComponentName:(CaliperComponent)component smallSize:(BOOL)smallSize {
+    NSString *crossBarName = smallSize ? CROSSBAR_SMALL : CROSSBAR;
+    NSString *leftBarName = smallSize ? LEFT_BAR_SMALL : LEFT_BAR;
+    NSString *rightBarName = smallSize ? RIGHT_BAR_SMALL : RIGHT_BAR;
+    NSString *upBarName = smallSize ? UP_BAR_SMALL : UP_BAR;
+    NSString *downBarName = smallSize ? DOWN_BAR_SMALL : DOWN_BAR;
+    switch (component) {
+        case Crossbar:
+            return (self.isAngleCaliper ? APEX_BAR : crossBarName);
+            break;
+        case Bar1:
+            return (self.direction == Horizontal ? leftBarName : upBarName);
+            break;
+        case Bar2:
+            return (self.direction == Horizontal ? rightBarName : downBarName);
+            break;
+        default:
+            return @"";
+            break;
+    }
+}
+
 - (void)moveCrossBar:(CGPoint)delta {
     self.bar1Position += delta.x;
     self.bar2Position += delta.x;
@@ -226,12 +275,112 @@
     self.bar2Position += delta.x;
 }
 
+- (void)moveBarInDirection:(MovementDirection)direction distance:(CGFloat)delta forComponent:(CaliperComponent)component {
+    if (component == Crossbar) {
+        [self moveCrossbarInDirection:direction distance:delta];
+        return;
+    }
+    if (direction == Up || direction == Left) {
+        delta = -delta;
+    }
+    switch (component) {
+        case Bar1:
+            self.bar1Position += delta;
+            break;
+        case Bar2:
+            self.bar2Position += delta;
+            break;
+        default:
+            break;
+    }
+}
+
+// swaps up and down for right and left, when using vertical calipers
+- (MovementDirection)swapDirection:(MovementDirection)direction {
+    switch (direction) {
+        case Left:
+            return Up;
+            break;
+        case Right:
+            return Down;
+            break;
+        case Up:
+            return Left;
+            break;
+        case Down:
+            return Right;
+            break;
+        default:
+            return Stationary;
+            break;
+    }
+}
+
+- (void)moveCrossbarInDirection:(MovementDirection)direction distance:(CGFloat)delta {
+    // assume origin at upper left
+    if (self.direction == Vertical) {
+        direction = [self swapDirection:direction];
+    }
+    switch (direction) {
+        case Up:
+            self.crossBarPosition -= delta;
+            break;
+        case Down:
+            self.crossBarPosition += delta;
+            break;
+        case Left:
+            self.bar1Position -= delta;
+            self.bar2Position -= delta;
+            break;
+        case Right:
+            self.bar1Position += delta;
+            self.bar2Position += delta;
+            break;
+        default:
+            break;
+    }
+}
+
 - (BOOL)requiresCalibration {
     return YES;
 }
 
-- (BOOL)isAngleCaliper {
-    return NO;
+// preserve state
+// duplicated in Calibration.m
+- (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key {
+    return [NSString stringWithFormat:@"%@%@", prefix, key];
 }
+
+- (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    [coder encodeBool:[self isAngleCaliper] forKey:[self getPrefixedKey:prefix key:@"IsAngleCaliper"]];
+    [coder encodeInteger:self.direction forKey:[self getPrefixedKey:prefix key:@"Direction"]];
+    [coder encodeDouble:self.bar1Position forKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
+    [coder encodeDouble:self.bar2Position forKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
+    [coder encodeDouble:self.crossBarPosition forKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
+    [coder encodeObject:self.unselectedColor forKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
+    [coder encodeBool:self.selected forKey:[self getPrefixedKey:prefix key:@"Selected"]];
+    [coder encodeInteger:self.lineWidth forKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
+    [coder encodeObject:self.color forKey:[self getPrefixedKey:prefix key:@"Color"]];
+    [coder encodeObject:self.selectedColor forKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
+    [coder encodeBool:self.roundMsecRate forKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
+    
+}
+
+// need to deal with two types of objects: angle and regular calipers
+// calling function to extract whether is angle caliper or not
+- (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    self.isAngleCaliper = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"IsAngleCaliper"]];
+    self.direction = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"Direction"]];
+    self.bar1Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
+    self.bar2Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
+    self.crossBarPosition = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
+    self.unselectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
+    self.selected = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Selected"]];
+    self.lineWidth = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
+    self.color = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"Color"]];
+    self.selectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
+    self.roundMsecRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
+}
+
 
 @end

@@ -8,7 +8,8 @@
 
 #import "CalipersView.h"
 #import "EPSLogging.h"
-#import "EPSMainViewController.h"
+
+#define IMAGE_LOCK @"IMAGE LOCK"
 
 @implementation CalipersView
 
@@ -26,14 +27,21 @@
         doubleTapGestureRecognizer.numberOfTapsRequired = 2;
         [self addGestureRecognizer:doubleTapGestureRecognizer];
         [singleTapGestureRecognizer requireGestureRecognizerToFail:doubleTapGestureRecognizer];
+        
+        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+        [self addGestureRecognizer:longPressGestureRecognizer];
         self.clearsContextBeforeDrawing = YES;
         self.locked = NO;
+        self.allowColorChange = NO;
+        self.allowTweakPosition = NO;
+        self.lockImageScreen = NO;
+        self.lockImageMessageForegroundColor = [UIColor whiteColor];
+        self.lockImageMessageBackgroundColor = [UIColor redColor];
    }
     return self;
 }
 
 
-//TESTEST!!!!!!!!!
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
         if ([(Caliper *)self.calipers[i] pointNearCaliper:point]) {
@@ -48,6 +56,27 @@
     for (Caliper *caliper in self.calipers) {
         [caliper drawWithContext:con inRect:rect];
     }
+    if (self.lockImageScreen) {
+        [self showLockImageWarning:rect];
+    }
+}
+
+- (void)showLockImageWarning:(CGRect)rect {
+    NSString *text = IMAGE_LOCK;
+    NSMutableDictionary *attributes = [NSMutableDictionary new];
+    UIFont *textFont = [UIFont fontWithName:@"Helvetica" size:14.0];
+
+//    NSMutableParagraphStyle paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+//    self.paragraphStyle.alignment = (self.direction == Horizontal ? NSTextAlignmentCenter : NSTextAlignmentLeft);
+//    
+    [attributes setObject:textFont forKey:NSFontAttributeName];
+//    [attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [attributes setObject:self.lockImageMessageForegroundColor forKey:NSForegroundColorAttributeName];
+    [attributes setObject:self.lockImageMessageBackgroundColor forKey:NSBackgroundColorAttributeName];
+    
+    rect = CGRectMake(rect.origin.x + 5, rect.origin.y + 5, rect.size.width, rect.size.height);
+    
+    [text drawInRect:rect withAttributes:attributes];
 }
 
 - (void)selectCaliperNoNeedsDisplay:(Caliper *)c {
@@ -180,6 +209,31 @@
     }
 }
 
+- (void)handleLongPress:(UILongPressGestureRecognizer *)gesture {
+    CGPoint location = [gesture locationInView:self];
+    if (gesture.state == UIGestureRecognizerStateBegan) {
+        if (self.allowColorChange) {
+            for (Caliper *c in self.calipers) {
+                if ([c pointNearCaliper:location]) {
+                    [self.delegate chooseColor:c];
+                    break;
+                 }
+             }
+        }
+        else if (self.allowTweakPosition) {
+            for (Caliper *c in self.calipers) {
+                CaliperComponent component = [c getCaliperComponent:location];
+                if (component != None) {
+                    EPSLog(@"Near component");
+                    [self.delegate tweakComponent:component forCaliper:c];
+                    break;
+                }
+            }
+        }
+    }
+}
+
+
 - (void)selectCaliperIfNoneSelected {
     if (self.calipers.count > 0 && [self noCaliperIsSelected]) {
         [self selectCaliper:(Caliper *)self.calipers[self.calipers.count - 1]];
@@ -210,18 +264,24 @@
 }
 
 - (void)updateCaliperPreferences:(UIColor *)unselectedColor selectedColor:(UIColor*)selectedColor lineWidth:(NSInteger)lineWidth roundMsec:(BOOL)roundMsec {
+    // This method has been changed so that unselected color only applies to new calipers, since we can now change
+    // individual caliper colors.
     for(Caliper *c in self.calipers) {
         c.selectedColor = selectedColor;
-        c.unselectedColor = unselectedColor;
+        //c.unselectedColor = unselectedColor;
         if (c.selected) {
             c.color = selectedColor;
         }
-        else {
-            c.color = unselectedColor;
-        }
+//        else {
+//            c.color = unselectedColor;
+//        }
         c.lineWidth = lineWidth;
         c.roundMsecRate = roundMsec;
     }
+}
+
+- (NSUInteger)count {
+    return [self.calipers count];
 }
 
 
