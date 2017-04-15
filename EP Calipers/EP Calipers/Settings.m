@@ -20,6 +20,7 @@
         self.defaultCalibration = @"1000 msec";
         self.defaultVerticalCalibration = @"10 mm";
         self.roundMsecRate = YES;
+        self.allowTweakDuringQtc = NO;
     }
     return self;
 }
@@ -41,6 +42,7 @@
     self.highlightColor = [colorMap valueForKey:highlightColorName];
 
     self.roundMsecRate = [defaults boolForKey:@"roundMsecRatePreference"];
+    self.allowTweakDuringQtc = [defaults boolForKey:@"allowTweakDuringQtc"];
 }
 
 @end

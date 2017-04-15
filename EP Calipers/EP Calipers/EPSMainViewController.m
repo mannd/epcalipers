@@ -498,7 +498,7 @@
         [calculateMeanRRAlertView show];
 
         self.toolbarItems = self.qtcStep2MenuItems;
-        self.calipersView.allowTweakPosition = YES;
+        self.calipersView.allowTweakPosition = self.settings.allowTweakDuringQtc;
         self.inQtc = YES;
         
     }
@@ -751,7 +751,7 @@
 }
 
 - (void)doneTweaking {
-    if (self.inQtc) {
+    if (self.inQtc && self.settings.allowTweakDuringQtc) {
         self.toolbarItems = self.qtcStep2MenuItems;
     }
     else {
