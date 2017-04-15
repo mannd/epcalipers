@@ -89,6 +89,7 @@
 @property (nonatomic) CaliperComponent chosenCaliperComponent;
 
 @property (nonatomic) BOOL wasLaunchedFromUrl;
+@property (nonatomic) BOOL inQtc;
 
 @end
 

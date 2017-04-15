@@ -78,7 +78,6 @@
     [self.settings loadPreferences];
     [self createToolbars];
 
-    [self selectMainToolbar];
 
     [self.imageView setContentMode:UIViewContentModeCenter];
     
@@ -100,6 +99,7 @@
     self.calipersView.delegate = self;
         
     self.rrIntervalForQTc = 0.0;
+    self.inQtc = NO;
     
     [self.imageView setHidden:YES];  // hide view until it is rescaled
     
@@ -145,7 +145,7 @@
     EPSLog(@"ViewDidAppear");
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
-        
+    
     if (self.firstRun) {
         //  scale image for imageView;
         // autolayout not done in viewDidLoad
@@ -192,7 +192,7 @@
         
         self.firstRun = NO;
         // for testing
-//        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+        //        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
         if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
             // app already launched
             EPSLog(@"Not first launch");
@@ -204,10 +204,12 @@
             // This is the first launch ever
             EPSLog(@"First launch");
             //TODO: Update with each version!!
-            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Use angle calipers to make angle measurements.  Evaluate ECGs for Brugada pattern using new Brugadometer.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the action button at the upper right for full help."
-                            delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Color calipers individually.  Use the *Tweak* menu to micro-move caliper components.  App maintains state when terminated by iOS and restored.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the action button at the upper right for full help."
+                                                                     delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [quickStartAlert show];
         }
+        
+        [self selectMainToolbar];
 
     }
 }
@@ -425,7 +427,7 @@
     self.microRightButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveRight)];
     self.microUpButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveUp)];
     self.microDownButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveDown)];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTweaking)];
     self.movementMenuItems = [NSArray arrayWithObjects:self.componentLabelButton, self.leftButton,
                               self.upButton, self.rightButton, self.downButton,
                               self.microLeftButton, self.microUpButton,
@@ -496,6 +498,9 @@
         [calculateMeanRRAlertView show];
 
         self.toolbarItems = self.qtcStep2MenuItems;
+        self.calipersView.allowTweakPosition = YES;
+        self.inQtc = YES;
+        
     }
 }
 
@@ -745,6 +750,15 @@
     [self.calipersView setUserInteractionEnabled:NO];
 }
 
+- (void)doneTweaking {
+    if (self.inQtc) {
+        self.toolbarItems = self.qtcStep2MenuItems;
+    }
+    else {
+        [self selectMainToolbar];
+    }
+}
+
 - (void)selectMainToolbar {
     self.toolbarItems  = self.mainMenuItems;
     [self.calipersView setUserInteractionEnabled:YES];
@@ -755,6 +769,7 @@
     self.calipersView.locked = NO;
     self.calipersView.allowColorChange = NO;
     self.calipersView.allowTweakPosition = NO;
+    self.inQtc = NO;
     self.chosenCaliper = nil;
     self.chosenCaliperComponent = None;
 }
@@ -1366,6 +1381,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 #pragma mark - restore view controller state
 
+// see https://useyourloaf.com/blog/state-preservation-and-restoration/
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder
 {
     EPSLog(@"encodeRestorableStateWithCoder");

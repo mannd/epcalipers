@@ -119,7 +119,7 @@ Select *Time*, *Amplitude*, or *Angle* to add the type of caliper you want.  Dou
 #+CAPTION: Add caliper menu
 [[./img/add_caliper_menu.png]]
 * Selecting a caliper
-When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red.  You can change these colors using [[app preferences]].  It is also possible to [[colors][change individual caliper colors]].  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another.
+When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red.  You can change these colors using app [[app preferences][Preferences]].  It is also possible to [[colors][change individual caliper colors]].  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another.
 #+CAPTION: Two uncalibrated calipers, a time and amplitude.  The time caliper is selected.
 [[./img/selected_caliper.png]]
 * <<moreoptions>>More caliper options
@@ -127,6 +127,7 @@ When more than one caliper is present, it is necessary that one is selected to b
 #+CAPTION: The *More* caliper menu
 [[./img/more_caliper_menu.png]]
 
+Selecting the *More* button on the main menu brings up the menu shown above.  The options on this menu are described next.
 ** <<colors>>Change caliper colors
 Initial caliper colors are set via [[app preferences][*App Preferences*]] and these colors apply to all newly added calipers.  However, once a caliper is added, its color can be changed, and each caliper can have a different color.  These color changes persist until the calipers are deleted or the app is stopped.  On the *More* menu, select the *Color* button.  Then long press a caliper to bring up a color selector.  Select a color and the caliper will change to that color.
 #+CAPTION: Caliper color picker
