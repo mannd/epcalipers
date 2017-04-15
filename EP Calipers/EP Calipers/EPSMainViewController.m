@@ -1291,6 +1291,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 #pragma mark - CalipersViewDelegate Methods
 
+// from https://github.com/fcanas/ios-color-picker
 - (void)chooseColor:(Caliper *)caliper {
     FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
     colorPicker.backgroundColor = [UIColor whiteColor];

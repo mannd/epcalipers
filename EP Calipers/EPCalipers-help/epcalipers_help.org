@@ -21,7 +21,7 @@ You open the ECG on your phone.  You look at the QT interval.  You're not sure a
 * Electronic calipers
 *EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your iPhone or iPad.  The electronic calipers of *EP Calipers* are more accurate, easier to use, and less dangerous than mechanical calipers (they don't have sharp points!).
 * What's new?
-This new version of *EP Calipers* contains allows for individual calipers to be colored differently, and calipers can now be "micro-moved" using the new *Tweak* menu.  The image can be locked if desired to facilitate moving calipers without inadvertently moving the image.  The image and calipers are no longer reset when the app goes into the background and is terminated by iOS.
+This new version of *EP Calipers* allows for individual calipers to be colored differently, and calipers can now be "micromoved" using the new *Tweak* menu.  The image can be locked if desired to facilitate moving calipers without inadvertently moving the image.  The image and calipers are no longer reset when the app goes into the background and is terminated by iOS.
 * Quick start
 When *EP Calipers* starts, a sample ECG and a time caliper are loaded.
 Move the caliper around by touching the caliper's crossbar and
@@ -84,7 +84,7 @@ After selecting the *Share* button, select *PDF* from the options that appear.  
 ** Multiple page PDFs
 When PDF files have more than one page, the app will display the first page initially.  You can go to other pages by selecting *Previous* or *Next* in the Image menu.  Note that if you switch to another app and *EP Calipers* is terminated by iOS (as can happen automatically to save memory space), only the last page viewed will be available when the app is restarted.  To change pages, it will be necessary to reload the PDF.
 * Adjusting the image
-You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Use the *Adjust* menu to rotate or flip your image.  This is useful if the image is rotated or not quite square to the screen.  You can rotate the image by 90° in either direction, or by increments of 1°.  If you select the *More* menu you can fine-tune the image further, rotating it by as little as 0.1° or flipping the image if for some reason it's reversed (flipping ECGs can be a fun pastime in its own right). Return from the *More* menu back to the *Adjust* menu by selecting *Done*.  Using these various options you should be able to straighten the image so it is square to the calipers.  You should recalibrate your calipers after rotating the image.  If you need to go back to the original position and zoom setting use *Reset*.  After adjusting the image select *Done* to return to the main image menu.
+You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Note that while in image mode, calipers are fixed in place.  Use the *Adjust* menu to rotate or flip your image.  This is useful if the image is rotated or not quite square to the screen.  You can rotate the image by 90° in either direction, or by increments of 1°.  If you select the *More* menu you can fine-tune the image further, rotating it by as little as 0.1° or flipping the image if for some reason it's reversed (flipping ECGs can be a fun pastime in its own right). Return from the *More* menu back to the *Adjust* menu by selecting *Done*.  Using these various options you should be able to straighten the image so it is square to the calipers.  You should recalibrate your calipers after rotating the image.  If you need to go back to the original position and zoom setting use *Reset*.  After adjusting the image select *Done* to return to the main image menu.
 #+CAPTION: The *Adjust* menu
 [[./img/adjust_menu.png]]
 #+CAPTION: The *More* image menu
@@ -111,11 +111,13 @@ Tap the *More* menu item to bring up a menu that contains some options that you 
 * Making measurements
 The interval measured by time or amplitude calipers is displayed on top of or next to the crossbar of the caliper.  Until these calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
 * Adding and deleting calipers
-Select *+* to add new calipers.  
+Select *+* from the main menu to add new calipers.  
 #+CAPTION: Main menu
 [[./img/main_menu2.png]]
 
-Select *Time*, *Amplitude*, or *Angle* to add the type of caliper you want.  Double-tap a caliper to delete it.
+Select *Time*, *Amplitude*, or *Angle* to add the type of caliper you want. 
+
+Double-tap a caliper to delete it.
 #+CAPTION: Add caliper menu
 [[./img/add_caliper_menu.png]]
 * Selecting a caliper
@@ -129,7 +131,7 @@ When more than one caliper is present, it is necessary that one is selected to b
 
 Selecting the *More* button on the main menu brings up the menu shown above.  The options on this menu are described next.
 ** <<colors>>Change caliper colors
-Initial caliper colors are set via [[app preferences][*App Preferences*]] and these colors apply to all newly added calipers.  However, once a caliper is added, its color can be changed, and each caliper can have a different color.  These color changes persist until the calipers are deleted or the app is stopped.  On the *More* menu, select the *Color* button.  Then long press a caliper to bring up a color selector.  Select a color and the caliper will change to that color.
+Initial caliper colors are set via app [[app preferences][Preferences]] and these colors apply to all newly added calipers.  However, once a caliper is added, its color can be changed, and each caliper can have a different color.  These color changes persist until the calipers are deleted or the app is stopped.  On the *More* menu, select the *Color* button.  Then long press a caliper to bring up a color selector.  Select a color and the caliper will change to that color.
 #+CAPTION: Caliper color picker
 [[./img/color_picker.png]]
 
@@ -155,7 +157,7 @@ Once a time (horizontal) caliper is calibrated, provided you use time units (suc
 * Mean rate and interval calculation
 Select a calibrated caliper and stretch it over a number of intervals.  Select *Mean Rate* or *MRate* and enter the number of intervals measured.  A dialog box will show the calculated mean heart rate and interval.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
 * QTc calculation
-Select *QTc*.  Stretch the selected caliper over one or more RR intervals and select *Measure*.  Enter the number of intervals the caliper is stretched over and select *Continue*.  Then use the same caliper to measure the QT interval.  Select *Measure*.  A dialog box will give the calculated QTc using Bazett's formula.
+Select *QTc*.  Stretch the selected caliper over one or more RR intervals and select *Measure*.  Enter the number of intervals the caliper is stretched over and select *Continue*.  Then use the same caliper to measure the QT interval.  Select *Measure*.  A dialog box will give the calculated QTc using Bazett's formula.  Note that it is possible to zoom and adjust the image while doing this (and other) measurements.  Also note that during all other measurements, it is possible to tweak or micromove the caliper using the *Tweak* menu prior to making the measurement.  However, during the second step of measuring the QTc (the QT measurement), the *Tweak* menu item is not accessible due to the presence of the QT measurement menu.  Because of this, to allow micromovements when measuring the QT, a long press on the individual caliper components will bring up the micromovement arrows and allow fine-tuning of the caliper position when measuring the QT, prior to the final QTc calculation.
 #+CAPTION: QTc measurement first step: measure 1 or more RR intervals
 [[./img/qtc_first_step.png]]
 #+CAPTION: QTc measurement second step: measure the QT interval
