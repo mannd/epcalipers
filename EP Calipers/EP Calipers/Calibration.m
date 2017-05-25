@@ -104,7 +104,8 @@
 }
 
 - (void)encodeCalibrationState:(NSCoder *)coder withPrefix:(NSString *)prefix {
-    [coder encodeObject:self.units forKey:[self getPrefixedKey:prefix key:@"Units"]];
+    // rawUnits is just _units.  However self.units returns units based on interval/rate
+    [coder encodeObject:self.rawUnits forKey:[self getPrefixedKey:prefix key:@"Units"]];
     [coder encodeBool:self.displayRate forKey:[self getPrefixedKey:prefix key:@"DisplayRate"]];
     [coder encodeBool:self.calibrated forKey:[self getPrefixedKey:prefix key:@"Calibrated"]];
     [coder encodeDouble:self.originalZoom forKey:[self getPrefixedKey:prefix key:@"OriginalZoom"]];
@@ -114,6 +115,7 @@
 }
 
 - (void)decodeCalibrationState:(NSCoder *)coder withPrefix:(NSString *)prefix {
+    // this is setting _units.  self.units returns units based on interval/rate
     self.units = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"Units"]];
     self.displayRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"DisplayRate"]];
     self.calibrated = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Calibrated"]];
