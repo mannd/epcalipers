@@ -117,7 +117,7 @@
         [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position - 25: self.bar2Position - 25), self.crossBarPosition - 22,  fmaxf(100.0, fabsf(self.bar2Position - self.bar1Position) + 50), 20)  withAttributes:self.attributes];
     }
     else {
-        [text drawInRect:CGRectMake(self.crossBarPosition + 5, self.bar1Position + (self.bar2Position - self.bar1Position)/2, 140, 20) withAttributes:self.attributes];
+        [text drawInRect:CGRectMake(self.crossBarPosition + 5, self.bar1Position - 10 + (self.bar2Position - self.bar1Position)/2, 140, 20) withAttributes:self.attributes];
     }
 }
 

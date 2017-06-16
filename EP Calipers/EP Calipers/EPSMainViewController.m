@@ -33,6 +33,10 @@
 #define HELP NSLocalizedString(@"Help", nil)
 #define CANCEL NSLocalizedString(@"Cancel", nil)
 #define ABOUT NSLocalizedString(@"About", nil)
+#define BACK NSLocalizedString(@"Back", nil)
+#define SET NSLocalizedString(@"Set", nil)
+#define CLEAR NSLocalizedString(@"Clear", nil)
+
 #define SWITCH_IPAD @"Image"
 #define SWITCH_IPHONE @"Image"
 #define SWITCH_BACK @"Measure"
@@ -358,8 +362,8 @@
 }
 
 - (void)createSetupCalibrationToolbar {
-    UIBarButtonItem *setButton = [[UIBarButtonItem alloc] initWithTitle:@"Set" style:UIBarButtonItemStylePlain target:self action:@selector(setCalibration)];
-    UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(clearCalibration)];
+    UIBarButtonItem *setButton = [[UIBarButtonItem alloc] initWithTitle:SET style:UIBarButtonItemStylePlain target:self action:@selector(setCalibration)];
+    UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:CLEAR style:UIBarButtonItemStylePlain target:self action:@selector(clearCalibration)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
 
     
@@ -457,7 +461,7 @@
         [self showNoTimeCaliperSelectedAlertView];
         return;
     }
-    UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Calculate", nil];
+    UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:CANCEL otherButtonTitles:NSLocalizedString(@"Calculate", nil), nil];
     calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     calculateMeanRRAlertView.tag = MEAN_RR_ALERTVIEW;
     [calculateMeanRRAlertView show];
@@ -489,7 +493,7 @@
         [self showNoTimeCaliperSelectedAlertView];
     }
     else {
-        UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Continue", nil];
+        UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:CANCEL otherButtonTitles:@"Continue", nil];
         calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
         calculateMeanRRAlertView.tag = MEAN_RR_FOR_QTC_ALERTVIEW;
         
@@ -660,7 +664,7 @@
         example = @"500 msec";
     }
     NSString *message = [NSString stringWithFormat:@"Enter measurement (e.g. %@)", example];
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Calibrate" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Calibrate" message:message delegate:self cancelButtonTitle:CANCEL otherButtonTitles:SET, nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = CALIBRATION_ALERTVIEW;
     NSString *calibrationString = @"";
