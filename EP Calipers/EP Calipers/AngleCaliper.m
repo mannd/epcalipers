@@ -99,7 +99,7 @@
     [self.attributes setObject:self.color forKey:NSForegroundColorAttributeName];
     
     // same positioning as
-    [text drawInRect:CGRectMake((point2.x > point1.x ? point1.x - 25: point2.x - 25), point1.y - 20,  fmax(100.0, fabs(point2.x - point1.x) + 50), 20)  withAttributes:self.attributes];
+    [text drawInRect:CGRectMake((point2.x > point1.x ? point1.x - 25: point2.x - 25), point1.y - 22,  fmax(100.0, fabs(point2.x - point1.x) + 50), 20)  withAttributes:self.attributes];
 
 }
 
@@ -118,7 +118,7 @@
 }
 
 - (NSString *)baseMeasurement:(double)lengthInPoints {
-    NSString *s = [NSString stringWithFormat:@"%.4g %@", [self calibratedBaseResult:lengthInPoints], self.calibration.units];
+    NSString *s = [NSString localizedStringWithFormat:@"%.4g %@", [self calibratedBaseResult:lengthInPoints], self.calibration.units];
     return s;
 
 }
@@ -162,7 +162,7 @@
 - (NSString *)measurement {
     double angle = self.angleBar1 - self.angleBar2;
     double degrees = [AngleCaliper radiansToDegrees:angle];
-    NSString *text = [NSString stringWithFormat:@"%.1f°", degrees];
+    NSString *text = [NSString localizedStringWithFormat:@"%.1f°", degrees];
     return text;
 }
 
@@ -175,7 +175,7 @@
     // the angle between bar2 and a vertical
     double angle = 0.5 * M_PI - self.angleBar2;
     double degrees = [AngleCaliper radiansToDegrees:angle];
-    NSString *text = [NSString stringWithFormat:@"%.1f°", degrees];
+    NSString *text = [NSString localizedStringWithFormat:@"%.1f°", degrees];
     return text;
 }
 

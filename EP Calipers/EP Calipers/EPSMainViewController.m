@@ -522,7 +522,7 @@
                 qt *= 1000;
                 qtc *= 1000;
             }
-            result = [NSString stringWithFormat:@"Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett's formula)", meanRR, c.calibration.units, qt, c.calibration.units, qtc, c.calibration.units];
+            result = [NSString localizedStringWithFormat:@"Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett's formula)", meanRR, c.calibration.units, qt, c.calibration.units, qtc, c.calibration.units];
         }
         UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:@"Calculated QTc" message:result delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         qtcResultAlertView.alertViewStyle = UIAlertViewStyleDefault;
@@ -1148,7 +1148,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             double meanRR = intervalResult / divisor;
             double meanRate = [c rateResult:meanRR];
             if (alertView.tag == MEAN_RR_ALERTVIEW) {
-                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString localizedStringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
                 [resultAlertView show];
             }
