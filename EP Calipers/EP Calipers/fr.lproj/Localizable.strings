@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  EP Calipers
+
+  Created by David Mann on 6/16/17.
+  Copyright © 2017 EP Studios. All rights reserved.
+*/
+"Image Mode" = "Mode Image";
+"EP Calipers" = "Étiers EP";
+"Help" = "Aide";
+"About" = "Sur";
+"Cancel" = "Annuler";
+"Calibrate" = "Étalonner";
+"Set" = "Définir";
+"Clear" = "Effacez";

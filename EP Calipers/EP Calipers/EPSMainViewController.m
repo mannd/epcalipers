@@ -30,8 +30,9 @@
 #define TOGGLE_INT_RATE_IPHONE @"I/R"
 #define MEAN_RATE_IPAD @"Mean Rate"
 #define MEAN_RATE_IPHONE @"MRate"
-#define HELP_IPAD @"Help"
-#define HELP_IPHONE @"?"
+#define HELP NSLocalizedString(@"Help", nil)
+#define CANCEL NSLocalizedString(@"Cancel", nil)
+#define ABOUT NSLocalizedString(@"About", nil)
 #define SWITCH_IPAD @"Image"
 #define SWITCH_IPHONE @"Image"
 #define SWITCH_BACK @"Measure"
@@ -55,8 +56,8 @@
 #define NUM_PDF_PAGES_ALERTVIEW 101
 #define LAUNCHED_FROM_URL_ALERTVIEW 102
 
-#define CALIPERS_VIEW_TITLE @"EP Calipers"
-#define IMAGE_VIEW_TITLE @"Image Mode"
+#define CALIPERS_VIEW_TITLE NSLocalizedString(@"EP Calipers", nil)
+#define IMAGE_VIEW_TITLE NSLocalizedString(@"Image Mode", nil)
 
 #define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
 
@@ -262,14 +263,14 @@
     UIAlertAction* preferencesAction = [UIAlertAction actionWithTitle:@"Preferences" style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action) {[self openSettings];}];
     [actionSheet addAction:preferencesAction];
-    UIAlertAction* helpAction = [UIAlertAction actionWithTitle:@"Help" style:UIAlertActionStyleDefault
+    UIAlertAction* helpAction = [UIAlertAction actionWithTitle:HELP style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action) {[self performSegueWithIdentifier:@"WebViewSegue" sender:self];}];
     [actionSheet addAction:helpAction];
-    UIAlertAction* aboutAction = [UIAlertAction actionWithTitle:@"About" style:UIAlertActionStyleDefault
+    UIAlertAction* aboutAction = [UIAlertAction actionWithTitle:ABOUT style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * action) {[About show];}];
     [actionSheet addAction:aboutAction];
     
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel
                                                          handler:nil];
     [actionSheet addAction:cancelAction];
     
