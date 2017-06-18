@@ -1090,11 +1090,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)fadeCaliperView {
-    self.calipersView.alpha = 0.5f;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.calipersView.alpha = 0.5f;}];
 }
 
 - (void)unfadeCaliperView {
-    self.calipersView.alpha = 1.0f;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.calipersView.alpha = 1.0f;}];
 }
 
 - (IBAction)flipImage:(id)sender {
