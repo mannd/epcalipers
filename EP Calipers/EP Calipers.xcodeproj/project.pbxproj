@@ -73,8 +73,8 @@
 		8E9BA1321EF47D2100FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8E9BA1341EF6BED700FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fr; path = "fr.lproj/EPCalipers-help"; sourceTree = "<group>"; };
 		8E9BA1351EF6BED700FC8DD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = folder; name = en; path = "en.lproj/EPCalipers-help"; sourceTree = "<group>"; };
-		8E9BA1381EF6E7BF00FC8DD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FCColorPickerViewController.xib; sourceTree = "<group>"; };
-		8E9BA13E1EF6E95200FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/FCColorPickerViewController.strings; sourceTree = "<group>"; };
+		8EB2F65D1EF6EF09003B82A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FCColorPickerViewController.xib; sourceTree = "<group>"; };
+		8EB2F65E1EF6EF7C003B82A6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/FCColorPickerViewController.strings; sourceTree = "<group>"; };
 		8EB3DE351AC344CC009376AD /* EPSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSLogging.h; sourceTree = "<group>"; };
 		8EB3DE371AC603A3009376AD /* Calibration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calibration.h; sourceTree = "<group>"; };
 		8EB3DE381AC603A3009376AD /* Calibration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calibration.m; sourceTree = "<group>"; };
@@ -389,8 +389,8 @@
 		8E9BA1391EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				8E9BA1381EF6E7BF00FC8DD2 /* en */,
-				8E9BA13E1EF6E95200FC8DD2 /* fr */,
+				8EB2F65D1EF6EF09003B82A6 /* Base */,
+				8EB2F65E1EF6EF7C003B82A6 /* fr */,
 			);
 			name = FCColorPickerViewController.xib;
 			sourceTree = "<group>";
