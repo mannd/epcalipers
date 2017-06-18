@@ -19,27 +19,31 @@
 // set to yes to always show startup screen
 //#define TEST_QUICK_START NO
 
+// make my own simpler localization macro
+#define localize(s) NSLocalizedString(s, nil)
+
 #define ANIMATION_DURATION 0.5
 #define MAX_ZOOM 10.0
 #define MOVEMENT 1.0f
 #define MICRO_MOVEMENT 0.1f
 
-#define CALIBRATE_IPAD @"Calibrate"
-#define CALIBRATE_IPHONE @"Cal"
-#define TOGGLE_INT_RATE_IPAD @"Interval/Rate"
-#define TOGGLE_INT_RATE_IPHONE @"I/R"
-#define MEAN_RATE_IPAD @"Mean Rate"
-#define MEAN_RATE_IPHONE @"MRate"
-#define HELP NSLocalizedString(@"Help", nil)
-#define CANCEL NSLocalizedString(@"Cancel", nil)
-#define ABOUT NSLocalizedString(@"About", nil)
-#define BACK NSLocalizedString(@"Back", nil)
-#define SET NSLocalizedString(@"Set", nil)
-#define CLEAR NSLocalizedString(@"Clear", nil)
+#define CALIBRATE_IPAD localize(@"Calibrate")
+#define CALIBRATE_IPHONE localize(@"Cal")
+#define TOGGLE_INT_RATE_IPAD localize(@"Interval/Rate")
+#define TOGGLE_INT_RATE_IPHONE localize(@"I/R")
+#define MEAN_RATE_IPAD localize(@"Mean Rate")
+#define MEAN_RATE_IPHONE localize(@"MRate")
+#define HELP localize(@"Help")
+#define CANCEL localize(@"Cancel")
+#define ABOUT localize(@"About")
+#define BACK localize(@"Back")
+#define SET localize(@"Set")
+#define CLEAR localize(@"Clear")
+#define MORE localize(@"More")
 
-#define SWITCH_IPAD @"Image"
-#define SWITCH_IPHONE @"Image"
-#define SWITCH_BACK @"Measure"
+#define SWITCH_IPAD localize(@"Image")
+#define SWITCH_IPHONE localize(@"Image")
+#define SWITCH_BACK localize(@"Measure")
 //#define SETTINGS_IPAD @"Preferences"
 //#define SETTINGS_IPHONE @"Prefs"
 //#define BRUGADA_IPAD @"Brugada"
@@ -60,8 +64,8 @@
 #define NUM_PDF_PAGES_ALERTVIEW 101
 #define LAUNCHED_FROM_URL_ALERTVIEW 102
 
-#define CALIPERS_VIEW_TITLE NSLocalizedString(@"EP Calipers", nil)
-#define IMAGE_VIEW_TITLE NSLocalizedString(@"Image Mode", nil)
+#define CALIPERS_VIEW_TITLE localize(@"EP Calipers")
+#define IMAGE_VIEW_TITLE localize(@"Image Mode")
 
 #define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
 
@@ -180,7 +184,7 @@
         }
         
         if (self.wasLaunchedFromUrl) {
-            UIAlertView *launchedFromUrlAlert = [[UIAlertView alloc] initWithTitle:@"Multipage PDF" message:@"App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	  UIAlertView *launchedFromUrlAlert = [[UIAlertView alloc] initWithTitle:localize(@"Multipage PDF") message:localize(@"App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages.") delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             launchedFromUrlAlert.tag = LAUNCHED_FROM_URL_ALERTVIEW;
             [launchedFromUrlAlert show];
             // only show this warning once
@@ -264,7 +268,7 @@
 // Help menu, etc.
 - (void)showSecondaryMenu {
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction* preferencesAction = [UIAlertAction actionWithTitle:@"Preferences" style:UIAlertActionStyleDefault
+    UIAlertAction* preferencesAction = [UIAlertAction actionWithTitle:localize(@"Preferences") style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action) {[self openSettings];}];
     [actionSheet addAction:preferencesAction];
     UIAlertAction* helpAction = [UIAlertAction actionWithTitle:HELP style:UIAlertActionStyleDefault
@@ -305,7 +309,7 @@
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
-    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreToolbar)];
+    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:MORE style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreToolbar)];
     self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton,
                           self.calibrateCalipersButton,
                           self.toggleIntervalRateButton,
@@ -317,12 +321,12 @@
 
 - (void)createImageToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
-    UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
-    UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
-    UIBarButtonItem *clearImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Sample" style:UIBarButtonItemStylePlain target:self action:@selector(loadDefaultImage)];
+    UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:localize(@"Select") style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
+    UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:localize(@"Adjust") style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
+    UIBarButtonItem *clearImageButton = [[UIBarButtonItem alloc] initWithTitle:localize(@"Sample") style:UIBarButtonItemStylePlain target:self action:@selector(loadDefaultImage)];
     // these 2 buttons only enable for multipage PDFs
-    self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
-    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? @"Previous" : @"Prev") style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
+    self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:localize(@"Next") style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
+    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? localize(@"Previous" ): localize(@"Prev")) style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
     [self enablePageButtons:NO];
     self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, clearImageButton, self.previousPageButton, self.nextPageButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -336,7 +340,7 @@
     UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"90°L" style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
     UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:@"1°R" style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
     UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"1°L" style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
-    UIBarButtonItem *moreAdjustButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreAdjustImageToolbar)];
+    UIBarButtonItem *moreAdjustButton = [[UIBarButtonItem alloc] initWithTitle:MORE style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreAdjustImageToolbar)];
     UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
     UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     
@@ -353,7 +357,7 @@
 }
 
 - (void)createAddCalipersToolbar {
-    UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Time" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
+    UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:localize(@"Time") style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
     UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Amplitude" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
     UIBarButtonItem *angleButton = [[UIBarButtonItem alloc] initWithTitle:@"Angle" style:UIBarButtonItemStylePlain target:self action:@selector(addAngleCaliper)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
@@ -461,13 +465,26 @@
         [self showNoTimeCaliperSelectedAlertView];
         return;
     }
-    UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:CANCEL otherButtonTitles:NSLocalizedString(@"Calculate", nil), nil];
+    
+// Alternate way to do this using UIAlertController, however, too many UIAlertViews and not worth changing.
+// We'll keep this commented code here as a reminder in case Apple ever really gets rid of UIAlertView for good.
+    
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:localize(@"Enter Number of Intervals") message:localize(@"How many intervals is this caliper measuring?") preferredStyle:UIAlertControllerStyleAlert];
+//    [alertController addAction:[UIAlertAction actionWithTitle:localize(@"Calculate") style:UIAlertActionStyleDefault handler:nil]];
+//    [alertController addAction:[UIAlertAction actionWithTitle:localize(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+//    [alertController addTextFieldWithConfigurationHandler:^(UITextField* inputTextField){
+//        [inputTextField setKeyboardType:UIKeyboardTypeNumberPad];
+//        [inputTextField setText:@"3"];
+//        [inputTextField setClearButtonMode:UITextFieldViewModeAlways];}];
+//    [self presentViewController:alertController animated:YES completion:nil];
+   
+    UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:localize(@"Enter Number of Intervals") message:localize(@"How many intervals is this caliper measuring?") delegate:self cancelButtonTitle:CANCEL otherButtonTitles:localize(@"Calculate"), nil];
     calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     calculateMeanRRAlertView.tag = MEAN_RR_ALERTVIEW;
     [calculateMeanRRAlertView show];
     
     [[calculateMeanRRAlertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
-    [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"3"];
+    [[calculateMeanRRAlertView textFieldAtIndex:0] setText:localize(@"3")];
     [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
 }
 
@@ -1153,7 +1170,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             double meanRR = intervalResult / divisor;
             double meanRate = [c rateResult:meanRR];
             if (alertView.tag == MEAN_RR_ALERTVIEW) {
-                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString localizedStringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:localize(@"Mean Interval and Rate") message:[NSString localizedStringWithFormat:localize(@"Mean interval = %.4g %@\nMean rate = %.4g bpm"), meanRR, [c.calibration rawUnits], meanRate] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
                 resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
                 [resultAlertView show];
             }
