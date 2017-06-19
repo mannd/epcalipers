@@ -4,7 +4,7 @@
 #+DATE:      [2015-04-02 Thu]
 #+DESCRIPTION: EP Calipers Help
 #+KEYWORDS:
-#+LANGUAGE:  en
+#+LANGUAGE:  fr
 #+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
@@ -14,17 +14,13 @@
 #+LINK_HOME: 
 #+XSLT:
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-* FRENCH VERSION
-* You're on call, again...
-It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is due to get his antiarrhythmic drug (who comes up with these crazy drug schedules?) and his ECG has a borderline prolonged QTc interval, at least according to the computer.  She's not sure if it is safe to give the drug.  The nurse wants to send you the ECG.
-
-You open the ECG on your phone.  You look at the QT interval.  You're not sure about the computer's measurement.  You really should double check it.  You start counting little boxes.  You pull out the (t)rusty old pair of mechanical calipers some drug rep gave you many years ago, back when such largesse was still legal.  You think to yourself: I live in a digital age.  Am I really making measurements on my iPhone with a physical pair of calipers?
-* Electronic calipers
-*EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your iPhone or iPad.  The electronic calipers of *EP Calipers* are more accurate, easier to use, and less dangerous than mechanical calipers (they don't have sharp points!).
-* What's new?
-This new version of *EP Calipers* allows for individual calipers to be colored differently, and calipers can now be "micromoved" using the new *Tweak* menu.  The image can be locked if desired to facilitate moving calipers without inadvertently moving the image.  The image and calipers are no longer reset when the app goes into the background and is terminated by iOS.
+* COMMENT FRENCH VERSION
+* Étriers electroniques
+Cette application *Étriers EP* fournit des *étriers electroniques* à mesurer des intervalles sur les images des enregistrements électrocardiographiques ou électrophysiologiques.  Dans le laboratroire d’électrophysiologie les étriers électroniques sont inclus avec le système d'enregistrement informatisé.  *Étriers EP* fournit de même étriers électroniques pour votre iPhone ou iPad.  Les étriers électroniques d’ *Étriers EP* sont plus précis, plus faciles à utiliser, et moins dangereux que les étriers méchaniques (ils n’ont pas de points tranchants!).
+* Quoi de neuf?
+Cette nouvelle version d’ *Étriers EP* utilise le formatage régional pour les nombres, et elle comprend une traduction française.
 * Quick start
-When *EP Calipers* starts, a sample ECG and a time caliper are loaded.
+When *Étriers EP* starts, a sample ECG and a time caliper are loaded.
 Move the caliper around by touching the caliper's crossbar and
 dragging it with your finger.  Expand and contract the caliper by
 putting your finger on either vertical bar and dragging.  Pinch and
@@ -50,7 +46,7 @@ way are not saved in the photos collection of the device.  It's best to use this
 ** Select a photo from your photos collection
 Touch *Select* to chose an image that is already saved on your device in your photos collection (for example, an image file attached to an email that you saved or a photo that your previously took).
 ** Select a photo or PDF using the *Share* menu from other apps
-*EP Calipers* can open image and PDF files regardless of where they are located on your device.  You can directly open email attachments, iCloud, Google Drive, and Dropbox files.  It is also easy to open ECG images directly from the /AliveCor Kardia™/ app.  The key to opening images in external apps is to use the *Share* button.  It looks like this: [[./img/share_icon.png]]
+*Étriers EP* can open image and PDF files regardless of where they are located on your device.  You can directly open email attachments, iCloud, Google Drive, and Dropbox files.  It is also easy to open ECG images directly from the /AliveCor Kardia™/ app.  The key to opening images in external apps is to use the *Share* button.  It looks like this: [[./img/share_icon.png]]
 
 Depending on the app, this button may appear at the top of the screen, or it may be necessary to do a long press on an image to open the *Share* menu.  Here you can see the *Share* button at the top right of the /Kardia/ screen:
 #+CAPTION: *Share* button at top right
@@ -58,7 +54,7 @@ Depending on the app, this button may appear at the top of the screen, or it may
 
 Once the *Share* menu is open, one of the options should be *Copy to EP Calipers*.  Selecting this option will open the image in the app.
 
-#+CAPTION: *Copy to EP Calipers* will open the image in *EP Calipers*
+#+CAPTION: *Copy to EP Calipers* will open the image in *Étriers EP*
 [[./img/copy_to_ep_calipers.png]]
 
 If the *Copy to EP Calipers* option does not appear, then try the *Quick Look* button:
@@ -68,7 +64,7 @@ If the *Copy to EP Calipers* option does not appear, then try the *Quick Look* b
 
 or the *Open In...* button.  Selecting it should open a window where *Copy to EP Calipers* appears.
 
-#+CAPTION: The *Open In...* button allows the image to be opened in *EP Calipers*
+#+CAPTION: The *Open In...* button allows the image to be opened in *Étriers EP*
 [[./img/openin.png]]
 
 *** Opening email attachments or Dropbox files
@@ -83,7 +79,7 @@ To view ECGs in the /AliveCor Kardia/ app, select *Journal*, then *SHARE* for th
 After selecting the *Share* button, select *PDF* from the options that appear.  Then select the *Share* button at the top right of the screen.  Select *Copy to EP Calipers* and you are ready to measure!
 
 ** Multiple page PDFs
-When PDF files have more than one page, the app will display the first page initially.  You can go to other pages by selecting *Previous* or *Next* in the Image menu.  Note that if you switch to another app and *EP Calipers* is terminated by iOS (as can happen automatically to save memory space), only the last page viewed will be available when the app is restarted.  To change pages, it will be necessary to reload the PDF.
+When PDF files have more than one page, the app will display the first page initially.  You can go to other pages by selecting *Previous* or *Next* in the Image menu.  Note that if you switch to another app and *Étriers EP* is terminated by iOS (as can happen automatically to save memory space), only the last page viewed will be available when the app is restarted.  To change pages, it will be necessary to reload the PDF.
 * Adjusting the image
 You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Note that while in image mode, calipers are fixed in place.  Use the *Adjust* menu to rotate or flip your image.  This is useful if the image is rotated or not quite square to the screen.  You can rotate the image by 90° in either direction, or by increments of 1°.  If you select the *More* menu you can fine-tune the image further, rotating it by as little as 0.1° or flipping the image if for some reason it's reversed (flipping ECGs can be a fun pastime in its own right). Return from the *More* menu back to the *Adjust* menu by selecting *Done*.  Using these various options you should be able to straighten the image so it is square to the calipers.  You should recalibrate your calipers after rotating the image.  If you need to go back to the original position and zoom setting use *Reset*.  After adjusting the image select *Done* to return to the main image menu.
 #+CAPTION: The *Adjust* menu
@@ -91,9 +87,9 @@ You can adjust the positioning of the image using pinch-to-zoom gestures and fin
 #+CAPTION: The *More* image menu
 [[./img/more_menu.png]]
 * Sample ECG
-Tap *Sample* to show the sample ECG that comes with *EP Calipers*.  This is a good way to practice using the app, or demonstrate it to others.
+Tap *Sample* to show the sample ECG that comes with *Étriers EP*.  This is a good way to practice using the app, or demonstrate it to others.
 * Exiting Image mode
-After loading and adjusting the image, you need to exit Image mode so that you can use the calipers.  Select the *Measure* button at the top left of the screen to return to the *EP Calipers* main screen.
+After loading and adjusting the image, you need to exit Image mode so that you can use the calipers.  Select the *Measure* button at the top left of the screen to return to the *Étriers EP* main screen.
 #+CAPTION: Use the *Measure* button to exit *Image* mode
 [[./img/measure_button.png]]
 * Types of calipers
@@ -168,13 +164,13 @@ Note that during all other measurements, it is possible to micromove (i.e. "[[tw
 #+CAPTION: QTc result
 [[./img/qtc_result.png]]
 * Brugadometer
-The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between ECGs with a Brugada syndrome pattern in leads V1 or V2 and ECGs with incomplete right bundle branch block.  This tool is under development in *EP Calipers* and will likely evolve in future updates.  In order to use the *Brugadometer*, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper preferably in msec or mm.  After doing so, an angle caliper will appear to have a triangle at its apex as shown below.
+The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between ECGs with a Brugada syndrome pattern in leads V1 or V2 and ECGs with incomplete right bundle branch block.  This tool is under development in *Étriers EP* and will likely evolve in future updates.  In order to use the *Brugadometer*, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper preferably in msec or mm.  After doing so, an angle caliper will appear to have a triangle at its apex as shown below.
 #+CAPTION: Brugadometer showing triangle base 5 mm below apex of caliper
 [[./img/brugadometer1.png]]
 
 The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  A triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] for further information.
 * <<app preferences>>Preferences
-Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *EP Calipers*. You can also change preferences by selecting the *Preferences* menu item from the *Action* menu, opened by tapping this icon [[./img/share_icon.png]] at the top right of the screen.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.
+Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *Étriers EP*. You can also change preferences by selecting the *Preferences* menu item from the *Action* menu, opened by tapping this icon [[./img/share_icon.png]] at the top right of the screen.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.
 * Issues and limitations
 - Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
 - Rotation of the device will not preserve the relation between the ECG image and the calipers. However calibration /is/ preserved with rotation.
@@ -183,8 +179,8 @@ Preferences such as caliper colors and default calibration intervals can be sele
 * Acknowledgments
 - Thanks to Dr. Michael Katz for the concept.
 - Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.
-- The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers][GitHub]].
-- *EP Calipers* is open source software and is licensed under the
+- The source code for *Étriers EP* is available on [[https://github.com/mannd/epcalipers][GitHub]].
+- *Étriers EP* is open source software and is licensed under the
   [[https://www.apache.org/licenses/LICENSE-2.0.html][Apache License Version 2.0]].  No guarantees are made as to the accuracy of the
   app, so use at your own risk.
 - For questions, error reporting or suggestions contact
