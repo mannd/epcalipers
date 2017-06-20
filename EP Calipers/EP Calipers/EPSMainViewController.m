@@ -213,10 +213,14 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             // This is the first launch ever
             EPSLog(@"First launch");
+            // NOTE: for now we will eliminate this dialog, though keep the first launch startup code,
+            // otherwise app breaks.
+            
             //TODO: Update with each version!!
-            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:L(@"EP Calipers Quick Start") message:@"What's new: Color calipers individually.  Use the *Tweak* menu to micro-move caliper components.  App maintains state when terminated by iOS and restored.  Bug fixes.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the action button at the upper right for full help."
-                                                                     delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
-            [quickStartAlert show];
+//            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:L(@"EP Calipers Quick Start") message:@"What's new: Color calipers individually.  Use the *Tweak* menu to micro-move caliper components.  App maintains state when terminated by iOS and restored.  Bug fixes.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the action button at the upper right for full help."
+//                                                                     delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
+//            [quickStartAlert show];
+            
         }
         
         [self selectMainToolbar];

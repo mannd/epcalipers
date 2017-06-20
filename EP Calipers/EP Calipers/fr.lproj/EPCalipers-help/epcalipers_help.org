@@ -16,18 +16,17 @@
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
 * COMMENT FRENCH VERSION
 * Étriers electroniques
-Cette application *Étriers EP* fournit des *étriers electroniques* à mesurer des intervalles sur les images des enregistrements électrocardiographiques ou électrophysiologiques.  Dans le laboratroire d’électrophysiologie les étriers électroniques sont inclus avec le système d'enregistrement informatisé.  *Étriers EP* fournit de même étriers électroniques pour votre iPhone ou iPad.  Les étriers électroniques d’ *Étriers EP* sont plus précis, plus faciles à utiliser, et moins dangereux que les étriers méchaniques (ils n’ont pas de points tranchants!).
-* Quick start
-When *Étriers EP* starts, a sample ECG and a time caliper are loaded.
-Move the caliper around by touching the caliper's crossbar and
-dragging it with your finger.  Expand and contract the caliper by
-putting your finger on either vertical bar and dragging.  Pinch and
-zoom the underlying ECG image as needed to enlarge or shrink it.  If
-the ECG is bigger than your screen, you can drag the image around with
-your finger to choose a place to measure.  The remainder of these
-instructions will go over how to load ECG images, add and delete
-calipers, calibrate the calipers and make advanced measurements like
-the corrected QT interval.
+Cette application *Étriers EP* offre des *étriers electroniques* pour mesurer des intervalles sur les images des enregistrements électrocardiographiques ou électrophysiologiques.  Dans le laboratroire d’électrophysiologie les étriers électroniques sont inclus avec le système d'enregistrement informatisé.  *Étriers EP* fournit de même étriers électroniques pour votre iPhone ou iPad.  Les étriers électroniques d’ *Étriers EP* sont plus précis, plus faciles à utiliser, et moins dangereux que les étriers méchaniques (ils n’ont pas de points tranchants!).
+* Commencement rapide
+Quand *Étriers EP* commence, un exemple ECG et un étrier temps sont
+montrés.  Déplacez l’étrier par toucher la barre tranversale et la
+glisser avec votre droigt.  Élargez et contractez l’étrier par toucher
+soit barre verticale et la glisser.  Pincez et zoomez l’image d’ECG au
+besoin.  Si l’ECG est plus grand que votre écran, vous pouvez la
+glisser avec votre droigt à trouver un endroit où mesurer.  Le reste
+des instructions va parcourir comme on charge les images, adjoute et
+supprime les étriers, les étale, et fait les mesures avancées comme
+l’intervalle QT corrigé.
 * Loading an image
 #+CAPTION: *Image* button
 [[./img/image_button.png]]
