@@ -20,8 +20,6 @@ It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is 
 You open the ECG on your phone.  You look at the QT interval.  You're not sure about the computer's measurement.  You really should double check it.  You start counting little boxes.  You pull out the (t)rusty old pair of mechanical calipers some drug rep gave you many years ago, back when such largesse was still legal.  You think to yourself: I live in a digital age.  Am I really making measurements on my iPhone with a physical pair of calipers?
 * Electronic calipers
 *EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your iPhone or iPad.  The electronic calipers of *EP Calipers* are more accurate, easier to use, and less dangerous than mechanical calipers (they don't have sharp points!).
-* What's new?
-This new version of *EP Calipers* allows for individual calipers to be colored differently, and calipers can now be "micromoved" using the new *Tweak* menu.  The image can be locked if desired to facilitate moving calipers without inadvertently moving the image.  The image and calipers are no longer reset when the app goes into the background and is terminated by iOS.
 * Quick start
 When *EP Calipers* starts, a sample ECG and a time caliper are loaded.
 Move the caliper around by touching the caliper's crossbar and

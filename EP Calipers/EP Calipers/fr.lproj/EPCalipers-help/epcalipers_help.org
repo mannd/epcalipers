@@ -17,8 +17,6 @@
 * COMMENT FRENCH VERSION
 * Étriers electroniques
 Cette application *Étriers EP* fournit des *étriers electroniques* à mesurer des intervalles sur les images des enregistrements électrocardiographiques ou électrophysiologiques.  Dans le laboratroire d’électrophysiologie les étriers électroniques sont inclus avec le système d'enregistrement informatisé.  *Étriers EP* fournit de même étriers électroniques pour votre iPhone ou iPad.  Les étriers électroniques d’ *Étriers EP* sont plus précis, plus faciles à utiliser, et moins dangereux que les étriers méchaniques (ils n’ont pas de points tranchants!).
-* Quoi de neuf?
-Cette nouvelle version d’ *Étriers EP* utilise le formatage régional pour les nombres, et elle comprend une traduction française.
 * Quick start
 When *Étriers EP* starts, a sample ECG and a time caliper are loaded.
 Move the caliper around by touching the caliper's crossbar and
