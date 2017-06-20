@@ -15,6 +15,10 @@
 #import "CaliperFactory.h"
 #include "Defs.h"
 
+//:TODO: Make NO for release version
+// set to yes to always show startup screen
+//#define TEST_QUICK_START NO
+
 // make my own simpler localization macro
 #define L(s) NSLocalizedString(s, nil)
 
@@ -194,6 +198,25 @@
         // When starting add a caliper if one isn't there already
         if ([self.calipersView count] == 0) {
             [self addHorizontalCaliper];
+        }
+        
+        self.firstRun = NO;
+        // for testing
+        //        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
+            // app already launched
+            EPSLog(@"Not first launch");
+        }
+        else
+        {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            // This is the first launch ever
+            EPSLog(@"First launch");
+            //TODO: Update with each version!!
+            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:L(@"EP Calipers Quick Start") message:@"What's new: Color calipers individually.  Use the *Tweak* menu to micro-move caliper components.  App maintains state when terminated by iOS and restored.  Bug fixes.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the action button at the upper right for full help."
+                                                                     delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
+            [quickStartAlert show];
         }
         
         [self selectMainToolbar];
