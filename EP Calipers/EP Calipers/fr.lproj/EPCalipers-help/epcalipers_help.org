@@ -24,87 +24,85 @@ glisser avec votre droigt.  Élargez et contractez l’étrier par toucher
 soit barre verticale et la glisser.  Pincez et zoomez l’image d’ECG au
 besoin.  Si l’ECG est plus grand que votre écran, vous pouvez la
 glisser avec votre droigt à trouver un endroit où mesurer.  Le reste
-des instructions va parcourir comme on charge les images, adjoute et
-supprime les étriers, les étale, et fait les mesures avancées comme
+des instructions va parcourir comme on charge les images, on adjoute et
+supprime les étriers, on les étale, et on rend les caculs avancés comme
 l’intervalle QT corrigé.
-* Loading an image
-#+CAPTION: *Image* button
+* Charger une image
+#+CAPTION: Bouton d’ *Image*
 [[./img/image_button.png]]
 
-Use the *Image* button at the top left of the screen to show the *Image* menu at the bottom of your screen. 
-#+CAPTION: *Image* menu
+Appuyez le bouton d’*Image* en haut gauche de l’écran pour montrer le menu d’*Image* en base d l’écran.
+#+CAPTION: Menu d’*Image*
 [[./img/image_menu.png]]
 
-With this menu you can load and adjust an ECG image.  There are several ways to load an ECG image.
-** Take a photo of an ECG
-[[./img/camera_icon.png]]Touch the *Camera* button to take a photo of an
-ECG tracing and load it into the app.  Note that images captured this
-way are not saved in the photos collection of the device.  It's best to use this option to make a quick measurement when you don't need to save the image.
-** Select a photo from your photos collection
-Touch *Select* to chose an image that is already saved on your device in your photos collection (for example, an image file attached to an email that you saved or a photo that your previously took).
-** Select a photo or PDF using the *Share* menu from other apps
-*Étriers EP* can open image and PDF files regardless of where they are located on your device.  You can directly open email attachments, iCloud, Google Drive, and Dropbox files.  It is also easy to open ECG images directly from the /AliveCor Kardia™/ app.  The key to opening images in external apps is to use the *Share* button.  It looks like this: [[./img/share_icon.png]]
+Avec ce menu vous pouvez charger et ajuster une image électrocardiographique.  Il y a plusieurs maniéres de la charger.
+** Prenez une photo d’un ECG
+[[./img/camera_icon.png]]Touchez le bouton de *Camera* pour prendre une photo d’un ECG et la charger dans l’application.  Notez que les images qui sont saisies ainsi ne sont pas enregistrées dans la collection de photos de votre appareil.  C’est mieux que vous utilisez cette option pour faire un mesurement rapide quand vous n’avez pas besoin d’enregistrer l’image.
+** Choissisez une photo de votre collection de photos
+** Choissisez une photo ou un PDF avec l’icône de partage d’autres applications
+*Étriers EP* peut ouvrir des fichiers d’images et PDF, indépendamment de leur location dans votre appareil.  Il est facile d’ouvrir directement des fichiers joints and des fichiers iCloud, Google Drive, et Dropbox.  Il est aussi facile d’ouvrir des images électrocardiographiques de l’application /AliveCor Kardia™/.  La solution à ouvrir les images dans les applications externes est l’utilisation du button *Partage*.  Ça resemmble à cela: [[./img/share_icon.png]]
 
-Depending on the app, this button may appear at the top of the screen, or it may be necessary to do a long press on an image to open the *Share* menu.  Here you can see the *Share* button at the top right of the /Kardia/ screen:
-#+CAPTION: *Share* button at top right
+Selon l’application, ce button se trouve en haut d l’écran, ou il faut appuyer longtemps sur une image pour ouvrir le menu *Partage*.  Voici le bouton *Partage* en haut à droite de l’écran de l’application /Kardia/:
+#+CAPTION: Bouton *Partage* en haut à droite
 [[./img/aliveecgtop.png]]
 
-Once the *Share* menu is open, one of the options should be *Copy to EP Calipers*.  Selecting this option will open the image in the app.
+Quand le menu *Partage* est ouvert, l’une des options serait *Copier à Étriers EP*.  Le choix de cette option ouvrira l’image dans l’application.
 
-#+CAPTION: *Copy to EP Calipers* will open the image in *Étriers EP*
+#+CAPTION: *Copier à Étriers EP* va ouvrir l’image dans *Étriers EP*
 [[./img/copy_to_ep_calipers.png]]
 
-If the *Copy to EP Calipers* option does not appear, then try the *Quick Look* button:
+** TODO check names of buttons with french settings on iPhone
+Si l’option *Copier à Étriers EP* n’existe pas, essayez le button *Quick Look*: 
 
-#+CAPTION: The *Quick Look* button is at the lower right
+#+CAPTION: Le bouton *Quick Look* est en base à droite
 [[./img/quicklook.png]]
 
-or the *Open In...* button.  Selecting it should open a window where *Copy to EP Calipers* appears.
+ou le bouton *Open In...*.  Sa selection devrait ouvrir une fenêtre où *Copier à Étriers EP* apparaîtra.
 
-#+CAPTION: The *Open In...* button allows the image to be opened in *Étriers EP*
+#+CAPTION: Le bouton *Open In...* permit l’image s’ouvrir dans *Étriers EP*
 [[./img/openin.png]]
 
-*** Opening email attachments or Dropbox files
-For email attachments or Dropbox files, download the attachment or the file (the details depend on the email app you are using.  Then when viewing the attachment or file, tap or long press to make the *Share* button appear.  Select *Share* and then select *Copy to EP Calipers* to open the image or PDF in the app.  
+*** Overture les fichiers joints ou les fichiers de Dropbox
+Pour les fichiers joints ou les fichiers Dropbox, télécharger le fichier (les détails sont dépendant de l’application d’e-mail que vous utilisez).  Alors en voyant le fichier, appuyez longtemps pour faire paraître le bouton *Partage*.  Choississez *Partage* et alors choissisez *Copier à Étriers EP* pour ouvrir l’image ou PDF dans l’application.
 
-*** /AliveCor/
-To view ECGs in the /AliveCor Kardia/ app, select *Journal*, then *SHARE* for the specific saved ECG you want to view.
+*** /AliveCor Kardia/
+Pour régarder des ECGs dans l’application /AliveCor Kardia/, choissisez *Journal*, alors *SHARE* pour l’ECG que vous voulez régarder.
 
-#+CAPTION: The /Kardia/ *SHARE* button uses an envelope icon
+#+CAPTION: Le button *Partage* de /Kardia/ a une icône comme une enveloppe
 [[./img/alive_ecg.png]]
 
-After selecting the *Share* button, select *PDF* from the options that appear.  Then select the *Share* button at the top right of the screen.  Select *Copy to EP Calipers* and you are ready to measure!
+Puis la selection du bouton *Share*, choissisez *PDF* de la liste d’options qui apparaît.  Alors choissisez le bouton *Partage* en haut à droite de l’écran.  Choissisez *Copier à Étriers EP* et vous êtes prêt(e) de mesurer!
 
-** Multiple page PDFs
-When PDF files have more than one page, the app will display the first page initially.  You can go to other pages by selecting *Previous* or *Next* in the Image menu.  Note that if you switch to another app and *Étriers EP* is terminated by iOS (as can happen automatically to save memory space), only the last page viewed will be available when the app is restarted.  To change pages, it will be necessary to reload the PDF.
-* Adjusting the image
-You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Note that while in image mode, calipers are fixed in place.  Use the *Adjust* menu to rotate or flip your image.  This is useful if the image is rotated or not quite square to the screen.  You can rotate the image by 90° in either direction, or by increments of 1°.  If you select the *More* menu you can fine-tune the image further, rotating it by as little as 0.1° or flipping the image if for some reason it's reversed (flipping ECGs can be a fun pastime in its own right). Return from the *More* menu back to the *Adjust* menu by selecting *Done*.  Using these various options you should be able to straighten the image so it is square to the calipers.  You should recalibrate your calipers after rotating the image.  If you need to go back to the original position and zoom setting use *Reset*.  After adjusting the image select *Done* to return to the main image menu.
-#+CAPTION: The *Adjust* menu
+** PDFs à pages multiples
+Quand des fichiers PDF ont plus d’une page, l’application affichera la première page au début. Vous pouvez naviguer à d’autres pages avec la selection des boutons fléchés du menu *Image*.  Observez que si vous passez à une autre application et *Étriers EP* est terminé par iOS (un événement qui se déroule automatiquement pour préserver l’éspace mémoire), seulement la dernière page sera disponible quand l’application est recommencée.  Pour changer la page, il faut recharger le PDF.
+* Adjustement de l’image
+Vous pouvez adjuster la position d’une image en utilisant le multitouch.  Pincez pour la zoomer et glissez pour faire la défiler.  Pendant le mode d’image, les étriers sont fixés en place.  Utilisez le menu *Adjust* pour tourner ou retourner l’image.  C’est utile si l’image n’est pas alignée correctement avec l’écran.   Vous pouvez la tourner de 90° dans toutes les directions, ou de 1°.  En choisissant le menu *Plus* vous pouvez tourner l’image de moins degres, aussi peu que 0,1°.  On peut faire une image miroir si c’est nécessaire.  Choissisez *OK* pour retourner du menu *Plus* au menu *Adjust*.  En utilisant ces options, vouv devriez pouvoir refaire les images.  Vous devez étaler les étriers après la rotation de l’image.  Si vous voulez retourner à la position originale et le zoom initial, utilisez *Réinit*.  Après l’adjustement de l’image choisissez *OK* pour retourner à le menu principal d’image.
+#+CAPTION: Menu *Adjust*
 [[./img/adjust_menu.png]]
-#+CAPTION: The *More* image menu
+#+CAPTION: Menu *Plus*
 [[./img/more_menu.png]]
-* Sample ECG
-Tap *Sample* to show the sample ECG that comes with *Étriers EP*.  This is a good way to practice using the app, or demonstrate it to others.
-* Exiting Image mode
+* Exemple ECG
+Tappez *Exemple* pour montrer l’exemple ECG qui apparaît quand *Ëtriers EP* commence.  C’est utile pour practiquer d’utilisation de l’appli, ou pour démontrer aux autres.
+* Quitter le mode d’image
 After loading and adjusting the image, you need to exit Image mode so that you can use the calipers.  Select the *Measure* button at the top left of the screen to return to the *Étriers EP* main screen.
 #+CAPTION: Use the *Measure* button to exit *Image* mode
 [[./img/measure_button.png]]
-* Types of calipers
+* Types d’étriers
 Calipers can be horizontal for time measurements, vertical for amplitude measurements or angle shaped to measure angles in degrees.  Time calipers look like the letter *H*, amplitude calipers like an *H* lying on its side, and angle calipers start out looking like an upside down *V*.  
-* Moving calipers
-** Time and amplitude calipers
+* Déplacement d’étriers
+** Les étriers de temps et d’amplitude
 Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers.  Note that you cannot pinch both bars at the same time.
 #+CAPTION: Single unselected uncalibrated time caliper
 [[./img/uncalibrated_caliper.png]]
-** Angle calipers
+** Les étriers d’angle
 Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  The apex is where the two lines join together.  Dragging either bar of an angle caliper a little distance away from the apex will open or close the angle.
 #+CAPTION: Angle caliper
 [[./img/angle_caliper.png]]
-** Micromovements
+** Petits déplacements
 It is also possible to move calipers by very small intervals using arrow keys.  See [[tweak][tweaking caliper position]].
-* Making measurements
+* Effectuer des mesures
 The interval measured by time or amplitude calipers is displayed on top of or next to the crossbar of the caliper.  Until these calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
-* Adding and deleting calipers
+* Addition et suppresion d’étriers
 Select *+* from the main menu to add new calipers.  
 #+CAPTION: Main menu
 [[./img/main_menu2.png]]
@@ -114,29 +112,29 @@ Select *Time*, *Amplitude*, or *Angle* to add the type of caliper you want.
 Double-tap a caliper to delete it.
 #+CAPTION: Add caliper menu
 [[./img/add_caliper_menu.png]]
-* Selecting a caliper
+* Selection d’un étrier
 When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red.  You can change these colors using app [[app preferences][preferences]].  It is also possible to [[colors][change individual caliper colors]].  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another.
 #+CAPTION: Two uncalibrated calipers, a time and amplitude.  The time caliper is selected.
 [[./img/selected_caliper.png]]
-* <<moreoptions>>More caliper options
-** More menu
+* <<moreoptions>>Plusieurs options
+** le menu plus
 #+CAPTION: The *More* caliper menu
 [[./img/more_caliper_menu.png]]
 
 Selecting the *More* button on the main menu brings up the menu shown above.  The options on this menu are described next.
-** <<colors>>Change caliper colors
+** <<colors>>Changer les coleurs d’étriers
 Initial caliper colors are set via app [[app preferences][preferences]] and these colors apply to all newly added calipers.  However, once a caliper is added, its color can be changed, and each caliper can have a different color.  These color changes persist until the calipers are deleted or the app is stopped.  On the *More* menu, select the *Color* button.  Then long press a caliper to bring up a color selector.  Select a color and the caliper will change to that color.
 #+CAPTION: Caliper color picker
 [[./img/color_picker.png]]
 
-** <<tweak>>Tweak caliper position
+** <<tweak>>Petits mouvements
 Sometimes you might like to fine tune the position of a caliper, or you find it too difficult to position a caliper exactly by dragging its components with your finger.  It's time for /tweaking/!  Tap the *Tweak* button.  Then long press a caliper component (crossbar, sidebar, or, in case of an angle caliper, the apex of the angle) and a menu with movement buttons will appear.  Buttons with left and right or up and down arrows move the selected caliper component or the whole caliper using micromovements.  You can move either sidebar (or either angle of an angle caliper) or a caliper as a whole by gradations of a single point (≈ pixel) or a tenth of a point, depending on which type of arrow you press (⇨ or →).  Press the *Done* button to return to the main menu.
 #+CAPTION: Buttons to tweak caliper positioning
 [[./img/tweak_menu.png]]
 
-** Lock the image in place
+** Fixer l’image
 When moving and adjusting calipers, you may sometimes inadvertently move the underlying image.  Select *Lock* to lock the image in place.  A message appears at the top of the screen indicating the image is locked.  Unlock the image by selecting *Unlock*.
-* Calibration
+* Étalonnage
 Select *Cal* or *Calibration*.  Stretch the selected caliper over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select *Set*.  In the dialog box, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 500 msec, or 1 sec, or 1 mV).  Select *Set* in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
 #+CAPTION: Time caliper about to be calibrated
 [[./img/pre_calibration.png]]
@@ -144,13 +142,13 @@ Select *Cal* or *Calibration*.  Stretch the selected caliper over a known interv
 [[./img/post_calibration.png]]
 
 Angle calipers do not need to be calibrated.  However, after calibration of time and amplitude calipers, angle calipers can be used as a [[Brugadometer]].
-* Changing calibration
+* Changement de l’étalonnage
 You can recalibrate at any time.  You can clear all calibration by selecting *Clear* in the calibration toolbar.  Note that calibration is maintained if the device is rotated or the image is zoomed.  Selecting a new image will reset calibration.
-* Interval/Rate
+* Intervalle/la fréquence
 Once a time (horizontal) caliper is calibrated, provided you use time units (such as msec or sec) for the calibration, it is possible to toggle between interval measurements (e.g. 600 msec) and heart rate measurements (e.g. 100 bpm) by selecting *Interval/Rate* on iPads (or *I/R* on iPhones).
-* Mean rate and interval calculation
+* Calculation de la fréquence moyenne et du intervalle moyen
 Select a calibrated caliper and stretch it over a number of intervals.  Select *Mean Rate* or *MRate* and enter the number of intervals measured.  A dialog box will show the calculated mean heart rate and interval.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
-* QTc calculation
+* Calculation du QT corrigé
 Select *QTc*.  Stretch the selected caliper over one or more RR intervals and select *Measure*.  Enter the number of intervals the caliper is stretched over and select *Continue*.  Then use the same caliper to measure the QT interval.  Select *Measure*.  A dialog box will give the calculated QTc using Bazett's formula.
 ** Tweaking during QT measurement
 Note that during all other measurements, it is possible to micromove (i.e. "[[tweak][tweak]]") the caliper using the arrow buttons of the *Tweak* menu prior to making the measurement.  However, during the second step of measuring the QTc (the QT measurement), the *Tweak* menu item is not accessible due to the presence of the QT measurement menu.  Because of this, to allow micromovements when measuring the QT, a long press on the individual caliper components can be used to bring up the micromovement arrows and allow fine-tuning of the caliper position when measuring the QT, prior to the final QTc calculation.  However, this is an optional setting.  Some people hesitate while moving a caliper, but aren't intending to bring up the *Tweak* menu; in fact, this can be an annoyance.  This is why long press gestures are not implemented throughout the app.  But in the specific situation of measuring the QT, one might desire this functionality.  This is an opt-in preference.  Set it by toggling on the *Allow Tweak during QTc* [[app preferences][preference]].
@@ -160,26 +158,23 @@ Note that during all other measurements, it is possible to micromove (i.e. "[[tw
 [[./img/qtc_second_step.png]]
 #+CAPTION: QTc result
 [[./img/qtc_result.png]]
-* Brugadometer
+* <<Brugadometer>> « Brugadometer »
 The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between ECGs with a Brugada syndrome pattern in leads V1 or V2 and ECGs with incomplete right bundle branch block.  This tool is under development in *Étriers EP* and will likely evolve in future updates.  In order to use the *Brugadometer*, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper preferably in msec or mm.  After doing so, an angle caliper will appear to have a triangle at its apex as shown below.
 #+CAPTION: Brugadometer showing triangle base 5 mm below apex of caliper
 [[./img/brugadometer1.png]]
 
 The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  A triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] for further information.
-* <<app preferences>>Preferences
+* <<app preferences>>Les preferences
 Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *Étriers EP*. You can also change preferences by selecting the *Preferences* menu item from the *Action* menu, opened by tapping this icon [[./img/share_icon.png]] at the top right of the screen.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.
-* Issues and limitations
+* Problèmes et limitations
 - Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
 - Rotation of the device will not preserve the relation between the ECG image and the calipers. However calibration /is/ preserved with rotation.
 - It is highly recommended that calipers be recalibrated if the image (not the device) is rotated.  The app though does not enforce this.
 - If the app is put in the background (e.g. by switching to another app) and then terminated by the operating system (something iOS does to preserve memory), /and/ if you have loaded a multi-page PDF image file, only the page you were last viewing will be available.  A warning dialog does appear when this happens.  If you need to switch pages in this situation, you will need to reload the PDF.
-* Acknowledgments
-- Thanks to Dr. Michael Katz for the concept.
-- Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.
-- The source code for *Étriers EP* is available on [[https://github.com/mannd/epcalipers][GitHub]].
-- *Étriers EP* is open source software and is licensed under the
-  [[https://www.apache.org/licenses/LICENSE-2.0.html][Apache License Version 2.0]].  No guarantees are made as to the accuracy of the
-  app, so use at your own risk.
-- For questions, error reporting or suggestions contact
-  mannd@epstudiossoftware.com
-- Website: https://www.epstudiossoftware.com
+* Remerciements
+- Je remercie Dr. Michael Katz pour l’idée.
+- Je remercie Dr. Adrian Baranchuk et ses collaborateurs de l’Université Queen's de Kingston en Ontario du Canada pour le concept du « Brugadometer » et pour leur assistance pour appliquer cet algorithme.
+- Le code source d’*Étriers EP* est disponible sur [[https://github.com/mannd/epcalipers][GitHub]].
+- *Étriers EP* est un logiciel libre et il est sous [[https://www.apache.org/licenses/LICENSE-2.0.html][Apache License Version 2.0]].  Nous ne fournissons aucune garantie de le précision de l’application.  Utilisez la à votre propre risque.
+- Pour des questions, des rapports d’érreurs, ou des suggestions, contactez mannd@epstudiossoftware.com
+- Le site Internet: https://www.epstudiossoftware.com
