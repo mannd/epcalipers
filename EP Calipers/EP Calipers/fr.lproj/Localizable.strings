@@ -17,8 +17,7 @@
 "Calculate" = "Calculer";
 "Enter Number of Intervals" = "Nombre d'intervalles ?";
 "How many intervals is this caliper measuring?" = "Combien d'intervalles cet étrier mesure-t-il ?";
-"Calibrate" = "Élater";
-"Cal" = "Étaler";
+"Cal" = "Étalonner";
 "Interval/Rate" = "Intervalle/FC";
 "I/R" = "Int/FC";
 "Mean Rate" = "FCM";
@@ -41,13 +40,13 @@
 "Calculated QTc" = "QTc calculé";
 "No Angle Caliper Selected" = "Pas d'étrier angle choisi";
 "No Caliper Selected" = "Pas d'étrier choisi";
-"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." = "Choisez un étrier par le tapper.  Déplacez-le à un intervalle connu.  Touchez « Définir » à entrer l'intervalle de l'étalonnage.";
+"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." = "Choisez un étrier par le tapper.  Déplacez-le à un intervalle connu.  Touchez « définir » à entrer l'intervalle de l'étalonnage.";
 "Enter measurement (e.g. %@)" = "Entrez la mesure (p.e. %@)";
 "90°R" = "90°D";
 "90°L" = "90°G";
 "1°R" = "1°D";
 "1°L" = "1°G";
-"Reset" = "Réinit";
+"Reset" = "Réinitialiser";
 "0.1°R" = "0.1°D";
 "0.1°L" = "0.1°G";
 "Flip" = "Inverser";

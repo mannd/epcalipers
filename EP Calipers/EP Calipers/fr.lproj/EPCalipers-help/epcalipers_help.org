@@ -15,6 +15,10 @@
 #+XSLT:
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
 * COMMENT FRENCH VERSION
+* Vous êtes de gare, encore...
+Il est 2h00 et le téléphone sonne.  C’est une infermière de L’ICU.  Il faut que M. Smith reçoive son médicament antiarythmique (Qui crée ces fous calendriers de médicaments?) et cet ECG a un intervalle QTc qui est un peu prolongé, selon l’ordinateur.  Elle n’est pas certaine si l’administration est sans danger.  L’infermière veut transmettre l’ECG.
+
+Vous charge l’ECG sur votre téléphone portable.  Vous étudiez l’intervalle QT.  Vous n’êtes pas certain si le mesurement de l’ordinateur est correct.  Vous devez le mesurer vous-même.  Vous commencez à compter les petites boîtes.  Vous tirez vos vieux étriers mechaniques que vous avez acheté il y a plusieur ’ans.  Vous vous pensez: J’habite dans une époque numerique.  Est-ce que je suis en train de faire des mesurements sur mon iPhone avec des étriers mechaniques?
 * Étriers electroniques
 Cette application *Étriers EP* offre des *étriers electroniques* pour mesurer des intervalles sur les images des enregistrements électrocardiographiques ou électrophysiologiques.  Dans le laboratroire d’électrophysiologie les étriers électroniques sont inclus avec le système d'enregistrement informatisé.  *Étriers EP* fournit de même étriers électroniques pour votre iPhone ou iPad.  Les étriers électroniques d’ *Étriers EP* sont plus précis, plus faciles à utiliser, et moins dangereux que les étriers méchaniques (ils n’ont pas de points tranchants!).
 * Commencement rapide
@@ -84,93 +88,93 @@ Vous pouvez adjuster la position d’une image en utilisant le multitouch.  Pinc
 * Exemple ECG
 Tappez *Exemple* pour montrer l’exemple ECG qui apparaît quand *Ëtriers EP* commence.  C’est utile pour practiquer d’utilisation de l’appli, ou pour démontrer aux autres.
 * Quitter le mode d’image
-After loading and adjusting the image, you need to exit Image mode so that you can use the calipers.  Select the *Measure* button at the top left of the screen to return to the *Étriers EP* main screen.
-#+CAPTION: Use the *Measure* button to exit *Image* mode
+Après une image est chargée et adjustée, vous voulez sortir le mode d’image pour utiliser les étriers.  Choisissez le bouton *Mesurer* en haut à gauche pour retourner à l’écran principal d’ *Étriers EP*.
+#+CAPTION: Tappez le bouton *Mesurer* pour sortir le mode d’*Image*
 [[./img/measure_button.png]]
 * Types d’étriers
-Calipers can be horizontal for time measurements, vertical for amplitude measurements or angle shaped to measure angles in degrees.  Time calipers look like the letter *H*, amplitude calipers like an *H* lying on its side, and angle calipers start out looking like an upside down *V*.  
+Les étriers pouvent être horizontal pour les mesurements de temps, vertical pour les mesurements d’amplitude, ou angle pour les mesurements d’angles en dégres.  Les étriers temps ressemble à la lettre *H*, les étriers amplitude à la lettre *H* couchée sur le côté, et les étriers angle au début à la lettre *V* inversée.
 * Déplacement d’étriers
 ** Les étriers de temps et d’amplitude
-Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers.  Note that you cannot pinch both bars at the same time.
-#+CAPTION: Single unselected uncalibrated time caliper
+Glissez la barre transversale d’un étrier pour le déplacer comme une unité.  Glissez les barres à gauche ou à droite (ou en haut ou en base pour les étriers d’amplitude) pour l’ étendre ou réduire.  Notez que vous ne pouvez pas pincez au même temps les deux barres.
+#+CAPTION: Seul étrier de temps déselectionné et non étalonné
 [[./img/uncalibrated_caliper.png]]
 ** Les étriers d’angle
-Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  The apex is where the two lines join together.  Dragging either bar of an angle caliper a little distance away from the apex will open or close the angle.
-#+CAPTION: Angle caliper
+Les étriers d’angle sont déplacés comme une unité par glisser l’angle au sommet ou juste au-dessus du sommet.  Le sommet est la place où les deux lignes s’joignent.  Si on glisse une barre d’un étrier d’angle une petite distance du sommet, l’angle ouvrira ou fermera.
+#+CAPTION: Étrier angle
 [[./img/angle_caliper.png]]
 ** Petits déplacements
-It is also possible to move calipers by very small intervals using arrow keys.  See [[tweak][tweaking caliper position]].
+C’est aussi possible de déplacer les étriers à un petit intervalle en utilisant les boutons    fléchés.  Voici [[tweak][petits mouvements]].
 * Effectuer des mesures
-The interval measured by time or amplitude calipers is displayed on top of or next to the crossbar of the caliper.  Until these calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
+L’intervalle mesuré par les étriers de temps ou d’amplitude est affiché près de la barre transversale de l’étrier.  Avant l’étalonnage d’étriers, les mesurements sont affichés en unités arbitraires (les pointes, Until these calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
 * Addition et suppresion d’étriers
-Select *+* from the main menu to add new calipers.  
-#+CAPTION: Main menu
+Choisissez *+* sur le menu principal pour adjoutes de nouveaux étriers.
+#+CAPTION: Menu principal
 [[./img/main_menu2.png]]
 
-Select *Time*, *Amplitude*, or *Angle* to add the type of caliper you want. 
+Choisissez *Temps*, *Amplitude*, ou *Angle* pour adjouter le type d’étrier que vous voulez.
 
-Double-tap a caliper to delete it.
+Double-tappez un étrier pour le supprimer.
 #+CAPTION: Add caliper menu
 [[./img/add_caliper_menu.png]]
 * Selection d’un étrier
-When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red.  You can change these colors using app [[app preferences][preferences]].  It is also possible to [[colors][change individual caliper colors]].  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  As there can be only one selected caliper at a time, selecting a caliper will unselect any other caliper that happens to be selected.  In some cases a caliper will be selected automatically (for example to do calibration) if you have not already selected one.  If you want to select a different caliper, just tap another.
-#+CAPTION: Two uncalibrated calipers, a time and amplitude.  The time caliper is selected.
+Quand il y a plus que un étrier sur l’écran, il faut qu’un soit choisi comme l’étrier actif pour l’étalonner ou pour faire les calculs.  Par défaut un étrier non choisi est bleu et un étrier choise est rouge. Vous voulez changer ces couleurs en utilisant les [[app preferences][préférences]].  Il est aussi possible de [[colors][changer les couleurs d’étriers individuels]].  Un simple coup sur un étrier non choisi le choisira.  Un deuxième coup encore (mais pas trop vite, parce que un double coup supprimera l’étrier) le déselectionnera.  Comme il peut y avoir un seul étrier choisi à la fois, la sélection d’un étrier va déselectionner un autre étrier qui est selectionné.  Parfois un étrier choisira automatiquement, par exemple à faire du étalonnage, si aucun n’est déja choisi.  Si vous voulez choisir un autre étrier, juste tappez-le.
+#+CAPTION: Deux étriers non choisis, un de temps et un d’ampitude.  L’étrier de temps est selectionné.
 [[./img/selected_caliper.png]]
 * <<moreoptions>>Plusieurs options
 ** le menu plus
-#+CAPTION: The *More* caliper menu
+#+CAPTION: Le menu étrier *Plus*
 [[./img/more_caliper_menu.png]]
 
-Selecting the *More* button on the main menu brings up the menu shown above.  The options on this menu are described next.
+La sélection du bouton *Plus* sur le menu principal ouvre le menu au-dessus.  Les options de ce menu sont décrites ensuite.
 ** <<colors>>Changer les coleurs d’étriers
-Initial caliper colors are set via app [[app preferences][preferences]] and these colors apply to all newly added calipers.  However, once a caliper is added, its color can be changed, and each caliper can have a different color.  These color changes persist until the calipers are deleted or the app is stopped.  On the *More* menu, select the *Color* button.  Then long press a caliper to bring up a color selector.  Select a color and the caliper will change to that color.
-#+CAPTION: Caliper color picker
+Au debut les couleurs des étriers sont fixés par les [[app preferences][preferences]] et ces couleurs sont appliqués à tous les nouveaux étriers ajoutés.  Cependant, après un étrier est ajouté, son couleur peut être changé.  Ces changements du couleur persiste jusque les étriers sont supprimés ou l’application est arrêtée.  Sur le menu *Plus*, choissisez le bouton *Couleur*.  Puis appuyez longtemps un étrier pour montrer le sélecteur du couleur.  Choisissez un couleur et l’étrier changera à ce couleur-là.
+#+CAPTION: Sélecteur du couleur
 [[./img/color_picker.png]]
 
 ** <<tweak>>Petits mouvements
-Sometimes you might like to fine tune the position of a caliper, or you find it too difficult to position a caliper exactly by dragging its components with your finger.  It's time for /tweaking/!  Tap the *Tweak* button.  Then long press a caliper component (crossbar, sidebar, or, in case of an angle caliper, the apex of the angle) and a menu with movement buttons will appear.  Buttons with left and right or up and down arrows move the selected caliper component or the whole caliper using micromovements.  You can move either sidebar (or either angle of an angle caliper) or a caliper as a whole by gradations of a single point (≈ pixel) or a tenth of a point, depending on which type of arrow you press (⇨ or →).  Press the *Done* button to return to the main menu.
-#+CAPTION: Buttons to tweak caliper positioning
+Parfois vous aimeriez à affiner la position d’un étrier, ou vous trouvez qu’il est trop difficile de le positionner exactement par glissez ses composants avec votre droigt.  On peut faire ces petits mouvements avec le bouton *Régler*.  Appuyez ce bouton et puis appuyez longtemps à un composants d’un étrier (une barre ou, en cas d’un étrier d’angle, peut-être le sommet) et un menu avec des boutons du mouvement apparaîtra.  Des boutons avec des flèches à gauche, à droite, montantes ou descendantes déplacent le composant choisi ou tout l’étrier en utilisant petits mouvements.  Vous pouvez les déplacer par un seul point (égal à un pixel) ou un diximème d’un point, selon quel type de flèche vous appuyez (⇨ or →).  Appuyez le bouton *OK* pour retourner à le menu principal.
+#+CAPTION: Les boutons pour adjuster la position des étriers
 [[./img/tweak_menu.png]]
 
 ** Fixer l’image
-When moving and adjusting calipers, you may sometimes inadvertently move the underlying image.  Select *Lock* to lock the image in place.  A message appears at the top of the screen indicating the image is locked.  Unlock the image by selecting *Unlock*.
+Pendant le mouvement et l’adjustement d’étriers, vous pouvez parfois involontairement déplace l’image ECG.  Choisissez *Immobiliser* pour immobiliser l’image sur l’écran.  Un méssage va apparaître en haut de l’écran pour indiquer l’image est immobilisée.  Démobilisez l’image en choisissant *Démobiliser*.
 * Étalonnage
-Select *Cal* or *Calibration*.  Stretch the selected caliper over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select *Set*.  In the dialog box, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 500 msec, or 1 sec, or 1 mV).  Select *Set* in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration.
-#+CAPTION: Time caliper about to be calibrated
+Choisissez *Étalonner*.  Étirez l’étrier selectionné sur un intervalle connu (par exemple 1 000 msec de temps, ou 10 mm d’amplitude).  Choisissez *Définir*.  Dans la boîte de dialogue, entrez l’intervalle et les unités (par exemple 500 msec, ou 1 sec, ou 1 mV).  Choisissez *Définir* dans la boîte du dialogue pour définir l’étalonnage.  Notez qu’il faut que des étriers de temps et d’amplitude soient étalonnés individuellement.  Après on en a étalonné, les étriers montreront les intervalles avec les unités utilisants pour en étalonner.  Nouveaux étriers crées vont utiliser le même étalonnage.
+#+CAPTION: Étrier de temps qui sera étalonner
 [[./img/pre_calibration.png]]
-#+CAPTION: Calibrated time caliper
+#+CAPTION: Étrier de temps après l’étalonnage
 [[./img/post_calibration.png]]
 
-Angle calipers do not need to be calibrated.  However, after calibration of time and amplitude calipers, angle calipers can be used as a [[Brugadometer]].
+Il ne faut pas étalonner des étriers d’angle.  Cependant, après l’étalonnage d’étriers de temps et d’amplitude, les étriers d’angle peuvent être utiliser comme un [[Brugadometer]].
 * Changement de l’étalonnage
-You can recalibrate at any time.  You can clear all calibration by selecting *Clear* in the calibration toolbar.  Note that calibration is maintained if the device is rotated or the image is zoomed.  Selecting a new image will reset calibration.
+On peut réétalonner à tout moment.  On peut effacer tout l’étalonnage en choisissant *Effacer* sur le menu d’étalonnage.  Notez que l’étalonnage continue quand l’appareil est tourné ou l’image est zoomée.  La sélection d’une nouvelle image va réinitialiser l’étalonnage.
 * Intervalle/la fréquence
-Once a time (horizontal) caliper is calibrated, provided you use time units (such as msec or sec) for the calibration, it is possible to toggle between interval measurements (e.g. 600 msec) and heart rate measurements (e.g. 100 bpm) by selecting *Interval/Rate* on iPads (or *I/R* on iPhones).
+Après un étrier de temps est étalonné, si vous utilisez des unités du temps (par exemple msec ou sec) pour l’étalonnage, il est possible pour changer entre les mesurements d’intervalle (par exemple 600 msec) et les mesurements de fréquence cardiaque (par exemple 100 bpm) en choisisant *Intervalle/FC* ou *Int/FC*.
 * Calculation de la fréquence moyenne et du intervalle moyen
-Select a calibrated caliper and stretch it over a number of intervals.  Select *Mean Rate* or *MRate* and enter the number of intervals measured.  A dialog box will show the calculated mean heart rate and interval.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
+Selectionnez un étrier étaloné et mesurez un nombre d’intervalles.  Choisissez *Fréquence moyenne* or *FCM* et entrez le nombre d’intervalles mesurés.  Une boîte de dialogue montrera la fréquence cardiaque moyenne calculée et l’intervalle moyen.  Cela est utile pour la calculation de fréquences et intervalles pendant un rythme irrégulier, par exemple la fibrillation auriculaire.
 * Calculation du QT corrigé
-Select *QTc*.  Stretch the selected caliper over one or more RR intervals and select *Measure*.  Enter the number of intervals the caliper is stretched over and select *Continue*.  Then use the same caliper to measure the QT interval.  Select *Measure*.  A dialog box will give the calculated QTc using Bazett's formula.
-** Tweaking during QT measurement
-Note that during all other measurements, it is possible to micromove (i.e. "[[tweak][tweak]]") the caliper using the arrow buttons of the *Tweak* menu prior to making the measurement.  However, during the second step of measuring the QTc (the QT measurement), the *Tweak* menu item is not accessible due to the presence of the QT measurement menu.  Because of this, to allow micromovements when measuring the QT, a long press on the individual caliper components can be used to bring up the micromovement arrows and allow fine-tuning of the caliper position when measuring the QT, prior to the final QTc calculation.  However, this is an optional setting.  Some people hesitate while moving a caliper, but aren't intending to bring up the *Tweak* menu; in fact, this can be an annoyance.  This is why long press gestures are not implemented throughout the app.  But in the specific situation of measuring the QT, one might desire this functionality.  This is an opt-in preference.  Set it by toggling on the *Allow Tweak during QTc* [[app preferences][preference]].
-#+CAPTION: QTc measurement first step: measure 1 or more RR intervals
+Choisissez *QTc*.  Étentrez l’étrier sélectionné sur un ou plus d’intervalles RR et puis choisissez *Mesurer*.  Entrez le nombre d’intervalles étant mesurés et puis choisissez *Continuer*.  Puis utilisez le même étrier pour mesurer l’intervalle QT.  Choisissez *Mesurer*.  Une boîte de dialogue montrera le QT calculé utilisant la formule de Bazett.
+** Petit mouvements pendant le mesurement QT
+Notez que pendat tous autres mesurements, il est possible de faire des petits mouvements des étriers en utilisant les boutons flèchés dans le menu *Régler* avant le mesurement.  Cependant, pendant la deuxième étape du mesurement de QT corrigé (le mesurement QT), le menu *Régler* n’est pas disponible à cause de la présence du menu du mesurement QT.  Ã cause de ce problème, pour permettre les petits mouvements pendant le mesurement du QT, un appui long sur les composants d’un étrier peut être utilisé pour montrer les flèches de mouvement et cela permit des petits mouvements pendant le mesurement du QT, avant la calculation dernière du QT corrigé.  Cependant, cette préference est optionnelle.  Quelques personnes hésitent pendant le mouvement d’un étrier, mais cette hésitations peut ouvrir le menu *Régler*.  Cela peut causer des problèmes.  Pour cette raison les appuis longs ne sont pas disponibles dans toute l’application.  Mais dans cette situation spécifique on pourrait désirer cette fonction.  Définez cette [[app preferences][preference]] en choisissant *Permittez de régler pendant QTc*.
+#+CAPTION: Mesurement du QTc première étape: mesurez un ou plus d’intervalles RR
 [[./img/qtc_first_step.png]]
-#+CAPTION: QTc measurement second step: measure the QT interval
+#+CAPTION: Mesurement du QTc deuxième étape:mesurez l’intervalle QT
 [[./img/qtc_second_step.png]]
-#+CAPTION: QTc result
+#+CAPTION: Resultat du QTc
 [[./img/qtc_result.png]]
 * <<Brugadometer>> « Brugadometer »
-The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between ECGs with a Brugada syndrome pattern in leads V1 or V2 and ECGs with incomplete right bundle branch block.  This tool is under development in *Étriers EP* and will likely evolve in future updates.  In order to use the *Brugadometer*, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper preferably in msec or mm.  After doing so, an angle caliper will appear to have a triangle at its apex as shown below.
-#+CAPTION: Brugadometer showing triangle base 5 mm below apex of caliper
+Le *Brugadometer* est un outil diagnostique pour le syndrome de Brugada developpé en collaboration avec Dr. Adrian Baranchuk et ses collègues à l’Université Queens, Kinston, de l’Ontario, au Canada.  C’est un outil prévu pour distinguer entre les ECGs avec un motif du syndrome de Brugada dans des fils V1 ou V2 avec un bloc de branch droite incomplète.  Cet outil est en cours de développement dans *Étriers EP* et probablement il évoluera dans de futures versions.  Ã utiliser le *Brugadometer*, il faut étalonner un étrier de temps en msec ou mm et un étrier d’amplitude en mm.  En suite, un étrier d’angle va apparaître d’avoir un triangle au sommet comme suit.
+#+CAPTION: Brugadometer avec une base de triangle 5 mm au-dessous du sommet de l’étrier
 [[./img/brugadometer1.png]]
 
-The triangle base will be located 5 mm below the apex of the triangle.  Proper alignment of this triangle with an r' wave in a person with a suspected Brugada ECG will provide measurement of the so-called /beta angle/ and the triangle base.  A triangle base > 160 msec (4 mm at standard ECG recording speed of 25 mm/sec) has an increased probability of being a Brugada ECG.   Please see [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] for further information.
-* <<app preferences>>Les preferences
-Preferences such as caliper colors and default calibration intervals can be selected in the Settings app of your device under *Étriers EP*. You can also change preferences by selecting the *Preferences* menu item from the *Action* menu, opened by tapping this icon [[./img/share_icon.png]] at the top right of the screen.  After changing the preferences return to the app by selecting the back button at the top left of the Settings screen.
+La base du triangle sera localisée 5 mm au-dessous du sommet de triangle.  L’alignement approprié de ce triangle avec une onde r’ dans une personne soupsonnée d’avoir un ECG du syndrome de Brugada va montrer l’angle beta et le mesurement de la base de triangle 5 mm au-dessous du sommet.  Une base de triangle plus de 160 msec (4 mm à la vitesse de l’enregistrement standard d’un ECG de 25 mm par seconde) a une probabilité monté d’être un ECG du syndrome de Brugada.  Voici [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] pour plus d’information.
+* <<app preferences>>Préferences
+Les preferences comme les couleurs des étriers et les intervalles par défaut de l’étalonnage peuvent être choisis dans l’application du préferences de votre appareil sous la catégorie *Étriers EP*. On peut aussi en changer par choisir le menu *Preferences* du menu *Action*, ouvrerte par tapper cette icône [[./img/share_icon.png]] en haut à droite de l’écran.  Après le changement des préferences retournez à l’application par la sélection le bouton retour en haut à gauche de l’écran des préferences.
 * Problèmes et limitations
-- Images taken via the *Camera* button in the app are not saved to your photos.  Using the camera in the app is recommended for quick ECG analysis when you don't need to retain an image of the ECG long-term.
-- Rotation of the device will not preserve the relation between the ECG image and the calipers. However calibration /is/ preserved with rotation.
-- It is highly recommended that calipers be recalibrated if the image (not the device) is rotated.  The app though does not enforce this.
-- If the app is put in the background (e.g. by switching to another app) and then terminated by the operating system (something iOS does to preserve memory), /and/ if you have loaded a multi-page PDF image file, only the page you were last viewing will be available.  A warning dialog does appear when this happens.  If you need to switch pages in this situation, you will need to reload the PDF.
+- Les images apprises par le bouton *Camera* dans l’application n’ont pas enregistré à vos photos.  L’utilisation de la camera dans l’application est recommandée pour l’analyse rapide quand vous ne veut pas enregistré une image à long terme.
+- La rotation de l’appareil ne preservera pas la relation entre l’image de l’ECG et les étriers.  Cependant l’étalonnage /est/ préservé avec la rotation.
+- Il est fortement recommandé de réétalonner les étriers si l’image (pas d’appareil) sont tournés.  L’application n’impose pas ça.
+- Si l’application est mise en arrière-plan (par exemple en changeant à un autre application) et puis est supprimée par le système d’exploitation (quelque chose que l’iOS fait pour préserver le memoire), /et/ si vous avez chargé un fichier PDF avec plusieurs pages, seulement la dernière page que vous avez vu sera disponible.  Une boîte de dialogue apparaîtra en ce cas.  S’il faut changer la page dans cette situation, il faut que vous changiez le PDF encore.
 * Remerciements
 - Je remercie Dr. Michael Katz pour l’idée.
 - Je remercie Dr. Adrian Baranchuk et ses collaborateurs de l’Université Queen's de Kingston en Ontario du Canada pour le concept du « Brugadometer » et pour leur assistance pour appliquer cet algorithme.
