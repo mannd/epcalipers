@@ -73,3 +73,4 @@
 "Amplitude" = "Amplitude";
 "Angle" = "Angle";
 "Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers." = "Étriers angle ne nécessiter pas d'étalonnage.  Seulement des étriers de temps ou d'amplitude doivent être étalonner.\n\nSi vous voulez utiliser un étrier d'angle comme un « Brugadometer » vous devez d'abord étalonner des étriers de temps et d'amplitude.";
+"IMAGE LOCK" = "IMAGE IMMOBILISÉE";

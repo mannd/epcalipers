@@ -9,7 +9,7 @@
 #import "CalipersView.h"
 #import "EPSLogging.h"
 
-#define IMAGE_LOCK @"IMAGE LOCK"
+#define IMAGE_LOCK NSLocalizedString(@"IMAGE LOCK", nil)
 
 @implementation CalipersView
 
