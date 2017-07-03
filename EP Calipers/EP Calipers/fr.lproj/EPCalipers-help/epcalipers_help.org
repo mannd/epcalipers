@@ -40,35 +40,35 @@ Avec ce menu vous pouvez charger et ajuster une image électrocardiographique.  
 ** Choisissez une photo ou un PDF avec l’icône de partage d’autres applications
 *Étriers EP* peut ouvrir des fichiers d’images et des PDF, indépendant de leur location dans votre appareil.  Il est facile d’ouvrir directement des fichiers joints and des fichiers iCloud, Google Drive, et Dropbox.  Il est aussi facile d’ouvrir des images électrocardiographiques de l’application /AliveCor Kardia™/.  La solution à ouvrir les images dans les applications externes est l’utilisation du button *Partage*.  Ça resemmble à cela: [[./img/share_icon.png]]
 
-Selon l’application, ce button se trouve en haut d l’écran, ou il faut appuyer pendant plusieurs secondes sur une image pour ouvrir le menu *Partage*.  Voici le bouton *Partage* en haut à droite de l’écran de l’application /Kardia/:
-#+CAPTION: Bouton *Partage* en haut à droite
+Selon l’application, ce button se trouve en haut ou en bas de l’écran, ou il faut appuyer pendant plusieurs secondes sur une image pour ouvrir le menu *Partage*.  Voici le bouton *Partage* en bas à gauche de l’écran de l’application /Kardia/:
+#+CAPTION: Bouton *Partage* en bas à gauche
 [[./img/aliveecgtop.png]]
 
-Quand le menu *Partage* est ouvert, l’une des options serait *Copier à Étriers EP*.  Le choix de cette option ouvrira l’image dans l’application.
+Quand le menu *Partage* est ouvert, l’une des options serait *Importer avec EP Calipers*.  Le choix de cette option ouvrira l’image dans l’application.
 
-#+CAPTION: *Copier à Étriers EP* va ouvrir l’image dans *Étriers EP*
+#+CAPTION: *Importer avec EP Calipers* va ouvrir l’image dans *Étriers EP*
 [[./img/copy_to_ep_calipers.png]]
 
-Si l’option *Copier à Étriers EP* n’existe pas, essayez le button *Quick Look*: 
+Si l’option *Importer avec EP Calipers* n’existe pas, essayez le button *Coup d’oeil*: 
 
-#+CAPTION: Le bouton *Quick Look* est en bas à droite
+#+CAPTION: Le bouton *Coup d’oeil* est en bas à gauche
 [[./img/quicklook.png]]
 
-ou le bouton *Open In...*.  Cette selection ouvrira une fenêtre où *Copier à Étriers EP* apparaîtra.
+ou le bouton *Ouvrir dans...*.  Cette selection ouvrira une fenêtre où *Importer avec EP Calipers* apparaîtra.
 
-#+CAPTION: Le bouton *Open In...* permit l’image s’ouvrir dans *Étriers EP*
+#+CAPTION: Le bouton *Ouvrir dans...* permit l’image s’ouvrir dans *Étriers EP*
 [[./img/openin.png]]
 
 *** Overture les fichiers joints ou les fichiers de Dropbox
-Pour les fichiers joints ou les fichiers Dropbox, télécharger le fichier (les détails dépendent du type de mail).  Alors en voyant le fichier, appuyez pendant quelques secondes pour faire paraître le bouton *Partage*.  Choisissez *Partage* et alors choisissez *Copier à Étriers EP* pour ouvrir l’image ou le PDF dans l’application.
+Pour les fichiers joints ou les fichiers Dropbox, télécharger le fichier (les détails dépendent du type de mail).  Alors en voyant le fichier, appuyez pendant quelques secondes pour faire paraître le bouton *Partage*.  Choisissez *Partage* et alors choisissez *Importer avec EP Calipers* pour ouvrir l’image ou le PDF dans l’application.
 
 *** /AliveCor Kardia/
-Pour régarder des ECGs dans l’application /AliveCor Kardia/, choisissez *Journal*, alors *SHARE* pour l’ECG que vous voulez régarder.
+Pour régarder des ECGs dans l’application /AliveCor Kardia/, choisissez *Journal*, alors *Partage* pour l’ECG que vous voulez régarder.
 
 #+CAPTION: Le button *Partage* de /Kardia/ a une icône comme une enveloppe
 [[./img/alive_ecg.png]]
 
-Puis la selection du bouton *Share*, choisissez *PDF* de la liste d’options qui apparaît.  Alors choisissez le bouton *Partage* en haut à droite de l’écran.  Choisissez *Copier à Étriers EP* et vous êtes prêt(e) de mesurer!
+Puis la selection du bouton *Partage*, choisissez *PDF* de la liste d’options qui apparaît.  Alors choisissez le bouton *Partage* en haut à droite de l’écran.  Choisissez *Importer avec EP Calipers* et vous êtes prêt(e) de mesurer!
 
 ** PDFs à pages multiples
 Quand des fichiers PDF ont plus d’une page, l’application affichera la première page au début. Vous pouvez naviguer à d’autres pages avec la selection des boutons fléchés du menu *Image*.  Observez que si vous passez à une autre application et *Étriers EP* est terminé par iOS (un événement qui se déroule automatiquement pour préserver l’éspace mémoire), seulement la dernière page sera disponible quand l’application est recommencée.  Pour changer la page, il faut recharger le PDF.
