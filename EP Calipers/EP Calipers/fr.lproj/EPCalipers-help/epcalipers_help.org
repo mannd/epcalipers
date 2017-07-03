@@ -18,29 +18,29 @@
 * COMMENT Use Vous or On consistently?
 * COMMENT Check text of figures and adjust
 * Vous êtes de gare, encore...
-Il est 2h00 et le téléphone sonne.  C’est une infermière du Soins Intensifs.  Il faut que M. Smith reçoive son médicament antiarythmique (Qui crée ces fous calendriers de médicaments?) et son ECG a un intervalle QTc qui est un peu prolongé, selon l’ordinateur.  L’infermiére n’est pas certaine si l’administration est sans danger.  Elle veut transmettre l’ECG.
+Il est 2h00 et le téléphone sonne.  C’est une infirmière du Soins Intensifs.  Il faut que M. Smith reçoive son médicament antiarythmique (Qui crée ces fous calendriers de médicaments?) et son ECG a un intervalle QTc qui est un peu prolongé, selon l’ordinateur.  L’infirmiére craint que l’administration soit dangereuse.  Elle veut transmettre l’ECG.
 
-Vous chargez l’ECG sur votre téléphone portable.  Vous étudiez l’intervalle QT.  Vous n’êtes pas certain si le mesurement de l’ordinateur est correct.  Vous devez le mesurer vous-même.  Vous commencez à compter les petites boîtes.  Vous tirez vos vieux étriers mechaniques que vous avez acheté il y a plusieur ’ans.  Vous vous pensez: J’habite pendant une époque numerique.  Est-ce que je suis en train de faire des mesurements sur mon iPhone avec un étrier mechanique?
+Vous telechargez l’ECG sur votre téléphone portable.  Vous étudiez l’intervalle QT.  Vous n’êtes pas certain que le mesurement de l’ordinateur soit correct.  Vous devez le mesurer vous-même.  Vous commencez à compter les petites boîtes.  Vous faîtes sortir de votre poche les vieux étriers mechaniques que vous avez acheté il y a plusieurs ans.  Vous pensez: J’habite pendant une époque numerique.  Est-ce que je suis en train de faire des mesurements sur mon iPhone avec un étrier mechanique?
 * Étriers electroniques
 Cette application *Étriers EP* offre des *étriers electroniques* pour mesurer les intervalles sur les images des enregistrements électrocardiographiques ou électrophysiologiques.  Dans le laboratroire d’électrophysiologie les étriers électroniques sont inclus avec le système d'enregistrement informatisé.  *Étriers EP* fournit de même étriers électroniques pour votre iPhone ou iPad.  Les étriers électroniques d’ *Étriers EP* sont plus précis, plus faciles à utiliser, et moins dangereux que les étriers méchaniques (ils n’ont pas de points tranchants!).
 * Commencement rapide
-Quand *Étriers EP* commence, un exemple ECG et un étrier de temps sont montrés.  Déplacez l’étrier par toucher la barre tranversale et la glisser avec votre droigt.  Élargez et contractez l’étrier par toucher soit barre verticale et la glisser.  Pincez et zoomez l’image d’ECG au besoin.  Si l’ECG est plus grand que votre écran, vous pouvez la glisser avec votre droigt à trouver un endroit où mesurer.  Le reste des instructions va parcourir comment on charge les images, on adjoute et supprime les étriers, on les étalonne, et on rend les caculs avancés comme l’intervalle QT corrigé.
+Quand *Étriers EP* commence, un exemple ECG et un étrier de temps sont montrés.  Déplacez l’étrier en touchant la barre transversale et en la glissant avec votre doigt.  Élargez et contractez l’étrier en touchant la barre verticale et en la glissant.  Pincez et zoomez l’image d’ECG au besoin.  Si l’ECG est plus grand que votre écran, vous pouvez la glisser avec votre doigt à trouver un endroit où mesurer.  Le reste des instructions va parcourir comment on charge les images, on adjoute et supprime les étriers, on les étalonne, et on rend les caculs avancés comme l’intervalle QT corrigé.
 * Charger une image
-#+CAPTION: Bouton d’ *Image*
+#+CAPTION: Bouton d’*Image*
 [[./img/image_button.png]]
 
-Appuyez le bouton d’*Image* en haut gauche de l’écran pour montrer le menu d’*Image* en base d l’écran.
+Appuyez le bouton d’*Image* en haut gauche de l’écran pour montrer le menu d’*Image* en base de l’écran.
 #+CAPTION: Menu d’*Image*
 [[./img/image_menu.png]]
 
 Avec ce menu vous pouvez charger et ajuster une image électrocardiographique.  Il y a plusieurs maniéres de la charger.
 ** Prenez une photo d’un ECG
-[[./img/camera_icon.png]]Touchez le bouton de *Camera* pour prendre une photo d’un ECG et la charger dans l’application.  Notez que les images qui sont saisies ainsi ne sont pas enregistrées dans la collection de photos de votre appareil.  C’est mieux que vous utilisez cette option pour faire un mesurement rapide quand vous n’avez pas besoin d’enregistrer l’image.
+[[./img/camera_icon.png]]Touchez le bouton de *Camera* pour prendre une photo d’un ECG et pour la charger dans l’application.  Notez que les images qui sont saisies ainsi ne sont pas enregistrées dans la collection de photos de votre appareil.  C’est mieux que vous utilisez cette option pour faire un mesurement rapide quand vous n’avez pas besoin d’enregistrer l’image.
 ** Choisissez une photo de votre collection de photos
 ** Choisissez une photo ou un PDF avec l’icône de partage d’autres applications
-*Étriers EP* peut ouvrir des fichiers d’images et de PDF, indépendamment de leur location dans votre appareil.  Il est facile d’ouvrir directement des fichiers joints and des fichiers iCloud, Google Drive, et Dropbox.  Il est aussi facile d’ouvrir des images électrocardiographiques de l’application /AliveCor Kardia™/.  La solution à ouvrir les images dans les applications externes est l’utilisation du button *Partage*.  Ça resemmble à cela: [[./img/share_icon.png]]
+*Étriers EP* peut ouvrir des fichiers d’images et des PDF, indépendant de leur location dans votre appareil.  Il est facile d’ouvrir directement des fichiers joints and des fichiers iCloud, Google Drive, et Dropbox.  Il est aussi facile d’ouvrir des images électrocardiographiques de l’application /AliveCor Kardia™/.  La solution à ouvrir les images dans les applications externes est l’utilisation du button *Partage*.  Ça resemmble à cela: [[./img/share_icon.png]]
 
-Selon l’application, ce button se trouve en haut d l’écran, ou il faut appuyer longtemps sur une image pour ouvrir le menu *Partage*.  Voici le bouton *Partage* en haut à droite de l’écran de l’application /Kardia/:
+Selon l’application, ce button se trouve en haut d l’écran, ou il faut appuyer pendant plusieurs secondes sur une image pour ouvrir le menu *Partage*.  Voici le bouton *Partage* en haut à droite de l’écran de l’application /Kardia/:
 #+CAPTION: Bouton *Partage* en haut à droite
 [[./img/aliveecgtop.png]]
 
@@ -51,16 +51,16 @@ Quand le menu *Partage* est ouvert, l’une des options serait *Copier à Étrie
 
 Si l’option *Copier à Étriers EP* n’existe pas, essayez le button *Quick Look*: 
 
-#+CAPTION: Le bouton *Quick Look* est en base à droite
+#+CAPTION: Le bouton *Quick Look* est en bas à droite
 [[./img/quicklook.png]]
 
-ou le bouton *Open In...*.  Cette selection devrait ouvrir une fenêtre où *Copier à Étriers EP* apparaîtra.
+ou le bouton *Open In...*.  Cette selection ouvrira une fenêtre où *Copier à Étriers EP* apparaîtra.
 
 #+CAPTION: Le bouton *Open In...* permit l’image s’ouvrir dans *Étriers EP*
 [[./img/openin.png]]
 
 *** Overture les fichiers joints ou les fichiers de Dropbox
-Pour les fichiers joints ou les fichiers Dropbox, télécharger le fichier (les détails sont dépendant de (sur???) l’application de mail que vous utilisez).  Alors en voyant le fichier, appuyez longtemps pour faire paraître le bouton *Partage*.  Choisissez *Partage* et alors choisissez *Copier à Étriers EP* pour ouvrir l’image ou le PDF dans l’application.
+Pour les fichiers joints ou les fichiers Dropbox, télécharger le fichier (les détails dépendent du type de mail).  Alors en voyant le fichier, appuyez pendant quelques secondes pour faire paraître le bouton *Partage*.  Choisissez *Partage* et alors choisissez *Copier à Étriers EP* pour ouvrir l’image ou le PDF dans l’application.
 
 *** /AliveCor Kardia/
 Pour régarder des ECGs dans l’application /AliveCor Kardia/, choisissez *Journal*, alors *SHARE* pour l’ECG que vous voulez régarder.
@@ -73,20 +73,20 @@ Puis la selection du bouton *Share*, choisissez *PDF* de la liste d’options qu
 ** PDFs à pages multiples
 Quand des fichiers PDF ont plus d’une page, l’application affichera la première page au début. Vous pouvez naviguer à d’autres pages avec la selection des boutons fléchés du menu *Image*.  Observez que si vous passez à une autre application et *Étriers EP* est terminé par iOS (un événement qui se déroule automatiquement pour préserver l’éspace mémoire), seulement la dernière page sera disponible quand l’application est recommencée.  Pour changer la page, il faut recharger le PDF.
 * Adjustement de l’image
-Vous pouvez adjuster la position d’une image en utilisant le multitouch.  Pincez pour la zoomer et glissez pour faire la défiler.  Pendant le mode d’image, les étriers sont fixés en place.  Utilisez le menu *Adjust* pour tourner ou retourner l’image.  C’est utile si l’image n’est pas alignée correctement avec l’écran.   Vous pouvez la tourner de 90° dans toutes les directions, ou de 1°.  En choisissant le menu *Plus* vous pouvez tourner l’image de moins degres, aussi peu que 0,1°.  On peut faire une image miroir si c’est nécessaire.  Choisissez *OK* pour retourner du menu *Plus* au menu *Adjust*.  En utilisant ces options, vouv devriez pouvoir refaire les images.  Vous devez étalonner les étriers après la rotation de l’image.  Si vous voulez retourner à la position originale et le zoom initial, utilisez *Réinit*.  Après l’adjustement de l’image choisissez *OK* pour retourner à le menu principal d’image.
+Vous pouvez rajuster la position d’une image en utilisant le multitouch.  Pincez pour la zoomer et glissez pour la faire défiler.  Pendant le mode d’image, les étriers sont fixés en place.  Utilisez le menu *Adjust* pour tourner ou retourner l’image.  C’est utile si l’image n’est pas alignée correctement avec l’écran.   Vous pouvez la tourner de 90° dans toutes les directions, ou de 1°.  En choisissant le menu *Plus* vous pouvez tourner l’image de moins degres, aussi peu que 0,1°.  On peut faire une image miroir si c’est nécessaire.  Choisissez *OK* pour retourner du menu *Plus* au menu *Adjust*.  En utilisant ces options, vouv devriez pouvoir refaire les images.  Vous devez étalonner les étriers après la rotation de l’image.  Si vous voulez retourner à la position originale et le zoom initial, utilisez *Réinit*.  Après l’adjustement de l’image choisissez *OK* pour retourner à le menu principal d’image.
 #+CAPTION: Menu *Adjust*
 [[./img/adjust_menu.png]]
 #+CAPTION: Menu *Plus*
 [[./img/more_menu.png]]
 * Exemple ECG
-Tappez *Exemple* pour montrer l’exemple ECG qui apparaît quand *Ëtriers EP* commence.  C’est utile pour practiquer d’utilisation de l’appli, ou pour la démontrer aux autres.
+Tappez *Exemple* pour montrer l’exemple ECG qui apparaît quand *Ëtriers EP* commence.  C’est utile pour practiquer utilisation de l’application, ou pour la démontrer aux autres.
 * Quitter le mode d’image
-Après une image est chargée et adjustée, vous voulez sortir le mode d’image pour utiliser les étriers.  Choisissez le bouton *Mesurer* en haut à gauche pour retourner à l’écran principal d’ *Étriers EP*.
+Après qu’une image est chargée et rajustée, vous voulez sortir le mode d’image pour utiliser les étriers.  Choisissez le bouton *Mesurer* en haut à gauche pour retourner à l’écran principal d’ *Étriers EP*.
 #+CAPTION: Tappez le bouton *Mesurer* pour sortir le mode d’*Image*
 [[./img/measure_button.png]]
 * Types d’étriers
-Les étriers pouvent être horizontals pour les mesurements de temps, verticals pour les mesurements d’amplitude, ou anglaires pour les mesurements d’angles en dégres.  Les étriers de temps ressemble à la lettre *H*, les étriers d’amplitude à la lettre *H* couchée sur le côté, et les étriers d’angle au début à la lettre *V* inversée.
-* Déplacement d’étriers
+Les étriers peuvent être horizontals pour les mesurements de temps, verticals pour les mesurements d’amplitude, ou angulaires pour les mesurements d’angles en dégres.  Les étriers de temps ressemble à la lettre *H*, les étriers d’amplitude à la lettre *H* couchée sur le côté, et les étriers d’angle au début à la lettre *V* inversée.
+* Déplacement des étriers
 ** Les étriers de temps et d’amplitude
 Glissez la barre transversale d’un étrier pour le déplacer comme une unité.  Glissez les barres à gauche ou à droite (ou en haut ou en base pour les étriers d’amplitude) pour l’ étendre ou réduire.  Notez que vous ne pouvez pas pincez au même temps les deux barres.
 #+CAPTION: Seul étrier de temps déselectionné et non étalonné
@@ -125,7 +125,7 @@ Au debut les couleurs des étriers sont fixés par les [[app preferences][préf�
 [[./img/color_picker.png]]
 
 ** <<tweak>>Petits mouvements
-Parfois vous aimeriez à affiner la position d’un étrier, ou vous trouvez qu’il est trop difficile de le positionner exactement par glissez ses composants avec votre droigt.  On peut faire ces petits mouvements avec le bouton *Régler*.  Appuyez ce bouton et puis appuyez longtemps à un composants d’un étrier (une barre ou, en cas d’un étrier d’angle, peut-être le sommet) et un menu avec des boutons du mouvement apparaîtra.  Des boutons avec des flèches à gauche, à droite, montantes ou descendantes déplacent le composant choisi ou tout l’étrier en utilisant petits mouvements.  Vous pouvez les déplacer par un seul point ou un diximème d’un point, selon quel type de flèche vous appuyez (⇨ or →).  Appuyez le bouton *OK* pour retourner à le menu principal.
+Parfois vous aimeriez à affiner la position d’un étrier, ou vous trouvez qu’il est trop difficile de le positionner exactement par glissez ses composants avec votre doigt.  On peut faire ces petits mouvements avec le bouton *Régler*.  Appuyez ce bouton et puis appuyez longtemps à un composants d’un étrier (une barre ou, en cas d’un étrier d’angle, peut-être le sommet) et un menu avec des boutons du mouvement apparaîtra.  Des boutons avec des flèches à gauche, à droite, montantes ou descendantes déplacent le composant choisi ou tout l’étrier en utilisant petits mouvements.  Vous pouvez les déplacer par un seul point ou un diximème d’un point, selon quel type de flèche vous appuyez (⇨ or →).  Appuyez le bouton *OK* pour retourner à le menu principal.
 #+CAPTION: Les boutons pour adjuster la position des étriers
 [[./img/tweak_menu.png]]
 
@@ -142,35 +142,35 @@ Il ne faut pas étalonner des étriers d’angle.  Cependant, après l’étalon
 * Changement de l’étalonnage
 On peut réétalonner à tout moment.  On peut effacer tout l’étalonnage en choisissant *Effacer* sur le menu d’étalonnage.  Notez que l’étalonnage continue quand l’appareil est tourné ou l’image est zoomée.  La sélection d’une nouvelle image va réinitialiser l’étalonnage.
 * Intervalle/fréquence
-Après un étrier de temps est étalonné, si vous utilisez des unités du temps (par exemple msec ou sec) pour l’étalonnage, il est possible pour changer entre les mesurements d’intervalle (par exemple 600 msec) et les mesurements de fréquence cardiaque (par exemple 100 bpm) en choisisant *Intervalle/FC* ou *Int/FC*.
+Après qu’un étrier de temps est étalonné, si vous utilisez des unités du temps (par exemple msec ou sec) pour l’étalonnage, il est possible d’alterner entre les mesurements d’intervalle (par exemple 600 msec) et les mesurements de fréquence cardiaque (par exemple 100 bpm) en choisisant *Intervalle/FC* ou *Int/FC*.
 * Calculation de la fréquence moyenne et du intervalle moyen
-Selectionnez un étrier étalonné et mesurez un nombre d’intervalles.  Choisissez *Fréquence moyenne* or *FCM* et entrez le nombre d’intervalles mesurés.  Une boîte de dialogue montrera la fréquence cardiaque moyenne calculée et l’intervalle moyen.  Cela est utile pour la calculation de fréquences et intervalles pendant un rythme irrégulier, par exemple la fibrillation auriculaire.
+Selectionnez un étrier étalonné et mesurez un nombre d’intervalles.  Choisissez *Fréquence moyenne* or *FCM* et entrez le nombre d’intervalles mesurés.  Une boîte de dialogue montrera la fréquence cardiaque moyenne calculée et l’intervalle moyen.  Cela est utile pour la calculation les fréquences et les intervalles pendant un rythme irrégulier, par exemple la fibrillation auriculaire.
 * Calculation du QT corrigé
-Choisissez *QTc*.  Étentrez l’étrier sélectionné sur un ou plus d’intervalles RR et puis choisissez *Mesurer*.  Entrez le nombre d’intervalles étant mesurés et puis choisissez *Continuer*.  Puis utilisez le même étrier pour mesurer l’intervalle QT.  Choisissez *Mesurer*.  Une boîte de dialogue montrera le QT calculé utilisant la formule de Bazett.
+Choisissez *QTc*.  Étendez l’étrier sélectionné sur un ou plus d’intervalles RR et puis choisissez *Mesurer*.  Entrez le nombre d’intervalles étant mesurés et puis choisissez *Continuer*.  Utilisez le même étrier pour mesurer l’intervalle QT.  Choisissez *Mesurer*.  Une boîte de dialogue montrera le QT calculé utilisant la formule de Bazett.
 ** Petit mouvements pendant le mesurement QT
-Notez que pendant tous autres mesurements, il est possible de faire des petits mouvements des étriers en utilisant les boutons flèchés dans le menu *Régler* avant le mesurement.  Cependant, pendant la deuxième étape du mesurement de QT corrigé (le mesurement QT), le menu *Régler* n’est pas disponible à cause de la présence du menu du mesurement QT.  Ã cause de ce problème, pour permettre les petits mouvements pendant le mesurement du QT, un appui long sur les composants d’un étrier peut être utilisé pour montrer les flèches de mouvement et cela permit des petits mouvements pendant le mesurement du QT, avant la calculation dernière du QT corrigé.  Cependant, cette préference est optionnelle.  Quelques personnes hésitent pendant le mouvement d’un étrier, mais ces hésitations peuvent ouvrir le menu *Régler*.  Cela peut causer des problèmes.  Pour cette raison les appuis longs ne sont pas disponibles dans toute l’application.  Mais dans cette situation spécifique on pourrait désirer cette fonction.  Définez cette [[app preferences][preference]] en choisissant *Permittez de régler pendant QTc*.
-#+CAPTION: Mesurement du QTc première étape: mesurez un ou plus d’intervalles RR
+Notez qu’avec toutes autres mesures, il est possible de faire des petits mouvements des étriers en utilisant les boutons fléchés dans le menu *Régler* avant le mesurer.  Cependant, pendant la deuxième étape de la mesure de QT corrigé (la mesure QT), le menu *Régler* n’est pas disponible à cause de la présence du menu de la mesure QT.  Ainsi, pour faire de petits mouvements pendant la mesure du QT, il faut appuyer sur les composants d’un étrier pendant quelques secondes et puis l’étrier peut être utilisé pour montrer les flèches de mouvement.  Cela permit de petits mouvements pendant la mesure du QT, avant la calculation dernière du QT corrigé.  Cette préference est optionnelle.  Il ya ceux qui hésitent pendant le mouvement d’un étrier, mais ces hésitations peuvent ouvrir le menu *Régler*.  Cela peut entraîner des problèmes.  Pour cette raison les appuis longs ne sont pas disponibles dans toute l’application.  Mais dans ce cas il est quand même possible d’effectuer cette fonction.  Ëlisez cette [[app preferences][préférence]] en choisissant *Permettez de régler pendant QTc*.
+#+CAPTION: La mesure du QTc première étape: mesurez un ou plus d’intervalles RR
 [[./img/qtc_first_step.png]]
-#+CAPTION: Mesurement du QTc deuxième étape:mesurez l’intervalle QT
+#+CAPTION: La mesure du QTc deuxième étape:mesurez l’intervalle QT
 [[./img/qtc_second_step.png]]
 #+CAPTION: Resultat du QTc
 [[./img/qtc_result.png]]
 * <<Brugadometer>> « Brugadometer »
-Le *Brugadometer* est un outil diagnostique pour le syndrome de Brugada developpé en collaboration avec Dr. Adrian Baranchuk et ses collègues à l’Université Queens, Kinston, de l’Ontario, au Canada.  C’est un outil prévu pour distinguer entre les ECGs avec un motif du syndrome de Brugada dans des fils V1 ou V2 avec un bloc de branch droite incomplète.  Cet outil est en cours de développement dans *Étriers EP* et probablement il évoluera dans de futures versions.  Ã utiliser le *Brugadometer*, il faut étalonner un étrier de temps en msec ou mm et un étrier d’amplitude en mm.  En suite, un étrier d’angle va apparaître d’avoir un triangle au sommet comme suit.
+Le *Brugadometer* est un outil diagnostique, utilisé pour l’analyse du syndrome de Brugada.  Cet outil a été développé en collaboration avec Dr. Adrian Baranchuk et ses collègues à l’Université Queens, Kinston, en Ontario.  Le Brugadometer peut distinguer entre un bloc de branch droite incomplète, et un motif du syndrome de Brugada aux fils V1 ou V2.  Cet outil est en cours de développement dans *Étriers EP* et il évoluera dans des futures versions.  Pour utiliser le *Brugadometer*, il faut étalonner un étrier de temps en msec ou mm et un étrier d’amplitude en mm.  En suite, un étrier d’angle apparaîtra avec un triangle au sommet comme ceci.
 #+CAPTION: Brugadometer avec une base de triangle 5 mm au-dessous du sommet de l’étrier
 [[./img/brugadometer1.png]]
 
-La base du triangle sera localisée 5 mm au-dessous du sommet de triangle.  L’alignement approprié de ce triangle avec une onde r’ dans une personne soupçonnée d’avoir un ECG du syndrome de Brugada va montrer l’angle beta et le mesurement de la base de triangle 5 mm au-dessous du sommet.  Une base de triangle plus de 160 msec (4 mm à la vitesse de l’enregistrement standard d’un ECG de 25 mm par seconde) a une probabilité montée d’être un ECG du syndrome de Brugada.  Voici [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] pour plus d’information.
+La base du triangle sera localisée à 5 mm au-dessous du sommet de triangle.  L’alignement correct de ce triangle contre l’onde r’ pour quelqu’un soupçonné d’avoir le syndrome de Brugada donnera la mesure de l’angle beta et la mesure de la base du triangle 5 mm au-dessous du sommet.  Une base de triangle qui est > 160 msec (4 mm à une vitesse standarde de 25 mm par seconde) suggere la présence du syndrome de Brugada.  Voici [[https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] pour plus d’information.
 * <<app preferences>>Préférences
-Les préférences comme les couleurs des étriers et les intervalles par défaut de l’étalonnage peuvent être choisis dans l’application du préferences de votre appareil sous la catégorie *Étriers EP*. On peut aussi en changer par choisir le menu *Préférences* du menu *Action*, ouverte par tapper cette icône [[./img/share_icon.png]] en haut à droite de l’écran.  Après le changement des préferences retournez à l’application par la sélection le bouton retour en haut à gauche de l’écran des préferences.
+Vos préférences comme des couleurs des étriers et les intervalles par défaut de l’étalonnage peuvent être choisis dans l’application du préferences de votre appareil sous la catégorie *Étriers EP*. On peut aussi les changer en choisissant le menu *Préférences* du menu *Action*, que vous pouvez ouvrir en appuyant sur cette icône: [[./img/share_icon.png]] en haut à droite de l’écran.  Après le changement des préferences retournez à l’application par la sélection le bouton retour en haut à gauche de l’écran des préferences.
 * Problèmes et limitations
-- Les images prises par le bouton *Camera* dans l’application n’ont pas enregistré à vos photos.  L’utilisation de la camera dans l’application est recommandée pour l’analyse rapide quand vous ne veut pas enregistré une image à long terme.
+- Les images prises avec le bouton *Camera* ne sont pas enregistrée à vos photos.  L’utilisation de l’appareil photo dans l’application est recommandée pour l’analyse rapide quand vous ne voulez pas enregistrer une image à long terme.
 - La rotation de l’appareil ne preservera pas la relation entre l’image de l’ECG et les étriers.  Cependant l’étalonnage /est/ préservé avec la rotation.
-- Il est fortement recommandé de réétalonner les étriers si l’image (pas d’appareil) est tournées.  L’application n’impose pas ça.
-- Si l’application est mise en arrière-plan (par exemple en changeant à un autre application) et puis est supprimée par le système d’exploitation (quelque chose que l’iOS fait pour préserver le memoire), /et/ si vous avez chargé un fichier PDF avec plusieurs pages, seulement la dernière page que vous avez vu sera disponible.  Une boîte de dialogue apparaîtra en ce cas.  S’il faut changer la page dans cette situation, il faut que vous changiez le PDF encore.
+- Il est fortement recommandé de réétalonner les étriers si l’image (pas l’appareil) est tournées.  L’application ne l’exige pas.
+- Si l’application est mise en arrière-plan (par exemple quand vous changez d’une autre application) et puis est supprimée par le système d’exploitation (quelque chose que l’iOS fait pour préserver le memoire), /et/ si vous avez chargé un fichier PDF avec plusieurs pages, seulement la dernière page que vous avez vu sera disponible.  Une boîte de dialogue apparaîtra en ce cas.  S’il faut changer la page dans cette situation, il faut que vous changiez le PDF encore.
 * Remerciements
 - Je remercie Dr. Michael Katz pour l’idée.
-- Je remercie Dr. Adrian Baranchuk et ses collaborateurs de l’Université Queen's de Kingston en Ontario du Canada pour le concept du « Brugadometer » et pour leur assistance pour appliquer cet algorithme.
+- Je remercie Dr. Adrian Baranchuk et ses collaborateurs de l’Université Queen de Kingston en Ontario au Canada pour le concept du « Brugadometer » et pour leur aide en appliquant cet algorithme.
 - Le code source d’*Étriers EP* est disponible sur [[https://github.com/mannd/epcalipers][GitHub]].
 - *Étriers EP* est un logiciel libre et il est sous [[https://www.apache.org/licenses/LICENSE-2.0.html][Apache License Version 2.0]].  Nous ne fournissons aucune garantie de le précision de l’application.  Utilisez-la à votre propre risque.
 - Pour des questions, des rapports d’érreurs, ou des suggestions, contactez mannd@epstudiossoftware.com
