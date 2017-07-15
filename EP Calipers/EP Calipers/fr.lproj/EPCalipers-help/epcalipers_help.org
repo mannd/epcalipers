@@ -62,7 +62,7 @@ ou le bouton *Ouvrir dans...*.  Cette sélection ouvrira une fenêtre où *Impor
 Pour les fichiers joints ou les fichiers Dropbox, télécharger le fichier (les détails dépendent du type de mail).  En voyant le fichier, appuyer pendant quelques secondes pour faire apparaître le bouton *Partage*.  Choisir *Partage* et puis choisir *Importer avec EP Calipers* pour ouvrir l'image ou le PDF dans l'application.
 
 *** /AliveCor Kardia/
-Pour regarder des ECGs dans l'application /AliveCor Kardia/, choisir*Journal*, puis *Partage* pour l'ECG que vous voulez regarder.
+Pour regarder des ECGs dans l'application /AliveCor Kardia/, choisir *Journal*, puis *Partage* pour l'ECG que vous voulez regarder.
 
 #+CAPTION: Le bouton *Partage* de /Kardia/ a une icône d'enveloppe
 [[./img/alive_ecg.png]]
@@ -130,7 +130,7 @@ Parfois vous aimeriez raffiner la position d'un étrier, ou vous trouvez qu'il e
 
 Noter les abréviations des composants: Barre t = Barre transversale, Barre g = Barre gauche, Barre d = Barre droite, Barre sup = Barre supérieure, Barre inf = Barre inférieure.
 ** Fixer l'image
-Pendant le mouvement et l'ajustement des étriers, vous pouvez parfois déplacer l'image ECG involontairement.  Choisir *Immobiliser* pour immobiliser l'image sur l'écran.  Un message apparaîtra en haut de l'écran pour indiquer que l'image est immobilisée.  Démobiliser l'image en choisissant *Démobiliser*.
+Pendant le mouvement et l'ajustement des étriers, vous pouvez parfois déplacer l'image ECG involontairement.  Choisir *Immobiliser* pour immobiliser l'image sur l'écran.  Un message apparaîtra en haut de l'écran pour indiquer que l'image est immobilisée.  Démobiliser l'image en choisissant *Débloquer*.
 * Étalonnage
 Choisir *Étalonner*.  Étirer l'étrier sélectionné sur un intervalle connu (par exemple 1 000 msec de temps, ou 10 mm d'amplitude).  Choisir *Définir*.  Dans la boîte de dialogue, entrer l'intervalle et les unités (par exemple 500 msec, ou 1 sec, ou 1 mV).  Choisir *Définir* dans la boîte du dialogue pour définir l'étalonnage.  Noter qu'il faut que les étriers de temps et d'amplitude soient étalonnés individuellement.  Après l'étalonnage, les étriers montreront les intervalles avec les unités utilisées pour les étalonner.  Des nouveaux étriers créés utiliseront le même étalonnage.
 #+CAPTION: Étrier de temps qui sera étalonné
@@ -138,7 +138,7 @@ Choisir *Étalonner*.  Étirer l'étrier sélectionné sur un intervalle connu (
 #+CAPTION: Étrier de temps après l'étalonnage
 [[./img/post_calibration.png]]
 
-Il ne faut pas étalonner les étriers d'angle.  Cependant, après l'étalonnage d'étriers de temps et d'amplitude, les étriers d'angle peuvent être utilisés comme un [[Brugadometer]].
+Il ne faut pas étalonner les étriers d'angle.  Cependant, après l'étalonnage d'étriers de temps et d'amplitude, les étriers d'angle peuvent être utilisés comme un [[Brugadometer][Brugadometer]].
 * Changement de l'étalonnage
 Vous pouvez réétalonner à tout moment.  L'étalonnage peut être complètement effacé en choisissant *Effacer* sur le menu d'étalonnage.  Noter que l'étalonnage continue quand l'appareil est tourné ou l'image est zoomée.  La sélection d'une nouvelle image réinitialisera l'étalonnage.
 * Intervalle/fréquence
@@ -148,7 +148,7 @@ Sélectionner un étrier étalonné et mesurer un nombre d'intervalles.  Choisir
 * Calcul du QT corrigé
 Choisir *QTc*.  Étendre l'étrier sélectionné sur un ou plusieurs intervalles RR et puis choisir *Mesurer*.  Entrer le nombre d'intervalles étant mesurés et puis choisir *Continuer*.  Utiliser le même étrier pour mesurer l'intervalle QT.  Choisir *Mesurer*.  Une boîte de dialogue montrera le QT calculé en utilisant la formule de Bazett.
 ** Petits mouvements pendant la mesure QT
-Noter qu'avec toutes les autres mesures, il est possible de faire des petits mouvements des étriers en utilisant les boutons fléchés dans le menu *Régler* avant de les mesurer.  Cependant, pendant la deuxième étape de la mesure de QT corrigé (la mesure QT), le menu *Régler* n'est pas disponible à cause de la présence du menu de la mesure QT.  Ainsi, pour faire des petits mouvements pendant la mesure du QT, il faut appuyer sur les composants d'un étrier pendant quelques secondes et puis l'étrier peut être utilisé pour montrer les flèches de mouvement.  Cela permet des petits mouvements pendant la mesure du QT, avant le dernier calcul du QT corrigé.  Cette préférence est facultative.  Il y a ceux qui hésitent pendant le mouvement d'un étrier, mais ces hésitations peuvent ouvrir le menu *Régler*.  Cela peut entraîner des problèmes.  Pour cette raison les appuis qui durent longtemps ne sont pas disponibles dans toute l'application.  Néanmoins, dans ce cas il est quand même possible d'effectuer cette fonction.  Activer cette [[app preferences][préférence]] en choisissant *Permettre de régler pendant QTc*.
+Noter qu'avec toutes les autres mesures, il est possible de faire des petits mouvements des étriers en utilisant les boutons fléchés dans le menu *Régler* avant de les mesurer.  Cependant, pendant la deuxième étape de la mesure de QT corrigé (la mesure QT), le menu *Régler* n'est pas disponible à cause de la présence du menu de la mesure QT.  Ainsi, pour faire des petits mouvements pendant la mesure du QT, il faut appuyer sur les composants d'un étrier pendant quelques secondes et puis l'étrier peut être utilisé pour montrer les flèches de mouvement.  Cela permet des petits mouvements pendant la mesure du QT, avant le dernier calcul du QT corrigé.  Cette préférence est facultative.  Il y a ceux qui hésitent pendant le mouvement d'un étrier, mais ces hésitations peuvent ouvrir le menu *Régler*.  Cela peut entraîner des problèmes.  Pour cette raison les appuis qui durent longtemps ne sont pas disponibles dans toute l'application.  Néanmoins, dans ce cas il est quand même possible d'effectuer cette fonction.  Activer cette [[app preferences][préférence]] en choisissant *Permettre de régler QTc*.
 #+CAPTION: La mesure du QTc première étape: mesurer un ou plusieurs intervalles RR
 [[./img/qtc_first_step.png]]
 #+CAPTION: La mesure du QTc deuxième étape: mesurer l'intervalle QT
@@ -165,7 +165,7 @@ La base du triangle sera localisée à 5 mm au-dessous du sommet du triangle.  L
 Vos préférences comme les couleurs des étriers et les intervalles par défaut de l'étalonnage peuvent être choisies dans l'application de préférences de votre appareil sous la catégorie *Étriers EP*. Vous pouvez les changer également en choisissant le menu *Préférences* du menu *Action*, que vous pouvez ouvrir en appuyant sur cette icône: [[./img/share_icon.png]] en haut à droite de l'écran.  Après le changement des préférences, retourner à l'application par la sélection du bouton de retour en haut à gauche de l'écran des préférences.
 * Problèmes et limitations
 - Les images prises avec le bouton *Camera* ne sont pas sauvegardées dans vos photos.  L'utilisation de l'appareil photo dans l'application est recommandée pour l'analyse rapide quand vous ne voulez pas enregistrer une image à long terme.
-- La rotation de l'appareil ne préservera pas la relation entre l'image de l'ECG et les étriers.  Cependant l'étalonnage est /est/ conservé avec la rotation.
+- La rotation de l'appareil ne préservera pas la relation entre l'image de l'ECG et les étriers.  Cependant l'étalonnage /est/ conservé avec la rotation.
 - Il est fortement recommandé de réétalonner les étriers si l'image (pas l'appareil) est tournée.  L'application ne l'exige pas quand même.
 - Si l'application est mise en arrière-plan (par exemple quand vous changez d'une autre application) et puis est supprimée par le système d'exploitation (quelque chose que l'iOS fait pour préserver la mémoire), /et/ si vous avez téléchargé un fichier PDF avec plusieurs pages, seulement la dernière page que vous avez vue sera disponible.  Une boîte de dialogue apparaîtra dans ce cas.  S'il faut changer la page dans cette situation, il faut que vous changiez le PDF encore.
 * Remerciements
