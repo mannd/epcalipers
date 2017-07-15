@@ -35,10 +35,11 @@ Avec ce menu vous pouvez charger et ajuster une image électrocardiographique.  
 ** Prendre une photo d'un ECG
 [[./img/camera_icon.png]]Toucher le bouton de la *Camera* pour prendre une photo d'un ECG et pour la charger dans l'application.  Noter que les images qui sont ainsi saisies ne sont pas enregistrées dans la collection de photos de votre appareil.  Il est mieux que vous utilisiez cette option pour prendre une mesure rapide quand vous n'avez pas besoin d'enregistrer l'image.
 ** Choisir une photo de votre collection de photos
+Taper *Choisir* pour choisir une image qui a été déja enregistrée dans la collection de photos de votre appareil, par exemple, un fichier joint ou une photo déja prise.
 ** Choisir une photo ou un PDF avec l'icône de partage d'autres applications
 *Étriers EP* peut ouvrir des fichiers d'images et des PDF, quel que soit l'endroit où ils se trouvent dans votre appareil.  Il est facile d'ouvrir directement les fichiers joints and les fichiers iCloud, Google Drive, et Dropbox.  Il est aussi facile d'ouvrir des images électrocardiographiques de l'application /AliveCor Kardia™/.  La solution pour ouvrir les images dans des applications externes est l'utilisation du bouton *Partage*.  Cela ressemble à ceci: [[./img/share_icon.png]]
 
-Selon l'application, ce bouton se trouve en haut ou en bas de l'écran, où il faut appuyer pendant plusieurs secondes sur une image pour ouvrir le menu *Partage*.  Voici le bouton *Partage* en bas à gauche de l'écran de l'application /Kardia/:
+Selon l'application, ce bouton se trouve en haut ou en bas de l'écran, ou il faut appuyer pendant plusieurs secondes sur une image pour ouvrir le menu *Partage*.  Voici le bouton *Partage* en bas à gauche de l'écran de l'application /Kardia/:
 #+CAPTION: Bouton *Partage* en bas à gauche
 [[./img/aliveecgtop.png]]
 

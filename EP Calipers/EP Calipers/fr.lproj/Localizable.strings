@@ -77,15 +77,16 @@
 "1000 ms" = "1 000 mse";
 "10 mm" = "10 mm";
 "Crossbar" = "Barre transversale";
-"Xbar" = "Transversale";
+"Xbar" = "Barre t";
 "Left bar" = "Barre gauche";
 "Right bar" = "Barre droite";
-"Left" = "Gauche";
-"Right" = "Droite";
+"Left" = "Barre g";
+"Right" = "Barre d";
 "Top bar" = "Barre supérieure";
-"Top" = "Supérieure";
+"Top" = "Barre sup";
 "Bottom bar" = "Barre inférieure";
-"Bottom" = "Inférieure";
+"Bottom" = "Barre inf";
 "Apex" = "Sommet";
+"Copyright © 2015 - 2017 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Copyright © 2015 - 2017 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
 
 

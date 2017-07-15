@@ -1200,9 +1200,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         float value = 0.0;
         NSString *trimmedUnits = @"";
         // commented lines can be used to test different locale behavior
-        // NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"FR"];
+        //NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"FR"];
         NSScanner *scanner = [NSScanner localizedScannerWithString:rawText];
-        // scanner.locale = locale;
+        //scanner.locale = locale;
         [scanner scanFloat:&value];
         trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         // reject negative values (showBadValueDialog}
