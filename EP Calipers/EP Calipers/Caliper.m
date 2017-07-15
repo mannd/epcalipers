@@ -8,19 +8,20 @@
 
 #import "Caliper.h"
 #include <math.h>
+#include "Defs.h"
 
 #define DELTA 20.0
-#define CROSSBAR @"Crossbar"
-#define CROSSBAR_SMALL @"Xbar"
-#define LEFT_BAR @"Left bar"
-#define LEFT_BAR_SMALL @"Left"
-#define RIGHT_BAR @"Right bar"
-#define RIGHT_BAR_SMALL @"Right"
-#define UP_BAR @"Top bar"
-#define UP_BAR_SMALL @"Top"
-#define DOWN_BAR @"Bottom bar"
-#define DOWN_BAR_SMALL @"Bottom"
-#define APEX_BAR @"Apex"
+#define CROSSBAR L(@"Crossbar")
+#define CROSSBAR_SMALL L(@"Xbar")
+#define LEFT_BAR L(@"Left bar")
+#define LEFT_BAR_SMALL L(@"Left")
+#define RIGHT_BAR L(@"Right bar")
+#define RIGHT_BAR_SMALL L(@"Right")
+#define UP_BAR L(@"Top bar")
+#define UP_BAR_SMALL L(@"Top")
+#define DOWN_BAR L(@"Bottom bar")
+#define DOWN_BAR_SMALL L(@"Bottom")
+#define APEX_BAR L(@"Apex")
 
 @implementation Caliper
 {
@@ -114,10 +115,10 @@
     
     if (self.direction == Horizontal) {
         // the math here insures that the label doesn't get so small that it can't be read
-        [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position - 25: self.bar2Position - 25), self.crossBarPosition - 20,  fmaxf(100.0, fabsf(self.bar2Position - self.bar1Position) + 50), 20)  withAttributes:self.attributes];
+        [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position - 25: self.bar2Position - 25), self.crossBarPosition - 22,  fmaxf(100.0, fabsf(self.bar2Position - self.bar1Position) + 50), 20)  withAttributes:self.attributes];
     }
     else {
-        [text drawInRect:CGRectMake(self.crossBarPosition + 5, self.bar1Position + (self.bar2Position - self.bar1Position)/2, 140, 20) withAttributes:self.attributes];
+        [text drawInRect:CGRectMake(self.crossBarPosition + 5, self.bar1Position - 10 + (self.bar2Position - self.bar1Position)/2, 140, 20) withAttributes:self.attributes];
     }
 }
 
@@ -136,7 +137,7 @@
 }
 
 - (NSString *)measurement {
-    NSString *s = [NSString stringWithFormat:@"%.4g %@", [self calibratedResult], self.calibration.units];
+    NSString *s = [NSString localizedStringWithFormat:@"%.4g %@", [self calibratedResult], self.calibration.units];
     return s;
 }
 

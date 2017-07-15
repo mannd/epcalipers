@@ -24,17 +24,24 @@
 #define MOVEMENT 1.0f
 #define MICRO_MOVEMENT 0.1f
 
-#define CALIBRATE_IPAD @"Calibrate"
-#define CALIBRATE_IPHONE @"Cal"
-#define TOGGLE_INT_RATE_IPAD @"Interval/Rate"
-#define TOGGLE_INT_RATE_IPHONE @"I/R"
-#define MEAN_RATE_IPAD @"Mean Rate"
-#define MEAN_RATE_IPHONE @"MRate"
-#define HELP_IPAD @"Help"
-#define HELP_IPHONE @"?"
-#define SWITCH_IPAD @"Image"
-#define SWITCH_IPHONE @"Image"
-#define SWITCH_BACK @"Measure"
+#define CALIBRATE_IPAD L(@"Calibrate")
+#define CALIBRATE_IPHONE L(@"Cal")
+#define TOGGLE_INT_RATE_IPAD L(@"Interval/Rate")
+#define TOGGLE_INT_RATE_IPHONE L(@"I/R")
+#define MEAN_RATE_IPAD L(@"Mean Rate")
+#define MEAN_RATE_IPHONE L(@"MRate")
+#define HELP L(@"Help")
+#define CANCEL L(@"Cancel")
+#define ABOUT L(@"About")
+#define BACK L(@"Back")
+#define SET L(@"Set")
+#define CLEAR L(@"Clear")
+#define MORE L(@"More")
+#define OK L(@"OK")
+
+#define SWITCH_IPAD L(@"Image")
+#define SWITCH_IPHONE L(@"Image")
+#define SWITCH_BACK L(@"Measure")
 //#define SETTINGS_IPAD @"Preferences"
 //#define SETTINGS_IPHONE @"Prefs"
 //#define BRUGADA_IPAD @"Brugada"
@@ -55,8 +62,8 @@
 #define NUM_PDF_PAGES_ALERTVIEW 101
 #define LAUNCHED_FROM_URL_ALERTVIEW 102
 
-#define CALIPERS_VIEW_TITLE @"EP Calipers"
-#define IMAGE_VIEW_TITLE @"Image Mode"
+#define CALIPERS_VIEW_TITLE L(@"EP Calipers")
+#define IMAGE_VIEW_TITLE L(@"Image Mode")
 
 #define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
 
@@ -175,7 +182,7 @@
         }
         
         if (self.wasLaunchedFromUrl) {
-            UIAlertView *launchedFromUrlAlert = [[UIAlertView alloc] initWithTitle:@"Multipage PDF" message:@"App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+	  UIAlertView *launchedFromUrlAlert = [[UIAlertView alloc] initWithTitle:L(@"Multipage PDF") message:L(@"App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages.") delegate:self cancelButtonTitle:OK otherButtonTitles:nil];
             launchedFromUrlAlert.tag = LAUNCHED_FROM_URL_ALERTVIEW;
             [launchedFromUrlAlert show];
             // only show this warning once
@@ -203,10 +210,14 @@
             [[NSUserDefaults standardUserDefaults] synchronize];
             // This is the first launch ever
             EPSLog(@"First launch");
+            // NOTE: for now we will eliminate this dialog, though keep the first launch startup code,
+            // otherwise app breaks.
+            
             //TODO: Update with each version!!
-            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:@"EP Calipers Quick Start" message:@"What's new: Color calipers individually.  Use the *Tweak* menu to micro-move caliper components.  App maintains state when terminated by iOS and restored.  Bug fixes.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the action button at the upper right for full help."
-                                                                     delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [quickStartAlert show];
+//            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:L(@"EP Calipers Quick Start") message:@"What's new: Color calipers individually.  Use the *Tweak* menu to micro-move caliper components.  App maintains state when terminated by iOS and restored.  Bug fixes.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the action button at the upper right for full help."
+//                                                                     delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
+//            [quickStartAlert show];
+            
         }
         
         [self selectMainToolbar];
@@ -259,17 +270,17 @@
 // Help menu, etc.
 - (void)showSecondaryMenu {
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction* preferencesAction = [UIAlertAction actionWithTitle:@"Preferences" style:UIAlertActionStyleDefault
+    UIAlertAction* preferencesAction = [UIAlertAction actionWithTitle:L(@"Preferences") style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action) {[self openSettings];}];
     [actionSheet addAction:preferencesAction];
-    UIAlertAction* helpAction = [UIAlertAction actionWithTitle:@"Help" style:UIAlertActionStyleDefault
+    UIAlertAction* helpAction = [UIAlertAction actionWithTitle:HELP style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * action) {[self performSegueWithIdentifier:@"WebViewSegue" sender:self];}];
     [actionSheet addAction:helpAction];
-    UIAlertAction* aboutAction = [UIAlertAction actionWithTitle:@"About" style:UIAlertActionStyleDefault
+    UIAlertAction* aboutAction = [UIAlertAction actionWithTitle:ABOUT style:UIAlertActionStyleDefault
                                                        handler:^(UIAlertAction * action) {[About show];}];
     [actionSheet addAction:aboutAction];
     
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel
                                                          handler:nil];
     [actionSheet addAction:cancelAction];
     
@@ -300,7 +311,7 @@
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
-    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreToolbar)];
+    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:MORE style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreToolbar)];
     self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton,
                           self.calibrateCalipersButton,
                           self.toggleIntervalRateButton,
@@ -312,12 +323,12 @@
 
 - (void)createImageToolbar {
     UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
-    UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Select" style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
-    UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Adjust" style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
-    UIBarButtonItem *clearImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Sample" style:UIBarButtonItemStylePlain target:self action:@selector(loadDefaultImage)];
+    UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Select") style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
+    UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Adjust") style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
+    UIBarButtonItem *clearImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Sample") style:UIBarButtonItemStylePlain target:self action:@selector(loadDefaultImage)];
     // these 2 buttons only enable for multipage PDFs
-    self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
-    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? @"Previous" : @"Prev") style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
+    self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Next") style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
+    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? L(@"Previous" ): L(@"Prev")) style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
     [self enablePageButtons:NO];
     self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, clearImageButton, self.previousPageButton, self.nextPageButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -327,38 +338,38 @@
 }
 
 - (void)createAdjustImageToolbar {
-    UIBarButtonItem *rotateImageRightButton = [[UIBarButtonItem alloc] initWithTitle:@"90°R" style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageRight:)];
-    UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"90°L" style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
-    UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:@"1°R" style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
-    UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"1°L" style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
-    UIBarButtonItem *moreAdjustButton = [[UIBarButtonItem alloc] initWithTitle:@"More" style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreAdjustImageToolbar)];
-    UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
+  UIBarButtonItem *rotateImageRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"90°R") style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageRight:)];
+  UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"90°L") style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
+  UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"1°R") style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
+  UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"1°L") style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
+    UIBarButtonItem *moreAdjustButton = [[UIBarButtonItem alloc] initWithTitle:MORE style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreAdjustImageToolbar)];
+    UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Reset") style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
     UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     
     self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, resetImageButton, moreAdjustButton, backToImageMenuButton, nil];
 }
 
 - (void)createMoreAdjustImageToolbar {
-    UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:@"0.1°R" style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
-    UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:@"0.1°L" style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
-    UIBarButtonItem *flipImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Flip" style:UIBarButtonItemStylePlain target:self action:@selector(flipImage:)];
-    UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Reset" style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
+  UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"0.1°R") style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
+  UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"0.1°L") style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
+  UIBarButtonItem *flipImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Flip") style:UIBarButtonItemStylePlain target:self action:@selector(flipImage:)];
+  UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Reset") style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
     UIBarButtonItem *backToAdjustImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(moreAdjustImageDone)];
     self.moreAdjustImageMenuItems = [NSArray arrayWithObjects:microTweakRightButton, microTweakLeftButton, flipImageButton, resetImageButton, backToAdjustImageMenuButton, nil];
 }
 
 - (void)createAddCalipersToolbar {
-    UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:@"Time" style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
-    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:@"Amplitude" style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
-    UIBarButtonItem *angleButton = [[UIBarButtonItem alloc] initWithTitle:@"Angle" style:UIBarButtonItemStylePlain target:self action:@selector(addAngleCaliper)];
+    UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Time") style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
+    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Amplitude") style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
+    UIBarButtonItem *angleButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Angle") style:UIBarButtonItemStylePlain target:self action:@selector(addAngleCaliper)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, angleButton, cancelButton, nil];
 }
 
 - (void)createSetupCalibrationToolbar {
-    UIBarButtonItem *setButton = [[UIBarButtonItem alloc] initWithTitle:@"Set" style:UIBarButtonItemStylePlain target:self action:@selector(setCalibration)];
-    UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStylePlain target:self action:@selector(clearCalibration)];
+    UIBarButtonItem *setButton = [[UIBarButtonItem alloc] initWithTitle:SET style:UIBarButtonItemStylePlain target:self action:@selector(setCalibration)];
+    UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:CLEAR style:UIBarButtonItemStylePlain target:self action:@selector(clearCalibration)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
 
     
@@ -367,10 +378,10 @@
 
 - (void)createQTcStep1Toolbar {
     UILabel *label = [[UILabel alloc] init];
-    [label setText:@"RR interval(s)?"];
+    [label setText:L(@"RR interval(s)?")];
     [label sizeToFit];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
+    UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     self.qtcStep1MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureRRButton, cancelButton, nil];
@@ -378,26 +389,26 @@
 
 - (void)createQTcStep2Toolbar {
     UILabel *label = [[UILabel alloc] init];
-    [label setText:@"QT interval?"];
+    [label setText:L(@"QT interval?")];
     [label sizeToFit];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    UIBarButtonItem *measureQTButton = [[UIBarButtonItem alloc] initWithTitle:@"Measure" style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
+    UIBarButtonItem *measureQTButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     self.qtcStep2MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureQTButton, cancelButton, nil];
 }
 
 - (void)createMoreToolbar {
-    UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Color" style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
-    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Tweak" style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
-    self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:@"Lock" style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
+  UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Color") style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
+  UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Tweak") style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
+  self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Lock") style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, self.lockImageButton, cancelButton, nil];
 }
 
 - (void)createColorToolbar {
     UILabel *label = [[UILabel alloc] init];
-    [label setText:@"Long press caliper"];
+    [label setText:L(@"Long press caliper")];
     [label sizeToFit];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
@@ -406,7 +417,7 @@
 
 - (void)createTweakToolbar {
     UILabel *label = [UILabel new];
-    [label setText:@"Long press caliper component"];
+    [label setText:L(@"Long press caliper component")];
     [label sizeToFit];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
@@ -456,13 +467,26 @@
         [self showNoTimeCaliperSelectedAlertView];
         return;
     }
-    UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Calculate", nil];
+    
+// Alternate way to do this using UIAlertController, however, too many UIAlertViews and not worth changing.
+// We'll keep this commented code here as a reminder in case Apple ever really gets rid of UIAlertView for good.
+    
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:L(@"Enter Number of Intervals") message:L(@"How many intervals is this caliper measuring?") preferredStyle:UIAlertControllerStyleAlert];
+//    [alertController addAction:[UIAlertAction actionWithTitle:L(@"Calculate") style:UIAlertActionStyleDefault handler:nil]];
+//    [alertController addAction:[UIAlertAction actionWithTitle:L(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
+//    [alertController addTextFieldWithConfigurationHandler:^(UITextField* inputTextField){
+//        [inputTextField setKeyboardType:UIKeyboardTypeNumberPad];
+//        [inputTextField setText:@"3"];
+//        [inputTextField setClearButtonMode:UITextFieldViewModeAlways];}];
+//    [self presentViewController:alertController animated:YES completion:nil];
+   
+    UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:L(@"Enter Number of Intervals") message:L(@"How many intervals is this caliper measuring?") delegate:self cancelButtonTitle:CANCEL otherButtonTitles:L(@"Calculate"), nil];
     calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     calculateMeanRRAlertView.tag = MEAN_RR_ALERTVIEW;
     [calculateMeanRRAlertView show];
     
     [[calculateMeanRRAlertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
-    [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"3"];
+    [[calculateMeanRRAlertView textFieldAtIndex:0] setText:L(@"3")];
     [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
 }
 
@@ -488,7 +512,7 @@
         [self showNoTimeCaliperSelectedAlertView];
     }
     else {
-        UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:@"Enter Number of Intervals" message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Continue", nil];
+      UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:L(@"Enter Number of Intervals") message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:CANCEL otherButtonTitles:L(@"Continue"), nil];
         calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
         calculateMeanRRAlertView.tag = MEAN_RR_FOR_QTC_ALERTVIEW;
         
@@ -522,9 +546,9 @@
                 qt *= 1000;
                 qtc *= 1000;
             }
-            result = [NSString stringWithFormat:@"Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett's formula)", meanRR, c.calibration.units, qt, c.calibration.units, qtc, c.calibration.units];
+            result = [NSString localizedStringWithFormat:L(@"Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett's formula)"), meanRR, c.calibration.units, qt, c.calibration.units, qtc, c.calibration.units];
         }
-        UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:@"Calculated QTc" message:result delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:L(@"Calculated QTc") message:result delegate:nil cancelButtonTitle:OK otherButtonTitles: nil];
         qtcResultAlertView.alertViewStyle = UIAlertViewStyleDefault;
         [qtcResultAlertView show];
         [self selectMainToolbar];
@@ -545,7 +569,7 @@
         [self unselectCalipersExcept:singleAngleCaliper];
     }
     if ([self noAngleCaliperSelected]) {
-        UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:@"No Angle Caliper Selected" message:@"Select an angle caliper." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:L(@"No Angle Caliper Selected") message:L(@"Select an angle caliper.") delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
         noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
         [noSelectionAlert show];
         return;
@@ -579,7 +603,7 @@
 //        riskStatement = @"Increased risk of Brugada syndrome";
 //    }
     NSString *message = [NSString stringWithFormat:@"Beta angle = %.1f°%@%@", angleInDegrees, calibrationStatement, riskStatement];
-    UIAlertView *brugadaResultAlert = [[UIAlertView alloc] initWithTitle:@"Brugada Syndrome Results" message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    UIAlertView *brugadaResultAlert = [[UIAlertView alloc] initWithTitle:@"Brugada Syndrome Results" message:message delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
     [brugadaResultAlert show];
     
 }
@@ -594,7 +618,7 @@
 }
 
 - (void)showNoTimeCaliperSelectedAlertView {
-    UIAlertView *nothingToMeasureAlertView = [[UIAlertView alloc] initWithTitle:@"No Time Caliper Selected" message:@"Select a time caliper to measure one or more RR intervals." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+  UIAlertView *nothingToMeasureAlertView = [[UIAlertView alloc] initWithTitle:L(@"No Time Caliper Selected") message:L(@"Select a time caliper to measure one or more RR intervals.") delegate:nil cancelButtonTitle:OK otherButtonTitles: nil];
     nothingToMeasureAlertView.alertViewStyle = UIAlertActionStyleDefault;
     [nothingToMeasureAlertView show];
 }
@@ -634,7 +658,7 @@
         return;
     }
     if ([self.calipersView noCaliperIsSelected]) {
-        UIAlertView *noSelectionAlertView = [[UIAlertView alloc] initWithTitle:@"No Caliper Selected" message:@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *noSelectionAlertView = [[UIAlertView alloc] initWithTitle:L(@"No Caliper Selected") message:L(@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement.") delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
         noSelectionAlertView.alertViewStyle = UIAlertViewStyleDefault;
         [noSelectionAlertView show];
         return;
@@ -642,12 +666,12 @@
     Caliper* c = self.calipersView.activeCaliper;
     // Angle calipers don't require calibration
     if (![c requiresCalibration]) {
-        UIAlertView *angleCaliperAlertView = [[UIAlertView alloc] initWithTitle:@"Angle Caliper" message:@"Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      UIAlertView *angleCaliperAlertView = [[UIAlertView alloc] initWithTitle:L(@"Angle Caliper") message:L(@"Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers.") delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
         [angleCaliperAlertView show];
         return;
     }
     if (c.valueInPoints <= 0) {
-        UIAlertView *negativeValueAlertView = [[UIAlertView alloc] initWithTitle:@"Negatively Valued Caliper" message:@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+      UIAlertView *negativeValueAlertView = [[UIAlertView alloc] initWithTitle:L(@"Negatively Valued Caliper") message:L(@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration.") delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
         [negativeValueAlertView show];
         return;
     }
@@ -658,8 +682,8 @@
     else {
         example = @"500 msec";
     }
-    NSString *message = [NSString stringWithFormat:@"Enter measurement (e.g. %@)", example];
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Calibrate" message:message delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Set", nil];
+    NSString *message = [NSString stringWithFormat:L(@"Enter measurement (e.g. %@)"), example];
+    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:L(@"Calibrate") message:message delegate:self cancelButtonTitle:CANCEL otherButtonTitles:SET, nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = CALIBRATION_ALERTVIEW;
     NSString *calibrationString = @"";
@@ -688,7 +712,7 @@
 }
 
 - (void)showNoCalipersAlert {
-    UIAlertView *noCalipersAlert = [[UIAlertView alloc] initWithTitle:@"No Calipers To Use" message:@"Add one or more calipers first before proceeding." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+  UIAlertView *noCalipersAlert = [[UIAlertView alloc] initWithTitle:L(@"No Calipers To Use") message:L(@"Add one or more calipers first before proceeding.") delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
     noCalipersAlert.alertViewStyle = UIAlertViewStyleDefault;
     [noCalipersAlert show];
 }
@@ -1068,11 +1092,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)fadeCaliperView {
-    self.calipersView.alpha = 0.5f;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.calipersView.alpha = 0.5f;}];
 }
 
 - (void)unfadeCaliperView {
-    self.calipersView.alpha = 1.0f;
+    [UIView animateWithDuration:0.5 animations:^{
+        self.calipersView.alpha = 1.0f;}];
 }
 
 - (IBAction)flipImage:(id)sender {
@@ -1112,7 +1138,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)showBadValueDialog {
-    UIAlertView *badValueAlertView = [[UIAlertView alloc] initWithTitle:@"Bad Input" message:@"Empty input, negative number input, or other bad input." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+  UIAlertView *badValueAlertView = [[UIAlertView alloc] initWithTitle:L(@"Bad Input") message:L(@"Empty input, negative number input, or other bad input.") delegate:nil cancelButtonTitle:OK otherButtonTitles: nil];
     [badValueAlertView show];
 }
 
@@ -1148,7 +1174,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             double meanRR = intervalResult / divisor;
             double meanRate = [c rateResult:meanRR];
             if (alertView.tag == MEAN_RR_ALERTVIEW) {
-                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:@"Mean Interval and Rate" message:[NSString stringWithFormat:@"Mean interval = %.4g %@\nMean rate = %.4g bpm", meanRR, [c.calibration rawUnits], meanRate] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:L(@"Mean Interval and Rate") message:[NSString localizedStringWithFormat:L(@"Mean interval = %.4g %@\nMean rate = %.4g bpm"), meanRR, [c.calibration rawUnits], meanRate] delegate:nil cancelButtonTitle:OK otherButtonTitles: nil];
                 resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
                 [resultAlertView show];
             }
@@ -1174,9 +1200,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         float value = 0.0;
         NSString *trimmedUnits = @"";
         // commented lines can be used to test different locale behavior
-        // NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"FR"];
+        //NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"FR"];
         NSScanner *scanner = [NSScanner localizedScannerWithString:rawText];
-        // scanner.locale = locale;
+        //scanner.locale = locale;
         [scanner scanFloat:&value];
         trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         // reject negative values (showBadValueDialog}
@@ -1280,10 +1306,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)lockImage {
     self.calipersView.lockImageScreen = !self.calipersView.lockImageScreen;
     if (self.calipersView.lockImageScreen) {
-        self.lockImageButton.title = @"Unlock";
+      self.lockImageButton.title = L(@"Unlock");
     }
     else {
-        self.lockImageButton.title = @"Lock";
+      self.lockImageButton.title = L(@"Lock");
     }
     [self.scrollView setUserInteractionEnabled:!self.calipersView.lockImageScreen];
     [self.calipersView setNeedsDisplay];

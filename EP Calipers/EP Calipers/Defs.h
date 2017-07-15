@@ -34,4 +34,8 @@ typedef NS_ENUM(NSInteger, MovementDirection) {
     Stationary
 };
 
+
+// make my own simpler localization macro
+#define L(s) NSLocalizedString(s, nil)
+
 #endif
