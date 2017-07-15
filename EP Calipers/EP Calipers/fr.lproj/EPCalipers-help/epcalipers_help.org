@@ -128,6 +128,7 @@ Parfois vous aimeriez raffiner la position d'un étrier, ou vous trouvez qu'il e
 #+CAPTION: Les boutons pour ajuster la position des étriers
 [[./img/tweak_menu.png]]
 
+Noter les abréviations des composants: Barre t = Barre transversale, Barre g = Barre gauche, Barre d = Barre droite, Barre sup = Barre supérieure, Barre inf = Barre inférieure.
 ** Fixer l'image
 Pendant le mouvement et l'ajustement des étriers, vous pouvez parfois déplacer l'image ECG involontairement.  Choisir *Immobiliser* pour immobiliser l'image sur l'écran.  Un message apparaîtra en haut de l'écran pour indiquer que l'image est immobilisée.  Démobiliser l'image en choisissant *Démobiliser*.
 * Étalonnage

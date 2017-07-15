@@ -42,11 +42,12 @@
 "No Caliper Selected" = "Étrier pas choisi";
 "Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." = "Choisir un étrier en le tapant une seule fois.  Le déplacer à un intervalle connu.  Toucher « définir » pour entrer l'intervalle de l'étalonnage.";
 "Enter measurement (e.g. %@)" = "Entrer la mesure (p.e. %@)";
+"Adjust" = "Ajuster";
 "90°R" = "90°D";
 "90°L" = "90°G";
 "1°R" = "1°D";
 "1°L" = "1°G";
-"Reset" = "Réinitialiser";
+"Reset" = "Réinit";
 "0.1°R" = "0.1°D";
 "0.1°L" = "0.1°G";
 "Flip" = "Inverser";
