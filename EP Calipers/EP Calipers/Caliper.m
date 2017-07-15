@@ -8,19 +8,20 @@
 
 #import "Caliper.h"
 #include <math.h>
+#include "Defs.h"
 
 #define DELTA 20.0
-#define CROSSBAR @"Crossbar"
-#define CROSSBAR_SMALL @"Xbar"
-#define LEFT_BAR @"Left bar"
-#define LEFT_BAR_SMALL @"Left"
-#define RIGHT_BAR @"Right bar"
-#define RIGHT_BAR_SMALL @"Right"
-#define UP_BAR @"Top bar"
-#define UP_BAR_SMALL @"Top"
-#define DOWN_BAR @"Bottom bar"
-#define DOWN_BAR_SMALL @"Bottom"
-#define APEX_BAR @"Apex"
+#define CROSSBAR L(@"Crossbar")
+#define CROSSBAR_SMALL L(@"Xbar")
+#define LEFT_BAR L(@"Left bar")
+#define LEFT_BAR_SMALL L(@"Left")
+#define RIGHT_BAR L(@"Right bar")
+#define RIGHT_BAR_SMALL L(@"Right")
+#define UP_BAR L(@"Top bar")
+#define UP_BAR_SMALL L(@"Top")
+#define DOWN_BAR L(@"Bottom bar")
+#define DOWN_BAR_SMALL L(@"Bottom")
+#define APEX_BAR L(@"Apex")
 
 @implementation Caliper
 {

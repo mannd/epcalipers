@@ -19,9 +19,6 @@
 // set to yes to always show startup screen
 //#define TEST_QUICK_START NO
 
-// make my own simpler localization macro
-#define L(s) NSLocalizedString(s, nil)
-
 #define ANIMATION_DURATION 0.5
 #define MAX_ZOOM 10.0
 #define MOVEMENT 1.0f

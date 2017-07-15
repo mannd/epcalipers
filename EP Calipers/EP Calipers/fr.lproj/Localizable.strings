@@ -76,4 +76,16 @@
 "IMAGE LOCK" = "IMAGE BLOQUÉE";
 "1000 ms" = "1 000 mse";
 "10 mm" = "10 mm";
+"Crossbar" = "Barre transversale";
+"Xbar" = "Transversale";
+"Left bar" = "Barre gauche";
+"Right bar" = "Barre droite";
+"Left" = "Gauche";
+"Right" = "Droite";
+"Top bar" = "Barre supérieure";
+"Top" = "Supérieure";
+"Bottom bar" = "Barre inférieure";
+"Bottom" = "Inférieure";
+"Apex" = "Sommet";
+
 
