@@ -43,23 +43,23 @@ Selon l'application, ce bouton se trouve en haut ou en bas de l'écran, ou il fa
 #+CAPTION: Bouton *Partage* en bas à gauche
 [[./img/aliveecgtop.png]]
 
-Quand le menu *Partage* est ouvert, l'une des options est *Importer avec EP Calipers*.  Le choix de cette option ouvrira l'image dans l'application.
+Quand le menu *Partage* est ouvert, l'une des options est *Importer avec Compas EP*.  Le choix de cette option ouvrira l'image dans l'application.
 
-#+CAPTION: *Importer avec EP Calipers* ouvrir l'image dans *Compas EP*
+#+CAPTION: *Importer avec Compas EP* ouvrir l'image dans *Compas EP*
 [[./img/copy_to_ep_calipers.png]]
 
-Si vous ne voyez pas l'option *Importer avec EP Calipers*, essayer le bouton *Coup d'œil*: 
+Si vous ne voyez pas l'option *Importer avec Compas EP*, essayer le bouton *Coup d'œil*: 
 
 #+CAPTION: Le bouton *Coup d'œil* est en bas à gauche
 [[./img/quicklook.png]]
 
-ou le bouton *Ouvrir dans...*.  Cette sélection ouvrira une fenêtre où *Importer avec EP Calipers* apparaîtra.
+ou le bouton *Ouvrir dans...*.  Cette sélection ouvrira une fenêtre où *Importer avec Compas EP* apparaîtra.
 
 #+CAPTION: Le bouton *Ouvrir dans...* permet à l'image de s'ouvrir dans *Compas EP*
 [[./img/openin.png]]
 
 *** Ouverture des fichiers joints ou des fichiers de Dropbox
-Pour les fichiers joints ou les fichiers Dropbox, télécharger le fichier (les détails dépendent du type de mail).  En voyant le fichier, appuyer pendant quelques secondes pour faire apparaître le bouton *Partage*.  Choisir *Partage* et puis choisir *Importer avec EP Calipers* pour ouvrir l'image ou le PDF dans l'application.
+Pour les fichiers joints ou les fichiers Dropbox, télécharger le fichier (les détails dépendent du type de mail).  En voyant le fichier, appuyer pendant quelques secondes pour faire apparaître le bouton *Partage*.  Choisir *Partage* et puis choisir *Importer avec Compas EP* pour ouvrir l'image ou le PDF dans l'application.
 
 *** /AliveCor Kardia/
 Pour regarder des ECGs dans l'application /AliveCor Kardia/, choisir *Journal*, puis *Partage* pour l'ECG que vous voulez regarder.
@@ -67,7 +67,7 @@ Pour regarder des ECGs dans l'application /AliveCor Kardia/, choisir *Journal*, 
 #+CAPTION: Le bouton *Partage* de /Kardia/ a une icône d'enveloppe
 [[./img/alive_ecg.png]]
 
-Après la sélection du bouton *Partage*, choisir *PDF* de la liste d'options qui apparaît.  Ensuite choisir le bouton *Partage* en haut à droite de l'écran.  Choisir *Importer avec EP Calipers* et vous êtes prêt(e) à mesurer!
+Après la sélection du bouton *Partage*, choisir *PDF* de la liste d'options qui apparaît.  Ensuite choisir le bouton *Partage* en haut à droite de l'écran.  Choisir *Importer avec Compas EP* et vous êtes prêt(e) à mesurer!
 
 ** PDFs à pages multiples
 Quand les fichiers PDF ont plus d'une page, l'application affichera la première page au début. Vous pouvez naviguer sur les autres pages avec la sélection des boutons fléchés du menu *Image*.  Observer que si vous passez à une autre application et *Compas EP* est terminée par iOS (un événement qui se déroule automatiquement pour préserver l'espace mémoire), seulement la dernière page sera disponible quand l'application est relancée.  Pour changer la page, il faut recharger le PDF.
@@ -110,7 +110,7 @@ Taper deux fois sur un compas pour le supprimer.
 [[./img/add_caliper_menu.png]]
 * Sélection d'un compas
 Quand il y a plus d'un compas sur l'écran, il faut qu'un compas soit choisi comme le compas actif pour l'étalonner ou pour faire les calculs.  Par défaut un compas non choisi est bleu et un compas choisi est rouge. Vous pouvez changer les couleurs en utilisant les [[app preferences][préférences]].  Il est aussi possible de [[colors][changer les couleurs de compas individuels]].  Une simple touche sur un compas non choisi le choisira.  Une deuxième touche encore (mais pas trop vite, parce que une double touche supprimera le compas) le désélectionnera.  Comme il peut y avoir un seul compas choisi à la fois, la sélection d'un compas va désélectionner un autre compas qui est sélectionné.  Parfois un compas sera choisi automatiquement, par exemple pour faire de l'étalonnage, si aucun compas n'est déjà choisi.  Si vous voulez choisir un autre compas, il faut simplement le taper.
-#+CAPTION: Deux compas non choisis, un de temps et un d'amplitude.  Le compas de temps est sélectionné.
+#+CAPTION: Deux compas non calibrés, un de temps et un d'amplitude.  Le compas de temps est sélectionné.
 [[./img/selected_caliper.png]]
 * <<moreoptions>>Plus d'options
 ** Plus de menus
