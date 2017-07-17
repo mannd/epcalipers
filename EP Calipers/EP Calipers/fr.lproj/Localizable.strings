@@ -6,7 +6,7 @@
   Copyright © 2017 EP Studios. All rights reserved.
 */
 "Image Mode" = "Mode Image";
-"EP Calipers" = "Étriers EP";
+"EP Calipers" = "Compas EP";
 "Help" = "Aide";
 "About" = "Sur";
 "Cancel" = "Annuler";
@@ -16,7 +16,7 @@
 "Back" = "Retour";
 "Calculate" = "Calculer";
 "Enter Number of Intervals" = "Nombre d'intervalles ?";
-"How many intervals is this caliper measuring?" = "Combien d'intervalles cet étrier mesure-t-il ?";
+"How many intervals is this caliper measuring?" = "Combien d'intervalles ce compas mesure-t-il ?";
 "Cal" = "Étalonner";
 "Interval/Rate" = "Intervalle/FC";
 "I/R" = "Int/FC";
@@ -38,9 +38,9 @@
 "Image" = "Image";
 "Measure" = "Mesurer";
 "Calculated QTc" = "QTc calculé";
-"No Angle Caliper Selected" = "Étrier d'angle pas choisi";
-"No Caliper Selected" = "Étrier pas choisi";
-"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." = "Choisir un étrier en le tapant une seule fois.  Le déplacer à un intervalle connu.  Toucher « définir » pour entrer l'intervalle de l'étalonnage.";
+"No Angle Caliper Selected" = "Compas d'angle pas choisi";
+"No Caliper Selected" = "Compas pas choisi";
+"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." = "Choisir un compas en le tapant une seule fois.  Le déplacer à un intervalle connu.  Toucher « définir » pour entrer l'intervalle de l'étalonnage.";
 "Enter measurement (e.g. %@)" = "Entrer la mesure (p.e. %@)";
 "Adjust" = "Ajuster";
 "90°R" = "90°D";
@@ -56,24 +56,24 @@
 "Color" = "Couleur";
 "Tweak" = "Régler";
 "Lock" = "Immobiliser";
-"Long press caliper" = "Appuyer sur un étrier";
+"Long press caliper" = "Appuyer sur un compas";
 "Long press caliper component" = "Appuyer sur un composant";
 "Enter Number of Intervals" = "Entrer le nombre d'intervalles";
 "Continue" = "Continuer";
 "Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett's formula)" = "RR moyen = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(formule de Bazett)";
-"Select an angle caliper." = "Choisir un étrier d'angle.";
-"No Time Caliper Selected" = "Étrier de temps pas choisi";
-"Select a time caliper to measure one or more RR intervals." = "Choisir un étrier pour mesurer un (ou plus) intervalle RR.";
-"Angle Caliper" = "Étrier d'angle";
-"Negatively Valued Caliper" = "Étrier à valeur négative";
-"No Calipers To Use" = "Pas d'étrier à utiliser";
+"Select an angle caliper." = "Choisir un compas d'angle.";
+"No Time Caliper Selected" = "Compas de temps pas choisi";
+"Select a time caliper to measure one or more RR intervals." = "Choisir un compas pour mesurer un (ou plus) intervalle RR.";
+"Angle Caliper" = "Compas d'angle";
+"Negatively Valued Caliper" = "Compas à valeur négative";
+"No Calipers To Use" = "Pas de compas à utiliser";
 "Unlock" = "Débloquer";
 "Bad Input" = "Mauvaise entrée";
-"Add one or more calipers first before proceeding." = "Ajouter un ou plus d'étriers avant de continuer";
+"Add one or more calipers first before proceeding." = "Ajouter un ou plus de compas avant de continuer";
 "Empty input, negative number input, or other bad input." = "Entrer de données vides, ou d'un chiffre négatif, ou d’une autre mauvaise entrée de données.";
 "Amplitude" = "Amplitude";
 "Angle" = "Angle";
-"Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers." = "Les Étriers d'angle ne nécessitent pas d'étalonnage.  Seuls les étriers de temps ou d'amplitude doivent être étalonnés.\n\nSi vous voulez utiliser un étrier d'angle comme un « Brugadometer » vous devez d'abord étalonner les étriers de temps et d'amplitude.";
+"Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers." = "Les compas d'angle ne nécessitent pas d'étalonnage.  Seuls les compas de temps ou d'amplitude doivent être étalonnés.\n\nSi vous voulez utiliser un compas d'angle comme un « Brugadometer » vous devez d'abord étalonner les compas de temps et d'amplitude.";
 "IMAGE LOCK" = "IMAGE BLOQUÉE";
 "1000 ms" = "1 000 mse";
 "10 mm" = "10 mm";
