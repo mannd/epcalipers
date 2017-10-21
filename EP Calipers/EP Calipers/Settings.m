@@ -22,6 +22,7 @@
         self.defaultVerticalCalibration = @"10 mm";
         self.roundMsecRate = YES;
         self.allowTweakDuringQtc = NO;
+        self.qtcFormula = Bazett;
     }
     return self;
 }
@@ -30,6 +31,15 @@
     NSArray *colorKeys = [NSArray arrayWithObjects:@"Black", @"Magenta", @"Light Gray", @"Blue", @"Green", @"White", @"Red", @"Yellow", @"Orange", nil];
     NSArray *colorValues = [NSArray arrayWithObjects:[UIColor blackColor], [UIColor magentaColor], [UIColor lightGrayColor], [UIColor blueColor], [UIColor greenColor], [UIColor whiteColor], [UIColor redColor], [UIColor yellowColor], [UIColor orangeColor], nil];
     NSDictionary *colorMap = [NSDictionary dictionaryWithObjects:colorValues forKeys:colorKeys];
+    
+    NSArray *qtcFormulaKeys = [NSArray arrayWithObjects:@"Bazett", @"Framingham", @"Hodges", @"Fridericia", @"All", nil];
+    NSArray *qtcFormulaValues = [NSArray arrayWithObjects:[NSNumber numberWithInteger:Bazett],
+                          [NSNumber numberWithInteger:Framingham],
+                          [NSNumber numberWithInteger:Hodges],
+                          [NSNumber numberWithInteger:Fridericia],
+                          [NSNumber numberWithInteger:all],
+                          nil];
+    NSDictionary *qtcFormulaMap = [NSDictionary dictionaryWithObjects:qtcFormulaValues forKeys:qtcFormulaKeys];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
@@ -44,6 +54,9 @@
 
     self.roundMsecRate = [defaults boolForKey:@"roundMsecRatePreference"];
     self.allowTweakDuringQtc = [defaults boolForKey:@"allowTweakDuringQtc"];
+    
+    NSString *qtcFormulaName = [defaults objectForKey:@"qtcFormulaPreference"];
+    self.qtcFormula = (QTcFormulaPreference)[[qtcFormulaMap valueForKey:qtcFormulaName] integerValue];
 }
 
 @end

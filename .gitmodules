@@ -1,0 +1,3 @@
+[submodule "Frameworks/External/QTc"]
+	path = Frameworks/External/QTc
+	url = https://github.com/mannd/QTc.git
