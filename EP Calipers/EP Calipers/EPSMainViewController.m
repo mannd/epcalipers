@@ -13,6 +13,7 @@
 #import "EPSLogging.h"
 #import "About.h"
 #import "CaliperFactory.h"
+#import "EP_Calipers-Swift.h"
 #include "Defs.h"
 
 //:TODO: Make NO for release version
@@ -539,18 +540,8 @@
         Caliper *c = [self.calipersView activeCaliper];
         float qt = fabs([c intervalInSecs:c.intervalResult]);
         float meanRR = fabs(self.rrIntervalForQTc);  // already in secs
-        NSString *result = @"Invalid Result";
-        if (meanRR > 0) {
-            float sqrtRR = sqrtf(meanRR);
-            float qtc = qt/sqrtRR;
-            // switch to units that calibration uses
-            if (c.calibration.unitsAreMsec) {
-                meanRR *= 1000;
-                qt *= 1000;
-                qtc *= 1000;
-            }
-            result = [NSString localizedStringWithFormat:L(@"Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett's formula)"), meanRR, c.calibration.units, qt, c.calibration.units, qtc, c.calibration.units];
-        }
+        QTcResult *qtcResult = [[QTcResult alloc] init];
+        NSString *result = [qtcResult calculateFromQtInSec:qt rrInSec:meanRR formula:self.settings.qtcFormula convertToMsec:c.calibration.unitsAreMsec units:c.calibration.units];
         UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:L(@"Calculated QTc") message:result delegate:nil cancelButtonTitle:OK otherButtonTitles: nil];
         qtcResultAlertView.alertViewStyle = UIAlertViewStyleDefault;
         [qtcResultAlertView show];
