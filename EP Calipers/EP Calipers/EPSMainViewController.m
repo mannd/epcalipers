@@ -67,6 +67,8 @@
 
 #define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
 
+
+
 @interface EPSMainViewController ()
 
 @end
@@ -533,6 +535,7 @@
         [self showNoTimeCaliperSelectedAlertView];
     }
     else {
+        EPSLog(@"QTc formula is %lu", (unsigned long)self.settings.qtcFormula);
         Caliper *c = [self.calipersView activeCaliper];
         float qt = fabs([c intervalInSecs:c.intervalResult]);
         float meanRR = fabs(self.rrIntervalForQTc);  // already in secs
