@@ -15,6 +15,8 @@
 		8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423681AB5F16A00CC15BC /* Images.xcassets */; };
 		8E1423781AB5F16A00CC15BC /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
 		8E172D711F9BE6F100CD50D6 /* QTcResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E172D701F9BE6F100CD50D6 /* QTcResult.swift */; };
+		8E172D8E1F9C094700CD50D6 /* QTc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E172D891F9C092000CD50D6 /* QTc.framework */; };
+		8E172D901F9C098300CD50D6 /* QTc.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E172D891F9C092000CD50D6 /* QTc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BBC541EA0340200ECB992 /* CaliperFactory.m */; };
 		8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E559EA81ACD9262004A6F91 /* Launch Screen.xib */; };
 		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
@@ -44,7 +46,41 @@
 			remoteGlobalIDString = 8E1423571AB5F16A00CC15BC;
 			remoteInfo = "EP Calipers";
 		};
+		8E172D881F9C092000CD50D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EE366E71F5B566A0003E5DA;
+			remoteInfo = QTc_iOS;
+		};
+		8E172D8A1F9C092000CD50D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EE366F01F5B566A0003E5DA;
+			remoteInfo = QTc_iOSTests;
+		};
+		8E172D8C1F9C092000CD50D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EE367061F5B56AA0003E5DA;
+			remoteInfo = QTc_Mac;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8E172D801F9C04FB00CD50D6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8E172D901F9C098300CD50D6 /* QTc.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8E0208A51AC2A8B300FE7EC5 /* Caliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliper.h; sourceTree = "<group>"; };
@@ -63,6 +99,7 @@
 		8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EP_CalipersTests.m; sourceTree = "<group>"; };
 		8E172D6F1F9BE6F000CD50D6 /* EP Calipers-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EP Calipers-Bridging-Header.h"; sourceTree = "<group>"; };
 		8E172D701F9BE6F100CD50D6 /* QTcResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QTcResult.swift; sourceTree = "<group>"; };
+		8E172D821F9C092000CD50D6 /* QTc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QTc.xcodeproj; path = ../Frameworks/External/QTc/QTc.xcodeproj; sourceTree = "<group>"; };
 		8E3BBC531EA0340200ECB992 /* CaliperFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaliperFactory.h; sourceTree = "<group>"; };
 		8E3BBC541EA0340200ECB992 /* CaliperFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaliperFactory.m; sourceTree = "<group>"; };
 		8E559EA81ACD9262004A6F91 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
@@ -107,6 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E172D8E1F9C094700CD50D6 /* QTc.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,11 +161,13 @@
 		8E14234F1AB5F16A00CC15BC = {
 			isa = PBXGroup;
 			children = (
+				8E172D821F9C092000CD50D6 /* QTc.xcodeproj */,
 				8EB3DE401AC9A488009376AD /* Settings.bundle */,
 				8ECEDF561E89F4F800288EDE /* ColorPicker */,
 				8E14235A1AB5F16A00CC15BC /* EP Calipers */,
 				8E1423741AB5F16A00CC15BC /* EP CalipersTests */,
 				8E1423591AB5F16A00CC15BC /* Products */,
+				8E172D7E1F9C04F200CD50D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -207,6 +247,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8E172D7E1F9C04F200CD50D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8E172D831F9C092000CD50D6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8E172D891F9C092000CD50D6 /* QTc.framework */,
+				8E172D8B1F9C092000CD50D6 /* QTc_iOSTests.xctest */,
+				8E172D8D1F9C092000CD50D6 /* QTc.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		8ECEDF561E89F4F800288EDE /* ColorPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -232,6 +289,7 @@
 				8E1423541AB5F16A00CC15BC /* Sources */,
 				8E1423551AB5F16A00CC15BC /* Frameworks */,
 				8E1423561AB5F16A00CC15BC /* Resources */,
+				8E172D801F9C04FB00CD50D6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -293,6 +351,12 @@
 			mainGroup = 8E14234F1AB5F16A00CC15BC;
 			productRefGroup = 8E1423591AB5F16A00CC15BC /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8E172D831F9C092000CD50D6 /* Products */;
+					ProjectRef = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8E1423571AB5F16A00CC15BC /* EP Calipers */,
@@ -300,6 +364,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8E172D891F9C092000CD50D6 /* QTc.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = QTc.framework;
+			remoteRef = 8E172D881F9C092000CD50D6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8E172D8B1F9C092000CD50D6 /* QTc_iOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = QTc_iOSTests.xctest;
+			remoteRef = 8E172D8A1F9C092000CD50D6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8E172D8D1F9C092000CD50D6 /* QTc.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = QTc.framework;
+			remoteRef = 8E172D8C1F9C092000CD50D6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8E1423561AB5F16A00CC15BC /* Resources */ = {

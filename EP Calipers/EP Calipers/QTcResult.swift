@@ -8,7 +8,7 @@
 
 import Foundation
 
-//import QTc
+import QTc
 // TODO remove (is in QTc module)
 enum QTcFormula {
     case qtcBzt
