@@ -28,9 +28,9 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     [btn addTarget:self action:@selector(showAbout) forControlEvents:UIControlEventTouchUpInside];
-    NSString *title = @"Help";
+    NSString *title = L(@"Help");
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        title = @"EP Calipers Help";
+        title = L(@"EP Calipers Help");
     }
     [self.navigationItem setTitle:title];
     
