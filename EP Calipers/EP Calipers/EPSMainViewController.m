@@ -515,7 +515,7 @@
         [self showNoTimeCaliperSelectedAlertView];
     }
     else {
-      UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:L(@"Enter Number of Intervals") message:@"How many intervals is this caliper measuring?" delegate:self cancelButtonTitle:CANCEL otherButtonTitles:L(@"Continue"), nil];
+      UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:L(@"Enter Number of Intervals") message:L(@"How many intervals is this caliper measuring?") delegate:self cancelButtonTitle:CANCEL otherButtonTitles:L(@"Continue"), nil];
         calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
         calculateMeanRRAlertView.tag = MEAN_RR_FOR_QTC_ALERTVIEW;
         
@@ -551,6 +551,7 @@
 
 // this is not used in current version, and in next version will be modified to provide
 // dialog with beta angle, base length, and probability of Brugada pattern ECG
+// TODO: If this is used, strings need to be localized
 - (void)doBrugadaCalculations {
     if (self.calipersView.calipers.count < 1) {
         [self showNoCalipersAlert];
