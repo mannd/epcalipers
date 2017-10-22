@@ -11,7 +11,7 @@
 #include "Defs.h"
 
 // TODO: update version
-#define VERSION @"2.8"
+#define VERSION @"2.9"
 
 @implementation About
 
