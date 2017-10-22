@@ -12,6 +12,13 @@
 #import "Settings.h"
 #import "FCColorPickerViewController.h"
 
+
+
+
+@protocol QTcResultProtocol
+- (NSString *)calculateFromQtInSec: (double)qtInSec rrInSec: (double)rrInSec formula: (QTcFormulaPreference)formula convertToMsec: (BOOL)convertToMsec units:(NSString *)units;
+@end
+
 @interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, FCColorPickerViewControllerDelegate, CalipersViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;

@@ -13,7 +13,11 @@
 		8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */; };
 		8E1423671AB5F16A00CC15BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423651AB5F16A00CC15BC /* Main.storyboard */; };
 		8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423681AB5F16A00CC15BC /* Images.xcassets */; };
-		8E1423781AB5F16A00CC15BC /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
+		8E172D711F9BE6F100CD50D6 /* QTcResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E172D701F9BE6F100CD50D6 /* QTcResult.swift */; };
+		8E172D8E1F9C094700CD50D6 /* QTc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E172D891F9C092000CD50D6 /* QTc.framework */; };
+		8E172D901F9C098300CD50D6 /* QTc.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E172D891F9C092000CD50D6 /* QTc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8E172D971F9C205200CD50D6 /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
+		8E172D9B1F9C215000CD50D6 /* Swift_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E172D9A1F9C215000CD50D6 /* Swift_Tests.swift */; };
 		8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BBC541EA0340200ECB992 /* CaliperFactory.m */; };
 		8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E559EA81ACD9262004A6F91 /* Launch Screen.xib */; };
 		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
@@ -43,7 +47,41 @@
 			remoteGlobalIDString = 8E1423571AB5F16A00CC15BC;
 			remoteInfo = "EP Calipers";
 		};
+		8E172D881F9C092000CD50D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EE366E71F5B566A0003E5DA;
+			remoteInfo = QTc_iOS;
+		};
+		8E172D8A1F9C092000CD50D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EE366F01F5B566A0003E5DA;
+			remoteInfo = QTc_iOSTests;
+		};
+		8E172D8C1F9C092000CD50D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8EE367061F5B56AA0003E5DA;
+			remoteInfo = QTc_Mac;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8E172D801F9C04FB00CD50D6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8E172D901F9C098300CD50D6 /* QTc.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8E0208A51AC2A8B300FE7EC5 /* Caliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliper.h; sourceTree = "<group>"; };
@@ -60,6 +98,11 @@
 		8E1423711AB5F16A00CC15BC /* EP CalipersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EP CalipersTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1423761AB5F16A00CC15BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EP_CalipersTests.m; sourceTree = "<group>"; };
+		8E172D6F1F9BE6F000CD50D6 /* EP Calipers-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EP Calipers-Bridging-Header.h"; sourceTree = "<group>"; };
+		8E172D701F9BE6F100CD50D6 /* QTcResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QTcResult.swift; sourceTree = "<group>"; };
+		8E172D821F9C092000CD50D6 /* QTc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QTc.xcodeproj; path = ../Frameworks/External/QTc/QTc.xcodeproj; sourceTree = "<group>"; };
+		8E172D9A1F9C215000CD50D6 /* Swift_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift_Tests.swift; sourceTree = "<group>"; };
+		8E172D9C1F9C25A800CD50D6 /* EP CalipersTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EP CalipersTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8E3BBC531EA0340200ECB992 /* CaliperFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaliperFactory.h; sourceTree = "<group>"; };
 		8E3BBC541EA0340200ECB992 /* CaliperFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaliperFactory.m; sourceTree = "<group>"; };
 		8E559EA81ACD9262004A6F91 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
@@ -104,6 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E172D8E1F9C094700CD50D6 /* QTc.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,11 +164,13 @@
 		8E14234F1AB5F16A00CC15BC = {
 			isa = PBXGroup;
 			children = (
+				8E172D821F9C092000CD50D6 /* QTc.xcodeproj */,
 				8EB3DE401AC9A488009376AD /* Settings.bundle */,
 				8ECEDF561E89F4F800288EDE /* ColorPicker */,
 				8E14235A1AB5F16A00CC15BC /* EP Calipers */,
 				8E1423741AB5F16A00CC15BC /* EP CalipersTests */,
 				8E1423591AB5F16A00CC15BC /* Products */,
+				8E172D7E1F9C04F200CD50D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -171,6 +217,8 @@
 				8E3BBC531EA0340200ECB992 /* CaliperFactory.h */,
 				8E3BBC541EA0340200ECB992 /* CaliperFactory.m */,
 				8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */,
+				8E172D701F9BE6F100CD50D6 /* QTcResult.swift */,
+				8E172D6F1F9BE6F000CD50D6 /* EP Calipers-Bridging-Header.h */,
 			);
 			path = "EP Calipers";
 			sourceTree = "<group>";
@@ -190,6 +238,8 @@
 			children = (
 				8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */,
 				8E1423751AB5F16A00CC15BC /* Supporting Files */,
+				8E172D9A1F9C215000CD50D6 /* Swift_Tests.swift */,
+				8E172D9C1F9C25A800CD50D6 /* EP CalipersTests-Bridging-Header.h */,
 			);
 			path = "EP CalipersTests";
 			sourceTree = "<group>";
@@ -200,6 +250,23 @@
 				8E1423761AB5F16A00CC15BC /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		8E172D7E1F9C04F200CD50D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8E172D831F9C092000CD50D6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8E172D891F9C092000CD50D6 /* QTc.framework */,
+				8E172D8B1F9C092000CD50D6 /* QTc_iOSTests.xctest */,
+				8E172D8D1F9C092000CD50D6 /* QTc.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		8ECEDF561E89F4F800288EDE /* ColorPicker */ = {
@@ -227,6 +294,7 @@
 				8E1423541AB5F16A00CC15BC /* Sources */,
 				8E1423551AB5F16A00CC15BC /* Frameworks */,
 				8E1423561AB5F16A00CC15BC /* Resources */,
+				8E172D801F9C04FB00CD50D6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -261,16 +329,18 @@
 		8E1423501AB5F16A00CC15BC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "EP Studios";
 				TargetAttributes = {
 					8E1423571AB5F16A00CC15BC = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = W74NPJXYEG;
+						LastSwiftMigration = 0900;
 					};
 					8E1423701AB5F16A00CC15BC = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = W74NPJXYEG;
+						LastSwiftMigration = 0900;
 						TestTargetID = 8E1423571AB5F16A00CC15BC;
 					};
 				};
@@ -287,6 +357,12 @@
 			mainGroup = 8E14234F1AB5F16A00CC15BC;
 			productRefGroup = 8E1423591AB5F16A00CC15BC /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8E172D831F9C092000CD50D6 /* Products */;
+					ProjectRef = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				8E1423571AB5F16A00CC15BC /* EP Calipers */,
@@ -294,6 +370,30 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8E172D891F9C092000CD50D6 /* QTc.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = QTc.framework;
+			remoteRef = 8E172D881F9C092000CD50D6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8E172D8B1F9C092000CD50D6 /* QTc_iOSTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = QTc_iOSTests.xctest;
+			remoteRef = 8E172D8A1F9C092000CD50D6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8E172D8D1F9C092000CD50D6 /* QTc.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = QTc.framework;
+			remoteRef = 8E172D8C1F9C092000CD50D6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8E1423561AB5F16A00CC15BC /* Resources */ = {
@@ -328,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */,
+				8E172D711F9BE6F100CD50D6 /* QTcResult.swift in Sources */,
 				8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */,
 				8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */,
 				8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */,
@@ -349,7 +450,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E1423781AB5F16A00CC15BC /* EP_CalipersTests.m in Sources */,
+				8E172D971F9C205200CD50D6 /* EP_CalipersTests.m in Sources */,
+				8E172D9B1F9C215000CD50D6 /* Swift_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,14 +523,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -468,14 +576,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -503,12 +617,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "EP Calipers/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "EP Calipers/EP Calipers-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -516,19 +634,24 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "EP Calipers/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "EP Calipers/EP Calipers-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
 		8E14237F1AB5F16A00CC15BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -540,6 +663,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "EP CalipersTests/EP CalipersTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EP Calipers.app/EP Calipers";
 			};
 			name = Debug;
@@ -547,7 +673,9 @@
 		8E1423801AB5F16A00CC15BC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "EP CalipersTests/Info.plist";
@@ -555,6 +683,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "EP CalipersTests/EP CalipersTests-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EP Calipers.app/EP Calipers";
 			};
 			name = Release;

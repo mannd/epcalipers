@@ -60,7 +60,6 @@
 "Long press caliper component" = "Appuyer sur un composant";
 "Enter Number of Intervals" = "Entrer le nombre d'intervalles";
 "Continue" = "Continuer";
-"Mean RR = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(Bazett's formula)" = "RR moyen = %.4g %@\nQT = %.4g %@\nQTc = %.4g %@\n(formule de Bazett)";
 "Select an angle caliper." = "Choisir un compas d'angle.";
 "No Time Caliper Selected" = "Compas de temps pas choisi";
 "Select a time caliper to measure one or more RR intervals." = "Choisir un compas pour mesurer un (ou plus) intervalle RR.";
@@ -89,5 +88,8 @@
 "Bottom" = "Barre inf";
 "Apex" = "Sommet";
 "Copyright © 2015 - 2017 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Copyright © 2015 - 2017 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
+"Mean RR = %.4g %@\nQT = %.4g %@" = "RR moyen = %.4g %@\nQT = %.4g %@";
+"\nQTc = %.4g %@ (%@ formula)" ="\nQTc = %.4g %@ (formule de %@)";
+
 
 
