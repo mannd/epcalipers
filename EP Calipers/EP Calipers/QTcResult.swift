@@ -28,7 +28,7 @@ import QTc
         case QTcFormulaPreference.Hodges:
             qtcFormulas = [.qtcHdg]
         case QTcFormulaPreference.all:
-            qtcFormulas = [.qtcBzt, .qtcFrd, .qtcFrm, .qtcHdg]
+            qtcFormulas = [.qtcBzt, .qtcFrm, .qtcHdg, .qtcFrd]
         }
         var meanRR = rrInSec
         var qt = qtInSec
@@ -43,10 +43,16 @@ import QTc
             if qtc == Double.infinity || qtc.isNaN {
                 return errorResult
             }
+            // round so 4th decimal place (in sec) is accurate
+            // Note that we don't do this to display mean rate, and not
+            // doing this introduces an error of at most 0.05 msec, so probably well withing
+            // the margin of error of measurement: ie, not sure this is needed!
+            qtc = Double(round(qtc * 100000.0) / 100000.0)
             // switch to units that calibration uses
             if convertToMsec {
                 qtc *= 1000
             }
+            NSLog("qtc = %f", qtc)
             result += NSString.localizedStringWithFormat(NSLocalizedString("\nQTc = %.4g %@ (%@ formula)", comment:"") as NSString, qtc, units, qtcCalculator.longName) as String
         }
         return result
