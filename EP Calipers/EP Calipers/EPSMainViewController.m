@@ -99,6 +99,7 @@
     self.smallFont = [UIFont boldSystemFontOfSize:smallFontSize];
     self.smallFontAttributes = @{NSFontAttributeName: self.smallFont};
     
+    self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
     [self createToolbars];
 
     [self.imageView setContentMode:UIViewContentModeCenter];
@@ -464,11 +465,16 @@
                               self.microRightButton,
                               self.microDownButton, doneButton, nil];
     // Make sure the buttons fit on the toolbar
-        [self shrinkButtonFontSize:self.movementMenuItems];
-        [self.componentLabel setFont:self.smallFont];
+    [self shrinkButtonFontSize:self.movementMenuItems];
+    [self.componentLabel setFont:self.smallFont];
 }
 
 - (void)shrinkButtonFontSize:(NSArray *)barButtonItems {
+    // Actually iPad can have compact width when multitasking, so keep small buttons
+    // no need to shrink buttons on iPad
+//    if (self.isIpad) {
+//        return;
+//    }
     for (UIBarButtonItem* button in barButtonItems) {
         [button setTitleTextAttributes:self.smallFontAttributes forState:UIControlStateNormal];
         [button setTitleTextAttributes:self.smallFontAttributes forState:UIControlStateSelected];
