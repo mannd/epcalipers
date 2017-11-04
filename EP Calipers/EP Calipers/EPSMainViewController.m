@@ -56,6 +56,8 @@
 #define MICRO_UP_ARROW @"↑"
 #define MICRO_DOWN_ARROW @"↓"
 
+#define SMALL_FONT 12
+
 // AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
 #define MEAN_RR_ALERTVIEW 30
@@ -72,6 +74,9 @@
 
 @interface EPSMainViewController ()
 
+@property (strong, atomic) UIFont *smallFont;
+@property (strong, atomic) NSDictionary *smallFontAttributes;
+
 @end
 
 @implementation EPSMainViewController
@@ -86,8 +91,16 @@
     
     self.settings = [[Settings alloc] init];
     [self.settings loadPreferences];
+    
+    // fonts
+    // TODO: should it be bold or just systemFont in toolbar?
+    // is it different for Done button?
+    NSUInteger smallFontSize = SMALL_FONT;
+    self.smallFont = [UIFont boldSystemFontOfSize:smallFontSize];
+    self.smallFontAttributes = @{NSFontAttributeName: self.smallFont};
+    
+    self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
     [self createToolbars];
-
 
     [self.imageView setContentMode:UIViewContentModeCenter];
     
@@ -334,6 +347,7 @@
     self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? L(@"Previous" ): L(@"Prev")) style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
     [self enablePageButtons:NO];
     self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, clearImageButton, self.previousPageButton, self.nextPageButton, nil];
+    [self shrinkButtonFontSize:self.photoMenuItems];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
@@ -350,6 +364,7 @@
     UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     
     self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, resetImageButton, moreAdjustButton, backToImageMenuButton, nil];
+    [self shrinkButtonFontSize:self.adjustImageMenuItems];
 }
 
 - (void)createMoreAdjustImageToolbar {
@@ -428,9 +443,11 @@
 }
 
 - (void)createMovementToolbar {
+    
     self.componentLabel = [UILabel new];
-    [self.componentLabel setText:@"test"];
+    [self.componentLabel setText:@"Right"];
     [self.componentLabel sizeToFit];
+
     self.componentLabelButton = [[UIBarButtonItem alloc] initWithCustomView:self.componentLabel];
     self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveLeft)];
     self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveRight)];
@@ -447,8 +464,23 @@
                               self.microLeftButton, self.microUpButton,
                               self.microRightButton,
                               self.microDownButton, doneButton, nil];
+    // Make sure the buttons fit on the toolbar
+    [self shrinkButtonFontSize:self.movementMenuItems];
+    [self.componentLabel setFont:self.smallFont];
 }
 
+- (void)shrinkButtonFontSize:(NSArray *)barButtonItems {
+    // Actually iPad can have compact width when multitasking, so keep small buttons
+    // no need to shrink buttons on iPad
+//    if (self.isIpad) {
+//        return;
+//    }
+    for (UIBarButtonItem* button in barButtonItems) {
+        [button setTitleTextAttributes:self.smallFontAttributes forState:UIControlStateNormal];
+        [button setTitleTextAttributes:self.smallFontAttributes forState:UIControlStateSelected];
+        [button setTitleTextAttributes:self.smallFontAttributes forState:UIControlStateDisabled];
+    }
+}
 
 - (void)toggleIntervalRate {
     self.horizontalCalibration.displayRate = ! self.horizontalCalibration.displayRate;
@@ -823,7 +855,7 @@
     self.calipersView.allowTweakPosition = YES;
 }
 
-- (void)selectMovementToolbar{
+- (void)selectMovementToolbar {
     self.toolbarItems = self.movementMenuItems;
 }
 
@@ -1287,11 +1319,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     return ![self isCompactSizeClass];
 }
 
+// TODO: adjust toolbars that need adjusting too
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     EPSLog(@"traitCollectionDidChange");
     [self.toggleIntervalRateButton setTitle:[self isCompactSizeClass] ? TOGGLE_INT_RATE_IPHONE : TOGGLE_INT_RATE_IPAD];
     [self.mRRButton setTitle:[self isCompactSizeClass] ? MEAN_RATE_IPHONE : MEAN_RATE_IPAD];
     [self.calibrateCalipersButton setTitle:[self isCompactSizeClass] ? CALIBRATE_IPHONE : CALIBRATE_IPAD];
+    // fix shrunken buttons
+    // Need to figure out how to recreate baseline font.
+    
+    // [self shrinkButtons:isCompactSizeClass];
     if (self.chosenCaliper != nil) {
         [self.componentLabel setText:[self.chosenCaliper getComponentName:self.chosenCaliperComponent smallSize:[self isCompactSizeClass]]];
         [self.componentLabel sizeToFit];
