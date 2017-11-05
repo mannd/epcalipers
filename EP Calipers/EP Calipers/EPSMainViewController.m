@@ -57,6 +57,7 @@
 #define MICRO_DOWN_ARROW @"↓"
 
 #define SMALL_FONT 12
+#define REGULAR_FONT 17 // This is updated when menus created.
 
 // AlertView tags (arbitrary)
 #define CALIBRATION_ALERTVIEW 20
@@ -76,6 +77,8 @@
 
 @property (strong, atomic) UIFont *smallFont;
 @property (strong, atomic) NSDictionary *smallFontAttributes;
+@property (strong, atomic) UIFont *regularFont;
+@property (strong, atomic) NSDictionary *regularFontAttributes;
 
 @end
 
@@ -98,6 +101,9 @@
     NSUInteger smallFontSize = SMALL_FONT;
     self.smallFont = [UIFont boldSystemFontOfSize:smallFontSize];
     self.smallFontAttributes = @{NSFontAttributeName: self.smallFont};
+    NSUInteger regularFontSize = REGULAR_FONT;
+    self.regularFont = [UIFont boldSystemFontOfSize:regularFontSize];
+    self.regularFontAttributes = @{NSFontAttributeName: self.regularFont};
     
     self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
     [self createToolbars];
@@ -319,6 +325,7 @@
     [self createColorToolbar];
     [self createTweakToolbar];
     [self createMovementToolbar];
+    [self fixupMenus:[self isCompactSizeClass]];
 }
 
 - (void)createMainToolbar {
@@ -347,7 +354,6 @@
     self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? L(@"Previous" ): L(@"Prev")) style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
     [self enablePageButtons:NO];
     self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, clearImageButton, self.previousPageButton, self.nextPageButton, nil];
-    [self shrinkButtonFontSize:self.photoMenuItems];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         // if no camera on device, just silently disable take photo button
         [takePhotoButton setEnabled:NO];
@@ -364,7 +370,6 @@
     UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     
     self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, resetImageButton, moreAdjustButton, backToImageMenuButton, nil];
-    [self shrinkButtonFontSize:self.adjustImageMenuItems];
 }
 
 - (void)createMoreAdjustImageToolbar {
@@ -447,7 +452,13 @@
     self.componentLabel = [UILabel new];
     [self.componentLabel setText:@"Right"];
     [self.componentLabel sizeToFit];
-
+    
+    // SNEAKY:  We adjust regular size font here
+    self.regularFont = self.componentLabel.font;
+    self.regularFontAttributes = @{NSFontAttributeName:self.regularFont};
+    
+    EPSLog(@"Regular font = %f", self.regularFont.pointSize);
+    
     self.componentLabelButton = [[UIBarButtonItem alloc] initWithCustomView:self.componentLabel];
     self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveLeft)];
     self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveRight)];
@@ -464,24 +475,48 @@
                               self.microLeftButton, self.microUpButton,
                               self.microRightButton,
                               self.microDownButton, doneButton, nil];
-    // Make sure the buttons fit on the toolbar
-    [self shrinkButtonFontSize:self.movementMenuItems];
-    [self.componentLabel setFont:self.smallFont];
+    
 }
 
 - (void)shrinkButtonFontSize:(NSArray *)barButtonItems {
-    // Actually iPad can have compact width when multitasking, so keep small buttons
-    // no need to shrink buttons on iPad
-//    if (self.isIpad) {
-//        return;
-//    }
+    [self changeButtonFontSize:barButtonItems attributes:self.smallFontAttributes];
+}
+
+- (void)expandButtonFontSize:(NSArray *)barButtonItems {
+    [self changeButtonFontSize:barButtonItems attributes:self.regularFontAttributes];
+}
+
+- (void)changeButtonFontSize:(NSArray *)barButtonItems attributes:(NSDictionary *)attributes {
     for (UIBarButtonItem* button in barButtonItems) {
-        [button setTitleTextAttributes:self.smallFontAttributes forState:UIControlStateNormal];
-        [button setTitleTextAttributes:self.smallFontAttributes forState:UIControlStateSelected];
-        [button setTitleTextAttributes:self.smallFontAttributes forState:UIControlStateDisabled];
+        [button setTitleTextAttributes:attributes forState:UIControlStateNormal];
+        [button setTitleTextAttributes:attributes forState:UIControlStateDisabled];
+        [button setTitleTextAttributes:attributes forState:UIControlStateHighlighted];
     }
 }
 
+- (void)shrinkMenus {
+    [self.componentLabel setFont:self.smallFont];
+    [self shrinkButtonFontSize:self.movementMenuItems];
+    [self shrinkButtonFontSize:self.photoMenuItems];
+    [self shrinkButtonFontSize:self.adjustImageMenuItems];
+}
+
+- (void)enlargeMenus {
+    [self.componentLabel setFont:self.regularFont];
+    [self expandButtonFontSize:self.movementMenuItems];
+    [self expandButtonFontSize:self.photoMenuItems];
+    [self expandButtonFontSize:self.adjustImageMenuItems];
+}
+
+- (void)fixupMenus:(BOOL)shrink {
+  if (shrink) {
+    [self shrinkMenus];
+  }
+  else {
+    [self enlargeMenus];
+  }
+}
+  
 - (void)toggleIntervalRate {
     self.horizontalCalibration.displayRate = ! self.horizontalCalibration.displayRate;
     [self.calipersView setNeedsDisplay];
@@ -867,7 +902,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (self.isIpad) {
         picker.allowsEditing = NO;
     }
     else{
@@ -882,7 +917,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (self.isIpad) {
         picker.allowsEditing = NO;
     }
     else{
@@ -1272,7 +1307,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = nil;
     // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if (self.isIpad) {
         chosenImage = info[UIImagePickerControllerOriginalImage];
     }
     else {
@@ -1309,10 +1344,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [self.calipersView setNeedsDisplay];
+
 }
 
 - (BOOL)isCompactSizeClass {
-    return (self.view.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
+    return (self.traitCollection.horizontalSizeClass == UIUserInterfaceSizeClassCompact);
 }
 
 - (BOOL)isRegularSizeClass {
@@ -1321,17 +1357,21 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 // TODO: adjust toolbars that need adjusting too
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
     EPSLog(@"traitCollectionDidChange");
-    [self.toggleIntervalRateButton setTitle:[self isCompactSizeClass] ? TOGGLE_INT_RATE_IPHONE : TOGGLE_INT_RATE_IPAD];
-    [self.mRRButton setTitle:[self isCompactSizeClass] ? MEAN_RATE_IPHONE : MEAN_RATE_IPAD];
-    [self.calibrateCalipersButton setTitle:[self isCompactSizeClass] ? CALIBRATE_IPHONE : CALIBRATE_IPAD];
-    // fix shrunken buttons
-    // Need to figure out how to recreate baseline font.
-    
-    // [self shrinkButtons:isCompactSizeClass];
-    if (self.chosenCaliper != nil) {
-        [self.componentLabel setText:[self.chosenCaliper getComponentName:self.chosenCaliperComponent smallSize:[self isCompactSizeClass]]];
-        [self.componentLabel sizeToFit];
+    if ((self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass)
+        || (self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass)) {
+        // note that this fixes menus for future use after rotation, but it doesn't immediately change font
+        // size on involved menus (until menu is changed).
+        [self fixupMenus:[self isCompactSizeClass]];
+        
+        [self.toggleIntervalRateButton setTitle:[self isCompactSizeClass] ? TOGGLE_INT_RATE_IPHONE : TOGGLE_INT_RATE_IPAD];
+        [self.mRRButton setTitle:[self isCompactSizeClass] ? MEAN_RATE_IPHONE : MEAN_RATE_IPAD];
+        [self.calibrateCalipersButton setTitle:[self isCompactSizeClass] ? CALIBRATE_IPHONE : CALIBRATE_IPAD];
+        if (self.chosenCaliper != nil) {
+            [self.componentLabel setText:[self.chosenCaliper getComponentName:self.chosenCaliperComponent smallSize:[self isCompactSizeClass]]];
+            [self.componentLabel sizeToFit];
+        }
     }
 }
 
