@@ -23,7 +23,7 @@
 #define DOWN_BAR_SMALL L(@"Bottom")
 #define APEX_BAR L(@"Apex")
 #define MIN_DISTANCE_FOR_MARCH 20.0f
-#define MAX_MARCHING_CALIPERS 10
+#define MAX_MARCHING_CALIPERS 20
 
 @implementation Caliper
 {
@@ -111,6 +111,7 @@
     [self caliperText];
 }
 
+// Assumes bar1 and bar positions are already set
 - (void)drawMarchingCalipers:(CGContextRef)context forRect:(CGRect)rect {
     CGFloat difference = fabs(self.bar1Position - self.bar2Position);
     if (difference < MIN_DISTANCE_FOR_MARCH) {
