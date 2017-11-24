@@ -18,7 +18,7 @@
 "Calculate" = "Calculer";
 "Enter Number of Intervals" = "Nombre d'intervalles ?";
 "How many intervals is this caliper measuring?" = "Combien d'intervalles ce compas mesure-t-il ?";
-"Cal" = "Étalonner";
+"Cal" = "Étal";
 "Interval/Rate" = "Intervalle/FC";
 "I/R" = "Int/FC";
 "Mean Rate" = "FCM";
@@ -55,8 +55,8 @@
 "RR interval(s)?" = "Intervalle(s) RR ?";
 "QT interval?" = "Intervalle QT ?";
 "Color" = "Couleur";
-"Tweak" = "Régler";
-"Lock" = "Immobiliser";
+"Tweak" = "Régl";
+"Lock" = "Immobil";
 "Long press caliper" = "Appuyer sur un compas";
 "Long press caliper component" = "Appuyer sur un composant";
 "Enter Number of Intervals" = "Entrer le nombre d'intervalles";
@@ -67,7 +67,7 @@
 "Angle Caliper" = "Compas d'angle";
 "Negatively Valued Caliper" = "Compas à valeur négative";
 "No Calipers To Use" = "Pas de compas à utiliser";
-"Unlock" = "Débloquer";
+"Unlock" = "Débloq";
 "Bad Input" = "Mauvaise entrée";
 "Add one or more calipers first before proceeding." = "Ajouter un ou plus de compas avant de continuer";
 "Empty input, negative number input, or other bad input." = "Entrer de données vides, ou d'un chiffre négatif, ou d’une autre mauvaise entrée de données.";

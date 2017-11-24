@@ -130,6 +130,7 @@
     self.rrIntervalForQTc = 0.0;
     self.inQtc = NO;
     
+    
     [self.imageView setHidden:YES];  // hide view until it is rescaled
     
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
@@ -422,11 +423,12 @@
 }
 
 - (void)createMoreToolbar {
-  UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Color") style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
-  UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Tweak") style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
-  self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Lock") style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
+    UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Color") style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
+    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Tweak") style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
+    UIBarButtonItem *marchingBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"March") style:UIBarButtonItemStylePlain target:self action:@selector(toggleMarchingCalipers)];
+    self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Lock") style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
-    self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, self.lockImageButton, cancelButton, nil];
+    self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, marchingBarButtonItem, self.lockImageButton, cancelButton, nil];
 }
 
 - (void)createColorToolbar {
@@ -515,6 +517,11 @@
   else {
     [self enlargeMenus];
   }
+}
+
+- (void)toggleMarchingCalipers{
+    [self.calipersView toggleShowMarchingCaliper];
+    [self.calipersView setNeedsDisplay];
 }
   
 - (void)toggleIntervalRate {
@@ -1497,6 +1504,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     
     // calipers
     [coder encodeInteger:[self.calipersView count] forKey:@"CalipersCount"];
+    [coder encodeBool:self.calipersView.aCaliperIsMarching forKey:@"ACaliperIsMarching"];
     for (int i = 0; i < [self.calipersView count]; i++) {
         [self.calipersView.calipers[i] encodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
         [coder encodeBool:[self.calipersView.calipers[i] isAngleCaliper] forKey:[NSString stringWithFormat:@"%dIsAngleCaliper", i]];
@@ -1524,6 +1532,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     
     // calipers
     NSInteger calipersCount = [coder decodeIntegerForKey:@"CalipersCount"];
+    self.calipersView.aCaliperIsMarching = [coder decodeBoolForKey:@"ACaliperIsMarching"];
     for (int i = 0; i < calipersCount; i++) {
         BOOL isAngleCaliper = [coder decodeBoolForKey:[NSString stringWithFormat:@"%dIsAngleCaliper", i]];
         CaliperType type = isAngleCaliper ? Angle : Interval;

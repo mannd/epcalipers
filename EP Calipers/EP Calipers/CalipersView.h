@@ -30,6 +30,7 @@
 @property (nonatomic) BOOL lockImageScreen;
 @property (nonatomic, strong) UIColor *lockImageMessageForegroundColor;
 @property (nonatomic, strong) UIColor *lockImageMessageBackgroundColor;
+@property (nonatomic) BOOL aCaliperIsMarching;
 
 - (void)selectCaliperIfNoneSelected;
 - (BOOL)noCaliperIsSelected;
@@ -40,5 +41,6 @@
 - (void)unselectCaliperNoNeedsDisplay:(Caliper *)c;
 - (void)updateCaliperPreferences:(UIColor *)unselectedColor selectedColor:(UIColor*)selectedColor lineWidth:(NSInteger)lineWidth roundMsec:(BOOL)roundMsec;
 - (NSUInteger)count;
+- (void)toggleShowMarchingCaliper;
 
 @end
