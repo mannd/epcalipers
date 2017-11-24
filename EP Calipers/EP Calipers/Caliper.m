@@ -22,6 +22,8 @@
 #define DOWN_BAR L(@"Bottom bar")
 #define DOWN_BAR_SMALL L(@"Bottom")
 #define APEX_BAR L(@"Apex")
+#define MIN_DISTANCE_FOR_MARCH 20.0f
+#define MAX_MARCHING_CALIPERS 10
 
 @implementation Caliper
 {
@@ -101,7 +103,50 @@
         CGContextAddLineToPoint(context, self.crossBarPosition, self.bar1Position);
     }
     CGContextStrokePath(context);
+
+    BOOL marching = YES;
+    if (marching  && self.direction == Horizontal) {
+        [self drawMarchingCalipers:context forRect:rect];
+    }
     [self caliperText];
+}
+
+- (void)drawMarchingCalipers:(CGContextRef)context forRect:(CGRect)rect {
+    CGFloat difference = fabs(self.bar1Position - self.bar2Position);
+    if (difference < MIN_DISTANCE_FOR_MARCH) {
+        return;
+    }
+    CGFloat greaterBar = fmaxf(self.bar1Position, self.bar2Position);
+    CGFloat lesserBar = fminf(self.bar1Position, self.bar2Position);
+    CGFloat biggerBars[MAX_MARCHING_CALIPERS];
+    CGFloat smallerBars[MAX_MARCHING_CALIPERS];
+    CGFloat point = greaterBar + difference;
+    int index = 0;
+    while (point < rect.size.width && index < MAX_MARCHING_CALIPERS) {
+        biggerBars[index] = point;
+        point += difference;
+        index++;
+    }
+    int maxBiggerBars = index;
+    index = 0;
+    point = lesserBar - difference;
+    while (point > 0 && index < MAX_MARCHING_CALIPERS) {
+        smallerBars[index] = point;
+        point -= difference;
+        index++;
+    }
+    int maxSmallerBars = index;
+    // draw them
+    for (int i = 0; i < maxBiggerBars; i++) {
+        CGContextMoveToPoint(context, biggerBars[i], 0);
+        CGContextAddLineToPoint(context, biggerBars[i], rect.size.height);
+    }
+    for (int i = 0; i < maxSmallerBars; i++) {
+        CGContextMoveToPoint(context, smallerBars[i], 0);
+        CGContextAddLineToPoint(context, smallerBars[i], rect.size.height);
+    }
+    CGContextSetLineWidth(context, fmaxf(self.lineWidth - 1, 1));
+    CGContextStrokePath(context);
 }
 
 - (void)caliperText {
