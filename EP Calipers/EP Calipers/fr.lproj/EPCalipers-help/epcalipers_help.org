@@ -129,10 +129,15 @@ Parfois vous aimeriez raffiner la position d'un compas, ou vous trouvez qu'il es
 [[./img/tweak_menu.png]]
 
 Noter les abréviations des composants: Barre t = Barre transversale, Barre g = Barre gauche, Barre d = Barre droite, Barre sup = Barre supérieure, Barre inf = Barre inférieure.
+** Les compas marchants
+Choisir *March* pour changer un compas de temps à un compas qui marche.  Des lignes verticales apparaîtront égales à la largeur du compas à chaque côté.  C’est utile pour l’évaluation les rythmes irréguliers ou réguliers, ou pour détecter les ondes P marchantes pendant une tachycardie ou un bloc cardiaque.  Choisir *March* encore pour changer à un compas normal.
+#+CAPTION: Un compas marchant
+[[./img/marching_calipers.png]]
+
 ** Fixer l'image
-Pendant le mouvement et l'ajustement des compas, vous pouvez parfois déplacer l'image ECG involontairement.  Choisir *Immobiliser* pour immobiliser l'image sur l'écran.  Un message apparaîtra en haut de l'écran pour indiquer que l'image est immobilisée.  Démobiliser l'image en choisissant *Débloquer*.
+Pendant le mouvement et l'ajustement des compas, vous pouvez parfois déplacer l'image ECG involontairement.  Choisir *Immobil* pour immobiliser l'image sur l'écran.  Un message apparaîtra en haut de l'écran pour indiquer que l'image est immobilisée.  Démobiliser l'image en choisissant *Débloq*.
 * Étalonnage
-Choisir *Étalonner*.  Étirer le compas sélectionné sur un intervalle connu (par exemple 1 000 msec de temps, ou 10 mm d'amplitude).  Choisir *Définir*.  Dans la boîte de dialogue, entrer l'intervalle et les unités (par exemple 500 msec, ou 1 sec, ou 1 mV).  Choisir *Définir* dans la boîte du dialogue pour définir l'étalonnage.  Noter qu'il faut que les compas de temps et d'amplitude soient étalonnés individuellement.  Après l'étalonnage, les compas montreront les intervalles avec les unités utilisées pour les étalonner.  Des nouveaux compas créés utiliseront le même étalonnage.
+Choisir *Étalonner* (ou *Étal* sur petits écrans).  Étirer le compas sélectionné sur un intervalle connu (par exemple 1 000 msec de temps, ou 10 mm d'amplitude).  Choisir *Définir*.  Dans la boîte de dialogue, entrer l'intervalle et les unités (par exemple 500 msec, ou 1 sec, ou 1 mV).  Choisir *Définir* dans la boîte du dialogue pour définir l'étalonnage.  Noter qu'il faut que les compas de temps et d'amplitude soient étalonnés individuellement.  Après l'étalonnage, les compas montreront les intervalles avec les unités utilisées pour les étalonner.  Des nouveaux compas créés utiliseront le même étalonnage.
 #+CAPTION: Compas de temps qui sera étalonné
 [[./img/pre_calibration.png]]
 #+CAPTION: Compas de temps après l'étalonnage
