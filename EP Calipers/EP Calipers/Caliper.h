@@ -30,6 +30,7 @@
 @property (nonatomic) BOOL roundMsecRate;
 @property (nonatomic, readonly) BOOL requiresCalibration;
 @property (nonatomic) BOOL isAngleCaliper;
+@property (nonatomic) BOOL marching;
 
 
 - (double)intervalResult;

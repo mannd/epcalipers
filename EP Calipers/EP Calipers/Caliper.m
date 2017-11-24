@@ -48,6 +48,7 @@
         self.attributes = [[NSMutableDictionary alloc] init];
         self.roundMsecRate = YES;
         self.isAngleCaliper = NO;
+        self.marching = NO;
     }
     return self;
 }
@@ -104,8 +105,7 @@
     }
     CGContextStrokePath(context);
 
-    BOOL marching = YES;
-    if (marching  && self.direction == Horizontal) {
+    if (self.marching  && self.direction == Horizontal) {
         [self drawMarchingCalipers:context forRect:rect];
     }
     [self caliperText];
@@ -410,6 +410,7 @@
     [coder encodeObject:self.color forKey:[self getPrefixedKey:prefix key:@"Color"]];
     [coder encodeObject:self.selectedColor forKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
     [coder encodeBool:self.roundMsecRate forKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
+    [coder encodeBool:self.marching forKey:[self getPrefixedKey:prefix key:@"Marching"]];
     
 }
 
@@ -427,6 +428,7 @@
     self.color = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"Color"]];
     self.selectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
     self.roundMsecRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
+    self.marching = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Marching"]];
 }
 
 
