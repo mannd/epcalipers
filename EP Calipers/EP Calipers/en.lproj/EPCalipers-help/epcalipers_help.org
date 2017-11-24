@@ -138,6 +138,11 @@ Sometimes you might like to fine tune the position of a caliper, or you find it 
 #+CAPTION: Buttons to tweak caliper positioning
 [[./img/tweak_menu.png]]
 
+** Marching calipers
+Select *March* to convert a time caliper to a marching caliper.  Vertical caliper lines will appear equal to the caliper width on either side of the caliper.  This is very useful to assess the regularity or irregularity of a rhythm, or to detect P waves marching through a tachycardia or during heart block.  Select *March* again to change the marching caliper back to normal again.
+#+CAPTION: Marching calipers
+[[./img/marching_calipers.png]]
+
 ** Lock the image in place
 When moving and adjusting calipers, you may sometimes inadvertently move the underlying image.  Select *Lock* to lock the image in place.  A message appears at the top of the screen indicating the image is locked.  Unlock the image by selecting *Unlock*.
 * Calibration
