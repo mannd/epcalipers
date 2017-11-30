@@ -301,17 +301,17 @@
         self.aCaliperIsMarching = NO;
         return;
     }
-    // first try to find a selected Horizontal caliper
+    // first try to find a selected Time caliper
     for (Caliper *c in self.calipers) {
-        if (c.selected && c.direction == Horizontal) {
+        if (c.selected && [c isTimeCaliper]) {
             c.marching = YES;
             self.aCaliperIsMarching = YES;
             return;
         }
     }
-    // if not, settle for the first Horizontal caliper
+    // if not, settle for the first Time caliper
     for (Caliper *c in self.calipers) {
-        if (c.direction == Horizontal) {
+        if ([c isTimeCaliper]) {
             c.marching = YES;
             self.aCaliperIsMarching = YES;
             return;

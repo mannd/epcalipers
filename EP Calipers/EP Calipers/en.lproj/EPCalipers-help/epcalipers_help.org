@@ -185,7 +185,7 @@ Preferences such as caliper colors and default calibration intervals can be sele
 * Acknowledgments
 - Thanks to Dr. Michael Katz for the concept.
 - Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.
-- Thanks to Scott Krankkala for the idea behing marching calipers.
+- Thanks to Scott Krankkala for the idea behind marching calipers.
 - The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers][GitHub]].
 - *EP Calipers* is open source software and is licensed under the
   [[https://www.apache.org/licenses/LICENSE-2.0.html][Apache License Version 2.0]].  No guarantees are made as to the accuracy of the
