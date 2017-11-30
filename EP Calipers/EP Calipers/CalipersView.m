@@ -147,7 +147,7 @@
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
         if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
             [self.calipers removeObject:self.calipers[i]];
-            if (self.calipers.count <= 0) {
+            if ([self thereAreNoTimeCalipers]) {
                 self.aCaliperIsMarching = NO;
             }
             [self setNeedsDisplay];
@@ -321,5 +321,18 @@
     self.aCaliperIsMarching = NO;
 }
 
+- (BOOL)thereAreNoTimeCalipers {
+    if (self.calipers.count <= 0) {
+        return YES;
+    }
+    BOOL noTimeCalipers = YES;
+    for (Caliper *c in self.calipers) {
+        if ([c isTimeCaliper]) {
+            noTimeCalipers = NO;
+            break;
+        }
+    }
+    return noTimeCalipers;
+}
 
 @end
