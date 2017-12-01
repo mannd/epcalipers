@@ -60,6 +60,7 @@
 - (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key;
 - (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
 - (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
+- (BOOL)isTimeCaliper;
 
 
 @end

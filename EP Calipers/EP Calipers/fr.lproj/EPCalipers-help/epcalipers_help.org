@@ -176,6 +176,7 @@ Vos préférences comme les couleurs des compas et les intervalles par défaut d
 * Remerciements
 - Je remercie Dr. Michael Katz pour l'idée.
 - Je remercie Dr. Adrian Baranchuk et ses collaborateurs de l'Université Queen de Kingston en Ontario au Canada pour le concept du « Brugadometer » et pour leur aide en appliquant cet algorithme.
+- Je remercie Scott Kankkala pour l’idée des compas marchants.
 - Le code source de *Compas EP* est disponible sur [[https://github.com/mannd/epc alipers][GitHub]].
 - *Compas EP* est un logiciel libre et il est sous [[https://www.apache.org/licen ses/LICENSE-2.0.html][Apache License Version 2.0]].  Nous ne fournissons aucune garantie sur la précision de l'application.  Utilisez-la à vos risques et périls.
 - Pour des questions, des rapports d'erreurs, ou des suggestions, contactez mannd@epstudiossoftware.com.

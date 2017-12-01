@@ -392,6 +392,10 @@
     return YES;
 }
 
+- (BOOL)isTimeCaliper {
+    return self.direction == Horizontal && !self.isAngleCaliper;
+}
+
 // preserve state
 // duplicated in Calibration.m
 - (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key {
