@@ -52,7 +52,6 @@ import QTc
             if convertToMsec {
                 qtc *= 1000
             }
-            NSLog("qtc = %f", qtc)
             result += NSString.localizedStringWithFormat(NSLocalizedString("\nQTc = %.4g %@ (%@ formula)", comment:"") as NSString, qtc, units, qtcCalculator.longName) as String
         }
         return result
