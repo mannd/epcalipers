@@ -1496,7 +1496,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [coder encodeBool:self.calipersView.aCaliperIsMarching forKey:@"ACaliperIsMarching"];
     for (int i = 0; i < [self.calipersView count]; i++) {
         [self.calipersView.calipers[i] encodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
-        [coder encodeBool:[self.calipersView.calipers[i] isAngleCaliper] forKey:[NSString stringWithFormat:@"%dIsAngleCaliper", i]];
         EPSLog(@"calipers is Angle %d", [self.calipersView.calipers[i] isAngleCaliper]);
     }
     
