@@ -697,17 +697,6 @@
     [self.calipersView setNeedsDisplay];
 }
 
-- (BOOL)horizontalCalipersAvailable {
-    if (self.calipersView.calipers.count < 1) {
-        return NO;
-    }
-    for (Caliper *c in self.calipersView.calipers) {
-        if (c.direction == Horizontal) {
-            return YES;
-        }
-    }
-    return NO;
-}
 
 - (void)setupCalibration {
     if (self.calipersView.calipers.count < 1) {
@@ -791,7 +780,7 @@
     int n = 0;
     if (self.calipersView.calipers.count > 0) {
         for (Caliper *caliper in self.calipersView.calipers) {
-            if (caliper.direction == Horizontal && !caliper.isAngleCaliper) {
+            if (caliper.isTimeCaliper) {
                 c = caliper;
                 n++;
             }
