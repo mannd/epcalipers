@@ -92,6 +92,8 @@
 "Copyright © 2015 - 2017 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Copyright © 2015 - 2017 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
 "Mean RR = %.4g %@\nQT = %.4g %@" = "RR moyen = %.4g %@\nQT = %.4g %@";
 "\nQTc = %.4g %@ (%@ formula)" ="\nQTc = %.4g %@ (formule de %@)";
+"Done" = "OK";
+"Repeat QT" = "Répéter QT";
 
 
 
