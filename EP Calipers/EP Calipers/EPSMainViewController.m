@@ -39,6 +39,7 @@
 #define CLEAR L(@"Clear")
 #define MORE L(@"More")
 #define OK L(@"OK")
+#define DONE L(@"Done")
 
 #define SWITCH_IPAD L(@"Image")
 #define SWITCH_IPHONE L(@"Image")
@@ -65,6 +66,7 @@
 #define MEAN_RR_FOR_QTC_ALERTVIEW 43
 #define NUM_PDF_PAGES_ALERTVIEW 101
 #define LAUNCHED_FROM_URL_ALERTVIEW 102
+#define QTC_RESULT_ALERTVIEW 104
 
 #define CALIPERS_VIEW_TITLE L(@"EP Calipers")
 #define IMAGE_VIEW_TITLE L(@"Image Mode")
@@ -616,10 +618,11 @@
         float meanRR = fabs(self.rrIntervalForQTc);  // already in secs
         QTcResult *qtcResult = [[QTcResult alloc] init];
         NSString *result = [qtcResult calculateFromQtInSec:qt rrInSec:meanRR formula:self.settings.qtcFormula convertToMsec:c.calibration.unitsAreMsec units:c.calibration.units];
-        UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:L(@"Calculated QTc") message:result delegate:nil cancelButtonTitle:OK otherButtonTitles: nil];
+        UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:L(@"Calculated QTc") message:result delegate:self cancelButtonTitle:DONE otherButtonTitles: L(@"Repeat QT"), nil];
+        qtcResultAlertView.tag = QTC_RESULT_ALERTVIEW;
         qtcResultAlertView.alertViewStyle = UIAlertViewStyleDefault;
         [qtcResultAlertView show];
-        [self selectMainToolbar];
+        //[self selectMainToolbar];
     }
 }
 
@@ -1204,6 +1207,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     BOOL badValue = NO;
+    if (alertView.tag == QTC_RESULT_ALERTVIEW) {
+        if (buttonIndex == 0) {
+            [self selectMainToolbar];
+        }
+        // Repeat QT measurement button
+        else if (buttonIndex == 1) {
+            self.toolbarItems = self.qtcStep2MenuItems;
+        }
+        return;
+    }
     if (buttonIndex == 0) {
         if (alertView.tag != CALIBRATION_ALERTVIEW) {
             // calibrate cancel returns to calibrate menu, otherwise...
