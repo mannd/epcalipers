@@ -12,6 +12,7 @@
 #import "Calibration.h"
 #import "AngleCaliper.h"
 #import "EPSMainViewController.h"
+#import "MiniQTcResult.h"
 
 
 
@@ -139,6 +140,30 @@
     base = [AngleCaliper calculateBaseFromHeight:height andAngle1:angle1 andAngle2:angle2];
     XCTAssertEqualWithAccuracy(base, 19.51443, 0.001);
     // scalene triangle
+}
+
+- (void)testQT {
+    MiniQTcResult *qtcResult = [[MiniQTcResult alloc] init];
+    NSString  *result = [qtcResult calculateFromQtInSec:0.4 rrInSec:1.0 formula:Bazett convertToMsec:NO units:@"sec"];
+    XCTAssertEqualObjects(result, @"Mean RR = 1 sec\nQT = 0.4 sec\nQTc = 0.4 sec (Bazett formula)");
+    result = [qtcResult calculateFromQtInSec:0.4 rrInSec:1.0 formula:Hodges convertToMsec:NO units:@"sec"];
+    XCTAssertEqualObjects(result, @"Mean RR = 1 sec\nQT = 0.4 sec\nQTc = 0.4 sec (Hodges formula)");
+    result = [qtcResult calculateFromQtInSec:0.278 rrInSec:0.6818 formula:Bazett convertToMsec:NO units:@"sec"];
+    XCTAssertEqualObjects(result, @"Mean RR = 0.6818 sec\nQT = 0.278 sec\nQTc = 0.3367 sec (Bazett formula)");
+    result = [qtcResult calculateFromQtInSec:0.278 rrInSec:0.6818 formula:Fridericia convertToMsec:NO units:@"sec"];
+    XCTAssertEqualObjects(result, @"Mean RR = 0.6818 sec\nQT = 0.278 sec\nQTc = 0.3159 sec (Fridericia formula)");
+    result = [qtcResult calculateFromQtInSec:0.278 rrInSec:0.6818 formula:Framingham convertToMsec:NO units:@"sec"];
+    XCTAssertEqualObjects(result, @"Mean RR = 0.6818 sec\nQT = 0.278 sec\nQTc = 0.327 sec (Framingham formula)");
+    result = [qtcResult calculateFromQtInSec:0.278 rrInSec:0.6818 formula:Hodges convertToMsec:NO units:@"sec"];
+    XCTAssertEqualObjects(result, @"Mean RR = 0.6818 sec\nQT = 0.278 sec\nQTc = 0.327 sec (Hodges formula)");
+    result = [qtcResult calculateFromQtInSec:0.334 rrInSec:0.5357 formula:Bazett convertToMsec:YES units:@"msec"];
+    XCTAssertEqualObjects(result, @"Mean RR = 535.7 msec\nQT = 334 msec\nQTc = 456.3 msec (Bazett formula)");
+    result = [qtcResult calculateFromQtInSec:0.334 rrInSec:0.5357 formula:Fridericia convertToMsec:YES units:@"msec"];
+    XCTAssertEqualObjects(result, @"Mean RR = 535.7 msec\nQT = 334 msec\nQTc = 411.3 msec (Fridericia formula)");
+    result = [qtcResult calculateFromQtInSec:0.334 rrInSec:0.5357 formula:Framingham convertToMsec:YES units:@"msec"];
+    XCTAssertEqualObjects(result, @"Mean RR = 535.7 msec\nQT = 334 msec\nQTc = 405.5 msec (Framingham formula)");
+    result = [qtcResult calculateFromQtInSec:0.334 rrInSec:0.5357 formula:Hodges convertToMsec:YES units:@"msec"];
+    XCTAssertEqualObjects(result, @"Mean RR = 535.7 msec\nQT = 334 msec\nQTc = 425 msec (Hodges formula)");
 }
 
 @end
