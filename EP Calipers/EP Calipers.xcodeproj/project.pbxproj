@@ -144,6 +144,7 @@
 		8E14235A1AB5F16A00CC15BC /* EP Calipers */ = {
 			isa = PBXGroup;
 			children = (
+				8EF520FD1FF99BFC000B2C74 /* Storyboards */,
 				8E9BA1331EF6BED700FC8DD2 /* EPCalipers-help */,
 				8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */,
 				8EB3DE351AC344CC009376AD /* EPSLogging.h */,
@@ -153,7 +154,6 @@
 				8ECEDF671E8A1A1A00288EDE /* About.m */,
 				8E1423621AB5F16A00CC15BC /* EPSMainViewController.h */,
 				8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */,
-				8E1423651AB5F16A00CC15BC /* Main.storyboard */,
 				8E1423681AB5F16A00CC15BC /* Images.xcassets */,
 				8E9A33381AC09DE90037E694 /* CalipersView.h */,
 				8E9A33391AC09DE90037E694 /* CalipersView.m */,
@@ -228,6 +228,14 @@
 				8E9BA1391EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib */,
 			);
 			name = ColorPicker;
+			sourceTree = "<group>";
+		};
+		8EF520FD1FF99BFC000B2C74 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				8E1423651AB5F16A00CC15BC /* Main.storyboard */,
+			);
+			name = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
