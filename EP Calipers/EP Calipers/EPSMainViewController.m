@@ -91,7 +91,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     EPSLog(@"viewDidLoad");
-    // Do any additional setup after loading the view, typically from a nib.
+    
     pdfRef = NULL;
     
     self.settings = [[Settings alloc] init];
@@ -175,6 +175,10 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     EPSLog(@"ViewDidAppear");
+    
+    NSString *language = [[NSLocale preferredLanguages] firstObject];
+    EPSLog(@"Language code = %@", language);
+    
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
     

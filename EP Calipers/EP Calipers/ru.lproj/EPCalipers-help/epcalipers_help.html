@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+<head>
+<!-- 2018-01-02 Tue 19:31 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title></title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="David Mann" />
+<meta name="description" content="EP Calipers Help"
+ />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2017 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>&#1057;&#1086;&#1076;&#1077;&#1088;&#1078;&#1072;&#1085;&#1080;&#1077;</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org2d252e9">Вы снова на вызове&#x2026;</a></li>
+<li><a href="#orga91e482">Электронный калипер</a></li>
+<li><a href="#org9919b91">Быстрый старт</a></li>
+<li><a href="#orgff59a69">Загрузка изображения</a>
+<ul>
+<li><a href="#org9f71676">Сделать фото ЭКГ</a></li>
+<li><a href="#orgc1d525e">Выберите фото из фотопленки.</a></li>
+<li><a href="#orga635f50">Используйте <b>Поделиться</b> чтобы выбрать фото или PDF из других приложений</a>
+<ul>
+<li><a href="#org94f624e">Открытие прикрепленных файлов из почты или файлов из Dropbox.</a></li>
+<li><a href="#org3cc1e1f"><i>AliveCor</i></a></li>
+</ul>
+</li>
+<li><a href="#orgbd3f5fb">Многостраничный файл PDFs</a></li>
+</ul>
+</li>
+<li><a href="#org2e0a217">Настойка изображения</a></li>
+<li><a href="#orgfea87a9">Образец ЭКГ</a></li>
+<li><a href="#orgb751bfb">Выход из режима изображения</a></li>
+<li><a href="#org39cbc84">Типы калиперов</a></li>
+<li><a href="#org951e611">Настройка калиперов</a>
+<ul>
+<li><a href="#orgc3950db">Калипер времени и амплитуды</a></li>
+<li><a href="#org97ad30f">Калипер угла</a></li>
+<li><a href="#org154c2d6">Микропередвижения</a></li>
+</ul>
+</li>
+<li><a href="#org5263991">Выполнение измерений</a></li>
+<li><a href="#org2da1af8">Добавляйте и удаляйте калиперы</a></li>
+<li><a href="#org095d2aa">Выбор калипера</a></li>
+<li><a href="#org9f4b7ca">Больше возможностей калипера</a>
+<ul>
+<li><a href="#orgfa83f10">Ещё меню</a></li>
+<li><a href="#org2756abd">Изменение цвета калипера</a></li>
+<li><a href="#org0d88ceb">Точная настройка положения калипера</a></li>
+<li><a href="#org0aa94b8">Заблокировать изображение на месте</a></li>
+</ul>
+</li>
+<li><a href="#org273a589">Калибровка</a></li>
+<li><a href="#org5a822fd">Изменение калибровки</a></li>
+<li><a href="#org623f36c">Интервал / Частота</a></li>
+<li><a href="#orgfcfad8c">Расчет средней частоты и интервала</a></li>
+<li><a href="#org9a15803">Расчет QTc</a>
+<ul>
+<li><a href="#org05ad585">Точная настройка расчета QT</a></li>
+</ul>
+</li>
+<li><a href="#orgb46b8d5">Бругадометр</a></li>
+<li><a href="#orgf6fb3f8">Индивидуальные настройки</a></li>
+<li><a href="#org1aaccf3">Проблемы и ограничения</a></li>
+<li><a href="#org49175d4">Благодарности</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2d252e9" class="outline-2">
+<h2 id="org2d252e9">Вы снова на вызове&#x2026;</h2>
+<div class="outline-text-2" id="text-org2d252e9">
+<p>
+Сейчас 2 часа ночи и звонит телефон. Это мед. сестра из кардиологического отделения. Г-н Смит собирается принять назначенный антиаритмический препарат (кто придумывает эти сумасшедшие графики приема лекарств?), но его ЭКГ показывает пограничное удлинение интервала QTc, по крайней мере по данным компьютера. Она не уверенна, безопасно ли давать препарат. Мед. сестра хочет отправить вам ЭКГ. 
+</p>
+
+<p>
+Вы открываете ЭКГ на своем телефоне. Вы смотрите на QT интервал. Вы не уверенны в измерениях компьютера. Вам надо его перепроверить. Вы начинаете считать маленькие клеточки. Вы достаете старый механический штангенциркуль, подаренный много лет назад одним фарм. представителем, когда такая щедрость еще была легальной. И вы думаете про себя: я живу в эпоху цифровых технологий. Неужели я делаю измерения на своем iPhone механическим штангенциркулем?
+</p>
+</div>
+</div>
+<div id="outline-container-orga91e482" class="outline-2">
+<h2 id="orga91e482">Электронный калипер</h2>
+<div class="outline-text-2" id="text-orga91e482">
+<p>
+<b>EP Calipers</b> обеспечивает <b>электронный калипер</b> для измерения интервалов, он накладывается на изображение ЭКГ или запись электрофизиологического исследования. В систему для  электрофизиологического исследования электронные калиперы включенны по умолчанию. <b>EP Calipers</b> предполагает аналогичный калипер для использования на Вашем iPhone или IPad. Электронные калиперы <b>EP Calipers</b> точнее в измерении, проще в использовании и менее опасны, чем механический штангенциркуль (они не имеют острых краев!)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9919b91" class="outline-2">
+<h2 id="org9919b91">Быстрый старт</h2>
+<div class="outline-text-2" id="text-org9919b91">
+<p>
+Во время начала работы <b>EP Calipers</b>, загружается образец ЭКГ и калипер времени. Передвинуть калипер можно прикоснувшись к планке калипера и перетащив его пальцем. Увеличить или уменьшить калипер можно коснувшись пальцами одной из вертикальных панелей и перетащив её. Сжимайти и увеличивайте масштаб ЭКГ при необходимости увеличить или уменьшить изображение. Если изображение ЭКГ больше, чем ваш экран, то вы можете перетащить изображение пальцем и выбрать место для измерения. В остальных инструкциях речь пойдет о том как загрузить ЭКГ, добавить или удалить калиперы, откалибровать калиперы и сделать такие расчеты, как корригированный интервал QT. 
+</p>
+</div>
+</div>
+<div id="outline-container-orgff59a69" class="outline-2">
+<h2 id="orgff59a69">Загрузка изображения</h2>
+<div class="outline-text-2" id="text-orgff59a69">
+
+<div class="figure">
+<p><img src="./img/image_button.png" alt="image_button.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 1.: </span>кнопка <b>Изображение</b></p>
+</div>
+
+<p>
+Используйте кнопку <b>Изображение</b> в левом верхнем углу экрана для того, чтобы открыть меню <b>Изображение</b> в нижней части экрана.
+</p>
+
+<div class="figure">
+<p><img src="./img/image_menu.png" alt="image_menu.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 2.: </span>меню <b>Изображение</b></p>
+</div>
+
+
+<p>
+С помощью этого меню вы можете загрузить и настроить изображение ЭКГ. Есть несколько способов загрузить ЭКГ изображение. 
+</p>
+</div>
+<div id="outline-container-org9f71676" class="outline-3">
+<h3 id="org9f71676">Сделать фото ЭКГ</h3>
+<div class="outline-text-3" id="text-org9f71676">
+<p>
+<img src="./img/camera_icon.png" alt="camera_icon.png" /> Нажмите <b>Камера</b> для того чтобы снять ЭКГ и загрузите его в приложение. Обратите внимание, что изображения снятые таким образом не сохраняются в альбоме фотогрфий устройства. Этот способ лучше использовать если вам необходимо быстро выполнить измерения и нет необходимости сохранять изображение.  
+</p>
+</div>
+</div>
+<div id="outline-container-orgc1d525e" class="outline-3">
+<h3 id="orgc1d525e">Выберите фото из фотопленки.</h3>
+<div class="outline-text-3" id="text-orgc1d525e">
+<p>
+Нажмите <b>Выбрать</b> для того, чтобы выбрать изображение которое уже сохранено в фотопленке вашего устройства (например, прикрепленный к письму файл с изображением, который вы сохранили или фото, которое вы сняли раннее)  
+</p>
+</div>
+</div>
+<div id="outline-container-orga635f50" class="outline-3">
+<h3 id="orga635f50">Используйте <b>Поделиться</b> чтобы выбрать фото или PDF из других приложений</h3>
+<div class="outline-text-3" id="text-orga635f50">
+<p>
+<b>EP Calipers</b> может открывать изображения и PDF файлы независимо от того где они храняться на вашем устройстве. Вы напрямую можете открывать пикрепленные файлы почты, файлы из iCloud, Google Drive и Dropbox. Также легко открыть изображение ЭКГ напрямую из приложения <i>AliveCor Kardia™</i>. Все что для этого надо, это нажать кнопку <b>Поделиться</b>. Это выглядит следующим образом: <img src="./img/share_icon.png" alt="share_icon.png" />
+</p>
+
+<p>
+В зависимости от приложения эта кнопка может быть в в верхней части экрана, или может потребоваться длительное нажатие на изображение для того, чтобы открыть меню <b>Поделиться</b>. Здесь вы можете увидеть кнопку <b>Поделиться</b> в правом верхнем углу экрана / Кардия /:
+</p>
+
+<div class="figure">
+<p><img src="./img/aliveecgtop.png" alt="aliveecgtop.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 3.: </span>Кнопка <b>Поделитья</b> в верхнем правом углу</p>
+</div>
+
+<p>
+Когда открыто меню <b>Поделиться</b>, один из вариантов должен быть *Копировать в EP Calipers *. При выборе этого параметра откроется изображение в приложении.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/copy_to_ep_calipers.png" alt="copy_to_ep_calipers.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 4.: </span><b>Копировать в EP Calipers</b> откроет изображение в <b>EP Calipers</b></p>
+</div>
+
+<p>
+Если опция <b>Копировать в EP Calipers</b> не открывается, тогда попробуйте открыть <b>Краткий обзор</b>:
+</p>
+
+
+<div class="figure">
+<p><img src="./img/quicklook.png" alt="quicklook.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 5.: </span>Кнопка <b>Краткий озор</b> находится в правом нижнем углу</p>
+</div>
+
+<p>
+или кнопку <b>Открыть в&#x2026;</b>. Выбирая ее должно открыться окно, где появится <b>Копировать в EP Calipers</b>.
+</p>
+
+<p>
+#*EP Calipers*
+<img src="./img/openin.png" alt="openin.png" />
+</p>
+</div>
+
+<div id="outline-container-org94f624e" class="outline-4">
+<h4 id="org94f624e">Открытие прикрепленных файлов из почты или файлов из Dropbox.</h4>
+<div class="outline-text-4" id="text-org94f624e">
+<p>
+Для открытия прикрепленных файлов из почты или файлов из Dropbox, загрузите вложения или файлы (детали зависят от приложения email, которое вы используете). Затем при просмотре вложения или файла коснитесь изображения или долго жмите, чтобы появилась кнопка <b>Поделиться</b>. Выберите <b>Поделиться</b>, а затем выберите <b>Копировать в EP Calipers</b>, чтобы открыть изображение или файл PDF в приложении.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3cc1e1f" class="outline-4">
+<h4 id="org3cc1e1f"><i>AliveCor</i></h4>
+<div class="outline-text-4" id="text-org3cc1e1f">
+<p>
+Для того чтобы просмотреть изображение ЭКГ из приложения <i>AliveCor Kardia</i>, выберите <b>Журнал</b>, затем <b>Поделиться</b> для конкретной сохраненной ЭКГ, которую вы хотите просмотреть.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/alive_ecg.png" alt="alive_ecg.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 6.: </span>Кнопка <i>Kaрдия</i> <b>Поделиться</b> имеет значок конверта</p>
+</div>
+
+<p>
+После выбора кнопки <b>Поделиться</b>, выберите <b>PDF</b> из опций, которые открываются. Затем выберите <b>Поделиться</b> в правом верхнем углу экрана. Выберите <b>Копировать в EP Calipers</b> и можно приступать к измерениям!
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbd3f5fb" class="outline-3">
+<h3 id="orgbd3f5fb">Многостраничный файл PDFs</h3>
+<div class="outline-text-3" id="text-orgbd3f5fb">
+<p>
+Если файл PDF содержит несколько страниц, то приложение сначала отобразит первую страницу. Вы можете перейти к другим страницам выбрав <b>Предыдущая</b> или <b>Слудующая</b> в меню <b>Изображение</b>.Обратите внимание, что если вы переключитесь на другое приложение и <b>EP Calipers</b> прекратит работу с iOS (как это происходить автоматически для экономии объёма памяти), доступен будет только просмотр последней страницы, когда приложение будет перезапущено. Чтобы отобразить другие страницы, необходимо перезагрузить файл
+PDF.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2e0a217" class="outline-2">
+<h2 id="org2e0a217">Настойка изображения</h2>
+<div class="outline-text-2" id="text-org2e0a217">
+<p>
+Вы можете отрегулировать положение изображения с помощью сведения и разведения пальцев и прокрутки файла пальцем. Обратите внимание, что в режиме изображения калиперы зафиксированы на месте. Используйте меню <b>Выровнить</b>, чтобы повернуть или перевернуть изображение. Это удобно, если изображение повернуто или не совсем ровно по отношению к экрану. Вы можете поворачивать изображение на 90° в любом направлении или с шагом 1°. Если вы выберете меню <b>Ещё</b>, вы можете более точно настроить изображение, повернуть на 0.1 ° или переверните изображение, если по какой-то причине оно было перевёрнуто (переворачивание изображения ЭКГ может стать интересным времяпрепровождением само по себе). Вернитесь из меню <b>Ещё</b> в меню <b>Выровнить</b>, выберите <b>Готово</b>. Используя настройки, вы можете выровнить изображение так, чтобы оно было квадратным для калиперов. После поворота изображения откалибруйте калипер. Если вам нужно вернуться в исходное положение и изменить масштаб, используйте <b>Сброс</b>. После настройки изображения выберите <b>Готово</b>, чтобы вернуться в главное меню <b>Изображение</b>.
+</p>
+
+<div class="figure">
+<p><img src="./img/adjust_menu.png" alt="adjust_menu.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 7.: </span>The <b>Adjust</b> menu</p>
+</div>
+
+<div class="figure">
+<p><img src="./img/more_menu.png" alt="more_menu.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 8.: </span>The <b>More</b> image menu</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfea87a9" class="outline-2">
+<h2 id="orgfea87a9">Образец ЭКГ</h2>
+<div class="outline-text-2" id="text-orgfea87a9">
+<p>
+Нажмите <b>Образец</b> чтобы открыть ЭКГ, которое прилагается к <b>EP Calipers</b>. Это хорошая практика в использовании приложения или демонстрации его другим.
+</p>
+</div>
+</div>
+<div id="outline-container-orgb751bfb" class="outline-2">
+<h2 id="orgb751bfb">Выход из режима изображения</h2>
+<div class="outline-text-2" id="text-orgb751bfb">
+<p>
+После того как вы загрузили и  настроили изображение, вам следует выйти из режима изображения, после чего вы можете использовать калиперы. Выберите <b>Измерить</b> в левом верхнем углу экрана, чтобы вернуться к главному экрану <b>EP Calipers</b>.
+</p>
+
+<div class="figure">
+<p><img src="./img/measure_button.png" alt="measure_button.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 9.: </span>Используйте кнопку <b>Измерить</b> для выхода из режима <b>Изображение</b>.</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org39cbc84" class="outline-2">
+<h2 id="org39cbc84">Типы калиперов</h2>
+<div class="outline-text-2" id="text-org39cbc84">
+<p>
+Калиперы могут быть горизонтальными для измерения времени, вертикальными для измерения амплитуды и в форме угла для измерения угла в градусах. Калиперы времени выглядять как буква <b>Н</b>, калиперы амплитуды выглядят как буква <b>Н</b>, которая лежит на одной стороне и калипер угла напоминает по форме перевернутую букву <b>V</b>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org951e611" class="outline-2">
+<h2 id="org951e611">Настройка калиперов</h2>
+<div class="outline-text-2" id="text-org951e611">
+</div>
+<div id="outline-container-orgc3950db" class="outline-3">
+<h3 id="orgc3950db">Калипер времени и амплитуды</h3>
+<div class="outline-text-3" id="text-orgc3950db">
+<p>
+Перетащите планку калипера, чтобы переместить его как единое целое. Передвиньте левую или правую планку (или сверху или снизу если это калиперы амплитуды), чтобы растянуть или сжать калиперы. Обратите внимание, что вы не можете одновременно зажимать обе полосы.
+</p>
+
+<div class="figure">
+<p><img src="./img/uncalibrated_caliper.png" alt="uncalibrated_caliper.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 10.: </span>Один невыбранный некалиброванный калипер времени</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org97ad30f" class="outline-3">
+<h3 id="org97ad30f">Калипер угла</h3>
+<div class="outline-text-3" id="text-org97ad30f">
+<p>
+Калиперы угла перемещаются как единое целое, перемещаясь в вершине или чуть выше вершины угла. Вершина - это место, где две линии соединяются. Перетаскивая любой край калипера на небольшое расстояние от вершины, вы увеличите или уменьшите угол. 
+</p>
+
+<div class="figure">
+<p><img src="./img/angle_caliper.png" alt="angle_caliper.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 11.: </span>Калипер угла</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org154c2d6" class="outline-3">
+<h3 id="org154c2d6">Микропередвижения</h3>
+<div class="outline-text-3" id="text-org154c2d6">
+<p>
+Возможно передвигать Калипер на очень короткие интервалы используя для этого клавиши со стрелками.  Смотри <a href="#orge9befbd">tweaking caliper position</a>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5263991" class="outline-2">
+<h2 id="org5263991">Выполнение измерений</h2>
+<div class="outline-text-2" id="text-org5263991">
+<p>
+Интервал, измеренный калиперами времени или амплитуды, отображается сверху или рядом с планкой калипера. До тех пор, пока эти калиперы
+калибруются, измерения отображаются в произвольных единицах (точках, примерно эквивалент экранных пикселей). Угловые калиперы показывают
+измерение текущего угла в градусах и не требуется калибрования чтобы отобразить угол. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2da1af8" class="outline-2">
+<h2 id="org2da1af8">Добавляйте и удаляйте калиперы</h2>
+<div class="outline-text-2" id="text-org2da1af8">
+<p>
+выбрав <b>+</b> из главного меню, чтобы добавить новый калипер.
+</p>
+
+<div class="figure">
+<p><img src="./img/main_menu2.png" alt="main_menu2.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 12.: </span>Главое меню</p>
+</div>
+
+<p>
+Выберите <b>Время</b>, <b>Амплитуда</b> или <b>Угол</b> чтобы добавить калипер, который вы хотите. 
+</p>
+
+<p>
+Дважды нажмите на калипер, чтобы удалить его.
+</p>
+
+<div class="figure">
+<p><img src="./img/add_caliper_menu.png" alt="add_caliper_menu.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 13.: </span>Добавить калипер в меню</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org095d2aa" class="outline-2">
+<h2 id="org095d2aa">Выбор калипера</h2>
+<div class="outline-text-2" id="text-org095d2aa">
+<p>
+Когда используются несклько калиперов, необходимо, чтобы один из них был активным когда вы калибруете или производите вычисления. По умолчанию неактивный калипер синего цыета, а активный - красного. Вы можете изменить эти цвета, используя приложение <a href="#org8a0ee73">preferences</a>. Также возможно с помощью <a href="#org80084bd">change individual caliper colors</a>. Вы можете активировать калипер одним нажатием. Коснитесь его еще раз (но не слишком быстро, так как двойное нажатие удалит калипер), чтобы деактивировать его. Поскольку одновременно может быть только один активный калипер, выбор другого калипера снимет выбор с предыдущего калипера. В некоторых случаях калипер будет выбран автоматически (например, для калибровки), если вы еще не выбрали его. Если вы хотите выбрать другой калипер, просто нажмите на него.
+</p>
+
+<div class="figure">
+<p><img src="./img/selected_caliper.png" alt="selected_caliper.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 14.: </span>Два неоткалиброванных калипера, время и амплитуда. Выбран калипер времени.</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9f4b7ca" class="outline-2">
+<h2 id="org9f4b7ca"><a id="org72cb06b"></a>Больше возможностей калипера</h2>
+<div class="outline-text-2" id="text-org9f4b7ca">
+</div>
+<div id="outline-container-orgfa83f10" class="outline-3">
+<h3 id="orgfa83f10">Ещё меню</h3>
+<div class="outline-text-3" id="text-orgfa83f10">
+
+<div class="figure">
+<p><img src="./img/more_caliper_menu.png" alt="more_caliper_menu.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 15.: </span><b>Ещё</b> в меню калипера</p>
+</div>
+
+<p>
+При выборе кнопки <b>Ещё</b> в главном меню отображается меню выше. Параметры этого меню описаны ниже.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2756abd" class="outline-3">
+<h3 id="org2756abd"><a id="org80084bd"></a>Изменение цвета калипера</h3>
+<div class="outline-text-3" id="text-org2756abd">
+<p>
+Начальные цвета калипера установлены через приложение <a href="#org8a0ee73">preferences</a>, и эти цвета применяются ко всем новым калиперам. Однако, после добавления калипера, его цвет можно изменить, и каждый калипер может иметь другой цвет. Эти изменения цвета сохраняются до тех пор, пока калиперы не будут удалены или приложение не будет остановлено. В меню <b>Ещё</b> выберите кнопку <b>Цвет</b>. Затем нажмите и удерживайте калипер, чтобы открыть палитру цветов. Выберите цвет, и калипер изменится на этот цвет.
+</p>
+
+<div class="figure">
+<p><img src="./img/color_picker.png" alt="color_picker.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 16.: </span>Палитра цветов калипера</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0d88ceb" class="outline-3">
+<h3 id="org0d88ceb"><a id="orge9befbd"></a>Точная настройка положения калипера</h3>
+<div class="outline-text-3" id="text-org0d88ceb">
+<p>
+Иногда возникает необходимость точно настроить положение калипера, или слишком сложно позиционировать калипер, корректирую положение пальцем. Пришло время для <i>Подстройки</i>! Нажмите кнопку <b>Точная настройка</b>. Затем нажмите на калипер (поперечная планка, боковая планка или, в случае углового суппорта, вершина угла) и появится меню с кнопками перемещения. Кнопки со стрелками влево и вправо или вверх и вниз перемещают выбранный компонент калипера или весь калипер с помощью микроперемещений. Вы можете перемещать либо боковую планку (или угол углового калипера), либо калипер в целом по градациям одной точки (≈ пиксель) или десятой части, в зависимости от того, какой тип стрелки вы нажимаете (⇨ или →). Нажмите кнопку <b>Готово</b>, чтобы вернуться в главное меню.
+</p>
+
+
+<div class="figure">
+<p><img src="./img/tweak_menu.png" alt="tweak_menu.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 17.: </span>Кнопки для подстройки положения калипера</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0aa94b8" class="outline-3">
+<h3 id="org0aa94b8">Заблокировать изображение на месте</h3>
+<div class="outline-text-3" id="text-org0aa94b8">
+<p>
+При перемещении и регулировке калиперов вы можете иногда непреднамеренно переместить основное изображение. Выберите <b>Заблокировать</b>, чтобы блокировать изображение.
+В верхней части экрана появляется сообщение, указывающее, что изображение заблокировано. Разблокируйте изображение, выбрав <b>Разблокировать</b>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org273a589" class="outline-2">
+<h2 id="org273a589">Калибровка</h2>
+<div class="outline-text-2" id="text-org273a589">
+<p>
+Выберите <b>Калиб</b> или <b>Калибровка</b>. Протяните выбранный калипер на известный интервал (например, 1000 мс для времени или 10 мм для амплитуды). Выберите <b>Установить</b>. В диалоговом окне убедитесь, что интервал соответствует тому, что вы измеряете. Введите как интервал калибровки, так и единицы измерения (например, 500 мс или 1 сек или 1 мВ). Выберите * Установить * в диалоговом окне чтобы установить калибровку. Обратите внимание, что время и амплитуду необходимо калибровать отдельно. После калибровки калиперы будут показывать интервалы в единицах, используемых для калибровки. Вновь созданные калиперы будут использовуть ту же калибровку.
+</p>
+
+<div class="figure">
+<p><img src="./img/pre_calibration.png" alt="pre_calibration.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 18.: </span>Time caliper about to be calibrated</p>
+</div>
+
+<div class="figure">
+<p><img src="./img/post_calibration.png" alt="post_calibration.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 19.: </span>Calibrated time caliper</p>
+</div>
+
+<p>
+Калиперы угла не требуют калибровки. Однако, после калибровки времени и амплитуды, калиперы угла могут быть использованы как  <a href="#org28e0785">No description for this link</a>. 
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5a822fd" class="outline-2">
+<h2 id="org5a822fd">Изменение калибровки</h2>
+<div class="outline-text-2" id="text-org5a822fd">
+<p>
+Вы можете выполнить перекалибровку в любое время. Вы можете очистить всю калибровку, выбрав <b>Очистить</b> на панели калибровки. Обратите внимание, что калибровка поддерживается, если устройство повернуто или изображение увеличено. Выбор нового изображения приведет к сбросу калибровки.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org623f36c" class="outline-2">
+<h2 id="org623f36c">Интервал / Частота</h2>
+<div class="outline-text-2" id="text-org623f36c">
+<p>
+После калибровки (горизонтального) калипера времени, если вы используете единицы измерения времени (например, мсек или сек) для калибровки, можно переключаться между интервальными измерениями (например, 600 мс) и измерениями сердечного ритма (например, 100 уд/мин), выбирая <b>Интервал/Частота</b> на iPads (или <b>И/Ч</b> на iPhone).
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfcfad8c" class="outline-2">
+<h2 id="orgfcfad8c">Расчет средней частоты и интервала</h2>
+<div class="outline-text-2" id="text-orgfcfad8c">
+<p>
+Выберите откалиброванный калипер и растяните его на несколько интервалов по времени.
+Выберите <b>Средняя частота</b> или <b>ср Частота</b> и введите количество измеряемых интервалов.
+В диалоговом окне будет отображаться средняя частота и интервалы сердечных сокращений.
+Это полезно для расчета частоты и интервалов при нерегулярном ритме, например фибрилляции предсердий.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9a15803" class="outline-2">
+<h2 id="org9a15803">Расчет QTc</h2>
+<div class="outline-text-2" id="text-org9a15803">
+<p>
+Выберите <b>QTc</b>. Растяните выбранный калипер на один или несколько RR
+интервалов и выберите <b>Измерить</b>. Введите количество интервалов, которое включает калипер
+ и выберите <b>Продолжить</b>. Затем используйте тот же
+калипер для измерения интервала QT. Выберите <b>Измерить</b>. В диалоговоем окне
+появится расчетный QTc с использованием формулы Базета.
+</p>
+
+<div class="figure">
+<p><img src="./img/qtc_first_step.png" alt="qtc_first_step.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 20.: </span>первый этап измерения QTc: измерение 1 или более RR интервалов</p>
+</div>
+
+<div class="figure">
+<p><img src="./img/qtc_second_step.png" alt="qtc_second_step.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 21.: </span>второй этап измерения QTc: измерение QT интервала</p>
+</div>
+
+<div class="figure">
+<p><img src="./img/qtc_result.png" alt="qtc_result.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 22.: </span>результат QTc</p>
+</div>
+</div>
+
+<div id="outline-container-org05ad585" class="outline-3">
+<h3 id="org05ad585">Точная настройка расчета QT</h3>
+<div class="outline-text-3" id="text-org05ad585">
+<p>
+Обратите внимание, что во всех других измерениях возможно микроперемещения
+(т. е. "[[tweak] [tweak]]") калипера с помощью кнопок со стрелками
+<b>Точная настройка</b> перед выполнением измерений. Однако во время
+второго этапа измерения QTc (измерение QT), опция <b>Точная настройка</b>
+недоступно из-за выполнения опции измерения QT. 
+Для того, чтобы произвести микроперемещения при измерении QT, длительно удерживайте отдельные элементы калипера до появления стрелок микроперемещения, это позволит точнее настроить калипер при измерении. Однако, делать это необязательно. Некоторые пользователи стараются двигать калипер, не используя меню <b>Точная настройка</b>; так как на самом деле это может быть нудно. Вот почему длинные нажатия не используются широко во всем приложении. Но в некоторых ситуациях для измерения QT, возможно, потребуется эта функция. Это дополнительная опция. Установите его включением в меню *Разрешить точную настройку QTc *
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb46b8d5" class="outline-2">
+<h2 id="orgb46b8d5"><a id="org28e0785"></a>Бругадометр</h2>
+<div class="outline-text-2" id="text-orgb46b8d5">
+<p>
+<b>Бругадометр</b> - это диагностический инструмент используемый при синдроме Бругады, разработанный
+в сотрудничестве с доктором Адрианом Баранчуком и его коллегами по
+Королевскому университету Кингстон (Онтарио, Канада). Он предназначен для 
+диагностики на ЭКГ синдрома Бругады и неполной блокадой правой ножки п.Гиса. Этот
+инструмент находится в разработке в <b>EP Calipers</b> и, вероятно, будет развиваться в
+следующих обновлениях. Чтобы использовать <b>Бругадометр</b>, необходимо
+откалибровать калипер амплитуды в миллиметрах (мм) и 
+ калипер времени (предпочтительно) в мс или мм. После этого калипер угла
+будет треугольным у вершины, как показано ниже.
+</p>
+
+<div class="figure">
+<p><img src="./img/brugadometer1.png" alt="brugadometer1.png" />
+</p>
+<p><span class="figure-number">&#1056;&#1080;&#1089;. 23.: </span>Brugadometer представлен треугольником с основаниием 5 mm ниже вершины угла калипера</p>
+</div>
+
+<p>
+Основание треугольника будет располагаться на 5 мм ниже вершины треугольника.
+Правильное выравнивание этого треугольника с волной r' на ЭКГ у человека 
+с подозрением на синдром Бругада измеряет так называемый <i>бета
+угол</i> и основание треугольника.  Если у основание треугольника &gt;160 мс (4 мм при
+стандартной ЭКГ со скоростью записи 25 мм/с) высокая
+вероятность картины ЭКГ признаков Бругада. Пожалуйста, посмотрите <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4040869/">de Luna AB,
+Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in
+Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180</a> для подробной информации.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf6fb3f8" class="outline-2">
+<h2 id="orgf6fb3f8"><a id="org8a0ee73"></a>Индивидуальные настройки</h2>
+<div class="outline-text-2" id="text-orgf6fb3f8">
+<p>
+Такие настройки, как цвета калипера и калибровка интервалов по умолчанию,
+</p>
+
+<p>
+можно выбрать в приложении «Настройки» вашего устройства в разделе *EP
+Calipers <b>. Вы также можете изменить настройки, выбрав
+*Настройки</b> из меню <b>Действие</b>, открывающегося нажатием
+на значок <img src="./img/share_icon.png" alt="share_icon.png" /> в правом верхнем углу экрана. После
+изменения настроек возвращайтесь в приложение, выбрав значок обратно
+в левом верхнем углу экрана настроек.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1aaccf3" class="outline-2">
+<h2 id="org1aaccf3">Проблемы и ограничения</h2>
+<div class="outline-text-2" id="text-org1aaccf3">
+<ul class="org-ul">
+<li>Изображения, сделанные с помощью кнопки <b>Камера</b> в приложении, не сохраняются в
+фотогалерею. Использование камеры в приложении рекомендуется для быстрого
+анализа ЭКГ, когда вы не планируете хранить изображение и использовать в дальнейшем.</li>
+
+<li>Вращение устройства не сопровождается вращением изображеня ЭКГ и калипера.
+Однако калибровка сохраняется при вращении.</li>
+
+<li>Настоятельно рекомендуется перекалибровать калиперы, если изображение
+(а не устройство) было повернуто. Хотя само приложение не требует этого.</li>
+
+<li>Если приложение помещается в фоновом режиме (например, при переключении на другое
+приложение), а затем завершается операционной системой (это iOS делает
+для сохранения памяти), / и /, если вы загрузили многостраничное изображение в формате PDF, в этой ситуации 
+будет доступна страница, которую вы просматривали в последний раз.
+Когда это произойдет, появится диалоговое окно с предупреждением. Если вам необходимо перейти на другие страницы, тогда
+необходимо перезагрузить PDF-файл.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org49175d4" class="outline-2">
+<h2 id="org49175d4">Благодарности</h2>
+<div class="outline-text-2" id="text-org49175d4">
+<ul class="org-ul">
+<li>Спасибо д-ру Майклу Кацу (Dr. Michael Katz) за концепцию.</li>
+
+<li>Благодарности доктору Адриану Баранчуку (Dr. Adrian Baranchuk) и его коллегам из Королевского Университета</li>
+</ul>
+<p>
+Кингстона (Queen's University Kingston) Онтарио, Канада, за
+  Бругадометр и за помощь в реализации этого алгоритма.
+</p>
+
+<ul class="org-ul">
+<li>Исходный код для <b>EP Calipers</b> доступен на
+<a href="//github.com/mannd/epcalipers">GitHub</a>.</li>
+
+<li>* EP Calipers * - это программное обеспечение с открытым исходным кодом и лицензируется в соответствии с
+<a href="https://www.apache.org/licenses/LICENSE-2.0.html">Apache License
+Version 2.0</a>. Никаких гарантий относительно точности
+приложения нет, поэтому используете на свой страх и риск.</li>
+
+<li>По вопросам, сообщениям об ошибках или предложениям обращайтесь
+mannd@epstudiossoftware.com</li>
+
+<li>Веб-сайт: <a href="https://www.epstudiossoftware.com">https://www.epstudiossoftware.com</a></li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>
