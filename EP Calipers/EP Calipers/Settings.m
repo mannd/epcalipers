@@ -8,6 +8,7 @@
 
 #import "Settings.h"
 #import "EPSLogging.h"
+#import "Defs.h"
 
 
 @implementation Settings
@@ -18,8 +19,8 @@
         self.caliperColor = [UIColor blueColor];
         self.highlightColor = [UIColor redColor];
         self.lineWidth = 2;
-        self.defaultCalibration = @"1000 msec";
-        self.defaultVerticalCalibration = @"10 mm";
+        self.defaultCalibration = L(@"1000 msec");
+        self.defaultVerticalCalibration = L(@"10 mm");
         self.roundMsecRate = YES;
         self.allowTweakDuringQtc = NO;
         self.qtcFormula = Bazett;

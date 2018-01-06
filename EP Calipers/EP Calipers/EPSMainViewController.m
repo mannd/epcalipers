@@ -742,10 +742,10 @@
     }
     NSString *example = @"";
     if (c!= nil && c.direction == Vertical) {
-        example = @"1 mV";
+        example = L(@"1 mV");
     }
     else {
-        example = @"500 msec";
+        example = L(@"500 msec");
     }
     NSString *message = [NSString stringWithFormat:L(@"Enter measurement (e.g. %@)"), example];
     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:L(@"Calibrate") message:message delegate:self cancelButtonTitle:CANCEL otherButtonTitles:SET, nil];

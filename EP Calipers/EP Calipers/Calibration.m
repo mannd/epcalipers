@@ -8,6 +8,7 @@
 
 #import "Calibration.h"
 #import "EPSLogging.h"
+#import "Defs.h"
 
 @implementation Calibration
 
@@ -30,14 +31,14 @@
 - (NSString *)units {
     if (self.calibrated) {
         if (self.displayRate) {
-            return @"bpm";
+            return L(@"bpm");
         }
         else {
             return _units;
         }
     }
     else
-        return @"points";
+        return L(@"points");
 }
 
 - (NSString *)rawUnits {
@@ -53,7 +54,7 @@
 }
 
 - (void)reset {
-    self.units = @"points";
+    self.units = L(@"points");
     self.displayRate = NO;
     self.originalZoom = 1.0;
     self.currentZoom = 1.0;
@@ -70,21 +71,37 @@
     return self.unitsAreMsec || self.unitsAreSeconds;
 }
 
+- (BOOL)isMatch:(NSString *)regex string:(NSString *)string {
+    NSRegularExpression *r = [NSRegularExpression regularExpressionWithPattern:regex options:0 error:nil];
+    return [r numberOfMatchesInString:string options:0 range:NSMakeRange(0, [string length])] > 0;
+}
+
 - (BOOL)unitsAreSeconds {
     if (_units.length < 1 || self.direction == Vertical) {
         return NO;
     }
-    NSString *units = [_units uppercaseString];
-    return [units isEqualToString:@"S"] || [units isEqualToString:@"SEC"] || [units isEqualToString:@"SECOND"]
-        || [units isEqualToString:@"SECS"] || [units isEqualToString:@"SECONDS"];
+    NSString *units = [_units localizedUppercaseString];
+    NSString *secondRegexEnglish = @"^SEC";
+    NSString *secondRegexRussian = @"^СЕК";
+    return [units isEqualToString:@"S"] || [self isMatch:secondRegexEnglish string:units]
+        // cyrillic
+        || [units isEqualToString:@"С"] || [self isMatch:secondRegexRussian string:units];
 }
 
 - (BOOL)unitsAreMsec {
     if (_units.length < 1 || self.direction == Vertical) {
         return NO;
     }
-    NSString *units = [_units uppercaseString];
-    return [units containsString:@"MSEC"] || [units isEqualToString:@"MS"] || [units containsString:@"MILLIS"];
+    NSString *units = [_units localizedUppercaseString];
+    NSString *msecRegexEnglish = @"^MSEC";
+    NSString *millisecRegexEnglish = @"^MILLIS";
+    NSString *msecRegexRussian = @"^МСЕК";
+    NSString *millisecRegexRussian = @"^МИЛЛИС";
+    return [units isEqualToString:@"MS"] || [self isMatch:msecRegexEnglish string:units]
+        || [self isMatch:millisecRegexEnglish string:units]
+        // cyrillic
+        || [units isEqualToString:@"МС"] || [self isMatch:msecRegexRussian string:units]
+        || [self isMatch:millisecRegexRussian string:units];
 }
 
 - (CGFloat)currentCalFactor {
@@ -95,8 +112,12 @@
     if (self.units.length < 1 || self.direction != Vertical) {
         return NO;
     }
-    NSString *units = [self.units uppercaseString];
-    return [units isEqualToString:@"MM"] || [units containsString:@"MILLIM"];
+    NSString *units = [self.units localizedUppercaseString];
+    NSString *mmRegexEnglish = @"^MILLIM";
+    NSString *mmRegexRussian = @"^МИЛЛИМ";
+    return [units isEqualToString:@"MM"] || [self isMatch:mmRegexEnglish string:units]
+        // cyrillic
+        || [units isEqualToString:@"ММ"] || [self isMatch:mmRegexRussian string:units];
 }
 
 - (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key {

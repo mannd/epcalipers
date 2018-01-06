@@ -108,6 +108,56 @@
     XCTAssert(![cal unitsAreMM]);
     cal.units = @"msec";
     XCTAssert(![cal unitsAreMM]);
+    cal.units = @"миллиметр";
+    XCTAssert([cal unitsAreMM]);
+    cal.units = @"миллиметра";
+    XCTAssert([cal unitsAreMM]);
+    cal.units = @"мм";
+    XCTAssert([cal unitsAreMM]);
+
+}
+
+- (void)testUnitsAreSec {
+    Calibration *cal = [[Calibration alloc] init];
+    cal.units = @"sec";
+    XCTAssert([cal unitsAreSeconds]);
+    cal.units = @"seconds";
+    XCTAssert([cal unitsAreSeconds]);
+    cal.units = @"SEC";
+    XCTAssert([cal unitsAreSeconds]);
+    cal.units = @"s";
+    XCTAssert([cal unitsAreSeconds]);
+    cal.units = @"msec";
+    XCTAssertFalse([cal unitsAreSeconds]);
+    cal.units = @"секунд";
+    XCTAssert([cal unitsAreSeconds]);
+    cal.units = @"сек";
+    XCTAssert([cal unitsAreSeconds]);
+    cal.units = @"с";
+    XCTAssert([cal unitsAreSeconds]);
+
+}
+
+- (void)testUnitsAreMsec {
+    Calibration *cal = [[Calibration alloc] init];
+    cal.units = @"msec";
+    XCTAssert([cal unitsAreMsec]);
+    cal.units = @"Msec";
+    XCTAssert([cal unitsAreMsec]);
+    cal.units = @"MSECs";
+    XCTAssert([cal unitsAreMsec]);
+    cal.units = @"ms";
+    XCTAssert([cal unitsAreMsec]);
+    cal.units = @"millisec";
+    XCTAssert([cal unitsAreMsec]);
+    cal.units = @"millimeters";
+    XCTAssertFalse([cal unitsAreMsec]);
+    cal.units = @"мс";
+    XCTAssert([cal unitsAreMsec]);
+    cal.units = @"мсек";
+    XCTAssert([cal unitsAreMsec]);
+    cal.units = @"миллисекунду";
+    XCTAssert([cal unitsAreMsec]);
 }
 
 - (void)testRadiansToDegrees {
