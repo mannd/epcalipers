@@ -27,7 +27,7 @@
 "Time" = "Время";
 "Preferences" = "Параметры";
 "Mean Interval and Rate" = "Средний интервал и частота";
-"Mean interval"="Средний интервал" ;
+"Mean interval"="Средний интервал";
 "Multipage PDF" = "Многостраничный PDF";
 
 "App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages." = "Приложение восстановлено из фонового режима, поэтому отображается только текущая страница. Вам следует снова открыть PDF через приложение для просмотра всех страниц";
@@ -104,4 +104,17 @@
 "1 mV" = "1 милливольт";
 "10 mm" = "10 мм";
 "bpm" = "ударов в минуту";
+
+"Mean interval = %.4g %@\nMean rate = %.4g bpm" = "Средний интервал = %.4g %@\nСредняя частота = %.4g ударов в минуту";
+"Mean RR = %.4g %@\nQT = %.4g %@" = "Средний RR = %.4g %@\nQT = %.4g %@";
+"\nQTc = %.4g %@ (%@ formula)" ="\nQTc = %.4g %@ (формула %@)";
+"Done" = "Готово";
+"OK" = "Готово";
+"Repeat QT" = "Повтори QT";
+"March" = "Фикс";
+"Bazett" = "Базетта";
+"Framingham" = "Фремингема";
+"Fridericia" = "Фридерихии";
+"Hodges" =  "Ходжеса";
+
 

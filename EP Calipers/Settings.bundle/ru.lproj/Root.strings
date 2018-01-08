@@ -16,4 +16,10 @@
 "Highlight Color" = "Цвет подсветки";
 "Line Width" = "Ширина линии";
 "EP Calipers" = "ЭФИ калипер";
+"QTc Formula" = "формулу QTc";
+"Bazett" = "Базетта";
+"Framingham" = "Фремингема";
+"Fridericia" = "Фридерихии";
+"Hodges" =  "Ходжеса";
+"All" = "Все";
 
