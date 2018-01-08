@@ -7,14 +7,15 @@
 //
 
 #import "MiniQTcResult.h"
+#import "Defs.h"
 
 
 @implementation MiniQTcResult
 
 - (NSString *)calculateFromQtInSec:(double)qtInSec rrInSec:(double)rrInSec formula:(QTcFormulaPreference)formula convertToMsec:(BOOL)convertToMsec units:(NSString *)units {
     
-    NSDictionary *formulaNames = [NSDictionary dictionaryWithObjectsAndKeys:@"Bazett", [NSNumber numberWithInteger:Bazett], @"Framingham", [NSNumber numberWithInteger:Framingham], @"Fridericia", [NSNumber numberWithInteger:Fridericia], @"Hodges", [NSNumber numberWithInteger:Hodges], nil];
-    NSString *errorResult = NSLocalizedString(@"Invalid Result", @"");
+    NSDictionary *formulaNames = [NSDictionary dictionaryWithObjectsAndKeys:L(@"Bazett"), [NSNumber numberWithInteger:Bazett], L(@"Framingham"), [NSNumber numberWithInteger:Framingham], L(@"Fridericia"), [NSNumber numberWithInteger:Fridericia], L(@"Hodges"), [NSNumber numberWithInteger:Hodges], nil];
+    NSString *errorResult = L(@"Invalid Result");
     if (rrInSec <= 0) {
         return errorResult;
     }

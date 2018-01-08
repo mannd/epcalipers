@@ -20,6 +20,8 @@ The ios-color-picker widget used in this app is Copyright © 2015 by [Fabian Can
 
 French translation by David Mann, Gretchen Mann, Juliet Mann and Jean-Claude Hounou.  Also thanks to Dr. Pierre Taboulet for confirming to me that a cardiologist’s caliper is a "Compas" and not an "Étrier!"
 
+Thanks to Victoria Churilina for the Russian translation.
+
 Thanks to Scott Krankkala for the idea behind marching calipers.
 
 ## Author

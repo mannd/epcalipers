@@ -1,0 +1,25 @@
+
+"Blue" = "Синий";
+"Black" = "Черный";
+"Magenta" = "Фуксия";
+"Light Gray" = "Светло серый";
+"Green" = "Зеленый";
+"White" = "Белый";
+"Red" = "Красный";
+"Yellow" = "Желтый";
+"Orange" = "Оранжевый";
+"Round Msec and Rate" = "Округленние Мсек и Частоты";
+"Allow Tweak during QTc" = "Разрешить точную настройку QTс";
+"Default Time Calibration" = "Калибровка времени по умолчанию";
+"Default Amplitude Calibration" = "Калибровка амплитуды по умолчанию";
+"Caliper Color" = "Цвет калипера";
+"Highlight Color" = "Цвет подсветки";
+"Line Width" = "Ширина линии";
+"EP Calipers" = "ЭФИ калипер";
+"QTc Formula" = "формулу QTc";
+"Bazett" = "Базетта";
+"Framingham" = "Фремингема";
+"Fridericia" = "Фридерихии";
+"Hodges" =  "Ходжеса";
+"All" = "Все";
+

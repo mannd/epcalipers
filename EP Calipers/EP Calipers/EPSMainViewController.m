@@ -91,7 +91,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     EPSLog(@"viewDidLoad");
-    // Do any additional setup after loading the view, typically from a nib.
+    
     pdfRef = NULL;
     
     self.settings = [[Settings alloc] init];
@@ -175,6 +175,10 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     EPSLog(@"ViewDidAppear");
+    
+    NSString *language = [[NSLocale preferredLanguages] firstObject];
+    EPSLog(@"Language code = %@", language);
+    
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
     
@@ -738,10 +742,10 @@
     }
     NSString *example = @"";
     if (c!= nil && c.direction == Vertical) {
-        example = @"1 mV";
+        example = L(@"1 mV");
     }
     else {
-        example = @"500 msec";
+        example = L(@"500 msec");
     }
     NSString *message = [NSString stringWithFormat:L(@"Enter measurement (e.g. %@)"), example];
     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:L(@"Calibrate") message:message delegate:self cancelButtonTitle:CANCEL otherButtonTitles:SET, nil];

@@ -175,6 +175,7 @@ Vos préférences comme les couleurs des compas et les intervalles par défaut d
 - Si l'application est mise en arrière-plan (par exemple quand vous changez d'une autre application) et puis est supprimée par le système d'exploitation (quelque chose que l'iOS fait pour préserver la mémoire), /et/ si vous avez téléchargé un fichier PDF avec plusieurs pages, seulement la dernière page que vous avez vue sera disponible.  Une boîte de dialogue apparaîtra dans ce cas.  S'il faut changer la page dans cette situation, il faut que vous changiez le PDF encore.
 * Remerciements
 - Je remercie Dr. Michael Katz pour l'idée.
+  - Je remercie Victoria Churilina pour la traduction en russe.
 - Je remercie Dr. Adrian Baranchuk et ses collaborateurs de l'Université Queen de Kingston en Ontario au Canada pour le concept du « Brugadometer » et pour leur aide en appliquant cet algorithme.
 - Je remercie Scott Kankkala pour l’idée des compas marchants.
 - Le code source de *Compas EP* est disponible sur [[https://github.com/mannd/epc alipers][GitHub]].

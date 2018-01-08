@@ -68,6 +68,11 @@
 		8E5A8F701ACC7A54000EEA89 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DismissSegue.h; sourceTree = "<group>"; };
 		8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissSegue.m; sourceTree = "<group>"; };
+		8E7340F61FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/FCColorPickerViewController.strings; sourceTree = "<group>"; };
+		8E7340F71FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		8E7340F81FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ru; path = "ru.lproj/EPCalipers-help"; sourceTree = "<group>"; };
+		8E7340F91FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8E7340FA1FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8E8DDE371FF96D13007247DA /* MiniQTcResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MiniQTcResult.h; sourceTree = "<group>"; };
 		8E8DDE381FF96D13007247DA /* MiniQTcResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MiniQTcResult.m; sourceTree = "<group>"; };
 		8E9A33381AC09DE90037E694 /* CalipersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalipersView.h; sourceTree = "<group>"; };
@@ -144,39 +149,15 @@
 		8E14235A1AB5F16A00CC15BC /* EP Calipers */ = {
 			isa = PBXGroup;
 			children = (
+				8E16B57220016B6A004202D1 /* Other */,
+				8E16B57020016A98004202D1 /* Calipers */,
+				8E16B56F200169DD004202D1 /* ViewControllers */,
+				8E16B57120016AB5004202D1 /* Views */,
 				8EF520FD1FF99BFC000B2C74 /* Storyboards */,
 				8E9BA1331EF6BED700FC8DD2 /* EPCalipers-help */,
-				8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */,
-				8EB3DE351AC344CC009376AD /* EPSLogging.h */,
-				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
-				8E1423601AB5F16A00CC15BC /* AppDelegate.m */,
-				8ECEDF661E8A1A1A00288EDE /* About.h */,
-				8ECEDF671E8A1A1A00288EDE /* About.m */,
-				8E1423621AB5F16A00CC15BC /* EPSMainViewController.h */,
-				8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */,
 				8E1423681AB5F16A00CC15BC /* Images.xcassets */,
-				8E9A33381AC09DE90037E694 /* CalipersView.h */,
-				8E9A33391AC09DE90037E694 /* CalipersView.m */,
-				8E0208A51AC2A8B300FE7EC5 /* Caliper.h */,
-				8E0208A61AC2A8B300FE7EC5 /* Caliper.m */,
-				8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */,
-				8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */,
-				8EB3DE371AC603A3009376AD /* Calibration.h */,
-				8EB3DE381AC603A3009376AD /* Calibration.m */,
-				8EB3DE3B1AC604FB009376AD /* Defs.h */,
-				8EB3DE3C1AC616C0009376AD /* Settings.h */,
-				8EB3DE3D1AC616C0009376AD /* Settings.m */,
-				8E5A8F6F1ACC7A54000EEA89 /* WebViewController.h */,
-				8E5A8F701ACC7A54000EEA89 /* WebViewController.m */,
 				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
-				8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */,
-				8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */,
-				8E559EA81ACD9262004A6F91 /* Launch Screen.xib */,
-				8E3BBC531EA0340200ECB992 /* CaliperFactory.h */,
-				8E3BBC541EA0340200ECB992 /* CaliperFactory.m */,
 				8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */,
-				8E8DDE371FF96D13007247DA /* MiniQTcResult.h */,
-				8E8DDE381FF96D13007247DA /* MiniQTcResult.m */,
 			);
 			path = "EP Calipers";
 			sourceTree = "<group>";
@@ -208,6 +189,61 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8E16B56F200169DD004202D1 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				8E1423621AB5F16A00CC15BC /* EPSMainViewController.h */,
+				8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */,
+				8E5A8F6F1ACC7A54000EEA89 /* WebViewController.h */,
+				8E5A8F701ACC7A54000EEA89 /* WebViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		8E16B57020016A98004202D1 /* Calipers */ = {
+			isa = PBXGroup;
+			children = (
+				8E8DDE371FF96D13007247DA /* MiniQTcResult.h */,
+				8E8DDE381FF96D13007247DA /* MiniQTcResult.m */,
+				8E0208A51AC2A8B300FE7EC5 /* Caliper.h */,
+				8E0208A61AC2A8B300FE7EC5 /* Caliper.m */,
+				8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */,
+				8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */,
+				8EB3DE371AC603A3009376AD /* Calibration.h */,
+				8EB3DE381AC603A3009376AD /* Calibration.m */,
+				8E3BBC531EA0340200ECB992 /* CaliperFactory.h */,
+				8E3BBC541EA0340200ECB992 /* CaliperFactory.m */,
+			);
+			name = Calipers;
+			sourceTree = "<group>";
+		};
+		8E16B57120016AB5004202D1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8E9A33381AC09DE90037E694 /* CalipersView.h */,
+				8E9A33391AC09DE90037E694 /* CalipersView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		8E16B57220016B6A004202D1 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */,
+				8EB3DE351AC344CC009376AD /* EPSLogging.h */,
+				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
+				8E1423601AB5F16A00CC15BC /* AppDelegate.m */,
+				8ECEDF661E8A1A1A00288EDE /* About.h */,
+				8ECEDF671E8A1A1A00288EDE /* About.m */,
+				8EB3DE3B1AC604FB009376AD /* Defs.h */,
+				8EB3DE3C1AC616C0009376AD /* Settings.h */,
+				8EB3DE3D1AC616C0009376AD /* Settings.m */,
+				8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */,
+				8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
 		8E172D7E1F9C04F200CD50D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -233,6 +269,7 @@
 		8EF520FD1FF99BFC000B2C74 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				8E559EA81ACD9262004A6F91 /* Launch Screen.xib */,
 				8E1423651AB5F16A00CC15BC /* Main.storyboard */,
 			);
 			name = Storyboards;
@@ -306,6 +343,7 @@
 				en,
 				Base,
 				fr,
+				ru,
 			);
 			mainGroup = 8E14234F1AB5F16A00CC15BC;
 			productRefGroup = 8E1423591AB5F16A00CC15BC /* Products */;
@@ -393,6 +431,7 @@
 			children = (
 				8E1423661AB5F16A00CC15BC /* Base */,
 				8E9BA12A1EF47CD700FC8DD2 /* fr */,
+				8E7340F71FFA9E020066A28C /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -402,6 +441,7 @@
 			children = (
 				8E9BA1311EF47D1E00FC8DD2 /* en */,
 				8E9BA1321EF47D2100FC8DD2 /* fr */,
+				8E7340FA1FFA9E020066A28C /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -411,6 +451,7 @@
 			children = (
 				8E9BA1341EF6BED700FC8DD2 /* fr */,
 				8E9BA1351EF6BED700FC8DD2 /* en */,
+				8E7340F81FFA9E020066A28C /* ru */,
 			);
 			name = "EPCalipers-help";
 			sourceTree = "<group>";
@@ -420,6 +461,7 @@
 			children = (
 				8EB2F65D1EF6EF09003B82A6 /* Base */,
 				8EB2F65E1EF6EF7C003B82A6 /* fr */,
+				8E7340F61FFA9E020066A28C /* ru */,
 			);
 			name = FCColorPickerViewController.xib;
 			sourceTree = "<group>";
@@ -429,6 +471,7 @@
 			children = (
 				8E9F71EE1F19CA1A00029BED /* fr */,
 				8E9F71F21F19CAF100029BED /* en */,
+				8E7340F91FFA9E020066A28C /* ru */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
