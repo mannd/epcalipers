@@ -19,10 +19,12 @@
 "Enter Number of Intervals" = "Ввести число интервалов";
 "How many intervals is this caliper measuring?" = "Сколько интервалов измерить в этом калипере?";
 "Cal" = "Калиб";
+/*"Cal" = "Кал";*/
 "Interval/Rate" = "Интервал/Частота";
 "I/R" = "И/Ч";
 "Mean Rate" = "Средняя частота";
 "MRate" = "срЧастота";
+/*"MRate" = "срЧаст";*/
 "More" = "Ещё";
 "Time" = "Время";
 "Preferences" = "Параметры";
@@ -98,9 +100,9 @@
 "Copyright © 2015 - 2017 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Авторские права © 2015 - 2017 EP Studios, Inc.\ Все права защищены. \ Версия %@";
 
 "points" = "пункты";
-"msec" = "мс";
-"500 msec" = "500 мс";
-"1000 msec" = "1000 мс";
+"msec" = "мсек";
+"500 msec" = "500 мсек";
+"1000 msec" = "1000 мсек";
 "1 mV" = "1 милливольт";
 "10 mm" = "10 мм";
 "bpm" = "ударов в минуту";
@@ -116,5 +118,7 @@
 "Framingham" = "Фремингема";
 "Fridericia" = "Фридерихии";
 "Hodges" =  "Ходжеса";
+
+"Invalid Result" = "Недопустимый результат";
 
 

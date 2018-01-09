@@ -94,6 +94,7 @@
 "\nQTc = %.4g %@ (%@ formula)" ="\nQTc = %.4g %@ (formule de %@)";
 "Done" = "OK";
 "Repeat QT" = "Répéter QT";
+"Invalid Result" = "Résultat invalide";
 
 
 
