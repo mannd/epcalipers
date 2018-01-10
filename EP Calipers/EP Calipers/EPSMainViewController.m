@@ -44,8 +44,12 @@
 #define SWITCH_IPAD L(@"Image")
 #define SWITCH_IPHONE L(@"Image")
 #define SWITCH_BACK L(@"Measure")
-//#define SETTINGS_IPAD @"Preferences"
-//#define SETTINGS_IPHONE @"Prefs"
+#define TWEAK_IPAD L(@"Tweak-iPad")
+#define TWEAK_IPHONE L(@"Tweak-iPhone")
+#define LOCK_IPAD L(@"Lock-iPad")
+#define LOCK_IPHONE L(@"Lock-iPhone")
+#define UNLOCK_IPAD L(@"Unlock-iPad")
+#define UNLOCK_IPHONE L(@"Unlock-iPhone")
 //#define BRUGADA_IPAD @"Brugada"
 //#define BRUGADA_IPHONE @"BrS"
 #define LEFT_ARROW @"⇦"
@@ -57,7 +61,9 @@
 #define MICRO_UP_ARROW @"↑"
 #define MICRO_DOWN_ARROW @"↓"
 
+#define VERY_SMALL_FONT 10
 #define SMALL_FONT 12
+#define INTERMEDIATE_FONT 14
 #define REGULAR_FONT 17 // This is updated when menus created.
 
 // AlertView tags (arbitrary)
@@ -77,8 +83,12 @@
 
 @interface EPSMainViewController ()
 
+@property (strong, atomic) UIFont *verySmallFont;
+@property (strong, atomic) NSDictionary *verySmallFontAttributes;
 @property (strong, atomic) UIFont *smallFont;
 @property (strong, atomic) NSDictionary *smallFontAttributes;
+@property (strong, atomic) UIFont *intermediateFont;
+@property (strong, atomic) NSDictionary *intermediateFontAttributes;
 @property (strong, atomic) UIFont *regularFont;
 @property (strong, atomic) NSDictionary *regularFontAttributes;
 
@@ -98,11 +108,15 @@
     [self.settings loadPreferences];
     
     // fonts
-    // TODO: should it be bold or just systemFont in toolbar?
-    // is it different for Done button?
+    NSUInteger verySmallFontSize = VERY_SMALL_FONT;
+    self.verySmallFont = [UIFont boldSystemFontOfSize:verySmallFontSize];
+    self.verySmallFontAttributes = @{NSFontAttributeName: self.verySmallFont};
     NSUInteger smallFontSize = SMALL_FONT;
     self.smallFont = [UIFont boldSystemFontOfSize:smallFontSize];
     self.smallFontAttributes = @{NSFontAttributeName: self.smallFont};
+    NSUInteger intermediateFontSize = INTERMEDIATE_FONT;
+    self.intermediateFont = [UIFont boldSystemFontOfSize:intermediateFontSize];
+    self.intermediateFontAttributes = @{NSFontAttributeName: self.intermediateFont};
     NSUInteger regularFontSize = REGULAR_FONT;
     self.regularFont = [UIFont boldSystemFontOfSize:regularFontSize];
     self.regularFontAttributes = @{NSFontAttributeName: self.regularFont};
@@ -137,7 +151,7 @@
     
     UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
     self.navigationItem.rightBarButtonItem = btn;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? SWITCH_IPAD : SWITCH_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:SWITCH_IPAD compactSize:SWITCH_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.toolbar.translucent = NO;
@@ -177,7 +191,9 @@
     EPSLog(@"ViewDidAppear");
     
     NSString *language = [[NSLocale preferredLanguages] firstObject];
-    EPSLog(@"Language code = %@", language);
+    EPSLog(@"Language code using preferredLanguages = %@", language);
+    EPSLog(@"Language code using localizedStrings = %@", [self applicationLanguage]);
+    
     
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
@@ -254,6 +270,14 @@
     }
 }
 
+- (NSString *)applicationLanguage {
+    return L(@"lang");
+}
+
+- (BOOL)usingRussian {
+    return [[self applicationLanguage] isEqualToString:@"ru"];
+}
+
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
 
@@ -278,7 +302,7 @@
     if (self.isCalipersView) {
         self.navigationController.navigationBar.barTintColor = nil;
         self.navigationController.toolbar.barTintColor = nil;
-        [self.navigationItem.leftBarButtonItem setTitle:([self isRegularSizeClass] ? SWITCH_IPAD : SWITCH_IPHONE)];
+        [self.navigationItem.leftBarButtonItem setTitle:[self selectSize:SWITCH_IPAD compactSize:SWITCH_IPHONE]];
         [self unfadeCaliperView];
         [self selectMainToolbar];
     }
@@ -335,11 +359,15 @@
     [self fixupMenus:[self isCompactSizeClass]];
 }
 
+- (NSString *)selectSize:(NSString *)regularSize compactSize:(NSString *)compactSize {
+    return [self isRegularSizeClass] ? regularSize : compactSize;
+}
+
 - (void)createMainToolbar {
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
-    self.calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? CALIBRATE_IPAD : CALIBRATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
-    self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? TOGGLE_INT_RATE_IPAD : TOGGLE_INT_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
-    self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? MEAN_RATE_IPAD : MEAN_RATE_IPHONE) style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
+    self.calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
+    self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
+    self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
     UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:MORE style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreToolbar)];
     self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton,
@@ -357,8 +385,8 @@
     UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Adjust") style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
     UIBarButtonItem *clearImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Sample") style:UIBarButtonItemStylePlain target:self action:@selector(loadDefaultImage)];
     // these 2 buttons only enable for multipage PDFs
-    self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Next") style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
-    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:([self isRegularSizeClass] ? L(@"Previous" ): L(@"Prev")) style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
+    self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
+    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
     [self enablePageButtons:NO];
     self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, clearImageButton, self.previousPageButton, self.nextPageButton, nil];
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
@@ -430,9 +458,9 @@
 
 - (void)createMoreToolbar {
     UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Color") style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
-    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Tweak") style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
+    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:TWEAK_IPAD compactSize:TWEAK_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
     UIBarButtonItem *marchingBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"March") style:UIBarButtonItemStylePlain target:self action:@selector(toggleMarchingCalipers)];
-    self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Lock") style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
+    self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:LOCK_IPAD compactSize:LOCK_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, marchingBarButtonItem, self.lockImageButton, cancelButton, nil];
 }
@@ -440,7 +468,11 @@
 - (void)createColorToolbar {
     UILabel *label = [[UILabel alloc] init];
     [label setText:L(@"Long press caliper")];
+    if ([self usingRussian]) {
+        [label setFont:self.intermediateFont];
+    }
     [label sizeToFit];
+
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     self.colorMenuItems = [NSArray arrayWithObjects:labelBarButtonItem, cancelButton, nil];
@@ -449,6 +481,9 @@
 - (void)createTweakToolbar {
     UILabel *label = [UILabel new];
     [label setText:L(@"Long press caliper component")];
+    if ([self usingRussian]) {
+        [label setFont:self.smallFont];
+    }
     [label sizeToFit];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
@@ -490,6 +525,14 @@
     [self changeButtonFontSize:barButtonItems attributes:self.smallFontAttributes];
 }
 
+- (void)slightlyShrinkButtonFontSize:(NSArray *)barButtonItems {
+    [self changeButtonFontSize:barButtonItems attributes:self.intermediateFontAttributes];
+}
+
+- (void)greatlyShrinkButtonFontSize:(NSArray *)barButtoneItems {
+    [self changeButtonFontSize:barButtoneItems attributes:self.verySmallFontAttributes];
+}
+
 - (void)expandButtonFontSize:(NSArray *)barButtonItems {
     [self changeButtonFontSize:barButtonItems attributes:self.regularFontAttributes];
 }
@@ -507,6 +550,16 @@
     [self shrinkButtonFontSize:self.movementMenuItems];
     [self shrinkButtonFontSize:self.photoMenuItems];
     [self shrinkButtonFontSize:self.adjustImageMenuItems];
+    if ([self usingRussian]) {
+        [self greatlyShrinkButtonFontSize:self.movementMenuItems];
+        [self greatlyShrinkButtonFontSize:self.photoMenuItems];
+        [self greatlyShrinkButtonFontSize:self.adjustImageMenuItems];
+        [self slightlyShrinkButtonFontSize:self.moreAdjustImageMenuItems];
+        [self slightlyShrinkButtonFontSize:self.moreMenuItems];
+        [self slightlyShrinkButtonFontSize:self.colorMenuItems];
+        [self slightlyShrinkButtonFontSize:self.tweakMenuItems];
+        [self slightlyShrinkButtonFontSize:self.addCalipersMenuItems];
+    }
 }
 
 - (void)enlargeMenus {
@@ -514,6 +567,13 @@
     [self expandButtonFontSize:self.movementMenuItems];
     [self expandButtonFontSize:self.photoMenuItems];
     [self expandButtonFontSize:self.adjustImageMenuItems];
+    if ([self usingRussian]) {
+        [self expandButtonFontSize:self.moreMenuItems];
+        [self expandButtonFontSize:self.moreAdjustImageMenuItems];
+        [self expandButtonFontSize:self.colorMenuItems];
+        [self expandButtonFontSize:self.tweakMenuItems];
+        [self expandButtonFontSize:self.addCalipersMenuItems];
+    }
 }
 
 - (void)fixupMenus:(BOOL)shrink {
@@ -1378,9 +1438,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         // size on involved menus (until menu is changed).
         [self fixupMenus:[self isCompactSizeClass]];
         
-        [self.toggleIntervalRateButton setTitle:[self isCompactSizeClass] ? TOGGLE_INT_RATE_IPHONE : TOGGLE_INT_RATE_IPAD];
-        [self.mRRButton setTitle:[self isCompactSizeClass] ? MEAN_RATE_IPHONE : MEAN_RATE_IPAD];
-        [self.calibrateCalipersButton setTitle:[self isCompactSizeClass] ? CALIBRATE_IPHONE : CALIBRATE_IPAD];
+        [self.toggleIntervalRateButton setTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE]];
+        [self.mRRButton setTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE]];
+        [self.calibrateCalipersButton setTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE]];
         if (self.chosenCaliper != nil) {
             [self.componentLabel setText:[self.chosenCaliper getComponentName:self.chosenCaliperComponent smallSize:[self isCompactSizeClass]]];
             [self.componentLabel sizeToFit];
@@ -1391,10 +1451,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)lockImage {
     self.calipersView.lockImageScreen = !self.calipersView.lockImageScreen;
     if (self.calipersView.lockImageScreen) {
-      self.lockImageButton.title = L(@"Unlock");
+        self.lockImageButton.title = [self selectSize:UNLOCK_IPAD compactSize:UNLOCK_IPHONE];
     }
     else {
-      self.lockImageButton.title = L(@"Lock");
+        self.lockImageButton.title = [self selectSize:LOCK_IPAD compactSize:LOCK_IPHONE];
     }
     [self.scrollView setUserInteractionEnabled:!self.calipersView.lockImageScreen];
     [self.calipersView setNeedsDisplay];
