@@ -12,7 +12,7 @@
 "Help" = "Помощь";
 "About" = "О нас";
 "Cancel" = "Отмена";
-"Calibrate" = "Калибровать";
+"Calibrate" = "Калибровка";
 "Set" = "Установить";
 "Clear" = "Очистить";
 "Back" = "Назад";
@@ -20,12 +20,12 @@
 "Enter Number of Intervals" = "Ввести число интервалов";
 "How many intervals is this caliper measuring?" = "Сколько интервалов измерить в этом калипере?";
 /*"Cal" = "Калиб";*/
-"Cal" = "Кал";
+"Cal" = "Счет";
 "Interval/Rate" = "Интервал/Частота";
 "I/R" = "И/Ч";
 "Mean Rate" = "Средняя частота";
 /*"MRate" = "срЧастота";*/
-"MRate" = "срЧаст";
+"MRate" = "срЧСС";
 "More" = "Ещё";
 "Time" = "Время";
 "Preferences" = "Параметры";
@@ -36,7 +36,7 @@
 "App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages." = "Приложение восстановлено из фонового режима, поэтому отображается только текущая страница. Вам следует снова открыть PDF через приложение для просмотра всех страниц";
 
 "Select" = "Выбрать";
-"Adjust" = "Выровнить";
+"Adjust" = "Выровнять";
 "Sample" = "Образец";
 "Next" = "Слудующий";
 "Previous" = "Предыдущий";
@@ -50,7 +50,7 @@
 "Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." = "Выберите калипер одним косанием. Переместите калипер к известному интервалу. Нажмите «Настройки», чтобы ввести калибровочное измерение.";
 
 "Enter measurement (e.g. %@)" = "Введите измерение (например %@)";
-"Adjust" = "Выровнить";
+"Adjust" = "Выровнять";
 //"90°R" = "90° вправо";
 //"90°L" = "90° влево";
 //"1°R" = "1° вправо";
@@ -73,7 +73,7 @@
 "Tweak-iPhone" = "Точная";
 "Tweak-iPad" = "Точная настройка";
 "Lock" = "Закрепить";
-"Lock-iPhone" = "Закре";
+"Lock-iPhone" = "Замок";
 "Lock-iPad" = "Закрепить";
 "Unlock" = "Разблокировать";
 "Unlock-iPhone" = "Закре";
@@ -122,18 +122,18 @@
 "1 mV" = "1 милливольт";
 "10 mm" = "10 мм";
 /*"bpm" = "ударов в минуту";*/
-"bpm" = "увм";
+"bpm" = "уд/мин";
 
-"Mean interval = %.4g %@\nMean rate = %.4g bpm" = "Средний интервал = %.4g %@\nСредняя частота = %.4g увм";
+"Mean interval = %.4g %@\nMean rate = %.4g bpm" = "Средний интервал = %.4g %@\nСредняя частота = %.4g уд/мин";
 "Mean RR = %.4g %@\nQT = %.4g %@" = "Средний RR = %.4g %@\nQT = %.4g %@";
 "\nQTc = %.4g %@ (%@ formula)" ="\nQTc = %.4g %@ (формула %@)";
 "Done" = "Готово";
-"OK" = "Готово";
-"Repeat QT" = "Повтори QT";
-"March" = "Фикс";
+"OK" = "ОК";
+"Repeat QT" = "Повтор QT";
+"March" = "Шаг";
 "Bazett" = "Базетта";
-"Framingham" = "Фремингема";
-"Fridericia" = "Фридерихии";
+"Framingham" = "Фрамингема";
+"Fridericia" = "Фредерика";
 "Hodges" =  "Ходжеса";
 
 "Invalid Result" = "Недопустимый результат";
