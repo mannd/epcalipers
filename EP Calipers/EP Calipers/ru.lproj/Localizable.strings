@@ -19,8 +19,8 @@
 "Calculate" = "Рассчитать";
 "Enter Number of Intervals" = "Ввести число интервалов";
 "How many intervals is this caliper measuring?" = "Сколько интервалов измерить в этом калипере?";
-/*"Cal" = "Калиб";*/
-"Cal" = "Счет";
+"Cal" = "Калиб";
+/*"Cal" = "Счет";*/
 "Interval/Rate" = "Интервал/Частота";
 "I/R" = "И/Ч";
 "Mean Rate" = "Средняя частота";
@@ -115,7 +115,7 @@
 "Apex" = "Вершина";
 "Copyright © 2015 - 2017 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Авторские права © 2015 - 2017 EP Studios, Inc.\ Все права защищены. \ Версия %@";
 
-"points" = "пункты";
+"points" = "пикселей";
 "msec" = "мсек";
 "500 msec" = "500 мсек";
 "1000 msec" = "1000 мсек";
