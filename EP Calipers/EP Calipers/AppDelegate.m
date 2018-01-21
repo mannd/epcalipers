@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "EPSMainViewController.h"
 #import "EPSLogging.h"
+#import "Defs.h"
 
 @interface AppDelegate ()
 
@@ -23,7 +24,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"roundMsecRatePreference", [NSNumber numberWithBool:NO], @"hideStartImagePreference", [NSNumber numberWithInt:2], @"lineWidthPreference", @"1000 msec", @"calibrationPreference", @"10 mm", @"verticalCalibrationPreference", @"Blue", @"caliperColorPreference", @"Red", @"highlightColorPreference", nil];
+    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"roundMsecRatePreference", [NSNumber numberWithBool:NO], @"hideStartImagePreference", [NSNumber numberWithInt:2], @"lineWidthPreference", L(@"1000 msec"), @"calibrationPreference", L(@"10 mm"), @"verticalCalibrationPreference", L(@"Blue"), @"caliperColorPreference", L(@"Red"), @"highlightColorPreference", nil];
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
     

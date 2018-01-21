@@ -8,6 +8,7 @@
 
 #import "Calibration.h"
 #import "EPSLogging.h"
+#import "Defs.h"
 
 @implementation Calibration
 
@@ -30,14 +31,14 @@
 - (NSString *)units {
     if (self.calibrated) {
         if (self.displayRate) {
-            return @"bpm";
+            return L(@"bpm");
         }
         else {
             return _units;
         }
     }
     else
-        return @"points";
+        return L(@"points");
 }
 
 - (NSString *)rawUnits {
@@ -53,7 +54,7 @@
 }
 
 - (void)reset {
-    self.units = @"points";
+    self.units = L(@"points");
     self.displayRate = NO;
     self.originalZoom = 1.0;
     self.currentZoom = 1.0;
@@ -70,21 +71,25 @@
     return self.unitsAreMsec || self.unitsAreSeconds;
 }
 
+- (BOOL)isMatch:(NSString *)regex string:(NSString *)string {
+    NSRegularExpression *r = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:nil];
+    return [r numberOfMatchesInString:string options:0 range:NSMakeRange(0, [string length])] > 0;
+}
+
 - (BOOL)unitsAreSeconds {
     if (_units.length < 1 || self.direction == Vertical) {
         return NO;
     }
-    NSString *units = [_units uppercaseString];
-    return [units isEqualToString:@"S"] || [units isEqualToString:@"SEC"] || [units isEqualToString:@"SECOND"]
-        || [units isEqualToString:@"SECS"] || [units isEqualToString:@"SECONDS"];
+    NSString *secondRegex = @"(?:^sec|^сек|^s$|^с$)";
+    return [self isMatch:secondRegex string:self.rawUnits];
 }
 
 - (BOOL)unitsAreMsec {
     if (_units.length < 1 || self.direction == Vertical) {
         return NO;
     }
-    NSString *units = [_units uppercaseString];
-    return [units containsString:@"MSEC"] || [units isEqualToString:@"MS"] || [units containsString:@"MILLIS"];
+    NSString *msRegex = @"(?:^msec|^millis|^мсек|^миллис|^ms$|^мс$)";
+    return [self isMatch:msRegex string:self.rawUnits];
 }
 
 - (CGFloat)currentCalFactor {
@@ -95,8 +100,8 @@
     if (self.units.length < 1 || self.direction != Vertical) {
         return NO;
     }
-    NSString *units = [self.units uppercaseString];
-    return [units isEqualToString:@"MM"] || [units containsString:@"MILLIM"];
+    NSString *mmRegex = @"(?:^millim|^миллим|^mm$|^мм$)";
+    return [self isMatch:mmRegex string:self.rawUnits];
 }
 
 - (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key {

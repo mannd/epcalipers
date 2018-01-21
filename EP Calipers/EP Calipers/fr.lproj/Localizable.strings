@@ -5,6 +5,8 @@
   Created by David Mann on 6/16/17.
   Copyright © 2017 EP Studios. All rights reserved.
 */
+
+"lang" = "fr";
 "Image Mode" = "Mode Image";
 "EP Calipers" = "Compas EP";
 "Help" = "Aide";
@@ -56,7 +58,14 @@
 "QT interval?" = "Intervalle QT ?";
 "Color" = "Couleur";
 "Tweak" = "Régl";
+"Tweak-iPhone" = "Régl";
+"Tweak-iPad" = "Régler";
 "Lock" = "Immobil";
+"Lock-iPhone" = "Immobil";
+"Lock-iPad" = "Immobiliser";
+"Unlock" = "Débloq";
+"Unlock-iPhone" = "Débloq";
+"Unlock-iPad" = "Débloquer";
 "March" = "March";
 "Long press caliper" = "Appuyer sur un compas";
 "Long press caliper component" = "Appuyer sur un composant";
@@ -68,7 +77,6 @@
 "Angle Caliper" = "Compas d'angle";
 "Negatively Valued Caliper" = "Compas à valeur négative";
 "No Calipers To Use" = "Pas de compas à utiliser";
-"Unlock" = "Débloq";
 "Bad Input" = "Mauvaise entrée";
 "Add one or more calipers first before proceeding." = "Ajouter un ou plus de compas avant de continuer";
 "Empty input, negative number input, or other bad input." = "Entrer de données vides, ou d'un chiffre négatif, ou d’une autre mauvaise entrée de données.";
@@ -94,6 +102,7 @@
 "\nQTc = %.4g %@ (%@ formula)" ="\nQTc = %.4g %@ (formule de %@)";
 "Done" = "OK";
 "Repeat QT" = "Répéter QT";
+"Invalid Result" = "Résultat invalide";
 
 
 

@@ -13,15 +13,12 @@
 		8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */; };
 		8E1423671AB5F16A00CC15BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423651AB5F16A00CC15BC /* Main.storyboard */; };
 		8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423681AB5F16A00CC15BC /* Images.xcassets */; };
-		8E172D711F9BE6F100CD50D6 /* QTcResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E172D701F9BE6F100CD50D6 /* QTcResult.swift */; };
-		8E172D8E1F9C094700CD50D6 /* QTc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E172D891F9C092000CD50D6 /* QTc.framework */; };
-		8E172D901F9C098300CD50D6 /* QTc.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8E172D891F9C092000CD50D6 /* QTc.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8E172D971F9C205200CD50D6 /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
-		8E172D9B1F9C215000CD50D6 /* Swift_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E172D9A1F9C215000CD50D6 /* Swift_Tests.swift */; };
 		8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BBC541EA0340200ECB992 /* CaliperFactory.m */; };
 		8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E559EA81ACD9262004A6F91 /* Launch Screen.xib */; };
 		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
 		8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */; };
+		8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DDE381FF96D13007247DA /* MiniQTcResult.m */; };
 		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
 		8E9BA12E1EF47D1C00FC8DD2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */; };
 		8E9BA1361EF6BED700FC8DD2 /* EPCalipers-help in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1331EF6BED700FC8DD2 /* EPCalipers-help */; };
@@ -47,41 +44,7 @@
 			remoteGlobalIDString = 8E1423571AB5F16A00CC15BC;
 			remoteInfo = "EP Calipers";
 		};
-		8E172D881F9C092000CD50D6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8EE366E71F5B566A0003E5DA;
-			remoteInfo = QTc_iOS;
-		};
-		8E172D8A1F9C092000CD50D6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8EE366F01F5B566A0003E5DA;
-			remoteInfo = QTc_iOSTests;
-		};
-		8E172D8C1F9C092000CD50D6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8EE367061F5B56AA0003E5DA;
-			remoteInfo = QTc_Mac;
-		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		8E172D801F9C04FB00CD50D6 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				8E172D901F9C098300CD50D6 /* QTc.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8E0208A51AC2A8B300FE7EC5 /* Caliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliper.h; sourceTree = "<group>"; };
@@ -98,11 +61,6 @@
 		8E1423711AB5F16A00CC15BC /* EP CalipersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EP CalipersTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1423761AB5F16A00CC15BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EP_CalipersTests.m; sourceTree = "<group>"; };
-		8E172D6F1F9BE6F000CD50D6 /* EP Calipers-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EP Calipers-Bridging-Header.h"; sourceTree = "<group>"; };
-		8E172D701F9BE6F100CD50D6 /* QTcResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QTcResult.swift; sourceTree = "<group>"; };
-		8E172D821F9C092000CD50D6 /* QTc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = QTc.xcodeproj; path = ../Frameworks/External/QTc/QTc.xcodeproj; sourceTree = "<group>"; };
-		8E172D9A1F9C215000CD50D6 /* Swift_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift_Tests.swift; sourceTree = "<group>"; };
-		8E172D9C1F9C25A800CD50D6 /* EP CalipersTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EP CalipersTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		8E3BBC531EA0340200ECB992 /* CaliperFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaliperFactory.h; sourceTree = "<group>"; };
 		8E3BBC541EA0340200ECB992 /* CaliperFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaliperFactory.m; sourceTree = "<group>"; };
 		8E559EA81ACD9262004A6F91 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
@@ -110,6 +68,13 @@
 		8E5A8F701ACC7A54000EEA89 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DismissSegue.h; sourceTree = "<group>"; };
 		8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissSegue.m; sourceTree = "<group>"; };
+		8E7340F61FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/FCColorPickerViewController.strings; sourceTree = "<group>"; };
+		8E7340F71FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		8E7340F81FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ru; path = "ru.lproj/EPCalipers-help"; sourceTree = "<group>"; };
+		8E7340F91FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8E7340FA1FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8E8DDE371FF96D13007247DA /* MiniQTcResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MiniQTcResult.h; sourceTree = "<group>"; };
+		8E8DDE381FF96D13007247DA /* MiniQTcResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MiniQTcResult.m; sourceTree = "<group>"; };
 		8E9A33381AC09DE90037E694 /* CalipersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalipersView.h; sourceTree = "<group>"; };
 		8E9A33391AC09DE90037E694 /* CalipersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalipersView.m; sourceTree = "<group>"; };
 		8E9BA12A1EF47CD700FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
@@ -147,7 +112,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E172D8E1F9C094700CD50D6 /* QTc.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +128,6 @@
 		8E14234F1AB5F16A00CC15BC = {
 			isa = PBXGroup;
 			children = (
-				8E172D821F9C092000CD50D6 /* QTc.xcodeproj */,
 				8EB3DE401AC9A488009376AD /* Settings.bundle */,
 				8ECEDF561E89F4F800288EDE /* ColorPicker */,
 				8E14235A1AB5F16A00CC15BC /* EP Calipers */,
@@ -186,39 +149,15 @@
 		8E14235A1AB5F16A00CC15BC /* EP Calipers */ = {
 			isa = PBXGroup;
 			children = (
+				8E16B57220016B6A004202D1 /* Other */,
+				8E16B57020016A98004202D1 /* Calipers */,
+				8E16B56F200169DD004202D1 /* ViewControllers */,
+				8E16B57120016AB5004202D1 /* Views */,
+				8EF520FD1FF99BFC000B2C74 /* Storyboards */,
 				8E9BA1331EF6BED700FC8DD2 /* EPCalipers-help */,
-				8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */,
-				8EB3DE351AC344CC009376AD /* EPSLogging.h */,
-				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
-				8E1423601AB5F16A00CC15BC /* AppDelegate.m */,
-				8ECEDF661E8A1A1A00288EDE /* About.h */,
-				8ECEDF671E8A1A1A00288EDE /* About.m */,
-				8E1423621AB5F16A00CC15BC /* EPSMainViewController.h */,
-				8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */,
-				8E1423651AB5F16A00CC15BC /* Main.storyboard */,
 				8E1423681AB5F16A00CC15BC /* Images.xcassets */,
-				8E9A33381AC09DE90037E694 /* CalipersView.h */,
-				8E9A33391AC09DE90037E694 /* CalipersView.m */,
-				8E0208A51AC2A8B300FE7EC5 /* Caliper.h */,
-				8E0208A61AC2A8B300FE7EC5 /* Caliper.m */,
-				8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */,
-				8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */,
-				8EB3DE371AC603A3009376AD /* Calibration.h */,
-				8EB3DE381AC603A3009376AD /* Calibration.m */,
-				8EB3DE3B1AC604FB009376AD /* Defs.h */,
-				8EB3DE3C1AC616C0009376AD /* Settings.h */,
-				8EB3DE3D1AC616C0009376AD /* Settings.m */,
-				8E5A8F6F1ACC7A54000EEA89 /* WebViewController.h */,
-				8E5A8F701ACC7A54000EEA89 /* WebViewController.m */,
 				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
-				8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */,
-				8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */,
-				8E559EA81ACD9262004A6F91 /* Launch Screen.xib */,
-				8E3BBC531EA0340200ECB992 /* CaliperFactory.h */,
-				8E3BBC541EA0340200ECB992 /* CaliperFactory.m */,
 				8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */,
-				8E172D701F9BE6F100CD50D6 /* QTcResult.swift */,
-				8E172D6F1F9BE6F000CD50D6 /* EP Calipers-Bridging-Header.h */,
 			);
 			path = "EP Calipers";
 			sourceTree = "<group>";
@@ -238,8 +177,6 @@
 			children = (
 				8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */,
 				8E1423751AB5F16A00CC15BC /* Supporting Files */,
-				8E172D9A1F9C215000CD50D6 /* Swift_Tests.swift */,
-				8E172D9C1F9C25A800CD50D6 /* EP CalipersTests-Bridging-Header.h */,
 			);
 			path = "EP CalipersTests";
 			sourceTree = "<group>";
@@ -252,21 +189,66 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		8E16B56F200169DD004202D1 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				8E1423621AB5F16A00CC15BC /* EPSMainViewController.h */,
+				8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */,
+				8E5A8F6F1ACC7A54000EEA89 /* WebViewController.h */,
+				8E5A8F701ACC7A54000EEA89 /* WebViewController.m */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		8E16B57020016A98004202D1 /* Calipers */ = {
+			isa = PBXGroup;
+			children = (
+				8E8DDE371FF96D13007247DA /* MiniQTcResult.h */,
+				8E8DDE381FF96D13007247DA /* MiniQTcResult.m */,
+				8E0208A51AC2A8B300FE7EC5 /* Caliper.h */,
+				8E0208A61AC2A8B300FE7EC5 /* Caliper.m */,
+				8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */,
+				8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */,
+				8EB3DE371AC603A3009376AD /* Calibration.h */,
+				8EB3DE381AC603A3009376AD /* Calibration.m */,
+				8E3BBC531EA0340200ECB992 /* CaliperFactory.h */,
+				8E3BBC541EA0340200ECB992 /* CaliperFactory.m */,
+			);
+			name = Calipers;
+			sourceTree = "<group>";
+		};
+		8E16B57120016AB5004202D1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8E9A33381AC09DE90037E694 /* CalipersView.h */,
+				8E9A33391AC09DE90037E694 /* CalipersView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		8E16B57220016B6A004202D1 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */,
+				8EB3DE351AC344CC009376AD /* EPSLogging.h */,
+				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
+				8E1423601AB5F16A00CC15BC /* AppDelegate.m */,
+				8ECEDF661E8A1A1A00288EDE /* About.h */,
+				8ECEDF671E8A1A1A00288EDE /* About.m */,
+				8EB3DE3B1AC604FB009376AD /* Defs.h */,
+				8EB3DE3C1AC616C0009376AD /* Settings.h */,
+				8EB3DE3D1AC616C0009376AD /* Settings.m */,
+				8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */,
+				8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
 		8E172D7E1F9C04F200CD50D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		8E172D831F9C092000CD50D6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8E172D891F9C092000CD50D6 /* QTc.framework */,
-				8E172D8B1F9C092000CD50D6 /* QTc_iOSTests.xctest */,
-				8E172D8D1F9C092000CD50D6 /* QTc.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		8ECEDF561E89F4F800288EDE /* ColorPicker */ = {
@@ -284,6 +266,15 @@
 			name = ColorPicker;
 			sourceTree = "<group>";
 		};
+		8EF520FD1FF99BFC000B2C74 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				8E559EA81ACD9262004A6F91 /* Launch Screen.xib */,
+				8E1423651AB5F16A00CC15BC /* Main.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -294,7 +285,6 @@
 				8E1423541AB5F16A00CC15BC /* Sources */,
 				8E1423551AB5F16A00CC15BC /* Frameworks */,
 				8E1423561AB5F16A00CC15BC /* Resources */,
-				8E172D801F9C04FB00CD50D6 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -353,16 +343,11 @@
 				en,
 				Base,
 				fr,
+				ru,
 			);
 			mainGroup = 8E14234F1AB5F16A00CC15BC;
 			productRefGroup = 8E1423591AB5F16A00CC15BC /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 8E172D831F9C092000CD50D6 /* Products */;
-					ProjectRef = 8E172D821F9C092000CD50D6 /* QTc.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8E1423571AB5F16A00CC15BC /* EP Calipers */,
@@ -370,30 +355,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		8E172D891F9C092000CD50D6 /* QTc.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = QTc.framework;
-			remoteRef = 8E172D881F9C092000CD50D6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8E172D8B1F9C092000CD50D6 /* QTc_iOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = QTc_iOSTests.xctest;
-			remoteRef = 8E172D8A1F9C092000CD50D6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8E172D8D1F9C092000CD50D6 /* QTc.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = QTc.framework;
-			remoteRef = 8E172D8C1F9C092000CD50D6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8E1423561AB5F16A00CC15BC /* Resources */ = {
@@ -428,10 +389,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */,
-				8E172D711F9BE6F100CD50D6 /* QTcResult.swift in Sources */,
 				8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */,
 				8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */,
 				8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */,
+				8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */,
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
 				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
 				8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */,
@@ -451,7 +412,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E172D971F9C205200CD50D6 /* EP_CalipersTests.m in Sources */,
-				8E172D9B1F9C215000CD50D6 /* Swift_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -471,6 +431,7 @@
 			children = (
 				8E1423661AB5F16A00CC15BC /* Base */,
 				8E9BA12A1EF47CD700FC8DD2 /* fr */,
+				8E7340F71FFA9E020066A28C /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -480,6 +441,7 @@
 			children = (
 				8E9BA1311EF47D1E00FC8DD2 /* en */,
 				8E9BA1321EF47D2100FC8DD2 /* fr */,
+				8E7340FA1FFA9E020066A28C /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -489,6 +451,7 @@
 			children = (
 				8E9BA1341EF6BED700FC8DD2 /* fr */,
 				8E9BA1351EF6BED700FC8DD2 /* en */,
+				8E7340F81FFA9E020066A28C /* ru */,
 			);
 			name = "EPCalipers-help";
 			sourceTree = "<group>";
@@ -498,6 +461,7 @@
 			children = (
 				8EB2F65D1EF6EF09003B82A6 /* Base */,
 				8EB2F65E1EF6EF7C003B82A6 /* fr */,
+				8E7340F61FFA9E020066A28C /* ru */,
 			);
 			name = FCColorPickerViewController.xib;
 			sourceTree = "<group>";
@@ -507,6 +471,7 @@
 			children = (
 				8E9F71EE1F19CA1A00029BED /* fr */,
 				8E9F71F21F19CAF100029BED /* en */,
+				8E7340F91FFA9E020066A28C /* ru */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -650,7 +615,6 @@
 		8E14237F1AB5F16A00CC15BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -674,7 +638,6 @@
 		8E1423801AB5F16A00CC15BC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

@@ -80,7 +80,7 @@ To view ECGs in the /AliveCor Kardia/ app, select *Journal*, then *SHARE* for th
 After selecting the *Share* button, select *PDF* from the options that appear.  Then select the *Share* button at the top right of the screen.  Select *Copy to EP Calipers* and you are ready to measure!
 
 ** Multiple page PDFs
-When PDF files have more than one page, the app will display the first page initially.  You can go to other pages by selecting *Previous* or *Next* in the *Image* menu.  Note that if you switch to another app and *EP Calipers* is terminated by iOS (as can happen automatically to save memory space), only the last page viewed will be available when the app is restarted.  To change pages, it will be necessary to reload the PDF.
+When PDF files have more than one page, the app will display the first page initially.  You can go to other pages by selecting the arrow buttons in the *Image* menu.  Note that if you switch to another app and *EP Calipers* is terminated by iOS (as can happen automatically to save memory space), only the last page viewed will be available when the app is restarted.  To change pages, it will be necessary to reload the PDF.
 * Adjusting the image
 You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Note that while in image mode, calipers are fixed in place.  Use the *Adjust* menu to rotate or flip your image.  This is useful if the image is rotated or not quite square to the screen.  You can rotate the image by 90° in either direction, or by increments of 1°.  If you select the *More* menu you can fine-tune the image further, rotating it by as little as 0.1° or flipping the image if for some reason it's reversed (flipping ECGs can be a fun pastime in its own right). Return from the *More* menu back to the *Adjust* menu by selecting *Done*.  Using these various options you should be able to straighten the image so it is square to the calipers.  You should recalibrate your calipers after rotating the image.  If you need to go back to the original position and zoom setting use *Reset*.  After adjusting the image select *Done* to return to the main *Image* menu.
 #+CAPTION: The *Adjust* menu
@@ -186,6 +186,7 @@ Preferences such as caliper colors and default calibration intervals can be sele
 - Thanks to Dr. Michael Katz for the concept.
 - Thanks to Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada for the concept of the Brugadometer and for assistance in implementing this algorithm.
 - Thanks to Scott Krankkala for the idea behind marching calipers.
+- Thanks to Victoria Churilina for the Russian translation.
 - The source code for *EP Calipers* is available on [[https://github.com/mannd/epcalipers][GitHub]].
 - *EP Calipers* is open source software and is licensed under the
   [[https://www.apache.org/licenses/LICENSE-2.0.html][Apache License Version 2.0]].  No guarantees are made as to the accuracy of the
