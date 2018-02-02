@@ -118,7 +118,7 @@
 }
 
 - (NSString *)baseMeasurement:(double)lengthInPoints {
-    NSString *s = [NSString localizedStringWithFormat:@"%.4g %@", [self calibratedBaseResult:lengthInPoints], self.calibration.units];
+    NSString *s = [NSString localizedStringWithFormat:@"%.4g %@", [self calibratedBaseResult:lengthInPoints], self.calibration.rawUnits];
     return s;
 
 }
