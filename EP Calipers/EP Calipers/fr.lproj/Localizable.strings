@@ -33,7 +33,6 @@
 "Multipage PDF" = "Multipage PDF";
 "App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages." = "L'application a été restaurée. Alors la multipage PDF montrera seulement une page.  Vous devez rouvrir le PDF avec l’application pour voir toutes les pages."; 
 "Select" = "Choisir";
-"Adjust" = "Régler";
 "Sample" = "Exemple";
 "Next" = "⇨";
 "Previous" = "⇦";
@@ -43,16 +42,16 @@
 "Calculated QTc" = "QTc calculé";
 "No Angle Caliper Selected" = "Compas d'angle pas choisi";
 "No Caliper Selected" = "Compas pas choisi";
-"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." = "Choisir un compas en le tapant une seule fois.  Le déplacer à un intervalle connu.  Toucher « définir » pour entrer l'intervalle de l'étalonnage.";
-"Enter measurement (e.g. %@)" = "Entrer la mesure (p.e. %@)";
+"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." = "Choisir un compas en le tapant une seule fois.  Le déplacer à un intervalle connu.  Toucher « définir » pour saisir l'intervalle de l'étalonnage.";
+"Enter measurement (e.g. %@)" = "Saisir la mesure (p.e. %@)";
 "Adjust" = "Ajuster";
 "90°R" = "90°D";
 "90°L" = "90°G";
 "1°R" = "1°D";
 "1°L" = "1°G";
 "Reset" = "Réinit";
-"0.1°R" = "0.1°D";
-"0.1°L" = "0.1°G";
+"0.1°R" = "0,1°D";
+"0.1°L" = "0,1°G";
 "Flip" = "Inverser";
 "RR interval(s)?" = "Intervalle(s) RR ?";
 "QT interval?" = "Intervalle QT ?";
@@ -69,7 +68,7 @@
 "March" = "March";
 "Long press caliper" = "Appuyer sur un compas";
 "Long press caliper component" = "Appuyer sur un composant";
-"Enter Number of Intervals" = "Entrer le nombre d'intervalles";
+"Enter Number of Intervals" = "Saisir le nombre d'intervalles";
 "Continue" = "Continuer";
 "Select an angle caliper." = "Choisir un compas d'angle.";
 "No Time Caliper Selected" = "Compas de temps pas choisi";
@@ -79,7 +78,7 @@
 "No Calipers To Use" = "Pas de compas à utiliser";
 "Bad Input" = "Mauvaise entrée";
 "Add one or more calipers first before proceeding." = "Ajouter un ou plus de compas avant de continuer";
-"Empty input, negative number input, or other bad input." = "Entrer de données vides, ou d'un chiffre négatif, ou d’une autre mauvaise entrée de données.";
+"Empty input, negative number input, or other bad input." = "Saisie de données vides, ou d'un chiffre négatif, ou d’une autre mauvaise entrée de données.";
 "Amplitude" = "Amplitude";
 "Angle" = "Angle";
 "Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers." = "Les compas d'angle ne nécessitent pas d'étalonnage.  Seuls les compas de temps ou d'amplitude doivent être étalonnés.\n\nSi vous voulez utiliser un compas d'angle comme un « Brugadometer » vous devez d'abord étalonner les compas de temps et d'amplitude.";

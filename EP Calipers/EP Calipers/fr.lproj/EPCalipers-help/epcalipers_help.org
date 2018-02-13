@@ -137,7 +137,7 @@ Choisir *March* pour changer un compas de temps à un compas qui marche.  Des li
 ** Fixer l'image
 Pendant le mouvement et l'ajustement des compas, vous pouvez parfois déplacer l'image ECG involontairement.  Choisir *Immobil* ou *Immobiliser* pour immobiliser l'image sur l'écran.  Un message apparaîtra en haut de l'écran pour indiquer que l'image est immobilisée.  Démobiliser l'image en choisissant *Débloq* ou *Débloquer*.
 * Étalonnage
-Choisir *Étalonner* (ou *Étal* sur petits écrans).  Étirer le compas sélectionné sur un intervalle connu (par exemple 1 000 msec de temps, ou 10 mm d'amplitude).  Choisir *Définir*.  Dans la boîte de dialogue, entrer l'intervalle et les unités (par exemple 500 msec, ou 1 sec, ou 1 mV).  Choisir *Définir* dans la boîte du dialogue pour définir l'étalonnage.  Noter qu'il faut que les compas de temps et d'amplitude soient étalonnés individuellement.  Après l'étalonnage, les compas montreront les intervalles avec les unités utilisées pour les étalonner.  Des nouveaux compas créés utiliseront le même étalonnage.
+Choisir *Étalonner* (ou *Étal* sur petits écrans).  Étirer le compas sélectionné sur un intervalle connu (par exemple 1 000 msec de temps, ou 10 mm d'amplitude).  Choisir *Définir*.  Dans la boîte de dialogue, saisir l'intervalle et les unités (par exemple 500 msec, ou 1 sec, ou 1 mV).  Choisir *Définir* dans la boîte du dialogue pour définir l'étalonnage.  Noter qu'il faut que les compas de temps et d'amplitude soient étalonnés individuellement.  Après l'étalonnage, les compas montreront les intervalles avec les unités utilisées pour les étalonner.  Des nouveaux compas créés utiliseront le même étalonnage.
 #+CAPTION: Compas de temps qui sera étalonné
 [[./img/pre_calibration.png]]
 #+CAPTION: Compas de temps après l'étalonnage
@@ -149,9 +149,9 @@ Vous pouvez réétalonner à tout moment.  L'étalonnage peut être complètemen
 * Intervalle/fréquence
 Après qu'un compas de temps est étalonné, si vous utilisez des unités du temps (par exemple msec ou sec) pour l'étalonnage, il est possible d'alterner entre les mesures d'intervalle (par exemple 600 msec) et les mesures de fréquence cardiaque (par exemple 100 bpm) en choisissant *Intervalle/FC* ou *Int/FC*.
 * Calcul de la fréquence moyenne et de l'intervalle moyen
-Sélectionner un compas étalonné et mesurer un nombre d'intervalles.  Choisir *Fréquence moyenne* or *FCM* et entrer le nombre d'intervalles mesurés.  Une boîte de dialogue montrera la fréquence cardiaque moyenne calculée et l'intervalle moyen.  Cela est utile pour le calcul des fréquences et des intervalles pendant un rythme irrégulier, par exemple la fibrillation auriculaire.
+Sélectionner un compas étalonné et mesurer un nombre d'intervalles.  Choisir *Fréquence moyenne* or *FCM* et saisir le nombre d'intervalles mesurés.  Une boîte de dialogue montrera la fréquence cardiaque moyenne calculée et l'intervalle moyen.  Cela est utile pour le calcul des fréquences et des intervalles pendant un rythme irrégulier, par exemple la fibrillation auriculaire.
 * Calcul du QT corrigé
-Choisir *QTc*.  Étendre le compas sélectionné sur un ou plusieurs intervalles RR et puis choisir *Mesurer*.  Entrer le nombre d'intervalles étant mesurés et puis choisir *Continuer*.  Utiliser le même compas pour mesurer l'intervalle QT.  Choisir *Mesurer*.  Une boîte de dialogue montrera le QT calculé en utilisant la formule de Bazett par défaut.  Choisir *Répéter QT* pour faire une nouvelle mesure du QT avec le même intervalle RR, ou choisir *OK* pour terminer.  On peut changer la formule en utilisant [[app preferences][les préférences]].
+Choisir *QTc*.  Étendre le compas sélectionné sur un ou plusieurs intervalles RR et puis choisir *Mesurer*.  Saisir le nombre d'intervalles étant mesurés et puis choisir *Continuer*.  Utiliser le même compas pour mesurer l'intervalle QT.  Choisir *Mesurer*.  Une boîte de dialogue montrera le QT calculé en utilisant la formule de Bazett par défaut.  Choisir *Répéter QT* pour faire une nouvelle mesure du QT avec le même intervalle RR, ou choisir *OK* pour terminer.  On peut changer la formule en utilisant [[app preferences][les préférences]].
 #+CAPTION: La mesure du QTc première étape: mesurer un ou plusieurs intervalles RR
 [[./img/qtc_first_step.png]]
 #+CAPTION: La mesure du QTc deuxième étape: mesurer l'intervalle QT
@@ -175,9 +175,10 @@ Vos préférences comme les couleurs des compas et les intervalles par défaut d
 - Si l'application est mise en arrière-plan (par exemple quand vous changez d'une autre application) et puis est supprimée par le système d'exploitation (quelque chose que l'iOS fait pour préserver la mémoire), /et/ si vous avez téléchargé un fichier PDF avec plusieurs pages, seulement la dernière page que vous avez vue sera disponible.  Une boîte de dialogue apparaîtra dans ce cas.  S'il faut changer la page dans cette situation, il faut que vous changiez le PDF encore.
 * Remerciements
 - Je remercie Dr. Michael Katz pour l'idée.
-  - Je remercie Victoria Churilina pour la traduction en russe.
 - Je remercie Dr. Adrian Baranchuk et ses collaborateurs de l'Université Queen de Kingston en Ontario au Canada pour le concept du « Brugadometer » et pour leur aide en appliquant cet algorithme.
 - Je remercie Scott Kankkala pour l’idée des compas marchants.
+- La traduction française est par David Mann, Gretchen Mann, Juliet Mann et Jean-Claude Hounou.  Je remercie Dr. Pierre Taboulet pour confirmer à moi que le compas d'un cardiologue est un "Compas" et pas "un Étrier!"
+- Je remercie Victoria Churilina pour la traduction en russe.
 - Le code source de *Compas EP* est disponible sur [[https://github.com/mannd/epc alipers][GitHub]].
 - *Compas EP* est un logiciel libre et il est sous [[https://www.apache.org/licen ses/LICENSE-2.0.html][Apache License Version 2.0]].  Nous ne fournissons aucune garantie sur la précision de l'application.  Utilisez-la à vos risques et périls.
 - Pour des questions, des rapports d'erreurs, ou des suggestions, contactez mannd@epstudiossoftware.com.

@@ -190,8 +190,7 @@
     [super viewDidAppear:animated];
     EPSLog(@"ViewDidAppear");
     
-    NSString *language = [[NSLocale preferredLanguages] firstObject];
-    EPSLog(@"Language code using preferredLanguages = %@", language);
+    EPSLog(@"Language code using preferredLanguages = %@", [[NSLocale preferredLanguages] firstObject]);
     EPSLog(@"Language code using localizedStrings = %@", [self applicationLanguage]);
     
     
