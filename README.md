@@ -1,7 +1,7 @@
 EP Calipers
 ===========
 
-
+[![Build Status](https://travis-ci.org/mannd/epcalipers.svg?branch=master)](https://travis-ci.org/mannd/epcalipers)
 
 ## Description
 EP Calipers is an Apple iOS application that provides
