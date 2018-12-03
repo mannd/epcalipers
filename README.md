@@ -1,3 +1,8 @@
+EP Calipers
+===========
+
+[![Build Status](https://travis-ci.org/mannd/epcalipers.svg?branch=master)](https://travis-ci.org/mannd/epcalipers)
+
 ## Description
 EP Calipers is an Apple iOS application that provides
 electronic calipers for making measurements on images of ECGs or other
@@ -8,7 +13,7 @@ EP Calipers for iOS is open source, and licensed under the
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).  When used with Apple devices via the iTunes App Store, it is subject to the [standard Apple iOS license agreement](http://images.apple.com/legal/sla/docs/AppleStoreApp.pdf).
 
 ## Copyright
-Copyright © 2015, 2016, 2017 [EP Studios, Inc.](http://www.epstudiossoftware.com)
+Copyright © 2015-2018 [EP Studios, Inc.](http://www.epstudiossoftware.com)
 
 ## Acknowledgments
 Thanks to Dr. Michael Katz for the concept.
