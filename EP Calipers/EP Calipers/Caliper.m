@@ -7,8 +7,10 @@
 //
 
 #import "Caliper.h"
+#import "EPSLogging.h"
 #include <math.h>
 #include "Defs.h"
+
 
 #define DELTA 20.0
 #define CROSSBAR L(@"Crossbar")
@@ -49,6 +51,8 @@
         self.roundMsecRate = YES;
         self.isAngleCaliper = NO;
         self.marching = NO;
+        self.textPosition = RightAbove;
+        self.autoPositionText = YES;
     }
     return self;
 }
@@ -108,7 +112,8 @@
     if (self.marching  && self.direction == Horizontal) {
         [self drawMarchingCalipers:context forRect:rect];
     }
-    [self caliperText];
+//    [self caliperText];
+    [self caliperTextInCanvas:rect textPosition:self.textPosition optimizeTextPosition:true];
 }
 
 // Assumes bar1 and bar positions are already set
@@ -150,10 +155,194 @@
     CGContextStrokePath(context);
 }
 
+- (void)caliperTextInCanvas:(CGRect)canvas textPosition:(TextPosition)textPosition optimizeTextPosition:(BOOL)optimizeTextPosition {
+    NSString *text = [self measurement];
+    self.paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    self.paragraphStyle.alignment = NSTextAlignmentCenter;
+
+    [self.attributes setObject:self.textFont forKey:NSFontAttributeName];
+    [self.attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [self.attributes setObject:self.color forKey:NSForegroundColorAttributeName];
+
+    CGSize size = [text sizeWithAttributes:self.attributes];
+
+    CGRect textPositionRect = [self caliperTextPosition:textPosition left:fminf(self.bar1Position, self.bar2Position) right:fmaxf(self.bar1Position, self.bar2Position) center:self.crossBarPosition size:size canvas:canvas optimizeTextPosition:optimizeTextPosition];
+    [text drawInRect:textPositionRect withAttributes:self.attributes];
+}
+
+- (CGRect)caliperTextPosition:(TextPosition)textPosition left:(CGFloat)left right:(CGFloat)right center:(CGFloat)center size:(CGSize)size canvas:(CGRect)canvas optimizeTextPosition:(BOOL)optimizeTextPosition {
+    // Position of our text, based on Center text alignment
+    // This assumes X is the center of the text block, and Y is the text baseline.
+    CGPoint textOrigin = CGPointMake(0, 0);
+    // This is the point used as the origin from which to calculate the textOrigin.
+    // This will vary depending on the TextPosition.
+    CGPoint origin = CGPointMake(0, 0);
+    CGFloat textHeight = size.height;
+    CGFloat textWidth = size.width;
+    CGFloat yOffset = 6;
+    CGFloat xOffset = 12;
+    if (self.direction == Horizontal) {
+        // Guard against the margin obscuring left and right labels.
+        TextPosition optimizedPosition = [self optimizedTextPosition:textPosition canvas:canvas left:left right:right center:center textWidth:textWidth textHeight:textHeight optimizeTextPosition:optimizeTextPosition];
+        origin.y = center;
+        switch (optimizedPosition) {
+            case CenterAbove:
+                origin.x = left + (right - left) / 2;
+                textOrigin.x = origin.x;
+                textOrigin.y = origin.y - yOffset;
+                break;
+            case CenterBelow:
+                origin.x = left + (right - left) / 2;
+                textOrigin.x = origin.x;
+                textOrigin.y = origin.y + yOffset + textHeight;
+                break;
+            case LeftAbove:
+                origin.x = left;
+                textOrigin.x = origin.x - xOffset - textWidth / 2;
+                textOrigin.y = origin.y - yOffset;
+                break;
+            case RightAbove:
+                origin.x = right;
+                textOrigin.x = origin.x + xOffset + textWidth / 2;
+                textOrigin.y = origin.y - yOffset;
+                break;
+            default:
+//                if (BuildConfig.DEBUG) {
+//                    throw new AssertionError("Invalid TextPosition.");
+//                }
+                break;
+        }
+    }
+    else {  // Vertical (amplitude) caliper
+        textOrigin.y = textHeight / 2 + left + (right - left) / 2;
+        TextPosition optimizedPosition = [self optimizedTextPosition:textPosition canvas:canvas left:left right:right center:center textWidth:textWidth textHeight:textHeight optimizeTextPosition:optimizeTextPosition];
+        switch (optimizedPosition) {
+            case LeftAbove:
+                textOrigin.x = center - xOffset - textWidth / 2;
+                break;
+            case RightAbove:
+                textOrigin.x = center + xOffset + textWidth / 2;
+                break;
+            case Top:
+                textOrigin.y = left - yOffset;
+                textOrigin.x = center;
+                break;
+            case Bottom:
+                textOrigin.y = right + yOffset + textHeight;
+                textOrigin.x = center;
+                break;
+            default:
+//                if (BuildConfig.DEBUG) {
+//                    throw new AssertionError("Invalid TextPosition.");
+//                }
+                break;
+        }
+    }
+    EPSLog(@"textOrigin.x = %f textOrigin.y = %f", textOrigin.x, textOrigin.y);
+    EPSLog(@"crossbar = %f", self.crossBarPosition);
+    EPSLog(@"textHeight = %f", textHeight);
+    return CGRectMake(textOrigin.x - textWidth / 2, textOrigin.y - textHeight, textWidth, textHeight);
+}
+
+
+- (TextPosition)optimizedTextPosition:(TextPosition)textPosition canvas:(CGRect)canvas left:(CGFloat)left right:(CGFloat)right center:(CGFloat)center textWidth:(CGFloat)textWidth textHeight:(CGFloat)textHeight optimizeTextPosition:(BOOL) optimizeTextPosition {
+    // Just use textPosition if not auto-positioning text
+    if (!self.autoPositionText || !optimizeTextPosition) {
+        return textPosition;
+    }
+    // Allow a few pixels margin so that screen edge never obscures text.
+    float offset = 4;
+    TextPosition optimizedPosition = textPosition;
+    if (self.direction == Horizontal) {
+        switch (optimizedPosition) {
+            case CenterAbove:
+            case CenterBelow:
+                // avoid squeezing label
+                if (textWidth + offset > right - left) {
+                    if (textWidth + right + offset > canvas.size.width) {
+                        optimizedPosition = LeftAbove;
+                    }
+                    else {
+                        optimizedPosition = RightAbove;
+                    }
+                }
+                break;
+            case Left:
+                if (textWidth + offset > left) {
+                    if (textWidth + right + offset > canvas.size.width) {
+                        optimizedPosition = CenterAbove;
+                    } else {
+                        optimizedPosition = RightAbove;
+                    }
+                }
+                break;
+            case Right:
+                if (textWidth + right + offset > canvas.size.width) {
+                    if (textWidth + offset > left) {
+                        optimizedPosition = CenterAbove;
+                    } else {
+                        optimizedPosition = LeftAbove;
+                    }
+                }
+                break;
+            default:
+                optimizedPosition = textPosition;
+        }
+    }
+    else if (self.direction == Vertical) {
+        // watch for squeeze
+        if ((optimizedPosition == LeftAbove || optimizedPosition == RightAbove)
+            && (textHeight + offset > right - left)) {
+            if (left - textHeight - offset < 0) {
+                optimizedPosition = Bottom;
+            }
+            else {
+                optimizedPosition = Top;
+            }
+        }
+        else {
+            switch (optimizedPosition) {
+                case LeftAbove:
+                    if (textWidth + offset > center) {
+                        optimizedPosition = RightAbove;
+                    }
+                    break;
+                case RightAbove:
+                    if (textWidth + center + offset > canvas.size.width) {
+                        optimizedPosition = LeftAbove;
+                    }
+                    break;
+                case Top:
+                    if (left - textHeight - offset < 0) {
+                        if (right + textHeight + offset > canvas.size.height) {
+                            optimizedPosition = RightAbove;
+                        } else {
+                            optimizedPosition = Bottom;
+                        }
+                    }
+                    break;
+                case Bottom:
+                    if (right + textHeight + offset > canvas.size.height) {
+                        if (left - textHeight - offset < 0) {
+                            optimizedPosition = RightAbove;
+                        } else {
+                            optimizedPosition = Top;
+                        }
+                    }
+                    break;
+                default:
+                    optimizedPosition = textPosition;
+            }
+        }
+    }
+    return optimizedPosition;
+}
+
+
 - (void)caliperText {
     NSString *text = [self measurement];
     self.paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
-    self.paragraphStyle.alignment = (self.direction == Horizontal ? NSTextAlignmentCenter : NSTextAlignmentLeft);
+    self.paragraphStyle.alignment = NSTextAlignmentCenter;
     
     [self.attributes setObject:self.textFont forKey:NSFontAttributeName];
     [self.attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
@@ -415,7 +604,6 @@
     [coder encodeObject:self.selectedColor forKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
     [coder encodeBool:self.roundMsecRate forKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
     [coder encodeBool:self.marching forKey:[self getPrefixedKey:prefix key:@"Marching"]];
-    
 }
 
 // need to deal with two types of objects: angle and regular calipers

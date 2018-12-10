@@ -181,7 +181,7 @@
     [self.settings loadPreferences];
     self.defaultHorizontalCalChanged = ![priorHorizontalDefaultCal isEqualToString:self.settings.defaultCalibration];
     self.defaultVerticalCalChanged = ![priorVerticalDefaultCal isEqualToString:self.settings.defaultVerticalCalibration];
-    [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate];
+    [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate autoPositionText:self.settings.autoPositionText timeTextPosition:self.settings.timeTextPosition amplitudeTextPosition:self.settings.amplitudeTextPosition];
     [self.calipersView setNeedsDisplay];
     
 }
@@ -1124,6 +1124,7 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
     [self updateCaliperSettings:caliper];
     caliper.color = caliper.unselectedColor;
     caliper.direction = Horizontal;
+    caliper.textPosition = self.settings.timeTextPosition;
     caliper.calibration = self.horizontalCalibration;
     caliper.verticalCalibration = self.verticalCalibration;
     [caliper setInitialPositionInRect:self.calipersView.bounds];
@@ -1137,6 +1138,7 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
     caliper.unselectedColor = self.settings.caliperColor;
     caliper.selectedColor = self.settings.highlightColor;
     caliper.roundMsecRate = self.settings.roundMsecRate;
+    caliper.autoPositionText = self.settings.autoPositionText;
 }
 
 - (void)addCaliperWithDirection:(CaliperDirection)direction {
@@ -1146,9 +1148,11 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
     caliper.direction = direction;
     if (direction == Horizontal) {
         caliper.calibration = self.horizontalCalibration;
+        caliper.textPosition = self.settings.timeTextPosition;
     }
     else {
         caliper.calibration = self.verticalCalibration;
+        caliper.textPosition = self.settings.amplitudeTextPosition;
     }
     [caliper setInitialPositionInRect:self.calipersView.bounds];
     
@@ -1562,7 +1566,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [coder encodeObject:UIImagePNGRepresentation(self.imageView.image)
                  forKey:@"SavedImageKey"];
     [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
-    
+
     // calibration
     [self.horizontalCalibration encodeCalibrationState:coder withPrefix:@"Horizontal"];
     [self.verticalCalibration encodeCalibrationState:coder withPrefix:@"Vertical"];
@@ -1602,11 +1606,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         CaliperType type = isAngleCaliper ? Angle : Interval;
         Caliper *newCaliper = [CaliperFactory createCaliper:type];
         [newCaliper decodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
+        newCaliper.autoPositionText = self.settings.autoPositionText;
         if (newCaliper.direction == Horizontal) {
             newCaliper.calibration = self.horizontalCalibration;
+            newCaliper.textPosition = self.settings.timeTextPosition;
         }
         else {
             newCaliper.calibration = self.verticalCalibration;
+            newCaliper.textPosition = self.settings.amplitudeTextPosition;
         }
         if ([newCaliper isAngleCaliper]) {
             ((AngleCaliper *)newCaliper).verticalCalibration = self.verticalCalibration;

@@ -31,7 +31,8 @@
 @property (nonatomic, readonly) BOOL requiresCalibration;
 @property (nonatomic) BOOL isAngleCaliper;
 @property (nonatomic) BOOL marching;
-
+@property (nonatomic) TextPosition textPosition;
+@property (nonatomic) BOOL autoPositionText;
 
 - (double)intervalResult;
 - (double)rateResult:(double)interval;
@@ -54,9 +55,10 @@
 - (void)moveCrossbarInDirection:(MovementDirection)direction distance:(CGFloat)delta;
 - (float)barCoord:(CGPoint)p;
 - (void)caliperText;
+- (void)caliperTextInCanvas:(CGRect)canvas textPosition:(TextPosition)textPosition optimizeTextPosition:(BOOL)optimizeTextPosition;
+- (CGRect)caliperTextPosition:(TextPosition)textPosition left:(CGFloat)left right:(CGFloat)right center:(CGFloat)center size:(CGSize)size canvas:(CGRect)canvas optimizeTextPosition:(BOOL)optimizeTextPosition;
 - (CaliperComponent)getCaliperComponent:(CGPoint)point;
 - (NSString *)getComponentName:(CaliperComponent)component smallSize:(BOOL)smallSize;
-
 - (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key;
 - (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
 - (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;

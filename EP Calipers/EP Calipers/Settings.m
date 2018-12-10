@@ -24,6 +24,9 @@
         self.roundMsecRate = YES;
         self.allowTweakDuringQtc = NO;
         self.qtcFormula = Bazett;
+        self.autoPositionText = YES;
+        self.timeTextPosition = CenterAbove;
+        self.amplitudeTextPosition = RightAbove;
     }
     return self;
 }
@@ -58,6 +61,12 @@
     
     NSString *qtcFormulaName = [defaults objectForKey:@"qtcFormulaPreference"];
     self.qtcFormula = (QTcFormulaPreference)[[qtcFormulaMap valueForKey:qtcFormulaName] integerValue];
+    self.autoPositionText = [defaults boolForKey:@"autopositionPreference"];
+    // The values here are just NSNumbers and correspond to the TextPosition values.
+    NSString *timeTextPositionValue = [defaults objectForKey:@"timeTextPositionPreference"];
+    self.timeTextPosition = [timeTextPositionValue integerValue];
+    NSString *amplitudeTextPositionValue = [defaults objectForKey:@"amplitudeTextPositionPreference"];
+    self.amplitudeTextPosition = [amplitudeTextPositionValue integerValue];
 }
 
 @end

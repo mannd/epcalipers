@@ -267,7 +267,7 @@
     return c;
 }
 
-- (void)updateCaliperPreferences:(UIColor *)unselectedColor selectedColor:(UIColor*)selectedColor lineWidth:(NSInteger)lineWidth roundMsec:(BOOL)roundMsec {
+- (void)updateCaliperPreferences:(UIColor *)unselectedColor selectedColor:(UIColor*)selectedColor lineWidth:(NSInteger)lineWidth roundMsec:(BOOL)roundMsec autoPositionText:(BOOL)autoPositionText timeTextPosition:(TextPosition)timeTextPosition amplitudeTextPosition:(TextPosition)amplitudeTextPosition {
     // This method has been changed so that unselected color only applies to new calipers, since we can now change
     // individual caliper colors.
     for(Caliper *c in self.calipers) {
@@ -281,6 +281,13 @@
 //        }
         c.lineWidth = lineWidth;
         c.roundMsecRate = roundMsec;
+        c.autoPositionText = autoPositionText;
+        if (c.direction == Horizontal) {
+            c.textPosition = timeTextPosition;
+        }
+        else {
+            c.textPosition = amplitudeTextPosition;
+        }
     }
 }
 
