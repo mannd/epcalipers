@@ -178,7 +178,7 @@
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
-			<string>Time Caliper Text Position</string>
+			<string>Time Caliper Text</string>
 			<key>Key</key>
 			<string>timeTextPositionPreference</string>
 			<key>DefaultValue</key>
@@ -202,7 +202,7 @@
 			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
-			<string>Amplitude Caliper Text Position</string>
+			<string>Amplitude Caliper Text</string>
 			<key>Key</key>
 			<string>amplitudeTextPositionPreference</string>
 			<key>DefaultValue</key>

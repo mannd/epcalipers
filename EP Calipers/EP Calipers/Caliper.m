@@ -238,9 +238,6 @@
                 break;
         }
     }
-    EPSLog(@"textOrigin.x = %f textOrigin.y = %f", textOrigin.x, textOrigin.y);
-    EPSLog(@"crossbar = %f", self.crossBarPosition);
-    EPSLog(@"textHeight = %f", textHeight);
     return CGRectMake(textOrigin.x - textWidth / 2, textOrigin.y - textHeight, textWidth, textHeight);
 }
 
