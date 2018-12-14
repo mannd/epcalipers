@@ -16,6 +16,19 @@
 
 @implementation AngleCaliper
 
+@synthesize textPosition = _textPosition;
+
+// override textPosition to just affect triangle base
+- (void)setTextPosition:(TextPosition)value {
+    self.triangleBaseTextPosition = value;
+    _textPosition = value;
+}
+
+- (TextPosition)textPosition {
+    return _textPosition;
+}
+
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -31,6 +44,7 @@
         self.crossBarPosition = 100.0f;
         self.verticalCalibration = nil;
         self.isAngleCaliper = YES;
+        self.triangleBaseTextPosition = [super textPosition];
     }
     return self;
 }
@@ -71,18 +85,18 @@
     CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
     CGContextAddLineToPoint(context, endPointBar2.x, endPointBar2.y);
     CGContextStrokePath(context);
-    [self caliperText];
+    [self caliperTextInCanvas:rect textPosition:CenterAbove optimizeTextPosition:false];
 
     if (self.verticalCalibration.calibrated && self.verticalCalibration.unitsAreMM) {
         if ([self angleInSouthernHemisphere:self.angleBar1] && [self angleInSouthernHemisphere:self.angleBar2]) {
             double pointsPerMM = 1.0 / self.verticalCalibration.multiplier;
-            [self drawTriangleBase:context forHeight:5 * pointsPerMM];
+            [self drawTriangleBase:context rect:rect forHeight:5 * pointsPerMM];
             // draw label
         }
     }
 }
 
-- (void)drawTriangleBase:(CGContextRef)context forHeight:(double)height {
+- (void)drawTriangleBase:(CGContextRef)context rect:(CGRect)rect forHeight:(double)height {
     CGPoint point1 = [self getBasePoint1ForHeight:height];
     CGPoint point2 = [self getBasePoint2ForHeight:height];
     double lengthInPoints = point2.x - point1.x;
@@ -97,10 +111,11 @@
     [self.attributes setObject:self.textFont forKey:NSFontAttributeName];
     [self.attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
     [self.attributes setObject:self.color forKey:NSForegroundColorAttributeName];
-    
-    // same positioning as
-    [text drawInRect:CGRectMake((point2.x > point1.x ? point1.x - 25: point2.x - 25), point1.y + 15,  fmax(100.0, fabs(point2.x - point1.x) + 50), 20)  withAttributes:self.attributes];
 
+    CGSize size = [text sizeWithAttributes:self.attributes];
+    CGRect textRect = [self caliperTextPosition:self.triangleBaseTextPosition left:fminf(point1.x, point2.x) right:fmaxf(point1.x, point2.x) center:point1.y size:size canvas:rect optimizeTextPosition:YES];
+    // same positioning as
+    [text drawInRect:textRect  withAttributes:self.attributes];
 }
 
 // test if angle is in inferior half of unit circle

@@ -164,6 +164,64 @@
 				<string>5</string>
 			</array>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Auto-position Text</string>
+			<key>Key</key>
+			<string>autopositionPreference</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Time Caliper Text</string>
+			<key>Key</key>
+			<string>timeTextPositionPreference</string>
+			<key>DefaultValue</key>
+			<string>0</string>
+			<key>Titles</key>
+			<array>
+				<string>Center Above</string>
+				<string>Center Below</string>
+				<string>Left</string>
+				<string>Right</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>0</string>
+				<string>1</string>
+				<string>2</string>
+				<string>3</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Amplitude Caliper Text</string>
+			<key>Key</key>
+			<string>amplitudeTextPositionPreference</string>
+			<key>DefaultValue</key>
+			<string>3</string>
+			<key>Titles</key>
+			<array>
+				<string>Top</string>
+				<string>Bottom</string>
+				<string>Left</string>
+				<string>Right</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>4</string>
+				<string>5</string>
+				<string>2</string>
+				<string>3</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>

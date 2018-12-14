@@ -27,4 +27,12 @@
 "3 points" = "3 пикселя";
 "4 points" = "4 пикселя";
 "5 points" = "5 пикселей";
-
+"Center Above" = "Над";
+"Center Below" = "Ниже";
+"Left" = "Слева";
+"Right" = "Справа";
+"Top" = "Над";
+"Bottom" = "Ниже";
+"Auto-position Text" = "Автоматический текст";
+"Time Caliper Text" = "Текст калиперы времени";
+"Amplitude Caliper Text" = "Текст калиперы амплитуды";

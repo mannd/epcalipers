@@ -13,6 +13,7 @@
 @property (nonatomic) double angleBar1;
 @property (nonatomic) double angleBar2;
 @property (weak, nonatomic) Calibration *verticalCalibration;
+@property (nonatomic) TextPosition triangleBaseTextPosition;
 
 - (instancetype)init;
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;

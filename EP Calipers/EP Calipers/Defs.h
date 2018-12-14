@@ -34,6 +34,15 @@ typedef NS_ENUM(NSInteger, MovementDirection) {
     Stationary
 };
 
+typedef NS_ENUM(NSInteger, TextPosition) {
+    CenterAbove = 0,
+    CenterBelow,
+    LeftAbove,
+    RightAbove,
+    Top,
+    Bottom
+};
+
 
 // make my own simpler localization macro
 #define L(s) NSLocalizedString(s, nil)

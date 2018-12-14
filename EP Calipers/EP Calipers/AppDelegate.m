@@ -24,8 +24,17 @@
 }
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"roundMsecRatePreference", [NSNumber numberWithBool:NO], @"hideStartImagePreference", [NSNumber numberWithInt:2], @"lineWidthPreference", L(@"1000 msec"), @"calibrationPreference", L(@"10 mm"), @"verticalCalibrationPreference", L(@"Blue"), @"caliperColorPreference", L(@"Red"), @"highlightColorPreference", nil];
-    
+    NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [NSNumber numberWithBool:YES], @"roundMsecRatePreference",
+                                        [NSNumber numberWithInt:2], @"lineWidthPreference",
+                                        L(@"1000 msec"), @"calibrationPreference",
+                                        L(@"10 mm"), @"verticalCalibrationPreference",
+                                        L(@"Blue"), @"caliperColorPreference",
+                                        L(@"Red"), @"highlightColorPreference",
+                                        [NSNumber numberWithBool:YES], @"autopositionPreference",
+                                        @"0", @"timeTextPositionPreference",
+                                        @"3", @"amplitudeTextPositionPreference",
+                                        nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
     
     return YES;

@@ -60,7 +60,7 @@
 "Tweak-iPhone" = "Régl";
 "Tweak-iPad" = "Régler";
 "Lock" = "Immobil";
-"Lock-iPhone" = "Immobil";
+"Lock-iPhone" = "Immob";
 "Lock-iPad" = "Immobiliser";
 "Unlock" = "Débloq";
 "Unlock-iPhone" = "Débloq";
@@ -96,7 +96,7 @@
 "Bottom bar" = "Barre inférieure";
 "Bottom" = "Barre inf";
 "Apex" = "Sommet";
-"Copyright © 2015 - 2017 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Copyright © 2015 - 2017 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
+"Copyright © 2015 - 2018 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Copyright © 2015 - 2018 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
 "Mean RR = %.4g %@\nQT = %.4g %@" = "RR moyen = %.4g %@\nQT = %.4g %@";
 "\nQTc = %.4g %@ (%@ formula)" ="\nQTc = %.4g %@ (formule de %@)";
 "Done" = "OK";

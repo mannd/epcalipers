@@ -113,7 +113,7 @@
 "Bottom bar" = "Нижняя панель";
 "Bottom" = "Нижний";
 "Apex" = "Вершина";
-"Copyright © 2015 - 2017 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Авторские права © 2015 - 2017 EP Studios, Inc.\ Все права защищены. \ Версия %@";
+"Copyright © 2015 - 2018 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Авторские права © 2015 - 2018 EP Studios, Inc.\ Все права защищены. \ Версия %@";
 
 "points" = "пикселей";
 "msec" = "мсек";
@@ -128,7 +128,6 @@
 "Mean RR = %.4g %@\nQT = %.4g %@" = "Средний RR = %.4g %@\nQT = %.4g %@";
 "\nQTc = %.4g %@ (%@ formula)" ="\nQTc = %.4g %@ (формула %@)";
 "Done" = "Готово";
-"OK" = "ОК";
 "Repeat QT" = "Повтор QT";
 "March" = "Шаг";
 "Bazett" = "Базетта";
