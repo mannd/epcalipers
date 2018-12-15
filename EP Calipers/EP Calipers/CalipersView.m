@@ -214,6 +214,7 @@
 }
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)gesture {
+    EPSLog(@"Long press");
     CGPoint location = [gesture locationInView:self];
     if (gesture.state == UIGestureRecognizerStateBegan) {
         if (self.allowColorChange) {

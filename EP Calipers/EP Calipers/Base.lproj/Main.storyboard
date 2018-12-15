@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6xA-Uv-Lhv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6xA-Uv-Lhv">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -31,10 +30,6 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="MainVCID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="EPSMainViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -43,10 +38,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c" userLabel="containerView">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                        <rect key="frame" x="0.0" y="20" width="320" height="528"/>
                                         <subviews>
                                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="ImageViewID" image="sampleECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="528"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
@@ -73,17 +68,20 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="D98-VW-HwH" secondAttribute="bottom" id="10L-uH-NeD"/>
+                            <constraint firstItem="BY4-Fr-5cz" firstAttribute="bottom" secondItem="D98-VW-HwH" secondAttribute="bottom" id="10L-uH-NeD"/>
                             <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7mg-co-GHU"/>
                             <constraint firstAttribute="bottom" secondItem="X5X-Yr-OYx" secondAttribute="bottom" id="Afo-Q6-Sib"/>
-                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Rln-Xy-rlQ"/>
-                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="W4Y-nF-S1C"/>
+                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="leading" secondItem="BY4-Fr-5cz" secondAttribute="leading" id="Rln-Xy-rlQ"/>
+                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailing" secondItem="BY4-Fr-5cz" secondAttribute="trailing" id="W4Y-nF-S1C"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="XQA-gU-Hse"/>
-                            <constraint firstItem="D98-VW-HwH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="qp0-qs-gBY"/>
-                            <constraint firstAttribute="trailing" secondItem="D98-VW-HwH" secondAttribute="trailing" id="tYO-h2-XFY"/>
+                            <constraint firstItem="D98-VW-HwH" firstAttribute="leading" secondItem="BY4-Fr-5cz" secondAttribute="leading" id="qp0-qs-gBY"/>
+                            <constraint firstItem="BY4-Fr-5cz" firstAttribute="trailing" secondItem="D98-VW-HwH" secondAttribute="trailing" id="tYO-h2-XFY"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="BY4-Fr-5cz"/>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="zAQ-bd-wcX"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="calipersView" destination="D98-VW-HwH" id="EQE-il-SPF"/>
                         <outlet property="imageContainerView" destination="blB-p5-m1c" id="pps-DN-j7O"/>
@@ -94,16 +92,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="216.5" y="27.5"/>
+            <point key="canvasLocation" x="215.625" y="27.464788732394368"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="MQ0-kA-Odt">
             <objects>
                 <viewController storyboardIdentifier="WebVCID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="F3l-Jg-V2u" customClass="WebViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="oyL-zp-Gbv"/>
-                        <viewControllerLayoutGuide type="bottom" id="OfB-zJ-Qqw"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GR2-WM-Ksu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -115,11 +109,12 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="dhT-Iu-ikC" firstAttribute="top" secondItem="oyL-zp-Gbv" secondAttribute="bottom" id="Cg8-WD-7HJ"/>
+                            <constraint firstItem="dhT-Iu-ikC" firstAttribute="top" secondItem="geh-zV-Xay" secondAttribute="top" id="Cg8-WD-7HJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dhT-Iu-ikC" secondAttribute="trailing" id="MRz-og-kWW"/>
-                            <constraint firstItem="OfB-zJ-Qqw" firstAttribute="top" secondItem="dhT-Iu-ikC" secondAttribute="bottom" id="e4R-Xx-4W6"/>
+                            <constraint firstItem="geh-zV-Xay" firstAttribute="bottom" secondItem="dhT-Iu-ikC" secondAttribute="bottom" id="e4R-Xx-4W6"/>
                             <constraint firstItem="dhT-Iu-ikC" firstAttribute="leading" secondItem="GR2-WM-Ksu" secondAttribute="leadingMargin" id="yyw-8F-6Il"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="geh-zV-Xay"/>
                     </view>
                     <connections>
                         <outlet property="webView" destination="dhT-Iu-ikC" id="Aad-r6-6Kh"/>
@@ -135,6 +130,7 @@
         <image name="sampleECG.jpg" width="1411" height="676"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="BOZ-jC-arD"/>
         <segue reference="Xdy-EN-bbI"/>
     </inferredMetricsTieBreakers>
 </document>

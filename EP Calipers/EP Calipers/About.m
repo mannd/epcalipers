@@ -7,6 +7,7 @@
 //
 
 #import "About.h"
+#import "Alert.h"
 #import <UIKit/UIKit.h>
 #include "Defs.h"
 
@@ -14,9 +15,8 @@
 
 + (void)show {
     NSString *message = [NSString localizedStringWithFormat:L(@"Copyright © 2015 - 2018 EP Studios, Inc.\nAll rights reserved.\nVersion %@"), [self getVersion]];
-    UIAlertView *aboutAlertView = [[UIAlertView alloc] initWithTitle:L(@"EP Calipers") message:message delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    aboutAlertView.alertViewStyle = UIAlertViewStyleDefault;
-    [aboutAlertView show];
+    UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    [Alert showSimpleAlertWithTitle:L(@"EP Calipers") message:message viewController:vc];
 }
 
 + (NSString *)getVersion {

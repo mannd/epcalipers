@@ -14,6 +14,7 @@
 #import "About.h"
 #import "CaliperFactory.h"
 #import "MiniQTcResult.h"
+#import "Alert.h"
 #include "Defs.h"
 
 //:TODO: Make NO for release version
@@ -71,7 +72,6 @@
 #define MEAN_RR_ALERTVIEW 30
 #define MEAN_RR_FOR_QTC_ALERTVIEW 43
 #define NUM_PDF_PAGES_ALERTVIEW 101
-#define LAUNCHED_FROM_URL_ALERTVIEW 102
 #define QTC_RESULT_ALERTVIEW 104
 
 #define CALIPERS_VIEW_TITLE L(@"EP Calipers")
@@ -155,7 +155,8 @@
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.toolbar.translucent = NO;
-    
+
+
     self.isCalipersView = YES;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
@@ -169,6 +170,7 @@
                                                  name:UIApplicationWillEnterForegroundNotification object:nil];
 
 }
+
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -196,7 +198,7 @@
     
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
-    
+
     if (self.firstRun) {
         //  scale image for imageView;
         // autolayout not done in viewDidLoad
@@ -226,10 +228,7 @@
         }
         
         if (self.wasLaunchedFromUrl) {
-	  UIAlertView *launchedFromUrlAlert = [[UIAlertView alloc] initWithTitle:L(@"Multipage PDF") message:L(@"App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages.") delegate:self cancelButtonTitle:OK otherButtonTitles:nil];
-            launchedFromUrlAlert.tag = LAUNCHED_FROM_URL_ALERTVIEW;
-            [launchedFromUrlAlert show];
-            // only show this warning once
+            [Alert showSimpleAlertWithTitle:L(@"Multipage PDF") message:L(@"App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages.") viewController:self];
             self.launchURL = nil;
             self.numberOfPages = 0;
             self.wasLaunchedFromUrl = NO;
@@ -609,27 +608,37 @@
         [self showNoTimeCaliperSelectedAlertView];
         return;
     }
-    
-// Alternate way to do this using UIAlertController, however, too many UIAlertViews and not worth changing.
-// We'll keep this commented code here as a reminder in case Apple ever really gets rid of UIAlertView for good.
-    
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:L(@"Enter Number of Intervals") message:L(@"How many intervals is this caliper measuring?") preferredStyle:UIAlertControllerStyleAlert];
-//    [alertController addAction:[UIAlertAction actionWithTitle:L(@"Calculate") style:UIAlertActionStyleDefault handler:nil]];
-//    [alertController addAction:[UIAlertAction actionWithTitle:L(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
-//    [alertController addTextFieldWithConfigurationHandler:^(UITextField* inputTextField){
-//        [inputTextField setKeyboardType:UIKeyboardTypeNumberPad];
-//        [inputTextField setText:@"3"];
-//        [inputTextField setClearButtonMode:UITextFieldViewModeAlways];}];
-//    [self presentViewController:alertController animated:YES completion:nil];
-   
-    UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:L(@"Enter Number of Intervals") message:L(@"How many intervals is this caliper measuring?") delegate:self cancelButtonTitle:CANCEL otherButtonTitles:L(@"Calculate"), nil];
-    calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    calculateMeanRRAlertView.tag = MEAN_RR_ALERTVIEW;
-    [calculateMeanRRAlertView show];
-    
-    [[calculateMeanRRAlertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
-    [[calculateMeanRRAlertView textFieldAtIndex:0] setText:L(@"3")];
-    [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
+    UIAlertController *calculateMeanRRAlertController = [UIAlertController alertControllerWithTitle:L(@"Enter Number of Intervals") message:L(@"How many intervals is this caliper measuring?") preferredStyle:UIAlertControllerStyleAlert];
+    [calculateMeanRRAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.text = L(@"3");
+        textField.clearButtonMode = UITextFieldViewModeAlways;
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self selectMainToolbar];
+    }];
+    UIAlertAction *calculateAction = [UIAlertAction actionWithTitle:L(@"Calculate") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        NSArray *textFields = calculateMeanRRAlertController.textFields;
+        UITextField *rawTextField = textFields[0];
+        int divisor = [rawTextField.text intValue];
+        if (divisor > 0) {
+            Caliper *c = self.calipersView.activeCaliper;
+            if (c == nil) {
+                return;
+            }
+            double intervalResult = fabs(c.intervalResult);
+            double meanRR = intervalResult / divisor;
+            double meanRate = [c rateResult:meanRR];
+            [Alert showSimpleAlertWithTitle:L(@"Mean Interval and Rate")  message:[NSString localizedStringWithFormat:L(@"Mean interval = %.4g %@\nMean rate = %.4g bpm"), meanRR, [c.calibration rawUnits], meanRate] viewController:self];
+        }
+        else {
+            [self showBadValueDialog];
+            [self selectMainToolbar];
+        }
+    }];
+    [calculateMeanRRAlertController addAction:cancelAction];
+    [calculateMeanRRAlertController addAction:calculateAction];
+    [self presentViewController:calculateMeanRRAlertController animated:YES completion:nil];
 }
 
 - (void)calculateQTc {
@@ -654,19 +663,40 @@
         [self showNoTimeCaliperSelectedAlertView];
     }
     else {
-      UIAlertView *calculateMeanRRAlertView = [[UIAlertView alloc] initWithTitle:L(@"Enter Number of Intervals") message:L(@"How many intervals is this caliper measuring?") delegate:self cancelButtonTitle:CANCEL otherButtonTitles:L(@"Continue"), nil];
-        calculateMeanRRAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-        calculateMeanRRAlertView.tag = MEAN_RR_FOR_QTC_ALERTVIEW;
-        
-        [[calculateMeanRRAlertView textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumberPad];
-        [[calculateMeanRRAlertView textFieldAtIndex:0] setText:@"1"];
-        [[calculateMeanRRAlertView textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
-        [calculateMeanRRAlertView show];
+        UIAlertController *calculateMeanRRAlertController = [UIAlertController alertControllerWithTitle:L(@"Enter Number of Intervals") message:L(@"How many intervals is this caliper measuring?") preferredStyle:UIAlertControllerStyleAlert];
+        [calculateMeanRRAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+            textField.text = L(@"1");
+            textField.clearButtonMode = UITextFieldViewModeAlways;
+            textField.keyboardType = UIKeyboardTypeNumberPad;
+        }];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [self selectMainToolbar];
+        }];
+        UIAlertAction *calculateAction = [UIAlertAction actionWithTitle:L(@"Calculate") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            NSArray *textFields = calculateMeanRRAlertController.textFields;
+            UITextField *rawTextField = textFields[0];
+            int divisor = [rawTextField.text intValue];
+            if (divisor > 0) {
+                Caliper *c = self.calipersView.activeCaliper;
+                if (c == nil) {
+                    return;
+                }
+                double intervalResult = fabs(c.intervalResult);
+                double meanRR = intervalResult / divisor;
+                self.rrIntervalForQTc = [c intervalInSecs:meanRR];
+            }
+            else {
+                [self showBadValueDialog];
+                [self selectMainToolbar];
+            }
+        }];
+        [calculateMeanRRAlertController addAction:cancelAction];
+        [calculateMeanRRAlertController addAction:calculateAction];
+        [self presentViewController:calculateMeanRRAlertController animated:YES completion:nil];
 
         self.toolbarItems = self.qtcStep2MenuItems;
         self.calipersView.allowTweakPosition = self.settings.allowTweakDuringQtc;
         self.inQtc = YES;
-        
     }
 }
 
@@ -681,11 +711,16 @@
         float meanRR = fabs(self.rrIntervalForQTc);  // already in secs
         MiniQTcResult *qtcResult = [[MiniQTcResult alloc] init];
         NSString *result = [qtcResult calculateFromQtInSec:qt rrInSec:meanRR formula:self.settings.qtcFormula convertToMsec:c.calibration.unitsAreMsec units:c.calibration.units];
-        UIAlertView *qtcResultAlertView = [[UIAlertView alloc] initWithTitle:L(@"Calculated QTc") message:result delegate:self cancelButtonTitle:DONE otherButtonTitles: L(@"Repeat QT"), nil];
-        qtcResultAlertView.tag = QTC_RESULT_ALERTVIEW;
-        qtcResultAlertView.alertViewStyle = UIAlertViewStyleDefault;
-        [qtcResultAlertView show];
-        //[self selectMainToolbar];
+        UIAlertController *qtcResultAlertController = [UIAlertController alertControllerWithTitle:L(@"Calculated QTc") message:result preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:DONE style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [self selectMainToolbar];
+        }];
+        UIAlertAction *repeatQtcAction = [UIAlertAction actionWithTitle:L(@"Repeat QT") style:UIAlertActionStyleDefault handler:^(UIAlertAction *alert) {
+            self.toolbarItems = self.qtcStep2MenuItems;
+        }];
+        [qtcResultAlertController addAction:cancelAlertAction];
+        [qtcResultAlertController addAction:repeatQtcAction];
+        [self presentViewController:qtcResultAlertController animated:YES completion:nil];
     }
 }
 
@@ -704,9 +739,7 @@
         [self unselectCalipersExcept:singleAngleCaliper];
     }
     if ([self noAngleCaliperSelected]) {
-      UIAlertView *noSelectionAlert = [[UIAlertView alloc] initWithTitle:L(@"No Angle Caliper Selected") message:L(@"Select an angle caliper.") delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
-        noSelectionAlert.alertViewStyle = UIAlertViewStyleDefault;
-        [noSelectionAlert show];
+        [Alert showSimpleAlertWithTitle:L(@"No Angle Caliper Selected") message:L(@"Select an angle caliper.") viewController:self];
         return;
     }
     // this had better be true
@@ -738,9 +771,7 @@
 //        riskStatement = @"Increased risk of Brugada syndrome";
 //    }
     NSString *message = [NSString stringWithFormat:@"Beta angle = %.1f°%@%@", angleInDegrees, calibrationStatement, riskStatement];
-    UIAlertView *brugadaResultAlert = [[UIAlertView alloc] initWithTitle:@"Brugada Syndrome Results" message:message delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
-    [brugadaResultAlert show];
-    
+    [Alert showSimpleAlertWithTitle:@"Brugada Syndrome Results" message:message viewController:self];
 }
 
 - (BOOL)noTimeCaliperSelected {
@@ -753,9 +784,7 @@
 }
 
 - (void)showNoTimeCaliperSelectedAlertView {
-  UIAlertView *nothingToMeasureAlertView = [[UIAlertView alloc] initWithTitle:L(@"No Time Caliper Selected") message:L(@"Select a time caliper to measure one or more RR intervals.") delegate:nil cancelButtonTitle:OK otherButtonTitles: nil];
-    nothingToMeasureAlertView.alertViewStyle = UIAlertActionStyleDefault;
-    [nothingToMeasureAlertView show];
+    [Alert showSimpleAlertWithTitle:L(@"No Time Caliper Selected") message:L(@"Select a time caliper to measure one or more RR intervals.") viewController:self];
 }
 
 - (void)clearCalibration {
@@ -782,21 +811,17 @@
         return;
     }
     if ([self.calipersView noCaliperIsSelected]) {
-        UIAlertView *noSelectionAlertView = [[UIAlertView alloc] initWithTitle:L(@"No Caliper Selected") message:L(@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement.") delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
-        noSelectionAlertView.alertViewStyle = UIAlertViewStyleDefault;
-        [noSelectionAlertView show];
+        [Alert showSimpleAlertWithTitle:L(@"No Caliper Selected") message:L(@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement.") viewController:self];
         return;
     }
     Caliper* c = self.calipersView.activeCaliper;
     // Angle calipers don't require calibration
     if (![c requiresCalibration]) {
-      UIAlertView *angleCaliperAlertView = [[UIAlertView alloc] initWithTitle:L(@"Angle Caliper") message:L(@"Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers.") delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
-        [angleCaliperAlertView show];
+        [Alert showSimpleAlertWithTitle:L(@"Angle Caliper") message:L(@"Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers.") viewController:self];
         return;
     }
     if (c.valueInPoints <= 0) {
-      UIAlertView *negativeValueAlertView = [[UIAlertView alloc] initWithTitle:L(@"Negatively Valued Caliper") message:L(@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration.") delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
-        [negativeValueAlertView show];
+        [Alert showSimpleAlertWithTitle:L(@"Negatively Valued Caliper") message:L(@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration.") viewController:self];
         return;
     }
     NSString *example = @"";
@@ -807,38 +832,49 @@
         example = L(@"500 msec");
     }
     NSString *message = [NSString stringWithFormat:L(@"Enter measurement (e.g. %@)"), example];
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:L(@"Calibrate") message:message delegate:self cancelButtonTitle:CANCEL otherButtonTitles:SET, nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    alert.tag = CALIBRATION_ALERTVIEW;
-    NSString *calibrationString = @"";
-    // set initial calibration time calibration to default
-    if ([self.horizontalCalibration.calibrationString length] < 1 || self.defaultHorizontalCalChanged) {
-        self.horizontalCalibration.calibrationString = self.settings.defaultCalibration;
-    }
-    if ([self.verticalCalibration.calibrationString length] < 1 || self.defaultVerticalCalChanged) {
-        self.verticalCalibration.calibrationString = self.settings.defaultVerticalCalibration;
-    }
-    if (c != nil) {
-        CaliperDirection direction = c.direction;
-        if (direction == Horizontal) {
-            calibrationString = self.horizontalCalibration.calibrationString;
+    // see https://stackoverflow.com/questions/33996443/how-to-add-text-input-in-alertview-of-ios-8 for using text fields with UIAlertController.
+    UIAlertController *calibrationAlertController = [UIAlertController alertControllerWithTitle:L(@"Calibrate") message:message preferredStyle:UIAlertControllerStyleAlert];
+    [calibrationAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.clearButtonMode = UITextFieldViewModeAlways;
+        textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+        NSString *calibrationString = @"";
+        // set initial calibration time calibration to default
+        if ([self.horizontalCalibration.calibrationString length] < 1 || self.defaultHorizontalCalChanged) {
+            self.horizontalCalibration.calibrationString = self.settings.defaultCalibration;
+        }
+        if ([self.verticalCalibration.calibrationString length] < 1 || self.defaultVerticalCalChanged) {
+            self.verticalCalibration.calibrationString = self.settings.defaultVerticalCalibration;
+        }
+        if (c != nil) {
+            CaliperDirection direction = c.direction;
+            if (direction == Horizontal) {
+                calibrationString = self.horizontalCalibration.calibrationString;
+            }
+            else {
+                calibrationString = self.verticalCalibration.calibrationString;
+            }
+        }
+        textField.text = calibrationString;
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *setAction = [UIAlertAction actionWithTitle:SET style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSArray *textFields = calibrationAlertController.textFields;
+        UITextField *rawTextField = textFields[0];
+        NSString *rawText = rawTextField.text;
+        if (rawText.length > 0) {
+            [self calibrateWithText:rawText];
         }
         else {
-            calibrationString = self.verticalCalibration.calibrationString;
+            [self showBadValueDialog];
         }
-    }
-    
-    [[alert textFieldAtIndex:0] setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
-    [[alert textFieldAtIndex:0] setText:calibrationString];
-    [[alert textFieldAtIndex:0] setClearButtonMode:UITextFieldViewModeAlways];
-
-    [alert show];
+    }];
+    [calibrationAlertController addAction:cancelAction];
+    [calibrationAlertController addAction:setAction];
+    [self presentViewController:calibrationAlertController animated:YES completion:nil];
 }
 
 - (void)showNoCalipersAlert {
-  UIAlertView *noCalipersAlert = [[UIAlertView alloc] initWithTitle:L(@"No Calipers To Use") message:L(@"Add one or more calipers first before proceeding.") delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
-    noCalipersAlert.alertViewStyle = UIAlertViewStyleDefault;
-    [noCalipersAlert show];
+    [Alert showSimpleAlertWithTitle:L(@"No Calipers To Use") message:L(@"Add one or more calipers first before proceeding.") viewController:self];
 }
 
 - (Caliper *)getLoneTimeCaliper {
@@ -1266,72 +1302,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)showBadValueDialog {
-  UIAlertView *badValueAlertView = [[UIAlertView alloc] initWithTitle:L(@"Bad Input") message:L(@"Empty input, negative number input, or other bad input.") delegate:nil cancelButtonTitle:OK otherButtonTitles: nil];
-    [badValueAlertView show];
+    [Alert showSimpleAlertWithTitle:L(@"Bad Input") message:L(@"Empty input, negative number input, or other bad input.") viewController:self];
 }
 
 #pragma mark - Delegate Methods
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    BOOL badValue = NO;
-    if (alertView.tag == QTC_RESULT_ALERTVIEW) {
-        if (buttonIndex == 0) {
-            [self selectMainToolbar];
-        }
-        // Repeat QT measurement button
-        else if (buttonIndex == 1) {
-            self.toolbarItems = self.qtcStep2MenuItems;
-        }
-        return;
-    }
-    if (buttonIndex == 0) {
-        if (alertView.tag != CALIBRATION_ALERTVIEW) {
-            // calibrate cancel returns to calibrate menu, otherwise...
-            [self selectMainToolbar];
-        }
-        return;
-    }
-    if (alertView.tag == CALIBRATION_ALERTVIEW) {
-        NSString *rawText = [[alertView textFieldAtIndex:0] text];
-        if (rawText.length > 0) {
-            [self calibrateWithText:rawText];
-        }
-        else {
-            badValue = YES;
-        }
-    }
-    else if (alertView.tag == MEAN_RR_ALERTVIEW || alertView.tag == MEAN_RR_FOR_QTC_ALERTVIEW) {
-        NSString *rawText = [[alertView textFieldAtIndex:0] text];
-        int divisor = [rawText intValue];
-        if (divisor > 0) {
-            Caliper *c = self.calipersView.activeCaliper;
-            if (c == nil) {
-                return;
-            }
-            double intervalResult = fabs(c.intervalResult);
-            double meanRR = intervalResult / divisor;
-            double meanRate = [c rateResult:meanRR];
-            if (alertView.tag == MEAN_RR_ALERTVIEW) {
-                UIAlertView *resultAlertView = [[UIAlertView alloc] initWithTitle:L(@"Mean Interval and Rate") message:[NSString localizedStringWithFormat:L(@"Mean interval = %.4g %@\nMean rate = %.4g bpm"), meanRR, [c.calibration rawUnits], meanRate] delegate:nil cancelButtonTitle:OK otherButtonTitles: nil];
-                resultAlertView.alertViewStyle = UIAlertActionStyleDefault;
-                [resultAlertView show];
-            }
-            else {
-                self.rrIntervalForQTc = [c intervalInSecs:meanRR];
-            }
-        }
-        else {
-            badValue = YES;
-        }
-    }
-    if (badValue) {
-        [self showBadValueDialog];
-        if (alertView.tag != CALIBRATION_ALERTVIEW) {
-            // calibrate cancel returns to calibrate menu, otherwise...
-            [self selectMainToolbar];
-        }
-    }
-}
 
 - (void)calibrateWithText:(NSString *)rawText {
     if (rawText.length > 0) {
