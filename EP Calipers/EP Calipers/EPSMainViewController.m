@@ -25,7 +25,7 @@
 #define MAX_ZOOM 10.0
 #define MOVEMENT 1.0f
 #define MICRO_MOVEMENT 0.1f
-#define MAX_BLACKVIEW_ALPHA 0.5f
+#define MAX_BLACKVIEW_ALPHA 0.4f
 
 #define CALIBRATE_IPAD L(@"Calibrate")
 #define CALIBRATE_IPHONE L(@"Calibrate")
@@ -163,8 +163,10 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icons8-menu-filled-30"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.toolbar.translucent = YES;
-
+    self.navigationController.navigationBar.backgroundColor = [UIColor cyanColor];
+    [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
+    self.navigationController.toolbar.tintColor = [UIColor whiteColor];
+    self.navigationController.toolbar.translucent = NO;
 
     self.isCalipersView = YES;
     
