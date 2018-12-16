@@ -147,15 +147,21 @@
         
     self.rrIntervalForQTc = 0.0;
     self.inQtc = NO;
-    
-    
+
+    // Add a little contrast, for Pete's sake.
+    self.imageView.backgroundColor = [UIColor lightGrayColor];
     [self.imageView setHidden:YES];  // hide view until it is rescaled
+
+    // hide hamburger menu
+    self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
+    self.hamburgerMenuIsOpen = NO;
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
 //    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
 //    self.navigationItem.rightBarButtonItem = btn;
     self.navigationItem.rightBarButtonItem = addCaliperButton;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:SWITCH_IPAD compactSize:SWITCH_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icons8-menu-filled-30"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
+//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:SWITCH_IPAD compactSize:SWITCH_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.toolbar.translucent = NO;
@@ -167,11 +173,8 @@
     self.firstRun = YES;
     
     self.wasLaunchedFromUrl = NO;
-    
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(viewBackToForeground)
-                                                 name:UIApplicationWillEnterForegroundNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewBackToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 
 }
 
@@ -334,6 +337,39 @@
     [actionSheet addAction:cancelAction];
     actionSheet.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItem;
     [self presentViewController:actionSheet animated:YES completion:nil];
+}
+
+- (void)toggleHamburgerMenu {
+    if (self.hamburgerMenuIsOpen) {
+        [self hideHamburgerMenu];
+    }
+    else {
+        [self showHamburgerMenu];
+    }
+    
+}
+- (void)showHamburgerMenu {
+    self.constraintHamburgerLeft.constant = 0;
+    self.hamburgerMenuIsOpen = YES;
+    [self.navigationController setToolbarHidden:YES animated:YES];
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (void)hideHamburgerMenu {
+    self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
+    self.hamburgerMenuIsOpen = NO;
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    self.navigationItem.rightBarButtonItem.enabled = YES;
+    [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
+        [self.view layoutIfNeeded];
+    }];
+}
+
+- (void)showHelp {
+    [self performSegueWithIdentifier:@"WebViewSegue" sender:self];
 }
 
 // Help menu, etc.

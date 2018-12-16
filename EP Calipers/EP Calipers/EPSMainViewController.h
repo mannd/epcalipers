@@ -25,6 +25,8 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet CalipersView *calipersView;
 @property (strong, nonatomic) IBOutlet UIView *imageContainerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintHamburgerLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintHamburgerWidth;
 
 @property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
 @property (strong, nonatomic) UIBarButtonItem *mRRButton;
@@ -69,6 +71,7 @@
 @property (nonatomic) BOOL firstRun;
 @property (nonatomic) BOOL launchFromURL;
 @property (strong, nonatomic) NSURL *launchURL;
+@property (nonatomic) BOOL hamburgerMenuIsOpen;
 
 @property (nonatomic) BOOL isCalipersView;
 

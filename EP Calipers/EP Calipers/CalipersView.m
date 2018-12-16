@@ -156,9 +156,8 @@
     }
 }
 
-
-
 - (void)dragging:(UIPanGestureRecognizer *)p {
+    EPSLog(@"dragging");
     CGPoint location = [p locationInView:self];
     static Caliper *selectedCaliper = nil;
     static BOOL bar1Selected = NO;
