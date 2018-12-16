@@ -27,11 +27,11 @@
 #define MICRO_MOVEMENT 0.1f
 
 #define CALIBRATE_IPAD L(@"Calibrate")
-#define CALIBRATE_IPHONE L(@"Cal")
+#define CALIBRATE_IPHONE L(@"Calibrate")
 #define TOGGLE_INT_RATE_IPAD L(@"Interval/Rate")
-#define TOGGLE_INT_RATE_IPHONE L(@"I/R")
+#define TOGGLE_INT_RATE_IPHONE L(@"Int/Rate")
 #define MEAN_RATE_IPAD L(@"Mean Rate")
-#define MEAN_RATE_IPHONE L(@"MRate")
+#define MEAN_RATE_IPHONE L(@"MeanRate")
 #define HELP L(@"Help")
 #define CANCEL L(@"Cancel")
 #define ABOUT L(@"About")
@@ -78,6 +78,8 @@
 #define IMAGE_VIEW_TITLE L(@"Image Mode")
 
 #define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
+
+#define FLEX_SPACE [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]
 
 
 
@@ -148,9 +150,11 @@
     
     
     [self.imageView setHidden:YES];  // hide view until it is rescaled
-    
-    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
-    self.navigationItem.rightBarButtonItem = btn;
+
+    UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
+//    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
+//    self.navigationItem.rightBarButtonItem = btn;
+    self.navigationItem.rightBarButtonItem = addCaliperButton;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:SWITCH_IPAD compactSize:SWITCH_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(switchView)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
     self.navigationController.navigationBar.translucent = NO;
@@ -318,6 +322,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)showAddCaliperMenu {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Add Caliper" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* timeCaliperAction = [UIAlertAction actionWithTitle:L(@"Time Caliper") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addHorizontalCaliper];}];
+    [actionSheet addAction:timeCaliperAction];
+    UIAlertAction* amplitudeCaliperAction = [UIAlertAction actionWithTitle:@"Amplitude Caliper" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addVerticalCaliper];}];
+    [actionSheet addAction:amplitudeCaliperAction];
+    UIAlertAction* angleCaliperAction = [UIAlertAction actionWithTitle:@"Angle Caliper" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addAngleCaliper];}];
+    [actionSheet addAction:angleCaliperAction];
+    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:nil];
+    [actionSheet addAction:cancelAction];
+    actionSheet.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItem;
+    [self presentViewController:actionSheet animated:YES completion:nil];
+}
+
 // Help menu, etc.
 - (void)showSecondaryMenu {
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -362,19 +380,23 @@
 }
 
 - (void)createMainToolbar {
-    UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
+//    UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
     self.calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
-    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:MORE style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreToolbar)];
-    self.mainMenuItems = [NSArray arrayWithObjects:addCaliperButton,
+//    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:MORE style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreToolbar)];
+    self.mainMenuItems = [NSArray arrayWithObjects://addCaliperButton,
                           self.calibrateCalipersButton,
+                          FLEX_SPACE,
                           self.toggleIntervalRateButton,
+                          FLEX_SPACE,
                           self.mRRButton,
+                          FLEX_SPACE,
                           self.qtcButton,
                           /* self.brugadaButton ? */
-                          moreButton, nil];
+                          //moreButton,
+                          nil];
 }
 
 - (void)createImageToolbar {
