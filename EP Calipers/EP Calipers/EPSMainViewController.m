@@ -25,6 +25,7 @@
 #define MAX_ZOOM 10.0
 #define MOVEMENT 1.0f
 #define MICRO_MOVEMENT 0.1f
+#define MAX_BLACKVIEW_ALPHA 0.5f
 
 #define CALIBRATE_IPAD L(@"Calibrate")
 #define CALIBRATE_IPHONE L(@"Calibrate")
@@ -155,6 +156,7 @@
     // hide hamburger menu
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
+    self.blackView.alpha = 0;
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
 //    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
@@ -355,6 +357,7 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
+        self.blackView.alpha = MAX_BLACKVIEW_ALPHA;
     }];
 }
 
@@ -365,6 +368,7 @@
     self.navigationItem.rightBarButtonItem.enabled = YES;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
+        self.blackView.alpha = 0;
     }];
 }
 

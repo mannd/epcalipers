@@ -66,6 +66,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
                                 <gestureRecognizers/>
                             </view>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Day-lu-Opi">
+                                <rect key="frame" x="0.0" y="20" width="375" height="603"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MbT-x5-FOE">
                                 <rect key="frame" x="0.0" y="20" width="250" height="603"/>
                                 <constraints>
@@ -79,8 +83,11 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="BY4-Fr-5cz" firstAttribute="bottom" secondItem="D98-VW-HwH" secondAttribute="bottom" id="10L-uH-NeD"/>
+                            <constraint firstItem="BY4-Fr-5cz" firstAttribute="trailing" secondItem="Day-lu-Opi" secondAttribute="trailing" id="611-Eo-GwK"/>
+                            <constraint firstItem="Day-lu-Opi" firstAttribute="leading" secondItem="BY4-Fr-5cz" secondAttribute="leading" id="6Dh-d6-woF"/>
                             <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7mg-co-GHU"/>
                             <constraint firstAttribute="bottom" secondItem="X5X-Yr-OYx" secondAttribute="bottom" id="Afo-Q6-Sib"/>
+                            <constraint firstItem="BY4-Fr-5cz" firstAttribute="bottom" secondItem="Day-lu-Opi" secondAttribute="bottom" id="BXI-tN-0AC"/>
                             <constraint firstItem="BY4-Fr-5cz" firstAttribute="bottom" secondItem="MbT-x5-FOE" secondAttribute="bottom" id="HFz-lT-ISS"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="leading" secondItem="BY4-Fr-5cz" secondAttribute="leading" id="Rln-Xy-rlQ"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailing" secondItem="BY4-Fr-5cz" secondAttribute="trailing" id="W4Y-nF-S1C"/>
@@ -89,6 +96,7 @@
                             <constraint firstItem="MbT-x5-FOE" firstAttribute="top" secondItem="BY4-Fr-5cz" secondAttribute="top" id="nw0-Go-CFa"/>
                             <constraint firstItem="D98-VW-HwH" firstAttribute="leading" secondItem="BY4-Fr-5cz" secondAttribute="leading" id="qp0-qs-gBY"/>
                             <constraint firstItem="BY4-Fr-5cz" firstAttribute="trailing" secondItem="D98-VW-HwH" secondAttribute="trailing" id="tYO-h2-XFY"/>
+                            <constraint firstItem="Day-lu-Opi" firstAttribute="top" secondItem="BY4-Fr-5cz" secondAttribute="top" id="tq3-0S-e7h"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BY4-Fr-5cz"/>
                     </view>
@@ -96,6 +104,7 @@
                     <navigationItem key="navigationItem" id="zAQ-bd-wcX"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics" translucent="NO"/>
                     <connections>
+                        <outlet property="blackView" destination="Day-lu-Opi" id="fnp-LB-3P0"/>
                         <outlet property="calipersView" destination="D98-VW-HwH" id="EQE-il-SPF"/>
                         <outlet property="constraintHamburgerLeft" destination="eia-zO-IKX" id="Qke-OW-uGD"/>
                         <outlet property="constraintHamburgerWidth" destination="aVl-LS-2Pq" id="Bcu-46-7LJ"/>

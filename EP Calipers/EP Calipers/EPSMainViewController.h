@@ -27,6 +27,7 @@
 @property (strong, nonatomic) IBOutlet UIView *imageContainerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintHamburgerLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintHamburgerWidth;
+@property (weak, nonatomic) IBOutlet UIView *blackView;
 
 @property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
 @property (strong, nonatomic) UIBarButtonItem *mRRButton;
