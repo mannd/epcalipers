@@ -150,7 +150,7 @@
     self.inQtc = NO;
 
     // Add a little contrast, for Pete's sake.
-    self.imageView.backgroundColor = [UIColor lightGrayColor];
+    self.imageView.backgroundColor = [UIColor whiteColor];
     [self.imageView setHidden:YES];  // hide view until it is rescaled
 
     // hide hamburger menu
@@ -159,14 +159,11 @@
     self.blackView.alpha = 0;
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
-//    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showSecondaryMenu)];
-//    self.navigationItem.rightBarButtonItem = btn;
     self.navigationItem.rightBarButtonItem = addCaliperButton;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icons8-menu-filled-30"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
-//    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:SWITCH_IPAD compactSize:SWITCH_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.toolbar.translucent = NO;
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.toolbar.translucent = YES;
 
 
     self.isCalipersView = YES;
@@ -490,8 +487,11 @@
     UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:CLEAR style:UIBarButtonItemStylePlain target:self action:@selector(clearCalibration)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
 
-    
-    self.calibrateMenuItems = [NSArray arrayWithObjects:setButton, clearButton, cancelButton, nil];
+    self.calibrateMenuItems = [NSArray arrayWithObjects:setButton,
+                               FLEX_SPACE,
+                               clearButton,
+                               FLEX_SPACE,
+                               cancelButton, nil];
 }
 
 - (void)createQTcStep1Toolbar {
