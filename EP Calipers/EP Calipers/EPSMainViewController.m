@@ -323,12 +323,12 @@
 }
 
 - (void)showAddCaliperMenu {
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"Add Caliper" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:L(@"Add Caliper") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* timeCaliperAction = [UIAlertAction actionWithTitle:L(@"Time Caliper") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addHorizontalCaliper];}];
     [actionSheet addAction:timeCaliperAction];
-    UIAlertAction* amplitudeCaliperAction = [UIAlertAction actionWithTitle:@"Amplitude Caliper" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addVerticalCaliper];}];
+    UIAlertAction* amplitudeCaliperAction = [UIAlertAction actionWithTitle:L(@"Amplitude Caliper") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addVerticalCaliper];}];
     [actionSheet addAction:amplitudeCaliperAction];
-    UIAlertAction* angleCaliperAction = [UIAlertAction actionWithTitle:@"Angle Caliper" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addAngleCaliper];}];
+    UIAlertAction* angleCaliperAction = [UIAlertAction actionWithTitle:L(@"Angle Caliper") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addAngleCaliper];}];
     [actionSheet addAction:angleCaliperAction];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:nil];
     [actionSheet addAction:cancelAction];

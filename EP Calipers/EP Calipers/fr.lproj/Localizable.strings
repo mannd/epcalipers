@@ -23,7 +23,9 @@
 "Cal" = "Étal";
 "Interval/Rate" = "Intervalle/FC";
 "I/R" = "Int/FC";
+"Int/Rate" = "Int/FC";
 "Mean Rate" = "FCM";
+"MeanRate" = "FCM";
 "MRate" = "FCM";
 "More" = "Plus";
 "Time" = "Temps";
@@ -74,6 +76,9 @@
 "No Time Caliper Selected" = "Compas de temps pas choisi";
 "Select a time caliper to measure one or more RR intervals." = "Choisir un compas pour mesurer un (ou plus) intervalle RR.";
 "Angle Caliper" = "Compas d'angle";
+"Time Caliper" = "Compas de temps";
+"Amplitude Caliper" = "Compas d'amplitude";
+"Add Caliper" = "Ajouter un compas";
 "Negatively Valued Caliper" = "Compas à valeur négative";
 "No Calipers To Use" = "Pas de compas à utiliser";
 "Bad Input" = "Mauvaise entrée";

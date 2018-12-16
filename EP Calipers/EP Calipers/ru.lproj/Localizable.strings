@@ -23,8 +23,10 @@
 /*"Cal" = "Счет";*/
 "Interval/Rate" = "Интервал/Частота";
 "I/R" = "И/Ч";
+"Int/Rate" = "И/Ч";
 "Mean Rate" = "Средняя частота";
 /*"MRate" = "срЧастота";*/
+"MeanRate" = "срЧСС";
 "MRate" = "срЧСС";
 "More" = "Ещё";
 "Time" = "Время";
@@ -88,6 +90,10 @@
 "No Time Caliper Selected" = "Время калипера не выбрано";
 "Select a time caliper to measure one or more RR intervals." = "Для измерения одного или более RR интервалов выберите время калипера";
 "Angle Caliper" = "Угол калипера";
+"Time Caliper" = "Время калипера";
+"Amplitude Caliper" = "Амплитуда калипера";
+"Add Caliper" = "Добавить калипер";
+
 "Negatively Valued Caliper" = "Отрицательное значение калипера";
 "No Calipers To Use" = "Нет калиперов для использования";
 
