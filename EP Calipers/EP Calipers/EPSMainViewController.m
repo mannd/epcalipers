@@ -150,7 +150,7 @@
     self.inQtc = NO;
 
     // Add a little contrast, for Pete's sake.
-    self.imageView.backgroundColor = [UIColor whiteColor];
+    self.imageView.backgroundColor = [UIColor lightGrayColor];
     [self.imageView setHidden:YES];  // hide view until it is rescaled
 
     // hide hamburger menu
@@ -160,13 +160,23 @@
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
     self.navigationItem.rightBarButtonItem = addCaliperButton;
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"icons8-menu-filled-30"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
+    // icon from https://icons8.com/icon/set/hamburger/ios
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
-    self.navigationController.navigationBar.translucent = YES;
-    self.navigationController.navigationBar.backgroundColor = [UIColor cyanColor];
+
+    // TODO: play with this color.
+    UIColor *barColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.navigationBar.backgroundColor = barColor;
+
+    // Below uses a white on black color
     [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
     self.navigationController.toolbar.tintColor = [UIColor whiteColor];
+
+    // Note that toolbar background colors don't work.  See
+    // https://stackoverflow.com/questions/4996906/uitoolbar-with-reduced-alpha-want-uibarbuttonitem-to-have-alpha-1/26642590#26642590
     self.navigationController.toolbar.translucent = NO;
+//    [self.navigationController.toolbar setBackgroundImage:[self onePixelImageWithColor:[barColor colorWithAlphaComponent:0.2]] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
 
     self.isCalipersView = YES;
     
@@ -179,6 +189,18 @@
 
 }
 
+- (UIImage *)onePixelImageWithColor:(UIColor *)color {
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(NULL, 1, 1, 8, 0, colorSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, CGRectMake(0, 0, 1, 1));
+    CGImageRef imgRef = CGBitmapContextCreateImage(context);
+    UIImage *image = [UIImage imageWithCGImage:imgRef];
+    CGImageRelease(imgRef);
+    CGContextRelease(context);
+    CGColorSpaceRelease(colorSpace);
+    return image;
+}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -353,6 +375,7 @@
     self.constraintHamburgerLeft.constant = 0;
     self.hamburgerMenuIsOpen = YES;
     [self.navigationController setToolbarHidden:YES animated:YES];
+    [self.calipersView setUserInteractionEnabled:NO];
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
@@ -363,6 +386,7 @@
 - (void)hideHamburgerMenu {
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
+    [self.calipersView setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO animated:YES];
     self.navigationItem.rightBarButtonItem.enabled = YES;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
@@ -373,6 +397,10 @@
 
 - (void)showHelp {
     [self performSegueWithIdentifier:@"WebViewSegue" sender:self];
+}
+
+- (void)showAbout {
+    [About show];
 }
 
 // Help menu, etc.
@@ -1067,9 +1095,16 @@
     if (self.isIpad) {
         picker.allowsEditing = NO;
     }
-    else{
+    else {
         picker.allowsEditing = YES;
     }
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        EPSLog(@"Camera not available");
+        [Alert showSimpleAlertWithTitle:@"Camera not available" message:@"Camera is not available on this device." viewController:self];
+        return;
+    }
+
+
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:picker animated:YES completion:NULL];
 }

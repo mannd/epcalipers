@@ -143,4 +143,8 @@
 
 "Invalid Result" = "Недопустимый результат";
 
+/* new strings EPCalipers-3 */
+
+"Camera not available" = "Camera not available";
+"Camera not available on this device" = "Camera not available on this device";
 

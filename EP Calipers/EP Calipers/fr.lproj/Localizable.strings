@@ -108,5 +108,10 @@
 "Repeat QT" = "Répéter QT";
 "Invalid Result" = "Résultat invalide";
 
+/* new strings EPCalipers-3 */
+
+"Camera not available" = "Caméra non disponible";
+"Camera not available on this device" = "Aucune caméra n'est disponible pour cet appareil.";
+
 
 

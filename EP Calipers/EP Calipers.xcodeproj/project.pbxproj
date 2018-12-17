@@ -16,6 +16,8 @@
 		8E172D971F9C205200CD50D6 /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
 		8E365C1D21C5B7E300CD11B3 /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E365C1C21C5B7E300CD11B3 /* Alert.m */; };
 		8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BBC541EA0340200ECB992 /* CaliperFactory.m */; };
+		8E3F384C21C737AE003A944E /* HamburgerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F384B21C737AE003A944E /* HamburgerViewModel.m */; };
+		8E3F384F21C73819003A944E /* HamburgerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F384E21C73819003A944E /* HamburgerLayer.m */; };
 		8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E559EA81ACD9262004A6F91 /* Launch Screen.xib */; };
 		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
 		8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */; };
@@ -28,7 +30,6 @@
 		8EA170CE21C6C64A0082783D /* EcgImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA170CD21C6C64A0082783D /* EcgImageView.m */; };
 		8EA170D121C6CDEF0082783D /* HamburgerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA170D021C6CDEF0082783D /* HamburgerTableViewController.m */; };
 		8EA170D421C6D0690082783D /* HamburgerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA170D321C6D0690082783D /* HamburgerCell.m */; };
-		8EA170D621C6ED6C0082783D /* icons8-menu-filled-30.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EA170D521C6ED6B0082783D /* icons8-menu-filled-30.png */; };
 		8EB3DE391AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
 		8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE3D1AC616C0009376AD /* Settings.m */; };
 		8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB3DE401AC9A488009376AD /* Settings.bundle */; };
@@ -70,6 +71,10 @@
 		8E365C1C21C5B7E300CD11B3 /* Alert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
 		8E3BBC531EA0340200ECB992 /* CaliperFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaliperFactory.h; sourceTree = "<group>"; };
 		8E3BBC541EA0340200ECB992 /* CaliperFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaliperFactory.m; sourceTree = "<group>"; };
+		8E3F384A21C737AE003A944E /* HamburgerViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HamburgerViewModel.h; sourceTree = "<group>"; };
+		8E3F384B21C737AE003A944E /* HamburgerViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerViewModel.m; sourceTree = "<group>"; };
+		8E3F384D21C73819003A944E /* HamburgerLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HamburgerLayer.h; sourceTree = "<group>"; };
+		8E3F384E21C73819003A944E /* HamburgerLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerLayer.m; sourceTree = "<group>"; };
 		8E559EA81ACD9262004A6F91 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		8E5A8F6F1ACC7A54000EEA89 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		8E5A8F701ACC7A54000EEA89 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
@@ -97,7 +102,6 @@
 		8EA170D021C6CDEF0082783D /* HamburgerTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerTableViewController.m; sourceTree = "<group>"; };
 		8EA170D221C6D0690082783D /* HamburgerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HamburgerCell.h; sourceTree = "<group>"; };
 		8EA170D321C6D0690082783D /* HamburgerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerCell.m; sourceTree = "<group>"; };
-		8EA170D521C6ED6B0082783D /* icons8-menu-filled-30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icons8-menu-filled-30.png"; path = "../../../../Downloads/icons8-menu-filled-30.png"; sourceTree = "<group>"; };
 		8EB2F65D1EF6EF09003B82A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FCColorPickerViewController.xib; sourceTree = "<group>"; };
 		8EB2F65E1EF6EF7C003B82A6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/FCColorPickerViewController.strings; sourceTree = "<group>"; };
 		8EB3DE351AC344CC009376AD /* EPSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSLogging.h; sourceTree = "<group>"; };
@@ -163,6 +167,7 @@
 		8E14235A1AB5F16A00CC15BC /* EP Calipers */ = {
 			isa = PBXGroup;
 			children = (
+				8E3F384921C736BC003A944E /* ViewModels */,
 				8E16B57220016B6A004202D1 /* Other */,
 				8E16B57020016A98004202D1 /* Calipers */,
 				8E16B56F200169DD004202D1 /* ViewControllers */,
@@ -249,7 +254,6 @@
 		8E16B57220016B6A004202D1 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				8EA170D521C6ED6B0082783D /* icons8-menu-filled-30.png */,
 				8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */,
 				8EB3DE351AC344CC009376AD /* EPSLogging.h */,
 				8E14235F1AB5F16A00CC15BC /* AppDelegate.h */,
@@ -272,6 +276,17 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8E3F384921C736BC003A944E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8E3F384A21C737AE003A944E /* HamburgerViewModel.h */,
+				8E3F384B21C737AE003A944E /* HamburgerViewModel.m */,
+				8E3F384D21C73819003A944E /* HamburgerLayer.h */,
+				8E3F384E21C73819003A944E /* HamburgerLayer.m */,
+			);
+			name = ViewModels;
 			sourceTree = "<group>";
 		};
 		8ECEDF561E89F4F800288EDE /* ColorPicker */ = {
@@ -391,7 +406,6 @@
 				8E9BA12E1EF47D1C00FC8DD2 /* Localizable.strings in Resources */,
 				8E9BA1371EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib in Resources */,
 				8ECEDF5D1E89F62000288EDE /* colormap.png in Resources */,
-				8EA170D621C6ED6C0082783D /* icons8-menu-filled-30.png in Resources */,
 				8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */,
 				8E9BA1361EF6BED700FC8DD2 /* EPCalipers-help in Resources */,
 				8E9F71ED1F19CA1A00029BED /* InfoPlist.strings in Resources */,
@@ -422,6 +436,8 @@
 				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
 				8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */,
 				8EA170D121C6CDEF0082783D /* HamburgerTableViewController.m in Sources */,
+				8E3F384C21C737AE003A944E /* HamburgerViewModel.m in Sources */,
+				8E3F384F21C73819003A944E /* HamburgerLayer.m in Sources */,
 				8ECEDF681E8A1A1A00288EDE /* About.m in Sources */,
 				8EA170D421C6D0690082783D /* HamburgerCell.m in Sources */,
 				8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */,

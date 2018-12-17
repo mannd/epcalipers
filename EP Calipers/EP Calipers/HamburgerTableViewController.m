@@ -8,6 +8,9 @@
 
 #import "HamburgerTableViewController.h"
 #import "HamburgerCell.h"
+#import "HamburgerViewModel.h"
+#import "EPSMainViewController.h"
+#import "EPSLogging.h"
 
 @interface HamburgerTableViewController ()
 
@@ -23,6 +26,8 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    HamburgerViewModel* viewModel = [[HamburgerViewModel alloc] init];
+    self.rows = [viewModel allLayers];
 }
 
 #pragma mark - Table view data source
@@ -32,49 +37,22 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return [self.rows count];
 }
 
+// TODO: check if camera available on device, see createImageMenu
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HamburgerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HamburgerCell" forIndexPath:indexPath];
-    cell.label.text = @"Test";
+    HamburgerLayer* row = self.rows[indexPath.row];
+
+
+
+
+    cell.label.text = row.name;
+    cell.icon.image = [UIImage imageNamed:row.iconName];
 
     return cell;
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 /*
 #pragma mark - Navigation
@@ -85,5 +63,36 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Delegates
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    EPSMainViewController *mainViewController = (EPSMainViewController *)self.parentViewController;
+    [mainViewController hideHamburgerMenu];
+    EPSLog(@"row %ld selected", (long)indexPath.row);
+
+    switch (indexPath.row) {
+        // FiXME: make sure camera is available
+        case Camera:
+            [mainViewController takePhoto];
+            break;
+        case PhotoGallery:
+            [mainViewController selectPhoto];
+            break;
+        case SampleEcg:
+            [mainViewController loadDefaultImage];
+            break;
+        case Preferences:
+            [mainViewController openSettings];
+            break;
+        case Help:
+            [mainViewController showHelp];
+            break;
+        case About:
+            [mainViewController showAbout];
+            break;
+        default:
+            break;
+    }
+}
 
 @end

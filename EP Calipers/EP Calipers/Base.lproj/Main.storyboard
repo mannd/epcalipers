@@ -63,15 +63,15 @@
                                 </constraints>
                             </scrollView>
                             <view opaque="NO" contentMode="scaleToFill" restorationIdentifier="CalipersViewID" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <gestureRecognizers/>
                             </view>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Day-lu-Opi">
-                                <rect key="frame" x="0.0" y="20" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MbT-x5-FOE">
-                                <rect key="frame" x="0.0" y="20" width="250" height="603"/>
+                                <rect key="frame" x="0.0" y="20" width="250" height="647"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="aVl-LS-2Pq"/>
                                 </constraints>
@@ -102,7 +102,6 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="zAQ-bd-wcX"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="blackView" destination="Day-lu-Opi" id="fnp-LB-3P0"/>
                         <outlet property="calipersView" destination="D98-VW-HwH" id="EQE-il-SPF"/>
@@ -122,10 +121,11 @@
         <scene sceneID="JpE-YD-Lql">
             <objects>
                 <tableViewController id="vgL-pG-7pH" customClass="HamburgerTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="jFn-S1-rEl">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="603"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="jFn-S1-rEl">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="separatorInset" minX="55" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HamburgerCell" id="rSL-Ip-4BB" customClass="HamburgerCell">
                                 <rect key="frame" x="0.0" y="28" width="250" height="44"/>
@@ -135,19 +135,25 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAB-Gp-MiX">
-                                            <rect key="frame" x="16" y="11.5" width="42" height="21"/>
+                                            <rect key="frame" x="55" y="11.5" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" image="icons8-google-images-30.png" translatesAutoresizingMaskIntoConstraints="NO" id="yC0-ut-9Ft">
+                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="sAB-Gp-MiX" firstAttribute="leading" secondItem="Az1-Ox-Gcr" secondAttribute="leadingMargin" id="OQ2-Ab-srU"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="sAB-Gp-MiX" secondAttribute="trailing" constant="20" symbolic="YES" id="exW-HR-oec"/>
+                                        <constraint firstItem="yC0-ut-9Ft" firstAttribute="centerY" secondItem="Az1-Ox-Gcr" secondAttribute="centerY" id="1jW-u2-zxU"/>
+                                        <constraint firstItem="sAB-Gp-MiX" firstAttribute="leading" secondItem="yC0-ut-9Ft" secondAttribute="trailing" constant="10" id="Q6m-DK-xFK"/>
                                         <constraint firstItem="sAB-Gp-MiX" firstAttribute="centerY" secondItem="Az1-Ox-Gcr" secondAttribute="centerY" id="ixt-5p-pdo"/>
+                                        <constraint firstItem="yC0-ut-9Ft" firstAttribute="leading" secondItem="Az1-Ox-Gcr" secondAttribute="leading" constant="15" id="omq-IY-47h"/>
+                                        <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="sAB-Gp-MiX" secondAttribute="trailing" constant="16" id="raT-yM-NPf"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="icon" destination="yC0-ut-9Ft" id="nBM-Wj-rnx"/>
                                     <outlet property="label" destination="sAB-Gp-MiX" id="FQZ-vT-s6U"/>
                                 </connections>
                             </tableViewCell>
@@ -171,7 +177,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-Iu-ikC">
-                                <rect key="frame" x="16" y="20" width="343" height="603"/>
+                                <rect key="frame" x="16" y="20" width="343" height="647"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -195,10 +201,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icons8-google-images-30.png" width="30" height="30"/>
         <image name="sampleECG.jpg" width="1411" height="676"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BOZ-jC-arD"/>
         <segue reference="Xdy-EN-bbI"/>
     </inferredMetricsTieBreakers>
 </document>

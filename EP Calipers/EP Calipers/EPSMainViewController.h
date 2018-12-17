@@ -87,6 +87,13 @@
 @property (nonatomic) CGFloat landscapeHeight;
 
 - (void)openURL:(NSURL *)url;
+- (void)hideHamburgerMenu;
+- (void)takePhoto;
+- (void)selectPhoto;
+- (void)showHelp;
+- (void)loadDefaultImage;
+- (void)showAbout;
+- (void)openSettings;
 
 //@property (nonatomic) CGPDFDocumentRef documentRef;
 @property (nonatomic) int pageNumber;

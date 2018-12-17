@@ -1,17 +1,20 @@
 //
-//  HamburgerTableViewController.h
+//  HamburgerViewModel.h
 //  EP Calipers
 //
 //  Created by David Mann on 12/16/18.
 //  Copyright © 2018 EP Studios. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "HamburgerLayer.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HamburgerTableViewController : UITableViewController
-@property (strong, nonatomic) NSArray* rows;
+@interface HamburgerViewModel : NSObject
+
+- (NSArray *)allLayers;
+
 @end
 
 NS_ASSUME_NONNULL_END

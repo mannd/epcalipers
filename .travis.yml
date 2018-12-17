@@ -4,3 +4,6 @@ osx_image: xcode10.1
 xcode_project: ./EP Calipers/EP Calipers.xcodeproj
 xcode_scheme: EP Calipers
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone XR
+branches:
+  except:
+    - epcalipers-3
