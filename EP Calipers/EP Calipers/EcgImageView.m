@@ -11,29 +11,28 @@
 
 @implementation EcgImageView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self.allowSideSwipe = NO;
-        UIScreenEdgePanGestureRecognizer *screenEdgePanGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(screenEdgePan:)];
-        screenEdgePanGestureRecognizer.edges = UIRectEdgeLeft;
-        screenEdgePanGestureRecognizer.enabled = YES;
-        [self addGestureRecognizer:screenEdgePanGestureRecognizer];
-        self.userInteractionEnabled = self.allowSideSwipe;
+        UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureTap:)];
+        tapGestureRecognizer.enabled = YES;
+        tapGestureRecognizer.delegate = self;
+        [self addGestureRecognizer:tapGestureRecognizer];
+        self.userInteractionEnabled = YES;
     }
     return self;
 }
 
-- (void)screenEdgePan:(id)sender {
-    EPSLog(@"screen edge pan");
+// The other gestures (UIPanGestureRecognizer and UIScreenEdgePanGestureRecognizer) don't
+// work in that they interfere with the panning of the UIImageView in the UIScrollView.
+// I tried various solutions, but none satisfactory.  So unfortunately we end up with a
+// non-swipable hamburger menu.  However UIScrollView doesn't have a tap gesture, so we
+// can use that to close the menu.
+- (void)gestureTap:(id)sender {
+    EPSLog(@"gesture tap");
+    if (self.delegate != nil && self.delegate.hamburgerMenuIsOpen) {
+        [self.delegate hideHamburgerMenu];
+    }
 }
-
 
 @end

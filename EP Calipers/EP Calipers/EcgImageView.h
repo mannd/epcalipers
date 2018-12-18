@@ -10,10 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface EcgImageView : UIImageView
+@protocol HamburgerDelegate <NSObject>
 
-@property (nonatomic) BOOL hamburgerMenuEnabled;
+@property (nonatomic) BOOL hamburgerMenuIsOpen;
+
+- (void)hideHamburgerMenu;
+
+@end
+
+@interface EcgImageView : UIImageView<UIGestureRecognizerDelegate>
+
 @property (nonatomic) BOOL allowSideSwipe;
+@property (nonatomic) BOOL isLeftToRight;
+@property (weak, nonatomic) id <HamburgerDelegate> delegate;
 
 - (id)initWithCoder:(NSCoder *)aDecoder;
 

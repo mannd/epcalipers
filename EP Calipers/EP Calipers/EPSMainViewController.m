@@ -100,7 +100,10 @@
 @implementation EPSMainViewController
 {
     CGPDFDocumentRef pdfRef;
+    // Direction of writing in primary language.
+    BOOL isLeftToRight;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     EPSLog(@"viewDidLoad");
@@ -109,7 +112,8 @@
     
     self.settings = [[Settings alloc] init];
     [self.settings loadPreferences];
-    
+
+
     // fonts
     NSUInteger verySmallFontSize = VERY_SMALL_FONT;
     self.verySmallFont = [UIFont boldSystemFontOfSize:verySmallFontSize];
@@ -127,12 +131,13 @@
     self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
     [self createToolbars];
 
+    self.imageView.delegate = self;
     [self.imageView setContentMode:UIViewContentModeCenter];
     
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.maximumZoomScale = MAX_ZOOM;
-    
+
     self.horizontalCalibration = [[Calibration alloc] init];
     self.horizontalCalibration.direction = Horizontal;
 
@@ -528,22 +533,32 @@
     UILabel *label = [[UILabel alloc] init];
     [label setText:L(@"RR interval(s)?")];
     [label sizeToFit];
+    label.textColor = [UIColor lightGrayColor];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
-    self.qtcStep1MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureRRButton, cancelButton, nil];
+    self.qtcStep1MenuItems = [NSArray arrayWithObjects:labelBarButtonItem,
+                              FLEX_SPACE,
+                              measureRRButton,
+                              FLEX_SPACE,
+                              cancelButton, nil];
 }
 
 - (void)createQTcStep2Toolbar {
     UILabel *label = [[UILabel alloc] init];
     [label setText:L(@"QT interval?")];
     [label sizeToFit];
+    label.textColor = [UIColor lightGrayColor];
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *measureQTButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
-    self.qtcStep2MenuItems = [NSArray arrayWithObjects:labelBarButtonItem, measureQTButton, cancelButton, nil];
+    self.qtcStep2MenuItems = [NSArray arrayWithObjects:labelBarButtonItem,
+                              FLEX_SPACE,
+                              measureQTButton,
+                              FLEX_SPACE,
+                              cancelButton, nil];
 }
 
 - (void)createMoreToolbar {
@@ -776,6 +791,9 @@
                 double intervalResult = fabs(c.intervalResult);
                 double meanRR = intervalResult / divisor;
                 self.rrIntervalForQTc = [c intervalInSecs:meanRR];
+                self.toolbarItems = self.qtcStep2MenuItems;
+                self.calipersView.allowTweakPosition = self.settings.allowTweakDuringQtc;
+                self.inQtc = YES;
             }
             else {
                 [self showBadValueDialog];
@@ -786,9 +804,6 @@
         [calculateMeanRRAlertController addAction:calculateAction];
         [self presentViewController:calculateMeanRRAlertController animated:YES completion:nil];
 
-        self.toolbarItems = self.qtcStep2MenuItems;
-        self.calipersView.allowTweakPosition = self.settings.allowTweakDuringQtc;
-        self.inQtc = YES;
     }
 }
 

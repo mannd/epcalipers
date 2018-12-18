@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CalipersView.h"
+#import "EcgImageView.h"
 #import "Calibration.h"
 #import "Settings.h"
 #import "FCColorPickerViewController.h"
@@ -19,9 +20,9 @@
 - (NSString *)calculateFromQtInSec: (double)qtInSec rrInSec: (double)rrInSec formula: (QTcFormulaPreference)formula convertToMsec: (BOOL)convertToMsec units:(NSString *)units;
 @end
 
-@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, FCColorPickerViewControllerDelegate, CalipersViewDelegate>
+@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, FCColorPickerViewControllerDelegate, CalipersViewDelegate, HamburgerDelegate>
 
-@property (strong, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) IBOutlet EcgImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet CalipersView *calipersView;
 @property (strong, nonatomic) IBOutlet UIView *imageContainerView;
