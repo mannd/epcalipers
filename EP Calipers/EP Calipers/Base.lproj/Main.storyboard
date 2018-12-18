@@ -34,7 +34,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx" customClass="EcgScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c" userLabel="containerView">
@@ -135,13 +135,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAB-Gp-MiX">
-                                            <rect key="frame" x="55" y="11.5" width="42" height="21"/>
+                                            <rect key="frame" x="44" y="11.5" width="42" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" image="icons8-google-images-30.png" translatesAutoresizingMaskIntoConstraints="NO" id="yC0-ut-9Ft">
-                                            <rect key="frame" x="15" y="7" width="30" height="30"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="yC0-ut-9Ft">
+                                            <rect key="frame" x="15" y="14" width="19" height="16"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
@@ -201,11 +201,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icons8-google-images-30.png" width="30" height="30"/>
+        <image name="camera" width="19.200000762939453" height="16.799999237060547"/>
         <image name="sampleECG.jpg" width="1411" height="676"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BOZ-jC-arD"/>
         <segue reference="Xdy-EN-bbI"/>
     </inferredMetricsTieBreakers>
 </document>

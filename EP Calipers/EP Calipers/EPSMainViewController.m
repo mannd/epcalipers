@@ -192,6 +192,9 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewBackToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doLongPress:)];
+    [self.scrollView addGestureRecognizer:longPress];
+
 }
 
 - (UIImage *)onePixelImageWithColor:(UIColor *)color {
@@ -310,6 +313,33 @@
 - (BOOL)usingRussian {
     return [[self applicationLanguage] isEqualToString:@"ru"];
 }
+
+
+- (void)doLongPress:(UILongPressGestureRecognizer *) sender {
+    EPSLog(@"Long press from main");
+    if (sender.state != UIGestureRecognizerStateBegan) {
+        return;
+    }
+    EPSLog(@"Can become first responder %d", [sender.view canBecomeFirstResponder]);
+    [sender.view becomeFirstResponder];
+    CGPoint location = [sender locationInView:sender.view];
+    UIMenuItem *testMenuItem = [[UIMenuItem alloc] initWithTitle:@"test" action:@selector(testAction)];
+    UIMenuItem *test2MenuItem = [[UIMenuItem alloc] initWithTitle:@"test2" action:@selector(test2Action)];
+    UIMenuController.sharedMenuController.menuItems = @[testMenuItem, test2MenuItem];
+    UIView *superView = sender.view.superview;
+    CGRect rect = CGRectMake(location.x, location.y, 0, 0);
+    [UIMenuController.sharedMenuController setTargetRect:rect inView:superView];
+    [UIMenuController.sharedMenuController setMenuVisible:YES animated:YES];
+}
+
+- (void)testAction {
+    [self.scrollView resignFirstResponder];
+}
+
+- (void)test2Action {
+    [self.scrollView resignFirstResponder];
+}
+
 
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
