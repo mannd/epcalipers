@@ -12,9 +12,7 @@
 #import "Calibration.h"
 #import "Settings.h"
 #import "FCColorPickerViewController.h"
-
-
-
+#import "HamburgerTableViewController.h"
 
 @protocol QTcResultProtocol
 - (NSString *)calculateFromQtInSec: (double)qtInSec rrInSec: (double)rrInSec formula: (QTcFormulaPreference)formula convertToMsec: (BOOL)convertToMsec units:(NSString *)units;
@@ -29,6 +27,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintHamburgerLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintHamburgerWidth;
 @property (weak, nonatomic) IBOutlet UIView *blackView;
+
+// We get this view via its embed segue!  See prepareForSegue:
+@property (strong, nonatomic) HamburgerTableViewController *hamburgerViewController;
 
 @property (strong, nonatomic) UIBarButtonItem *toggleIntervalRateButton;
 @property (strong, nonatomic) UIBarButtonItem *mRRButton;
@@ -95,6 +96,8 @@
 - (void)loadDefaultImage;
 - (void)showAbout;
 - (void)openSettings;
+- (void)lockImage;
+- (BOOL)imageIsLocked;
 
 //@property (nonatomic) CGPDFDocumentRef documentRef;
 @property (nonatomic) int pageNumber;

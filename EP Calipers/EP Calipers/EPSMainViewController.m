@@ -15,6 +15,7 @@
 #import "CaliperFactory.h"
 #import "MiniQTcResult.h"
 #import "Alert.h"
+#import "HamburgerTableViewController.h"
 #include "Defs.h"
 
 //:TODO: Make NO for release version
@@ -410,6 +411,7 @@
     
 }
 - (void)showHamburgerMenu {
+    [self.hamburgerViewController reloadData];
     self.constraintHamburgerLeft.constant = 0;
     self.hamburgerMenuIsOpen = YES;
     [self.navigationController setToolbarHidden:YES animated:YES];
@@ -1452,6 +1454,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [Alert showSimpleAlertWithTitle:L(@"Bad Input") message:L(@"Empty input, negative number input, or other bad input.") viewController:self];
 }
 
+// Can only get at this embedded view controller via its segue.
+// See https://stackoverflow.com/questions/29582200/how-do-i-get-the-views-inside-a-container-in-swift.
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier  isEqual: @"EmbedSegue"]) {
+        self.hamburgerViewController = (HamburgerTableViewController *)segue.destinationViewController;
+    }
+}
+
 #pragma mark - Delegate Methods
 
 - (void)calibrateWithText:(NSString *)rawText {
@@ -1582,6 +1592,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
     [self.scrollView setUserInteractionEnabled:!self.calipersView.lockImageScreen];
     [self.calipersView setNeedsDisplay];
+}
+
+- (BOOL)imageIsLocked {
+    return self.calipersView.lockImageScreen;
 }
 
 #pragma mark - CalipersViewDelegate Methods

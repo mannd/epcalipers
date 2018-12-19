@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger, Layer) {
     Camera = 0,
     PhotoGallery,
     SampleEcg,
+    Lock,
     Preferences,
     Help,
     About
@@ -25,8 +26,12 @@ typedef NS_ENUM(NSInteger, Layer) {
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *iconName;
 @property (nonatomic) Layer layer;
+@property (nullable, strong, nonatomic)  NSString *altName;
+@property (nullable, strong, nonatomic) NSString *altIconName;
 
 - (instancetype)initWithName:(NSString *)name iconName:(NSString *)iconName layer:(Layer)layer;
+
+- (instancetype)initWithName:(NSString *)name iconName:(NSString *)iconName layer:(Layer)layer altName:(NSString *)altName altIconName:(NSString *)altIconName;
 
 @end
 

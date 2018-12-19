@@ -13,7 +13,7 @@
 #import "EPSLogging.h"
 
 @interface HamburgerTableViewController ()
-
+@property (weak, nonatomic) EPSMainViewController *mainViewController;
 @end
 
 @implementation HamburgerTableViewController
@@ -28,6 +28,18 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     HamburgerViewModel* viewModel = [[HamburgerViewModel alloc] init];
     self.rows = [viewModel allLayers];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    EPSLog(@"Hamburger will appear");
+    [super viewWillAppear:animated];
+    self.mainViewController = (EPSMainViewController *)self.parentViewController;
+    self.imageIsLocked = [self.mainViewController imageIsLocked];
+}
+
+- (void)reloadData {
+    self.imageIsLocked = [self.mainViewController imageIsLocked];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Table view data source
@@ -45,12 +57,14 @@
     HamburgerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HamburgerCell" forIndexPath:indexPath];
     HamburgerLayer* row = self.rows[indexPath.row];
 
-
-
-
-    cell.label.text = row.name;
-    cell.icon.image = [UIImage imageNamed:row.iconName];
-
+    if (row.layer == Lock && self.imageIsLocked) {
+        cell.label.text = row.altName;
+        cell.icon.image = [UIImage imageNamed:row.altIconName];
+    }
+    else {
+        cell.label.text = row.name;
+        cell.icon.image = [UIImage imageNamed:row.iconName];
+    }
     return cell;
 }
 
@@ -66,29 +80,31 @@
 
 #pragma mark - Delegates
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EPSMainViewController *mainViewController = (EPSMainViewController *)self.parentViewController;
-    [mainViewController hideHamburgerMenu];
+    [self.mainViewController hideHamburgerMenu];
     EPSLog(@"row %ld selected", (long)indexPath.row);
 
     switch (indexPath.row) {
         // FiXME: make sure camera is available
         case Camera:
-            [mainViewController takePhoto];
+            [self.mainViewController takePhoto];
             break;
         case PhotoGallery:
-            [mainViewController selectPhoto];
+            [self.mainViewController selectPhoto];
             break;
         case SampleEcg:
-            [mainViewController loadDefaultImage];
+            [self.mainViewController loadDefaultImage];
+            break;
+        case Lock:
+            [self.mainViewController lockImage];
             break;
         case Preferences:
-            [mainViewController openSettings];
+            [self.mainViewController openSettings];
             break;
         case Help:
-            [mainViewController showHelp];
+            [self.mainViewController showHelp];
             break;
         case About:
-            [mainViewController showAbout];
+            [self.mainViewController showAbout];
             break;
         default:
             break;

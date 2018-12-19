@@ -18,6 +18,8 @@
     [array addObject:selectPhotoLayer];
     HamburgerLayer *sampleEcgLayer = [[HamburgerLayer alloc] initWithName:L(@"Sample ECG") iconName:@"sample" layer:SampleEcg];
     [array addObject:sampleEcgLayer];
+    HamburgerLayer *lockLayer = [[HamburgerLayer alloc] initWithName:L(@"Lock image") iconName:@"lock" layer:Lock altName:L(@"Unlock image") altIconName:@"unlock"];
+    [array addObject:lockLayer];
     HamburgerLayer *preferencesLayer = [[HamburgerLayer alloc] initWithName:L(@"Preferences") iconName:@"settings" layer:Preferences];
     [array addObject:preferencesLayer];
     HamburgerLayer *helpLayer = [[HamburgerLayer alloc] initWithName:L(@"Help") iconName:@"help" layer:Help];

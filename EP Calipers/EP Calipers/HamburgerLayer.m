@@ -16,6 +16,20 @@
         self.name = name;
         self.iconName = iconName;
         self.layer = layer;
+        self.altName = nil;
+        self.altIconName = nil;
+    }
+    return self;
+}
+
+- (instancetype)initWithName:(NSString *)name iconName:(NSString *)iconName layer:(Layer)layer altName:(NSString *)altName altIconName:(NSString *)altIconName {
+    self = [super init];
+    if (self) {
+        self.name = name;
+        self.iconName = iconName;
+        self.layer = layer;
+        self.altName = altName;
+        self.altIconName = altIconName;
     }
     return self;
 }

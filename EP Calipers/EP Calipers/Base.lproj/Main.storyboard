@@ -76,7 +76,7 @@
                                     <constraint firstAttribute="width" constant="250" id="aVl-LS-2Pq"/>
                                 </constraints>
                                 <connections>
-                                    <segue destination="vgL-pG-7pH" kind="embed" id="TZI-Nz-UxU"/>
+                                    <segue destination="vgL-pG-7pH" kind="embed" identifier="EmbedSegue" id="TZI-Nz-UxU"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -125,7 +125,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="250" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <inset key="separatorInset" minX="55" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="separatorInset" minX="48" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HamburgerCell" id="rSL-Ip-4BB" customClass="HamburgerCell">
                                 <rect key="frame" x="0.0" y="28" width="250" height="44"/>
@@ -134,22 +134,22 @@
                                     <rect key="frame" x="0.0" y="0.0" width="250" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAB-Gp-MiX">
-                                            <rect key="frame" x="44" y="11.5" width="42" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Camera" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAB-Gp-MiX">
+                                            <rect key="frame" x="45" y="11.5" width="60" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="yC0-ut-9Ft">
-                                            <rect key="frame" x="15" y="14" width="19" height="16"/>
+                                            <rect key="frame" x="10.5" y="14" width="19" height="16"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="yC0-ut-9Ft" firstAttribute="centerY" secondItem="Az1-Ox-Gcr" secondAttribute="centerY" id="1jW-u2-zxU"/>
-                                        <constraint firstItem="sAB-Gp-MiX" firstAttribute="leading" secondItem="yC0-ut-9Ft" secondAttribute="trailing" constant="10" id="Q6m-DK-xFK"/>
                                         <constraint firstItem="sAB-Gp-MiX" firstAttribute="centerY" secondItem="Az1-Ox-Gcr" secondAttribute="centerY" id="ixt-5p-pdo"/>
-                                        <constraint firstItem="yC0-ut-9Ft" firstAttribute="leading" secondItem="Az1-Ox-Gcr" secondAttribute="leading" constant="15" id="omq-IY-47h"/>
+                                        <constraint firstItem="yC0-ut-9Ft" firstAttribute="centerX" secondItem="Az1-Ox-Gcr" secondAttribute="leading" constant="20" id="omq-IY-47h"/>
                                         <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="sAB-Gp-MiX" secondAttribute="trailing" constant="16" id="raT-yM-NPf"/>
+                                        <constraint firstItem="sAB-Gp-MiX" firstAttribute="leading" secondItem="yC0-ut-9Ft" secondAttribute="centerX" constant="25" id="zln-Qp-5iM"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
