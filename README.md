@@ -23,7 +23,11 @@ Kingston, Ontario, Canada.  It is used with Dr. Baranchuk's permission and encou
 
 The ios-color-picker widget used in this app is Copyright © 2015 by [Fabian Canas](https://github.com/fcanas/ios-color-picker/blob/master/LICENSE).  Its license is the [MIT license](https://opensource.org/licenses/MIT) which is [compatible](https://en.wikipedia.org/wiki/License_compatibility) with the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
 
-French translation by David Mann, Gretchen Mann, Juliet Mann and Jean-Claude Hounou.  Also thanks to Dr. Pierre Taboulet for confirming to me that a cardiologist’s caliper is a "Compas" and not an "Étrier!"
+Many icons in this app were downloaded as free icons from [Icons8](https://icons8.com/icons).  They are used under the [Creative Commons Attribution-NoDerivs 3.0 Unported license](https://creativecommons.org/licenses/by-nd/3.0/).  For more information,see [this site](https://icons8.com/license/).
+
+Right and left arrow icons were made by David Gandy at www.flaticon.com and used under the [Creative Commons BY 3.0 license](http://creativecommons.org/licenses/by/3.0/).
+
+French translation by David Mann, Gretchen Mann, Juliet Mann and Jean-Claude Hounou.  Also thanks to Dr. Pierre Taboulet for confirming to me that a cardiologist's caliper is a "Compas" and not an "Étrier!"
 
 Thanks to Victoria Churilina for the Russian translation.
 

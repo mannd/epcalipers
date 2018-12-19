@@ -156,7 +156,7 @@
     self.inQtc = NO;
 
     // Add a little contrast, for Pete's sake.
-    self.imageView.backgroundColor = [UIColor lightGrayColor];
+    self.imageView.backgroundColor = [UIColor whiteColor];
     [self.imageView setHidden:YES];  // hide view until it is rescaled
 
     // hide hamburger menu
@@ -321,30 +321,38 @@
     if (sender.state != UIGestureRecognizerStateBegan || self.hamburgerMenuIsOpen) {
         return;
     }
-    EPSLog(@"Can become first responder %d", [sender.view canBecomeFirstResponder]);
     [sender.view becomeFirstResponder];
     CGPoint location = [sender locationInView:sender.view];
-    EPSLog(@"location is %f, %f.", location.x, location.y);
     CGPoint offset = self.scrollView.contentOffset;
-    EPSLog(@"offset is %f, %f.", offset.x, offset.y);
-    UIMenuItem *testMenuItem = [[UIMenuItem alloc] initWithTitle:@"test" action:@selector(testAction)];
-    UIMenuItem *test2MenuItem = [[UIMenuItem alloc] initWithTitle:@"test2" action:@selector(test2Action)];
-    UIMenuController.sharedMenuController.menuItems = @[testMenuItem, test2MenuItem];
+    UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:@"Rotate" action:@selector(rotateAction)];
+    UIMenuItem *flipMenuItem = [[UIMenuItem alloc] initWithTitle:@"Flip" action:@selector(flipAction)];
+    UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:@"Reset" action:@selector(resetAction)];
+    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:@"Done" action:@selector(doneMenuAction)];
+    UIMenuController.sharedMenuController.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, doneMenuItem];
     UIView *superView = sender.view.superview;
     CGRect rect = CGRectMake(location.x - offset.x, location.y - offset.y, 0, 0);
     [UIMenuController.sharedMenuController setTargetRect:rect inView:superView];
     [UIMenuController.sharedMenuController setMenuVisible:YES animated:YES];
 }
 
-- (void)testAction {
+- (void)rotateAction {
+    [self selectAdjustImageToolbar];
     [self.scrollView resignFirstResponder];
 }
 
-- (void)test2Action {
+- (void)flipAction {
+    [self flipImage:self];
     [self.scrollView resignFirstResponder];
 }
 
+- (void)resetAction {
+    [self resetImage:self];
+    [self.scrollView resignFirstResponder];
+}
 
+- (void)doneMenuAction {
+    [self.scrollView resignFirstResponder];
+}
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
 
@@ -470,7 +478,6 @@
     [self createMainToolbar];
     [self createImageToolbar];
     [self createAdjustImageToolbar];
-    [self createMoreAdjustImageToolbar];
     [self createAddCalipersToolbar];
     [self createSetupCalibrationToolbar];
     [self createQTcStep1Toolbar];
@@ -527,20 +534,23 @@
   UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"90°L") style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
   UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"1°R") style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
   UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"1°L") style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
-    UIBarButtonItem *moreAdjustButton = [[UIBarButtonItem alloc] initWithTitle:MORE style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreAdjustImageToolbar)];
-    UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Reset") style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
-    UIBarButtonItem *backToImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
+    UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"0.1°R") style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
+    UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"0.1°L") style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
+    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     
-    self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton, rotateImageLeftButton, tweakRightButton, tweakLeftButton, resetImageButton, moreAdjustButton, backToImageMenuButton, nil];
-}
-
-- (void)createMoreAdjustImageToolbar {
-  UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"0.1°R") style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
-  UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"0.1°L") style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
-  UIBarButtonItem *flipImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Flip") style:UIBarButtonItemStylePlain target:self action:@selector(flipImage:)];
-  UIBarButtonItem *resetImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Reset") style:UIBarButtonItemStylePlain target:self action:@selector(resetImage:)];
-    UIBarButtonItem *backToAdjustImageMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(moreAdjustImageDone)];
-    self.moreAdjustImageMenuItems = [NSArray arrayWithObjects:microTweakRightButton, microTweakLeftButton, flipImageButton, resetImageButton, backToAdjustImageMenuButton, nil];
+    self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton,
+                                 FLEX_SPACE,
+                                 rotateImageLeftButton,
+                                 FLEX_SPACE,
+                                 tweakRightButton,
+                                 FLEX_SPACE,
+                                 tweakLeftButton,
+                                 FLEX_SPACE,
+                                 microTweakRightButton,
+                                 FLEX_SPACE,
+                                 microTweakLeftButton,
+                                 FLEX_SPACE,
+                                 backToMainMenuButton, nil];
 }
 
 - (void)createAddCalipersToolbar {
@@ -694,7 +704,6 @@
         [self greatlyShrinkButtonFontSize:self.movementMenuItems];
         [self greatlyShrinkButtonFontSize:self.photoMenuItems];
         [self greatlyShrinkButtonFontSize:self.adjustImageMenuItems];
-        [self slightlyShrinkButtonFontSize:self.moreAdjustImageMenuItems];
         [self slightlyShrinkButtonFontSize:self.moreMenuItems];
         [self slightlyShrinkButtonFontSize:self.colorMenuItems];
         [self slightlyShrinkButtonFontSize:self.tweakMenuItems];
@@ -709,7 +718,6 @@
     [self expandButtonFontSize:self.adjustImageMenuItems];
     if ([self usingRussian]) {
         [self expandButtonFontSize:self.moreMenuItems];
-        [self expandButtonFontSize:self.moreAdjustImageMenuItems];
         [self expandButtonFontSize:self.colorMenuItems];
         [self expandButtonFontSize:self.tweakMenuItems];
         [self expandButtonFontSize:self.addCalipersMenuItems];
@@ -1108,10 +1116,6 @@
     self.toolbarItems = self.adjustImageMenuItems;
 }
 
-- (void)selectMoreAdjustImageToolbar {
-    self.toolbarItems = self.moreAdjustImageMenuItems;
-}
-
 - (void)selectCalibrateToolbar {
     self.toolbarItems = self.calibrateMenuItems;
 }
@@ -1431,19 +1435,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)adjustImageDone {
-//    CGFloat maxImageDimension = 0.0;
-//    if (self.imageView.image.size.width > self.imageView.image.size.height) {
-//        maxImageDimension = self.imageView.image.size.width;
-//    }
-//    else {
-//        maxImageDimension = self.imageView.image.size.height;
-//    }
-    [self selectImageToolbar];
+    [self selectMainToolbar];
     [self.calipersView setNeedsDisplay];
-}
-
-- (void)moreAdjustImageDone {
-    [self selectAdjustImageToolbar];
 }
 
 - (BOOL)isPortraitMode {

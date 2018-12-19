@@ -14,8 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSInteger, Layer) {
     Camera = 0,
     PhotoGallery,
-    SampleEcg,
     Lock,
+    SampleEcg,
+    NextPage,
+    PreviousPage,
     Preferences,
     Help,
     About
