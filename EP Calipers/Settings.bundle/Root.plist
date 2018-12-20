@@ -222,6 +222,16 @@
 				<string>3</string>
 			</array>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Dark Theme</string>
+			<key>Key</key>
+			<string>darkThemePreference</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 	</array>
 </dict>
 </plist>

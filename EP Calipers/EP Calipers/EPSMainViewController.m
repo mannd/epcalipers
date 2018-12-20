@@ -170,19 +170,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
 
-    // TODO: play with this color.
-    UIColor *barColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.backgroundColor = barColor;
-
-    // Below uses a white on black color
-    [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
-    self.navigationController.toolbar.tintColor = [UIColor whiteColor];
-
-    // Note that toolbar background colors don't work.  See
-    // https://stackoverflow.com/questions/4996906/uitoolbar-with-reduced-alpha-want-uibarbuttonitem-to-have-alpha-1/26642590#26642590
-    self.navigationController.toolbar.translucent = NO;
-//    [self.navigationController.toolbar setBackgroundImage:[self onePixelImageWithColor:[barColor colorWithAlphaComponent:0.2]] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
+    [self setupTheme];
 
     self.isCalipersView = YES;
     
@@ -211,6 +199,37 @@
     return image;
 }
 
+- (void)setupTheme {
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.toolbar.translucent = NO;
+    BOOL useDarkTheme = self.settings.darkTheme;
+    if (useDarkTheme) {
+    // TODO: play with this color.
+//    UIColor *barColor = [UIColor whiteColor];
+//    self.navigationController.navigationBar.translucent = NO;
+//    self.navigationController.navigationBar.backgroundColor = barColor;
+
+    // Below uses a white on black color
+    [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
+    self.navigationController.toolbar.tintColor = [UIColor whiteColor];
+
+    // Note that toolbar background colors don't work.  See
+    // https://stackoverflow.com/questions/4996906/uitoolbar-with-reduced-alpha-want-uibarbuttonitem-to-have-alpha-1/26642590#26642590
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    //    [self.navigationController.toolbar setBackgroundImage:[self onePixelImageWithColor:[barColor colorWithAlphaComponent:0.2]] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
+    }
+    else {
+        EPSLog(@"setup light theme");
+        [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
+        [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
+        self.navigationController.toolbar.tintColor = nil;
+        self.navigationController.navigationBar.tintColor = nil;
+        self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
+        self.navigationController.toolbar.backgroundColor = [UIColor whiteColor];
+    }
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
 }
@@ -220,6 +239,7 @@
     NSString *priorHorizontalDefaultCal = [NSString stringWithString:self.settings.defaultCalibration];
     NSString *priorVerticalDefaultCal = [NSString stringWithString:self.settings.defaultVerticalCalibration];
     [self.settings loadPreferences];
+    [self setupTheme];
     self.defaultHorizontalCalChanged = ![priorHorizontalDefaultCal isEqualToString:self.settings.defaultCalibration];
     self.defaultVerticalCalChanged = ![priorVerticalDefaultCal isEqualToString:self.settings.defaultVerticalCalibration];
     [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate autoPositionText:self.settings.autoPositionText timeTextPosition:self.settings.timeTextPosition amplitudeTextPosition:self.settings.amplitudeTextPosition];
@@ -233,8 +253,7 @@
     
     EPSLog(@"Language code using preferredLanguages = %@", [[NSLocale preferredLanguages] firstObject]);
     EPSLog(@"Language code using localizedStrings = %@", [self applicationLanguage]);
-    
-    
+
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO];
 
@@ -515,7 +534,7 @@
     // these 2 buttons only enable for multipage PDFs
     self.nextPageButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"whitenextpage"] style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
     self.previousPageButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"whitepreviouspage"] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
-    UIBarButtonItem *gotoPageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Goto") style:UIBarButtonItemStylePlain target:self action:@selector(gotoPage)];
+    UIBarButtonItem *gotoPageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Go to") style:UIBarButtonItemStylePlain target:self action:@selector(gotoPage)];
     [self enablePageButtons:NO];
     UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     NSArray *array = [NSArray arrayWithObjects: self.previousPageButton, self.nextPageButton, gotoPageButton, backToMainMenuButton, nil];
@@ -1186,6 +1205,7 @@
 }
 
 - (void)loadDefaultImage {
+    [self clearPDF];
     NSURL *url = [[NSBundle mainBundle] URLForResource:@"sampleECG" withExtension:@"jpg"];
     [self openURL:url];
 }
