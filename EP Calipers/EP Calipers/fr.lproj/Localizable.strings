@@ -58,8 +58,8 @@
 "RR interval(s)?" = "Intervalle(s) RR ?";
 "QT interval?" = "Intervalle QT ?";
 "Color" = "Couleur";
-"Tweak" = "Régl";
-"Tweak-iPhone" = "Régl";
+"Tweak" = "Régler";
+"Tweak-iPhone" = "Régler";
 "Tweak-iPad" = "Régler";
 "Lock" = "Immobil";
 "Lock-iPhone" = "Immob";
@@ -112,6 +112,12 @@
 
 "Camera not available" = "Caméra non disponible";
 "Camera not available on this device" = "Aucune caméra n'est disponible pour cet appareil.";
-
-
-
+"Take photo" = "Prendre une photo";
+"Select image" = "Choisir une image";
+"Lock image" = "Immobiliser l'image";
+"Unlock image" = "Débloquer l'image";
+"Sample ECG" = "Exemple ECG";
+"About EP Calipers" = "Sur Compas EP";
+"Rotate" = "Tourner";
+"Go to" = "Aller à";
+"Go to Page..." = "Aller à la page";
