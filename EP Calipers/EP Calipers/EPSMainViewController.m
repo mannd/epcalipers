@@ -813,7 +813,6 @@
                 double meanRR = intervalResult / divisor;
                 self.rrIntervalForQTc = [c intervalInSecs:meanRR];
                 self.toolbarItems = self.qtcStep2MenuItems;
-                self.calipersView.allowTweakPosition = self.settings.allowTweakDuringQtc;
                 self.inQtc = YES;
             }
             else {
@@ -1062,7 +1061,7 @@
 }
 
 - (void)doneTweaking {
-    if (self.inQtc && self.settings.allowTweakDuringQtc) {
+    if (self.inQtc) {
         self.toolbarItems = self.qtcStep2MenuItems;
     }
     else {

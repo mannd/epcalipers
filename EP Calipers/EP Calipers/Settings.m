@@ -22,7 +22,6 @@
         self.defaultCalibration = L(@"1000 msec");
         self.defaultVerticalCalibration = L(@"10 mm");
         self.roundMsecRate = YES;
-        self.allowTweakDuringQtc = NO;
         self.qtcFormula = Bazett;
         self.autoPositionText = YES;
         self.timeTextPosition = CenterAbove;
@@ -56,10 +55,7 @@
     NSString *highlightColorName = [defaults objectForKey:@"highlightColorPreference"];
     self.caliperColor = [colorMap valueForKey:colorName];
     self.highlightColor = [colorMap valueForKey:highlightColorName];
-
     self.roundMsecRate = [defaults boolForKey:@"roundMsecRatePreference"];
-    self.allowTweakDuringQtc = [defaults boolForKey:@"allowTweakDuringQtc"];
-    
     NSString *qtcFormulaName = [defaults objectForKey:@"qtcFormulaPreference"];
     self.qtcFormula = (QTcFormulaPreference)[[qtcFormulaMap valueForKey:qtcFormulaName] integerValue];
     self.autoPositionText = [defaults boolForKey:@"autopositionPreference"];
