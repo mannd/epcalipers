@@ -28,8 +28,6 @@
         [self addGestureRecognizer:doubleTapGestureRecognizer];
         [singleTapGestureRecognizer requireGestureRecognizerToFail:doubleTapGestureRecognizer];
         
-//        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-//        [self addGestureRecognizer:longPressGestureRecognizer];
         self.clearsContextBeforeDrawing = YES;
         self.allowTweakPosition = NO;
         self.lockImageScreen = NO;
@@ -233,31 +231,24 @@
     }
 }
 
-//- (void)handleLongPress:(UILongPressGestureRecognizer *)gesture {
-//    EPSLog(@"Long press");
-//    CGPoint location = [gesture locationInView:self];
-//    if (gesture.state == UIGestureRecognizerStateBegan) {
-//        if (self.allowColorChange) {
-//            for (Caliper *c in self.calipers) {
-//                if ([c pointNearCaliper:location]) {
-//                    [self.delegate chooseColor:c];
-//                    break;
-//                 }
-//             }
-//        }
-//        else if (self.allowTweakPosition) {
-//            for (Caliper *c in self.calipers) {
-//                CaliperComponent component = [c getCaliperComponent:location];
-//                if (component != None) {
-//                    EPSLog(@"Near component");
-//                    [self.delegate tweakComponent:component forCaliper:c];
-//                    break;
-//                }
-//            }
-//        }
-//    }
-//}
+- (Caliper *) caliperNearLocation:(CGPoint)location {
+    for (Caliper *c in self.calipers) {
+        if ([c pointNearCaliper:location]) {
+            return c;
+        }
+    }
+    return nil;
+}
 
+- (BOOL) caliperNearLocationIsTimeCaliper:(CGPoint)location {
+    Caliper *c = [self caliperNearLocation:location];
+    if (c != nil) {
+        return c.isTimeCaliper;
+    }
+    else {
+        return NO;
+    }
+}
 
 - (void)selectCaliperIfNoneSelected {
     if (self.calipers.count > 0 && [self noCaliperIsSelected]) {
@@ -316,38 +307,24 @@
     return [self.calipers count];
 }
 
-// TODO: toggle march on specific caliper selected.
-// necessary to redraw calipersview after this
-- (void)toggleShowMarchingCaliper {
+- (void)toggleShowMarchingCaliper:(CGPoint)location {
     if (self.calipers.count <= 0) {
         self.aCaliperIsMarching = NO;
         return;
     }
-    if (self.aCaliperIsMarching) {
-        for (Caliper *c in self.calipers) {
-            c.marching = NO;
-        }
+    Caliper *selectedCaliper = [self caliperNearLocation:location];
+    if (selectedCaliper != nil && selectedCaliper.marching) {
+        selectedCaliper.marching = NO;
         self.aCaliperIsMarching = NO;
         return;
     }
-    // first try to find a selected Time caliper
-    for (Caliper *c in self.calipers) {
-        if (c.selected && [c isTimeCaliper]) {
-            c.marching = YES;
-            self.aCaliperIsMarching = YES;
-            return;
+    else {
+        for (Caliper *c in self.calipers) {
+            c.marching = NO;
         }
+        selectedCaliper.marching = YES;
+        self.aCaliperIsMarching = YES;
     }
-    // if not, settle for the first Time caliper
-    for (Caliper *c in self.calipers) {
-        if ([c isTimeCaliper]) {
-            c.marching = YES;
-            self.aCaliperIsMarching = YES;
-            return;
-        }
-    }
-    // otherwise give up
-    self.aCaliperIsMarching = NO;
 }
 
 - (BOOL)thereAreNoTimeCalipers {

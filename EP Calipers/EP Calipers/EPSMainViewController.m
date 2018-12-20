@@ -344,9 +344,15 @@
     menu.arrowDirection = UIMenuControllerArrowDefault;
     UIMenuItem *colorMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Color") action:@selector(colorAction)];
     UIMenuItem *tweakMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Tweak") action:@selector(tweakAction)];
-    UIMenuItem *marchMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"March") action:@selector(toggleMarchingCalipers)];
+    UIMenuItem *marchMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"March") action:@selector(marchAction)];
     UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Done") action:@selector(doneMenuAction)];
-    menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, doneMenuItem];
+    // Only include march menu if we are on a time caliper.
+    if ([self.calipersView caliperNearLocationIsTimeCaliper:location]) {
+        menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, doneMenuItem];
+    }
+    else {
+        menu.menuItems = @[colorMenuItem, tweakMenuItem, doneMenuItem];
+    }
     CGRect rect = CGRectMake(location.x, location.y, 0, 0);
     UIView *superView = sender.view.superview;
     [menu setTargetRect:rect inView:superView];
@@ -417,6 +423,8 @@
 }
 
 - (void)marchAction {
+    [self.calipersView toggleShowMarchingCaliper:self.pressLocation];
+    [self.calipersView setNeedsDisplay];
     [self.calipersView resignFirstResponder];
 }
 
@@ -609,15 +617,6 @@
     self.qtcStep2MenuItems = [self spaceoutToolbar:array];
 }
 
-//- (void)createMoreToolbar {
-//    UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Color") style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
-//    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:TWEAK_IPAD compactSize:TWEAK_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
-//    UIBarButtonItem *marchingBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"March") style:UIBarButtonItemStylePlain target:self action:@selector(toggleMarchingCalipers)];
-//    self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:LOCK_IPAD compactSize:LOCK_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
-//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
-//    self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, marchingBarButtonItem, self.lockImageButton, cancelButton, nil];
-//}
-
 - (void)createColorToolbar {
     UILabel *label = [[UILabel alloc] init];
     [label setText:L(@"Long press caliper")];
@@ -717,11 +716,6 @@
   }
 }
 
-- (void)toggleMarchingCalipers{
-    [self.calipersView toggleShowMarchingCaliper];
-    [self.calipersView setNeedsDisplay];
-}
-  
 - (void)toggleIntervalRate {
     self.horizontalCalibration.displayRate = ! self.horizontalCalibration.displayRate;
     [self.calipersView setNeedsDisplay];

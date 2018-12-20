@@ -40,9 +40,11 @@
 - (void)unselectCaliperNoNeedsDisplay:(Caliper *)c;
 - (void)updateCaliperPreferences:(UIColor *)unselectedColor selectedColor:(UIColor*)selectedColor lineWidth:(NSInteger)lineWidth roundMsec:(BOOL)roundMsec autoPositionText:(BOOL)autoPositionText timeTextPosition:(TextPosition)timeTextPosition amplitudeTextPosition:(TextPosition)amplitudeTextPosition;
 - (NSUInteger)count;
-- (void)toggleShowMarchingCaliper;
+- (void)toggleShowMarchingCaliper:(CGPoint)location;
 - (BOOL)canBecomeFirstResponder;
 - (void)changeColor:(CGPoint)location;
 - (void) tweakPosition:(CGPoint)location;
+- (BOOL) caliperNearLocationIsTimeCaliper:(CGPoint)location;
+
 
 @end
