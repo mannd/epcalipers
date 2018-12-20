@@ -322,21 +322,31 @@
         return;
     }
     [sender.view becomeFirstResponder];
+    UIMenuController *menu = UIMenuController.sharedMenuController;
+    menu.arrowDirection = UIMenuControllerArrowDefault;
+    UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Rotate") action:@selector(rotateAction)];
+    UIMenuItem *flipMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Flip") action:@selector(flipAction)];
+    UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Reset") action:@selector(resetAction)];
+    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Done") action:@selector(doneMenuAction)];
+    // Determine if we add PDF menu item.
+    BOOL isMultipagePDF = self.numberOfPages > 1 && pdfRef != NULL;
+    if (isMultipagePDF) {
+        UIMenuItem *pdfMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"PDF") action:@selector(pdfAction)];
+        menu.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, pdfMenuItem, doneMenuItem];
+    }
+    else {
+        menu.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, doneMenuItem];
+    }
     CGPoint location = [sender locationInView:sender.view];
     CGPoint offset = self.scrollView.contentOffset;
-    UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:@"Rotate" action:@selector(rotateAction)];
-    UIMenuItem *flipMenuItem = [[UIMenuItem alloc] initWithTitle:@"Flip" action:@selector(flipAction)];
-    UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:@"Reset" action:@selector(resetAction)];
-    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:@"Done" action:@selector(doneMenuAction)];
-    UIMenuController.sharedMenuController.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, doneMenuItem];
-    UIView *superView = sender.view.superview;
     CGRect rect = CGRectMake(location.x - offset.x, location.y - offset.y, 0, 0);
-    [UIMenuController.sharedMenuController setTargetRect:rect inView:superView];
-    [UIMenuController.sharedMenuController setMenuVisible:YES animated:YES];
+    UIView *superView = sender.view.superview;
+    [menu setTargetRect:rect inView:superView];
+    [menu setMenuVisible:YES animated:YES];
 }
 
 - (void)rotateAction {
-    [self selectAdjustImageToolbar];
+    [self selectRotateImageToolbar];
     [self.scrollView resignFirstResponder];
 }
 
@@ -347,6 +357,11 @@
 
 - (void)resetAction {
     [self resetImage:self];
+    [self.scrollView resignFirstResponder];
+}
+
+- (void)pdfAction {
+    [self selectPDFToolbar];
     [self.scrollView resignFirstResponder];
 }
 
@@ -369,25 +384,6 @@
     UIImage *scaledImage = [UIImage imageWithCGImage:(CGImageRef)imageRef scale:1/ratio orientation:UIImageOrientationUp];
 
     return scaledImage;
-}
-
-- (void)switchView {
-    self.isCalipersView = !self.isCalipersView;
-    self.navigationItem.title = (self.isCalipersView ? CALIPERS_VIEW_TITLE : IMAGE_VIEW_TITLE);
-    if (self.isCalipersView) {
-        self.navigationController.navigationBar.barTintColor = nil;
-        self.navigationController.toolbar.barTintColor = nil;
-        [self.navigationItem.leftBarButtonItem setTitle:[self selectSize:SWITCH_IPAD compactSize:SWITCH_IPHONE]];
-        [self unfadeCaliperView];
-        [self selectMainToolbar];
-    }
-    else {
-        self.navigationController.navigationBar.barTintColor = IMAGE_TINT;
-        self.navigationController.toolbar.barTintColor = IMAGE_TINT;
-        [self.navigationItem.leftBarButtonItem setTitle:SWITCH_BACK];
-        [self fadeCaliperView];
-        [self selectImageToolbar];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -476,9 +472,8 @@
 // Create toolbars
 - (void)createToolbars {
     [self createMainToolbar];
-    [self createImageToolbar];
-    [self createAdjustImageToolbar];
-    [self createAddCalipersToolbar];
+    [self createPDFToolbar];
+    [self rotateImageToolbar];
     [self createSetupCalibrationToolbar];
     [self createQTcStep1Toolbar];
     [self createQTcStep2Toolbar];
@@ -493,43 +488,41 @@
     return [self isRegularSizeClass] ? regularSize : compactSize;
 }
 
+- (NSArray *)spaceoutToolbar:(NSArray *)items {
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for (int i = 0; i < items.count; i++) {
+        if (i == 0) {
+            array[0] = items[0];
+        }
+        else {
+            [array addObject:FLEX_SPACE];
+            [array addObject:items[i]];
+        }
+    }
+    return array;
+}
+
 - (void)createMainToolbar {
-//    UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(selectAddCalipersToolbar)];
     self.calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
-//    UIBarButtonItem *moreButton = [[UIBarButtonItem alloc] initWithTitle:MORE style:UIBarButtonItemStylePlain target:self action:@selector(selectMoreToolbar)];
-    self.mainMenuItems = [NSArray arrayWithObjects://addCaliperButton,
-                          self.calibrateCalipersButton,
-                          FLEX_SPACE,
-                          self.toggleIntervalRateButton,
-                          FLEX_SPACE,
-                          self.mRRButton,
-                          FLEX_SPACE,
-                          self.qtcButton,
-                          /* self.brugadaButton ? */
-                          //moreButton,
-                          nil];
+    NSArray *array = [NSArray arrayWithObjects: self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, /* self.brugadaButton ? */ nil];
+    self.mainMenuItems = [self spaceoutToolbar:array];
 }
 
-- (void)createImageToolbar {
-    UIBarButtonItem *takePhotoButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(takePhoto)];
-    UIBarButtonItem *selectImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Select") style:UIBarButtonItemStylePlain target:self action:@selector(selectPhoto)];
-    UIBarButtonItem *adjustImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Adjust") style:UIBarButtonItemStylePlain target:self action:@selector(selectAdjustImageToolbar)];
-    UIBarButtonItem *clearImageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Sample") style:UIBarButtonItemStylePlain target:self action:@selector(loadDefaultImage)];
+- (void)createPDFToolbar {
     // these 2 buttons only enable for multipage PDFs
-    self.nextPageButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
-    self.previousPageButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
+    self.nextPageButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"whitenextpage"] style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
+    self.previousPageButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"whitepreviouspage"] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
+    UIBarButtonItem *gotoPageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Goto") style:UIBarButtonItemStylePlain target:self action:@selector(gotoPage)];
     [self enablePageButtons:NO];
-    self.photoMenuItems = [NSArray arrayWithObjects:takePhotoButton, selectImageButton, adjustImageButton, clearImageButton, self.previousPageButton, self.nextPageButton, nil];
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        // if no camera on device, just silently disable take photo button
-        [takePhotoButton setEnabled:NO];
-    }
+    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
+    NSArray *array = [NSArray arrayWithObjects: self.previousPageButton, self.nextPageButton, gotoPageButton, backToMainMenuButton, nil];
+    self.pdfMenuItems = [self spaceoutToolbar:array];
 }
 
-- (void)createAdjustImageToolbar {
+- (void)rotateImageToolbar {
   UIBarButtonItem *rotateImageRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"90°R") style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageRight:)];
   UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"90°L") style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
   UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"1°R") style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
@@ -538,28 +531,14 @@
     UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"0.1°L") style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
     UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     
-    self.adjustImageMenuItems = [NSArray arrayWithObjects:rotateImageRightButton,
-                                 FLEX_SPACE,
+    NSArray *array = [NSArray arrayWithObjects:rotateImageRightButton,
                                  rotateImageLeftButton,
-                                 FLEX_SPACE,
                                  tweakRightButton,
-                                 FLEX_SPACE,
                                  tweakLeftButton,
-                                 FLEX_SPACE,
                                  microTweakRightButton,
-                                 FLEX_SPACE,
                                  microTweakLeftButton,
-                                 FLEX_SPACE,
                                  backToMainMenuButton, nil];
-}
-
-- (void)createAddCalipersToolbar {
-    UIBarButtonItem *horizontalButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Time") style:UIBarButtonItemStylePlain target:self action:@selector(addHorizontalCaliper)];
-    UIBarButtonItem *verticalButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Amplitude") style:UIBarButtonItemStylePlain target:self action:@selector(addVerticalCaliper)];
-    UIBarButtonItem *angleButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Angle") style:UIBarButtonItemStylePlain target:self action:@selector(addAngleCaliper)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
-    
-    self.addCalipersMenuItems = [NSArray arrayWithObjects:horizontalButton, verticalButton, angleButton, cancelButton, nil];
+    self.rotateImageMenuItems = [self spaceoutToolbar:array];
 }
 
 - (void)createSetupCalibrationToolbar {
@@ -567,11 +546,10 @@
     UIBarButtonItem *clearButton = [[UIBarButtonItem alloc] initWithTitle:CLEAR style:UIBarButtonItemStylePlain target:self action:@selector(clearCalibration)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
 
-    self.calibrateMenuItems = [NSArray arrayWithObjects:setButton,
-                               FLEX_SPACE,
+    NSArray * array = [NSArray arrayWithObjects:setButton,
                                clearButton,
-                               FLEX_SPACE,
                                cancelButton, nil];
+    self.calibrateMenuItems = [self spaceoutToolbar:array];
 }
 
 - (void)createQTcStep1Toolbar {
@@ -583,11 +561,10 @@
     UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
-    self.qtcStep1MenuItems = [NSArray arrayWithObjects:labelBarButtonItem,
-                              FLEX_SPACE,
+    NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
                               measureRRButton,
-                              FLEX_SPACE,
                               cancelButton, nil];
+    self.qtcStep1MenuItems = [self spaceoutToolbar:array];
 }
 
 - (void)createQTcStep2Toolbar {
@@ -599,11 +576,10 @@
     UIBarButtonItem *measureQTButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
-    self.qtcStep2MenuItems = [NSArray arrayWithObjects:labelBarButtonItem,
-                              FLEX_SPACE,
+    NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
                               measureQTButton,
-                              FLEX_SPACE,
                               cancelButton, nil];
+    self.qtcStep2MenuItems = [self spaceoutToolbar:array];
 }
 
 - (void)createMoreToolbar {
@@ -698,12 +674,10 @@
 - (void)shrinkMenus {
     [self.componentLabel setFont:self.smallFont];
     [self shrinkButtonFontSize:self.movementMenuItems];
-    [self shrinkButtonFontSize:self.photoMenuItems];
-    [self shrinkButtonFontSize:self.adjustImageMenuItems];
+    [self shrinkButtonFontSize:self.rotateImageMenuItems];
     if ([self usingRussian]) {
         [self greatlyShrinkButtonFontSize:self.movementMenuItems];
-        [self greatlyShrinkButtonFontSize:self.photoMenuItems];
-        [self greatlyShrinkButtonFontSize:self.adjustImageMenuItems];
+        [self greatlyShrinkButtonFontSize:self.rotateImageMenuItems];
         [self slightlyShrinkButtonFontSize:self.moreMenuItems];
         [self slightlyShrinkButtonFontSize:self.colorMenuItems];
         [self slightlyShrinkButtonFontSize:self.tweakMenuItems];
@@ -714,8 +688,7 @@
 - (void)enlargeMenus {
     [self.componentLabel setFont:self.regularFont];
     [self expandButtonFontSize:self.movementMenuItems];
-    [self expandButtonFontSize:self.photoMenuItems];
-    [self expandButtonFontSize:self.adjustImageMenuItems];
+    [self expandButtonFontSize:self.rotateImageMenuItems];
     if ([self usingRussian]) {
         [self expandButtonFontSize:self.moreMenuItems];
         [self expandButtonFontSize:self.colorMenuItems];
@@ -1079,9 +1052,8 @@
 }
 
 // Select toolbars
-- (void)selectImageToolbar {
-    self.toolbarItems = self.photoMenuItems;
-    [self.calipersView setUserInteractionEnabled:NO];
+- (void)selectPDFToolbar {
+    self.toolbarItems = self.pdfMenuItems;
 }
 
 - (void)doneTweaking {
@@ -1108,12 +1080,8 @@
     self.chosenCaliperComponent = None;
 }
 
-- (void)selectAddCalipersToolbar {
-    self.toolbarItems = self.addCalipersMenuItems;
-}
-
-- (void)selectAdjustImageToolbar {
-    self.toolbarItems = self.adjustImageMenuItems;
+- (void)selectRotateImageToolbar {
+    self.toolbarItems = self.rotateImageMenuItems;
 }
 
 - (void)selectCalibrateToolbar {
@@ -1232,6 +1200,43 @@
             self.nextPageButton.enabled = NO;
         }
     }
+}
+
+- (void)gotoPage {
+    // show goto page dialog here
+    EPSLog(@"Goto page selected");
+    UIAlertController *gotoPageAlertController = [UIAlertController alertControllerWithTitle:L(@"Go to Page...") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    [gotoPageAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        NSString *stringCurrentPage = [NSString stringWithFormat:@"%i", self.pageNumber];
+        textField.text = stringCurrentPage;
+//        // This preselects the text, since probably user will want to change pages.
+//        [textField selectAll:nil];
+        textField.clearButtonMode = UITextFieldViewModeAlways;
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self selectPDFToolbar];
+    }];
+    UIAlertAction *gotoAction = [UIAlertAction actionWithTitle:OK style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        NSArray *textFields = gotoPageAlertController.textFields;
+        UITextField *rawTextField = textFields[0];
+        int page = [rawTextField.text intValue];
+        if (page > self.numberOfPages) {
+            page = self.numberOfPages;
+        }
+        if (page < 1) {
+            page = 1;
+        }
+        self.pageNumber = page;
+        [self enablePageButtons:YES];
+        [self openPDFPage:self->pdfRef atPage:self.pageNumber];
+    }];
+    [gotoPageAlertController addAction:cancelAction];
+    [gotoPageAlertController addAction:gotoAction];
+    [self presentViewController:gotoPageAlertController animated:YES completion:^{
+        // Preselect page number, making it easier to change it.
+        [gotoPageAlertController.textFields[0] selectAll:nil];
+    }];
 }
 
 - (void)gotoPreviousPage {

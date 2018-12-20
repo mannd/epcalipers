@@ -22,10 +22,6 @@
     [array addObject:lockLayer];
     HamburgerLayer *sampleEcgLayer = [[HamburgerLayer alloc] initWithName:L(@"Sample ECG") iconName:@"sample" layer:SampleEcg];
     [array addObject:sampleEcgLayer];
-    HamburgerLayer *nextPageLayer = [[HamburgerLayer alloc] initWithName:L(@"PDF next page") iconName:@"nextpage" layer:NextPage];
-    [array addObject:nextPageLayer];
-    HamburgerLayer *previousPageLayer = [[HamburgerLayer alloc] initWithName:L(@"PDF previous page") iconName:@"previouspage" layer:NextPage];
-    [array addObject:previousPageLayer];
     HamburgerLayer *preferencesLayer = [[HamburgerLayer alloc] initWithName:L(@"Preferences") iconName:@"settings" layer:Preferences];
     [array addObject:preferencesLayer];
     HamburgerLayer *helpLayer = [[HamburgerLayer alloc] initWithName:L(@"Help") iconName:@"help" layer:Help];
