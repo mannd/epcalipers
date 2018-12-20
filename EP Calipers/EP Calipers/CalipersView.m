@@ -28,11 +28,9 @@
         [self addGestureRecognizer:doubleTapGestureRecognizer];
         [singleTapGestureRecognizer requireGestureRecognizerToFail:doubleTapGestureRecognizer];
         
-        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
-        [self addGestureRecognizer:longPressGestureRecognizer];
+//        UILongPressGestureRecognizer *longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)];
+//        [self addGestureRecognizer:longPressGestureRecognizer];
         self.clearsContextBeforeDrawing = YES;
-        self.locked = NO;
-        self.allowColorChange = NO;
         self.allowTweakPosition = NO;
         self.lockImageScreen = NO;
         self.lockImageMessageForegroundColor = [UIColor whiteColor];
@@ -42,6 +40,9 @@
     return self;
 }
 
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
@@ -212,30 +213,50 @@
     }
 }
 
-- (void)handleLongPress:(UILongPressGestureRecognizer *)gesture {
-    EPSLog(@"Long press");
-    CGPoint location = [gesture locationInView:self];
-    if (gesture.state == UIGestureRecognizerStateBegan) {
-        if (self.allowColorChange) {
-            for (Caliper *c in self.calipers) {
-                if ([c pointNearCaliper:location]) {
-                    [self.delegate chooseColor:c];
-                    break;
-                 }
-             }
-        }
-        else if (self.allowTweakPosition) {
-            for (Caliper *c in self.calipers) {
-                CaliperComponent component = [c getCaliperComponent:location];
-                if (component != None) {
-                    EPSLog(@"Near component");
-                    [self.delegate tweakComponent:component forCaliper:c];
-                    break;
-                }
-            }
+- (void)changeColor:(CGPoint)location {
+    for (Caliper *c in self.calipers) {
+        if ([c pointNearCaliper:location]) {
+            [self.delegate chooseColor:c];
+            break;
         }
     }
 }
+
+- (void) tweakPosition:(CGPoint)location {
+    for (Caliper *c in self.calipers) {
+        CaliperComponent component = [c getCaliperComponent:location];
+        if (component != None) {
+            EPSLog(@"Near component");
+            [self.delegate tweakComponent:component forCaliper:c];
+            break;
+        }
+    }
+}
+
+//- (void)handleLongPress:(UILongPressGestureRecognizer *)gesture {
+//    EPSLog(@"Long press");
+//    CGPoint location = [gesture locationInView:self];
+//    if (gesture.state == UIGestureRecognizerStateBegan) {
+//        if (self.allowColorChange) {
+//            for (Caliper *c in self.calipers) {
+//                if ([c pointNearCaliper:location]) {
+//                    [self.delegate chooseColor:c];
+//                    break;
+//                 }
+//             }
+//        }
+//        else if (self.allowTweakPosition) {
+//            for (Caliper *c in self.calipers) {
+//                CaliperComponent component = [c getCaliperComponent:location];
+//                if (component != None) {
+//                    EPSLog(@"Near component");
+//                    [self.delegate tweakComponent:component forCaliper:c];
+//                    break;
+//                }
+//            }
+//        }
+//    }
+//}
 
 
 - (void)selectCaliperIfNoneSelected {
@@ -295,6 +316,7 @@
     return [self.calipers count];
 }
 
+// TODO: toggle march on specific caliper selected.
 // necessary to redraw calipersview after this
 - (void)toggleShowMarchingCaliper {
     if (self.calipers.count <= 0) {

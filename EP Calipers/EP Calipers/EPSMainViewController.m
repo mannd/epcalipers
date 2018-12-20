@@ -64,6 +64,9 @@
 #define MICRO_UP_ARROW @"↑"
 #define MICRO_DOWN_ARROW @"↓"
 
+#define WHITE [UIColor whiteColor]
+#define GRAY [UIColor lightGrayColor]
+
 #define VERY_SMALL_FONT 10
 #define SMALL_FONT 12
 #define INTERMEDIATE_FONT 14
@@ -95,6 +98,7 @@
 @property (strong, atomic) NSDictionary *intermediateFontAttributes;
 @property (strong, atomic) UIFont *regularFont;
 @property (strong, atomic) NSDictionary *regularFontAttributes;
+@property (nonatomic) CGPoint pressLocation;
 
 @end
 
@@ -110,10 +114,11 @@
     EPSLog(@"viewDidLoad");
     
     pdfRef = NULL;
+
+    self.pressLocation = CGPointMake(0, 0);
     
     self.settings = [[Settings alloc] init];
     [self.settings loadPreferences];
-
 
     // fonts
     NSUInteger verySmallFontSize = VERY_SMALL_FONT;
@@ -139,24 +144,23 @@
     self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.maximumZoomScale = MAX_ZOOM;
 
+    // init calibration
     self.horizontalCalibration = [[Calibration alloc] init];
     self.horizontalCalibration.direction = Horizontal;
-
     self.verticalCalibration = [[Calibration alloc] init];
     self.verticalCalibration.direction = Vertical;
-    
     self.defaultHorizontalCalChanged = NO;
     self.defaultVerticalCalChanged = NO;
     
     [self.calipersView setUserInteractionEnabled:YES];
-    
     self.calipersView.delegate = self;
-        
+
+    // init QTc variables
     self.rrIntervalForQTc = 0.0;
     self.inQtc = NO;
 
-    // Add a little contrast, for Pete's sake.
-    self.imageView.backgroundColor = [UIColor whiteColor];
+    // After experimentation, white background color seems best.
+    self.imageView.backgroundColor = WHITE;
     [self.imageView setHidden:YES];  // hide view until it is rescaled
 
     // hide hamburger menu
@@ -181,9 +185,11 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewBackToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 
-    UILongPressGestureRecognizer *longPressScrollView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doSrollViewLongPress:)];
+    UILongPressGestureRecognizer *longPressScrollView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doScrollViewLongPress:)];
     [self.scrollView addGestureRecognizer:longPressScrollView];
 
+    UILongPressGestureRecognizer *longPressCalipersView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doCalipersViewLongPress:)];
+    [self.calipersView addGestureRecognizer:longPressCalipersView];
 }
 
 - (UIImage *)onePixelImageWithColor:(UIColor *)color {
@@ -202,31 +208,23 @@
 - (void)setupTheme {
     self.navigationController.navigationBar.translucent = NO;
     self.navigationController.toolbar.translucent = NO;
-    BOOL useDarkTheme = self.settings.darkTheme;
-    if (useDarkTheme) {
-    // TODO: play with this color.
-//    UIColor *barColor = [UIColor whiteColor];
-//    self.navigationController.navigationBar.translucent = NO;
-//    self.navigationController.navigationBar.backgroundColor = barColor;
+    if (self.settings.darkTheme) {
+        // Note that toolbar background colors don't work.  See
+        // https://stackoverflow.com/questions/4996906/uitoolbar-with-reduced-alpha-want-uibarbuttonitem-to-have-alpha-1/26642590#26642590
 
-    // Below uses a white on black color
-    [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
-    self.navigationController.toolbar.tintColor = [UIColor whiteColor];
-
-    // Note that toolbar background colors don't work.  See
-    // https://stackoverflow.com/questions/4996906/uitoolbar-with-reduced-alpha-want-uibarbuttonitem-to-have-alpha-1/26642590#26642590
-    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    //    [self.navigationController.toolbar setBackgroundImage:[self onePixelImageWithColor:[barColor colorWithAlphaComponent:0.2]] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
+        // Below uses a white on black color
+        [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
+        self.navigationController.toolbar.tintColor = WHITE;
+        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+        self.navigationController.navigationBar.tintColor = WHITE;
+        // Use this if you want tinted bars.
+        // [self.navigationController.toolbar setBackgroundImage:[self onePixelImageWithColor:[barColor colorWithAlphaComponent:0.2]] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
     }
     else {
-        EPSLog(@"setup light theme");
         [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
         [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
         self.navigationController.toolbar.tintColor = nil;
         self.navigationController.navigationBar.tintColor = nil;
-        self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
-        self.navigationController.toolbar.backgroundColor = [UIColor whiteColor];
     }
 }
 
@@ -334,8 +332,28 @@
     return [[self applicationLanguage] isEqualToString:@"ru"];
 }
 
+- (void)doCalipersViewLongPress:(UILongPressGestureRecognizer *)sender {
+    EPSLog(@"long press calipers view from main");
+    if (sender.state != UIGestureRecognizerStateBegan || self.hamburgerMenuIsOpen) {
+        return;
+    }
+    [sender.view becomeFirstResponder];
+    CGPoint location = [sender locationInView:sender.view];
+    self.pressLocation = location;
+    UIMenuController *menu = UIMenuController.sharedMenuController;
+    menu.arrowDirection = UIMenuControllerArrowDefault;
+    UIMenuItem *colorMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Color") action:@selector(colorAction)];
+    UIMenuItem *tweakMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Tweak") action:@selector(tweakAction)];
+    UIMenuItem *marchMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"March") action:@selector(toggleMarchingCalipers)];
+    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Done") action:@selector(doneMenuAction)];
+    menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, doneMenuItem];
+    CGRect rect = CGRectMake(location.x, location.y, 0, 0);
+    UIView *superView = sender.view.superview;
+    [menu setTargetRect:rect inView:superView];
+    [menu setMenuVisible:YES animated:YES];
+}
 
-- (void)doSrollViewLongPress:(UILongPressGestureRecognizer *) sender {
+- (void)doScrollViewLongPress:(UILongPressGestureRecognizer *) sender {
     EPSLog(@"Long press from main");
     if (sender.state != UIGestureRecognizerStateBegan || self.hamburgerMenuIsOpen) {
         return;
@@ -386,6 +404,20 @@
 
 - (void)doneMenuAction {
     [self.scrollView resignFirstResponder];
+}
+
+- (void)colorAction {
+    [self.calipersView changeColor:self.pressLocation];
+    [self.calipersView resignFirstResponder];
+}
+
+- (void)tweakAction {
+    [self.calipersView tweakPosition:self.pressLocation];
+    [self.calipersView resignFirstResponder];
+}
+
+- (void)marchAction {
+    [self.calipersView resignFirstResponder];
 }
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
@@ -466,28 +498,6 @@
     [About show];
 }
 
-// Help menu, etc.
-- (void)showSecondaryMenu {
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction* preferencesAction = [UIAlertAction actionWithTitle:L(@"Preferences") style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {[self openSettings];}];
-    [actionSheet addAction:preferencesAction];
-    UIAlertAction* helpAction = [UIAlertAction actionWithTitle:HELP style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {[self performSegueWithIdentifier:@"WebViewSegue" sender:self];}];
-    [actionSheet addAction:helpAction];
-    UIAlertAction* aboutAction = [UIAlertAction actionWithTitle:ABOUT style:UIAlertActionStyleDefault
-                                                       handler:^(UIAlertAction * action) {[About show];}];
-    [actionSheet addAction:aboutAction];
-    
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel
-                                                         handler:nil];
-    [actionSheet addAction:cancelAction];
-    
-    actionSheet.popoverPresentationController.barButtonItem = self.navigationItem.rightBarButtonItem;
-    
-    [self presentViewController:actionSheet animated:YES completion:nil];
-}
-
 // Create toolbars
 - (void)createToolbars {
     [self createMainToolbar];
@@ -496,9 +506,7 @@
     [self createSetupCalibrationToolbar];
     [self createQTcStep1Toolbar];
     [self createQTcStep2Toolbar];
-    [self createMoreToolbar];
     [self createColorToolbar];
-    [self createTweakToolbar];
     [self createMovementToolbar];
     [self fixupMenus:[self isCompactSizeClass]];
 }
@@ -575,7 +583,7 @@
     UILabel *label = [[UILabel alloc] init];
     [label setText:L(@"RR interval(s)?")];
     [label sizeToFit];
-    label.textColor = [UIColor lightGrayColor];
+    label.textColor = GRAY;
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
@@ -590,7 +598,7 @@
     UILabel *label = [[UILabel alloc] init];
     [label setText:L(@"QT interval?")];
     [label sizeToFit];
-    label.textColor = [UIColor lightGrayColor];
+    label.textColor = GRAY;
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *measureQTButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
@@ -601,14 +609,14 @@
     self.qtcStep2MenuItems = [self spaceoutToolbar:array];
 }
 
-- (void)createMoreToolbar {
-    UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Color") style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
-    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:TWEAK_IPAD compactSize:TWEAK_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
-    UIBarButtonItem *marchingBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"March") style:UIBarButtonItemStylePlain target:self action:@selector(toggleMarchingCalipers)];
-    self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:LOCK_IPAD compactSize:LOCK_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
-    self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, marchingBarButtonItem, self.lockImageButton, cancelButton, nil];
-}
+//- (void)createMoreToolbar {
+//    UIBarButtonItem *colorBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"Color") style:UIBarButtonItemStylePlain target:self action:@selector(selectColorToolbar)];
+//    UIBarButtonItem *tweakBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:TWEAK_IPAD compactSize:TWEAK_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(selectTweakToolbar)];
+//    UIBarButtonItem *marchingBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:L(@"March") style:UIBarButtonItemStylePlain target:self action:@selector(toggleMarchingCalipers)];
+//    self.lockImageButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:LOCK_IPAD compactSize:LOCK_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(lockImage)];
+//    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
+//    self.moreMenuItems = [NSArray arrayWithObjects:colorBarButtonItem, tweakBarButtonItem, marchingBarButtonItem, self.lockImageButton, cancelButton, nil];
+//}
 
 - (void)createColorToolbar {
     UILabel *label = [[UILabel alloc] init];
@@ -621,18 +629,6 @@
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
     self.colorMenuItems = [NSArray arrayWithObjects:labelBarButtonItem, cancelButton, nil];
-}
-
-- (void)createTweakToolbar {
-    UILabel *label = [UILabel new];
-    [label setText:L(@"Long press caliper component")];
-    if ([self usingRussian]) {
-        [label setFont:self.smallFont];
-    }
-    [label sizeToFit];
-    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
-    self.tweakMenuItems = [NSArray arrayWithObjects:labelBarButtonItem, cancelButton, nil];
 }
 
 - (void)createMovementToolbar {
@@ -658,12 +654,8 @@
     self.microUpButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveUp)];
     self.microDownButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveDown)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTweaking)];
-    self.movementMenuItems = [NSArray arrayWithObjects:self.componentLabelButton, self.leftButton,
-                              self.upButton, self.rightButton, self.downButton,
-                              self.microLeftButton, self.microUpButton,
-                              self.microRightButton,
-                              self.microDownButton, doneButton, nil];
-    
+    NSArray *array = [NSArray arrayWithObjects:self.leftButton, self.upButton, self.rightButton, self.downButton, self.microLeftButton, self.microUpButton, self.microRightButton, self.microDownButton, doneButton, nil];
+    self.movementMenuItems = [self spaceoutToolbar:array];
 }
 
 - (void)shrinkButtonFontSize:(NSArray *)barButtonItems {
@@ -1092,7 +1084,6 @@
     [self.mRRButton setEnabled:enable];
     [self.qtcButton setEnabled:enable];
     self.calipersView.locked = NO;
-    self.calipersView.allowColorChange = NO;
     self.calipersView.allowTweakPosition = NO;
     self.inQtc = NO;
     self.chosenCaliper = nil;
@@ -1107,18 +1098,8 @@
     self.toolbarItems = self.calibrateMenuItems;
 }
 
-- (void)selectMoreToolbar {
-    self.toolbarItems = self.moreMenuItems;
-}
-
 - (void)selectColorToolbar {
     self.toolbarItems = self.colorMenuItems;
-    self.calipersView.allowColorChange = YES;
-}
-
-- (void)selectTweakToolbar {
-    self.toolbarItems = self.tweakMenuItems;
-    self.calipersView.allowTweakPosition = YES;
 }
 
 - (void)selectMovementToolbar {
