@@ -1105,6 +1105,7 @@
 }
 
 - (void)takePhoto {
+    EPSLog(@"Take photo");
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
@@ -1149,6 +1150,8 @@
 }
 
 - (void)openURL:(NSURL *)url {
+    EPSLog(@"OpenURL");
+    [self resetImage:self];
     NSString *extension = [url.pathExtension uppercaseString];
     if (![extension isEqualToString:@"PDF"]) {
         [self enablePageButtons:NO];
@@ -1177,6 +1180,7 @@
     [self.imageView setHidden:NO];
     [self.scrollView setZoomScale:1.0f];
     [self clearCalibration];
+    [self selectMainToolbar];
 }
 
 - (void)loadDefaultImage {
@@ -1513,6 +1517,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     else {
         chosenImage = info[UIImagePickerControllerEditedImage];
         }
+    [self resetImage:self];
     self.imageView.image = [self scaleImageForImageView:chosenImage];
     // reset zoom for new image
     self.scrollView.zoomScale = 1.0;
@@ -1524,6 +1529,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self clearPDF];
     self.launchURL = nil;
     self.numberOfPages = 0;
+    [self selectMainToolbar];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -1753,3 +1759,4 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 @end
+
