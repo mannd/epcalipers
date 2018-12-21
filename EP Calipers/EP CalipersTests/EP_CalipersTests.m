@@ -14,8 +14,6 @@
 #import "EPSMainViewController.h"
 #import "MiniQTcResult.h"
 
-
-
 @interface EP_CalipersTests : XCTestCase
 
 @end

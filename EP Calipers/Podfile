@@ -1,0 +1,9 @@
+platform :ios, '8.0'
+
+target 'EP Calipers' do
+  pod 'CMPopTipView', '~> 2.3'
+
+  target 'EP CalipersTests' do
+    inherit! :search_paths
+    end
+end

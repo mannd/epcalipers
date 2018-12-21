@@ -41,6 +41,8 @@
 		8ECEDF681E8A1A1A00288EDE /* About.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF671E8A1A1A00288EDE /* About.m */; };
 		8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */; };
 		8EFCC6A71DE5FA5F00D1C58F /* AngleCaliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */; };
+		BB677CB2C1D1D00F3CC7C063 /* libPods-EP CalipersTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA84B7561464AB7408ECA076 /* libPods-EP CalipersTests.a */; };
+		C447064F47438C8FE4FFBCF6 /* libPods-EP Calipers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E780D594419161D7CC562F /* libPods-EP Calipers.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		170AF01C02A50FA535F68754 /* Pods-EP CalipersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EP CalipersTests.debug.xcconfig"; path = "Target Support Files/Pods-EP CalipersTests/Pods-EP CalipersTests.debug.xcconfig"; sourceTree = "<group>"; };
+		73EC2DF73B1FA3841D22C775 /* Pods-EP CalipersTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EP CalipersTests.release.xcconfig"; path = "Target Support Files/Pods-EP CalipersTests/Pods-EP CalipersTests.release.xcconfig"; sourceTree = "<group>"; };
 		8E0208A51AC2A8B300FE7EC5 /* Caliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliper.h; sourceTree = "<group>"; };
 		8E0208A61AC2A8B300FE7EC5 /* Caliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Caliper.m; sourceTree = "<group>"; };
 		8E0D4AAC21C8BA9D0061158D /* EcgScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EcgScrollView.h; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 		8E7340F81FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ru; path = "ru.lproj/EPCalipers-help"; sourceTree = "<group>"; };
 		8E7340F91FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E7340FA1FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8E7E432521CD85CF00A0C828 /* CMPopTipView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CMPopTipView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E8DDE371FF96D13007247DA /* MiniQTcResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MiniQTcResult.h; sourceTree = "<group>"; };
 		8E8DDE381FF96D13007247DA /* MiniQTcResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MiniQTcResult.m; sourceTree = "<group>"; };
 		8E9A33381AC09DE90037E694 /* CalipersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalipersView.h; sourceTree = "<group>"; };
@@ -126,6 +131,10 @@
 		8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sampleECG.jpg; sourceTree = "<group>"; };
 		8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AngleCaliper.h; sourceTree = "<group>"; };
 		8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AngleCaliper.m; sourceTree = "<group>"; };
+		B483D0269B9745F9D159766F /* Pods-EP Calipers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EP Calipers.release.xcconfig"; path = "Target Support Files/Pods-EP Calipers/Pods-EP Calipers.release.xcconfig"; sourceTree = "<group>"; };
+		B7E780D594419161D7CC562F /* libPods-EP Calipers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EP Calipers.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D16E9BDFAC77A2377883E14A /* Pods-EP Calipers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EP Calipers.debug.xcconfig"; path = "Target Support Files/Pods-EP Calipers/Pods-EP Calipers.debug.xcconfig"; sourceTree = "<group>"; };
+		EA84B7561464AB7408ECA076 /* libPods-EP CalipersTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EP CalipersTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +142,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C447064F47438C8FE4FFBCF6 /* libPods-EP Calipers.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,12 +150,24 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB677CB2C1D1D00F3CC7C063 /* libPods-EP CalipersTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		341383020FBFA8D513A1DB0E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D16E9BDFAC77A2377883E14A /* Pods-EP Calipers.debug.xcconfig */,
+				B483D0269B9745F9D159766F /* Pods-EP Calipers.release.xcconfig */,
+				170AF01C02A50FA535F68754 /* Pods-EP CalipersTests.debug.xcconfig */,
+				73EC2DF73B1FA3841D22C775 /* Pods-EP CalipersTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		8E14234F1AB5F16A00CC15BC = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +177,7 @@
 				8E1423741AB5F16A00CC15BC /* EP CalipersTests */,
 				8E1423591AB5F16A00CC15BC /* Products */,
 				8E172D7E1F9C04F200CD50D6 /* Frameworks */,
+				341383020FBFA8D513A1DB0E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -279,6 +302,9 @@
 		8E172D7E1F9C04F200CD50D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E7E432521CD85CF00A0C828 /* CMPopTipView.framework */,
+				B7E780D594419161D7CC562F /* libPods-EP Calipers.a */,
+				EA84B7561464AB7408ECA076 /* libPods-EP CalipersTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -325,6 +351,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E14237B1AB5F16A00CC15BC /* Build configuration list for PBXNativeTarget "EP Calipers" */;
 			buildPhases = (
+				31E0ADCA713C08AF3C9E5807 /* [CP] Check Pods Manifest.lock */,
 				8E1423541AB5F16A00CC15BC /* Sources */,
 				8E1423551AB5F16A00CC15BC /* Frameworks */,
 				8E1423561AB5F16A00CC15BC /* Resources */,
@@ -342,6 +369,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E14237E1AB5F16A00CC15BC /* Build configuration list for PBXNativeTarget "EP CalipersTests" */;
 			buildPhases = (
+				9D952F799E3013DD58CE4048 /* [CP] Check Pods Manifest.lock */,
 				8E14236D1AB5F16A00CC15BC /* Sources */,
 				8E14236E1AB5F16A00CC15BC /* Frameworks */,
 				8E14236F1AB5F16A00CC15BC /* Resources */,
@@ -425,6 +453,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		31E0ADCA713C08AF3C9E5807 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EP Calipers-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9D952F799E3013DD58CE4048 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EP CalipersTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8E1423541AB5F16A00CC15BC /* Sources */ = {
@@ -635,6 +710,7 @@
 		};
 		8E14237C1AB5F16A00CC15BC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D16E9BDFAC77A2377883E14A /* Pods-EP Calipers.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -652,6 +728,7 @@
 		};
 		8E14237D1AB5F16A00CC15BC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B483D0269B9745F9D159766F /* Pods-EP Calipers.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -668,6 +745,7 @@
 		};
 		8E14237F1AB5F16A00CC15BC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 170AF01C02A50FA535F68754 /* Pods-EP CalipersTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
@@ -691,6 +769,7 @@
 		};
 		8E1423801AB5F16A00CC15BC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73EC2DF73B1FA3841D22C775 /* Pods-EP CalipersTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;

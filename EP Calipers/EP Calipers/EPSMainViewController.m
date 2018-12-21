@@ -15,7 +15,6 @@
 #import "CaliperFactory.h"
 #import "MiniQTcResult.h"
 #import "Alert.h"
-#import "HamburgerTableViewController.h"
 #include "Defs.h"
 
 //:TODO: Make NO for release version
@@ -90,15 +89,24 @@
 
 @interface EPSMainViewController ()
 
-@property (strong, atomic) UIFont *verySmallFont;
-@property (strong, atomic) NSDictionary *verySmallFontAttributes;
-@property (strong, atomic) UIFont *smallFont;
-@property (strong, atomic) NSDictionary *smallFontAttributes;
-@property (strong, atomic) UIFont *intermediateFont;
-@property (strong, atomic) NSDictionary *intermediateFontAttributes;
-@property (strong, atomic) UIFont *regularFont;
-@property (strong, atomic) NSDictionary *regularFontAttributes;
+@property (strong, nonatomic) UIFont *verySmallFont;
+@property (strong, nonatomic) NSDictionary *verySmallFontAttributes;
+@property (strong, nonatomic) UIFont *smallFont;
+@property (strong, nonatomic) NSDictionary *smallFontAttributes;
+@property (strong, nonatomic) UIFont *intermediateFont;
+@property (strong, nonatomic) NSDictionary *intermediateFontAttributes;
+@property (strong, nonatomic) UIFont *regularFont;
+@property (strong, nonatomic) NSDictionary *regularFontAttributes;
 @property (nonatomic) CGPoint pressLocation;
+
+// help tooltips
+@property (strong, nonatomic) CMPopTipView *navBarLeftButtonPopTipView;
+@property (strong, nonatomic) CMPopTipView *navBarRightButtonPopTipView;
+@property (strong, nonatomic) CMPopTipView *calibrateButtonPopTipView;
+@property (strong, nonatomic) CMPopTipView *caliperPopTipView;
+@property (strong, nonatomic) CMPopTipView *imagePopTipView;
+@property (strong, nonatomic) CMPopTipView *longPressPopTipView;
+@property (nonatomic) BOOL toolTipsAreInProgress;
 
 @end
 
@@ -310,17 +318,60 @@
             EPSLog(@"First launch");
             // NOTE: for now we will eliminate this dialog, though keep the first launch startup code,
             // otherwise app breaks.
-            
-            //TODO: Update with each version!!
-//            UIAlertView *quickStartAlert = [[UIAlertView alloc] initWithTitle:L(@"EP Calipers Quick Start") message:@"What's new: Color calipers individually.  Use the *Tweak* menu to micro-move caliper components.  App maintains state when terminated by iOS and restored.  Bug fixes.  See Help for more details.\n\nQuick Start: Use your fingers to move and position calipers or move and zoom the image.\n\nAdd calipers with the *+* menu item, single tap a caliper to select it, tap again to unselect, and double tap to delete a caliper.  After calibration the menu items that allow toggling interval and rate and calculating mean rates and QTc will be enabled.\n\nUse the *Image* button on the top left to load and adjust ECG images.\n\nTap the action button at the upper right for full help."
-//                                                                     delegate:nil cancelButtonTitle:OK otherButtonTitles:nil];
-//            [quickStartAlert show];
-            
+            [self showToolTips];
         }
-        
         [self selectMainToolbar];
-
     }
+}
+
+- (void)showToolTips {
+    self.navBarRightButtonPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Use this button to add calipers.")];
+    [self setupToolTip:self.navBarRightButtonPopTipView];
+    [self.navBarRightButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
+}
+
+- (void)setupToolTip:(CMPopTipView *)toolTip {
+    toolTip.delegate = self;
+    toolTip.dismissTapAnywhere = YES;
+    toolTip.has3DStyle = NO;
+}
+
+// CMPopTipViewDelegate method
+- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
+    // place a view on screen
+    UIView *targetView = [[UIView alloc] init];
+    [targetView setBounds:CGRectMake(0, 0, 1, 1)];
+    targetView.center = [self.view convertPoint:self.view.center fromView:self.view.superview];
+    [self.view addSubview:targetView];
+    if ([popTipView isEqual:self.navBarRightButtonPopTipView]) {
+        EPSLog(@"right popup gone.");
+        self.navBarLeftButtonPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Use this button to select an image, changes preferences, and more.")];
+        [self setupToolTip:self.navBarLeftButtonPopTipView];
+        [self.navBarLeftButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.leftBarButtonItem animated:YES];
+    }
+    if ([popTipView isEqual:self.navBarLeftButtonPopTipView]) {
+        self.calibrateButtonPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Measurement toolbar.  First calibrate a caliper, then perform calculations like mean rate and QTc.")];
+        [self setupToolTip:self.calibrateButtonPopTipView];
+        [self.calibrateButtonPopTipView presentPointingAtBarButtonItem:self.calibrateCalipersButton animated:YES];
+    }
+    if ([popTipView isEqual:self.calibrateButtonPopTipView]) {
+        self.imagePopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Pan and zoom the ECG using your fingers.")];
+        [self setupToolTip:self.imagePopTipView];
+        [self.imagePopTipView presentPointingAtView:targetView inView:self.view animated:YES];
+    }
+    if ([popTipView isEqual:self.imagePopTipView]) {
+        self.caliperPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Expand and contract calipers by moving the bars with your finger.  Move the whole caliper by touching the crossbar.")];
+        [self setupToolTip:self.caliperPopTipView];
+        [self.caliperPopTipView presentPointingAtView:targetView inView:self.view animated:YES];
+    }
+    if ([popTipView isEqual:self.caliperPopTipView]) {
+        self.longPressPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Long press on the ECG or on a caliper to bring up additional options, such as image rotation, changing caliper colors, etc.")];
+        [self setupToolTip:self.longPressPopTipView];
+        [self.longPressPopTipView presentPointingAtView:targetView inView:self.view animated:YES];
+    }
+    [targetView removeFromSuperview];
+    targetView = nil;
+    [self.view setUserInteractionEnabled:YES];
 }
 
 - (NSString *)applicationLanguage {
