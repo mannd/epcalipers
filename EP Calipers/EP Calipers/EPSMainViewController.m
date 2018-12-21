@@ -20,7 +20,7 @@
 
 //:TODO: Make NO for release version
 // set to yes to always show startup screen
-//#define TEST_QUICK_START NO
+#define TEST_QUICK_START YES
 
 #define ANIMATION_DURATION 0.5
 #define MAX_ZOOM 10.0
@@ -298,8 +298,7 @@
         
         self.firstRun = NO;
         // for testing
-        //        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"])
-        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
+        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
             // app already launched
             EPSLog(@"Not first launch");
         }
