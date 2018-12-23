@@ -341,4 +341,23 @@
     return noTimeCalipers;
 }
 
+- (CGPoint)getATimeCaliperMidpoint {
+    Caliper *c = [self getATimeCaliper];
+    return [c getCaliperMidPoint];
+}
+
+- (Caliper *)getATimeCaliper {
+    Caliper *caliper = nil;
+    if (self.calipers.count < 1) {
+        return caliper;
+    }
+    for (Caliper *c in self.calipers) {
+        if ([c isTimeCaliper]) {
+            caliper = c;
+            break;
+        }
+    }
+    return caliper;
+}
+
 @end

@@ -214,4 +214,19 @@
     XCTAssertEqualObjects(result, @"Mean RR = 535.7 msec\nQT = 334 msec\nQTc = 425 msec (Hodges formula)");
 }
 
+- (void)testCaliperMidpoint {
+    Caliper *c1 = [[Caliper alloc] initWithDirection:Horizontal bar1Position:200 bar2Position:100 crossBarPosition:100];
+    CGPoint midPoint = CGPointMake(150, 100);
+    XCTAssertEqual(c1.getCaliperMidPoint.x, midPoint.x);
+    XCTAssertEqual(c1.getCaliperMidPoint.y, midPoint.y);
+    Caliper *c2 = [[Caliper alloc] initWithDirection:Vertical bar1Position:200 bar2Position:100 crossBarPosition:100];
+    midPoint = CGPointMake(100, 150);
+    XCTAssertEqual(c2.getCaliperMidPoint.x, midPoint.x);
+    XCTAssertEqual(c2.getCaliperMidPoint.y, midPoint.y);
+    Caliper *c3;
+    XCTAssertEqual(c3.getCaliperMidPoint.x, 0);
+    XCTAssertEqual(c3.getCaliperMidPoint.y, 0);
+
+}
+
 @end

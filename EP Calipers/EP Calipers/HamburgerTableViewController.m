@@ -100,6 +100,9 @@
         case Preferences:
             [self.mainViewController openSettings];
             break;
+        case ToolTips:
+            [self.mainViewController showToolTips];
+            break;
         case Help:
             [self.mainViewController showHelp];
             break;

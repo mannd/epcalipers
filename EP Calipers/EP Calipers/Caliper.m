@@ -620,5 +620,20 @@
     self.marching = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Marching"]];
 }
 
+- (CGPoint)getCaliperMidPoint {
+    CGPoint point = CGPointMake(0, 0);
+    CGFloat x = fabs(self.bar2Position - self.bar1Position) / 2 + fmin(self.bar1Position, self.bar2Position);
+    CGFloat y = self.crossBarPosition;
+    if (self.direction == Horizontal) {
+        point.x = x;
+        point.y = y;
+    }
+    else {
+        point.x = y;
+        point.y = x;
+    }
+    return point;
+}
+
 
 @end

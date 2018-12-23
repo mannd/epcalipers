@@ -45,6 +45,6 @@
 - (void)changeColor:(CGPoint)location;
 - (void) tweakPosition:(CGPoint)location;
 - (BOOL) caliperNearLocationIsTimeCaliper:(CGPoint)location;
-
+- (CGPoint)getATimeCaliperMidpoint;
 
 @end

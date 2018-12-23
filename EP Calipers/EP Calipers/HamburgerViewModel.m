@@ -24,6 +24,8 @@
     [array addObject:sampleEcgLayer];
     HamburgerLayer *preferencesLayer = [[HamburgerLayer alloc] initWithName:L(@"Preferences") iconName:@"settings" layer:Preferences];
     [array addObject:preferencesLayer];
+    HamburgerLayer *tooltipLayer = [[HamburgerLayer alloc] initWithName:L(@"Show tooltips") iconName:@"lightning" layer:ToolTips];
+    [array addObject:tooltipLayer];
     HamburgerLayer *helpLayer = [[HamburgerLayer alloc] initWithName:L(@"Help") iconName:@"help" layer:Help];
     [array addObject:helpLayer];
     HamburgerLayer *aboutLayer = [[HamburgerLayer alloc] initWithName:L(@"About EP Calipers") iconName:@"about" layer:About];

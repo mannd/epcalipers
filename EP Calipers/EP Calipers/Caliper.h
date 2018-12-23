@@ -63,6 +63,7 @@
 - (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
 - (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
 - (BOOL)isTimeCaliper;
+- (CGPoint)getCaliperMidPoint;
 
 
 @end

@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, Layer) {
     Lock,
     SampleEcg,
     Preferences,
+    ToolTips,
     Help,
     About
 };
