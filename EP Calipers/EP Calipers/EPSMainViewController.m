@@ -15,16 +15,17 @@
 #import "CaliperFactory.h"
 #import "MiniQTcResult.h"
 #import "Alert.h"
+#import "Version.h"
 #include "Defs.h"
 
 // These can't be yes for release version
 #ifdef DEBUG
 //TODO: Make NO for release version
 // Set to yes to always show startup screen, for testing
-#define TEST_QUICK_START YES
+#define TEST_QUICK_START NO
 //TODO: Make NO for release version
 // Set to YES to skip introductory tooltips, for testing
-#define SKIP_INTRO_TOOLTIPS YES
+#define SKIP_INTRO_TOOLTIPS NO
 #else
 #define TEST_QUICK_START NO
 #define SKIP_INTRO_TOOLTIPS NO
@@ -330,20 +331,18 @@
         
         self.firstRun = NO;
 
-        self.showSetupCalibrationToolTip = NO;
-        if (!TEST_QUICK_START && [[NSUserDefaults standardUserDefaults] boolForKey:@"HasLaunchedOnce"]) {
+        if (!(TEST_QUICK_START || self.isNewInstallation || self.isUpgrade)) {
             // app already launched
             EPSLog(@"Not first launch");
         }
         else
         {
-            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"HasLaunchedOnce"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            // This is the first launch ever
             EPSLog(@"First launch");
-            // NOTE: for now we will eliminate this dialog, though keep the first launch startup code,
-            // otherwise app breaks.
             [self showToolTips];
+        }
+        if (self.isNewInstallation || self.isUpgrade) {
+            [[NSUserDefaults standardUserDefaults] setObject:[Version getAppVersion] forKey:@"AppVersion"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
         }
         [self selectMainToolbar];
     }
@@ -352,7 +351,7 @@
 - (void)showToolTips {
     [self initToolTips];
     if (!SKIP_INTRO_TOOLTIPS) {
-        self.navBarRightButtonPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Add calipers.")];
+        self.navBarRightButtonPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Add calipers")];
         [self setupToolTip:self.navBarRightButtonPopTipView];
         [self.navBarRightButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
     }
@@ -396,7 +395,7 @@
     if ([popTipView isEqual:self.navBarRightButtonPopTipView]) {
         self.navBarRightButtonPopTipView = nil;
         EPSLog(@"right popup gone.");
-        self.navBarLeftButtonPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Change image, preferences, help.")];
+        self.navBarLeftButtonPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Open a new image")];
         [self setupToolTip:self.navBarLeftButtonPopTipView];
         [self.navBarLeftButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.leftBarButtonItem animated:YES];
     }
@@ -408,19 +407,19 @@
     }
     if ([popTipView isEqual:self.caliperPopTipView]) {
         self.caliperPopTipView = nil;
-        self.measurementToolbarPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Use the measurement toolbar to first calibrate calipers, then make measurements.")];
+        self.measurementToolbarPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Calibrate calipers, then make measurements")];
         [self setupToolTip:self.measurementToolbarPopTipView];
         [self.measurementToolbarPopTipView presentPointingAtView:self.navigationController.toolbar inView:self.view animated:YES];
     }
     if ([popTipView isEqual:self.measurementToolbarPopTipView]) {
         self.measurementToolbarPopTipView = nil;
-        self.imagePopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Pinch to zoom image.  Drag to reposition image.")];
+        self.imagePopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Pinch to zoom and drag to reposition image")];
         [self setupToolTip:self.imagePopTipView];
         [self.imagePopTipView presentPointingAtView:imageTargetView inView:self.view animated:YES];
     }
     if ([popTipView isEqual:self.imagePopTipView]) {
         self.imagePopTipView = nil;
-        self.longPressPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Long press on the image or on a caliper to show additional options, such as image rotation and changing caliper colors.")];
+        self.longPressPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Long press on the image or on a caliper to show additional options")];
         [self setupToolTip:self.longPressPopTipView];
         [self.longPressPopTipView presentPointingAtView:caliperTargetView inView:self.view animated:YES];
     }
@@ -1033,7 +1032,7 @@
 - (void)clearCalibration {
     // Toggle popTipView when a standard UIButton is pressed
     if (nil == self.clearCalibrationButtonPopTipView && self.showClearCalibrationToolTip) {
-        self.clearCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:@"Clear all caliper calibration."];
+        self.clearCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:@"Clear all calibration"];
         [self setupToolTip:self.clearCalibrationButtonPopTipView];
         [self.clearCalibrationButtonPopTipView presentPointingAtBarButtonItem:self.clearButton animated:YES];
         return;
@@ -1052,7 +1051,7 @@
 - (void)setupCalibration {
     // Toggle popTipView when a standard UIButton is pressed
     if (nil == self.setupCalibrationButtonPopTipView && self.showSetupCalibrationToolTip) {
-        self.setupCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:@"Select a caliper by tapping it.  Measure a known interval (e.g. 1000 msec).  Then press Set to calibrate."];
+        self.setupCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:@"Select a caliper by tapping it. Measure a known interval (e.g. 1000 msec). Then press Set to calibrate."];
         [self setupToolTip:self.setupCalibrationButtonPopTipView];
         [self.setupCalibrationButtonPopTipView presentPointingAtBarButtonItem:self.calibrateCalipersButton  animated:YES];
         return;

@@ -13,6 +13,7 @@
 #import "AngleCaliper.h"
 #import "EPSMainViewController.h"
 #import "MiniQTcResult.h"
+#import "Version.h"
 
 @interface EP_CalipersTests : XCTestCase
 
@@ -226,7 +227,20 @@
     Caliper *c3;
     XCTAssertEqual(c3.getCaliperMidPoint.x, 0);
     XCTAssertEqual(c3.getCaliperMidPoint.y, 0);
-
 }
 
+- (void)testVersion {
+    NSString *testVersion = @"2.1.3";
+    XCTAssertEqualObjects(@"2", [Version getMajorVersion:testVersion]);
+    Version *versionTest = [[Version alloc] initWithVersion:@"3.1.9" previousVersion:@"2.1.9"];
+    versionTest.doUnitTest = YES;
+    XCTAssertTrue([versionTest isUpgrade]);
+    XCTAssertFalse([versionTest isNewInstallation]);
+    versionTest.previousVersion = nil;
+    XCTAssertTrue([versionTest isNewInstallation]);
+    versionTest.previousVersion = nil;
+    XCTAssertTrue([versionTest isNewInstallation]);
+    versionTest.currentVersion = @"1.0";
+    XCTAssertFalse([versionTest isUpgrade]);
+}
 @end

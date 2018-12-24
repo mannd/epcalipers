@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "EPSMainViewController.h"
+#import "Version.h"
 #import "EPSLogging.h"
 #import "Defs.h"
 
@@ -20,6 +21,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    UINavigationController *navigationController = (UINavigationController *)  self.window.rootViewController;
+    EPSMainViewController *mainViewController = (EPSMainViewController *) [navigationController.viewControllers objectAtIndex:0];
+
+    Version *version = [[Version alloc] init];
+    mainViewController.isUpgrade = [version isUpgrade];
+    mainViewController.isNewInstallation = [version isNewInstallation];
     return YES;
 }
 

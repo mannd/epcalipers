@@ -117,5 +117,9 @@
 @property (nonatomic) BOOL wasLaunchedFromUrl;
 @property (nonatomic) BOOL inQtc;
 
+// New installation, upgrade?
+@property (nonatomic) BOOL isNewInstallation;
+@property (nonatomic) BOOL isUpgrade;
+
 @end
 

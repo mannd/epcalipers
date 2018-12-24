@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0208A61AC2A8B300FE7EC5 /* Caliper.m */; };
 		8E0D4AAE21C8BA9D0061158D /* EcgScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D4AAD21C8BA9D0061158D /* EcgScrollView.m */; };
+		8E13AB6021D13A430020896D /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E13AB5F21D13A430020896D /* Version.m */; };
 		8E14235E1AB5F16A00CC15BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E14235D1AB5F16A00CC15BC /* main.m */; };
 		8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423601AB5F16A00CC15BC /* AppDelegate.m */; };
 		8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */; };
@@ -62,6 +63,8 @@
 		8E0208A61AC2A8B300FE7EC5 /* Caliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Caliper.m; sourceTree = "<group>"; };
 		8E0D4AAC21C8BA9D0061158D /* EcgScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EcgScrollView.h; sourceTree = "<group>"; };
 		8E0D4AAD21C8BA9D0061158D /* EcgScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EcgScrollView.m; sourceTree = "<group>"; };
+		8E13AB5E21D13A430020896D /* Version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
+		8E13AB5F21D13A430020896D /* Version.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Version.m; sourceTree = "<group>"; };
 		8E1423581AB5F16A00CC15BC /* EP Calipers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EP Calipers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E14235C1AB5F16A00CC15BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E14235D1AB5F16A00CC15BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -295,6 +298,8 @@
 				8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */,
 				8E365C1B21C5B7E300CD11B3 /* Alert.h */,
 				8E365C1C21C5B7E300CD11B3 /* Alert.m */,
+				8E13AB5E21D13A430020896D /* Version.h */,
+				8E13AB5F21D13A430020896D /* Version.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -508,6 +513,7 @@
 			files = (
 				8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */,
 				8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */,
+				8E13AB6021D13A430020896D /* Version.m in Sources */,
 				8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */,
 				8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */,
 				8E0D4AAE21C8BA9D0061158D /* EcgScrollView.m in Sources */,
