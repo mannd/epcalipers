@@ -29,7 +29,6 @@
 // non-swipable hamburger menu.  However UIScrollView doesn't have a tap gesture, so we
 // can use that to close the menu.
 - (void)gestureTap:(id)sender {
-    EPSLog(@"gesture tap");
     if (self.delegate != nil && self.delegate.hamburgerMenuIsOpen) {
         [self.delegate hideHamburgerMenu];
     }

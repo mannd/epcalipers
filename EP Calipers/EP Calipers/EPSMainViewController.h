@@ -38,6 +38,8 @@
 @property (strong, nonatomic) UIBarButtonItem *calibrateCalipersButton;
 @property (strong, nonatomic) UIBarButtonItem *setButton;
 @property (strong, nonatomic) UIBarButtonItem *clearButton;
+@property (strong, nonatomic) UIBarButtonItem *qtcMeasureRateButton;
+@property (strong, nonatomic) UIBarButtonItem *qtcMeasureQTcButton;
 @property (strong, nonatomic) UIBarButtonItem *previousPageButton;
 @property (strong, nonatomic) UIBarButtonItem *nextPageButton;
 //@property (strong, nonatomic) UIBarButtonItem *brugadaButton;
@@ -102,6 +104,8 @@
 - (void)lockImage;
 - (BOOL)imageIsLocked;
 - (void)showToolTips;
+
+@property (nonatomic) BOOL showingToolTips;
 
 //@property (nonatomic) CGPDFDocumentRef documentRef;
 @property (nonatomic) int pageNumber;

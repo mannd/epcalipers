@@ -13,3 +13,18 @@
 "Lock-iPad" = "Lock";
 "Unlock-iPhone" = "Unlock";
 "Unlock-iPad" = "Unlock";
+
+/* Tooltips */
+"Add_tooltip" = "Add calipers";
+"Side_menu_tooltip" = "Use side menu to change image";
+"Move_caliper_tooltip" = "Move caliper by dragging.  Tap caliper to select it.  Double-tap to delete it.";
+"Measurement_tooltip" ="Use measurement toolbar to calibrate calipers, then make measurements";
+"Move_image_tooltip" = "Pinch to zoom and drag to reposition image"; 
+"Longpress_tooltip" = "Long press on image or caliper to show additional options";
+"Setup_calibration_tooltip" = "Select a caliper by tapping it. Use it to measure a known interval (e.g. 1000 msec).";
+"Set_calibration_tooltip" = "Measure a know interval with selected caliper.";
+"Clear_calibration_tooltip" = "Clear all calibration";
+"Int_rate_tooltip" = "Toggle between interval and heart rate";
+"Mean_rate_tooltip" = "Measure 2 or more intervals and calculate mean rate and interval";
+"QTc_step_1_tooltip" = "Measure 1 or more RR intervals";
+"QTc_step_2_tooltip" = "Measure the QT interval";

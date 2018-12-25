@@ -22,7 +22,7 @@
 #ifdef DEBUG
 //TODO: Make NO for release version
 // Set to yes to always show startup screen, for testing
-#define TEST_QUICK_START NO
+#define TEST_QUICK_START YES
 //TODO: Make NO for release version
 // Set to YES to skip introductory tooltips, for testing
 #define SKIP_INTRO_TOOLTIPS NO
@@ -73,6 +73,20 @@
 #define MICRO_UP_ARROW @"↑"
 #define MICRO_DOWN_ARROW @"↓"
 
+// Tooltips
+#define ADD_TOOLTIP L(@"Add_tooltip")
+#define SIDE_MENU_TOOLTIP L(@"Side_menu_tooltip")
+#define MOVE_CALIPER_TOOLTIP L(@"Move_caliper_tooltip")
+#define MEASUREMENT_TOOLTIP L(@"Measurement_tooltip")
+#define MOVE_IMAGE_TOOLTIP L(@"Move_image_tooltip")
+#define LONGPRESS_TOOLTIP L(@"Longpress_tooltip")
+#define SETUP_CALIBRATION_TOOLTIP L(@"Setup_calibration_tooltip")
+#define SET_CALIBRATION_TOOLTIP L(@"Set_calibration_tooltip")
+#define CLEAR_CALIBRATION_TOOLTIP L(@"Clear_calibration_tooltip")
+#define INT_RATE_TOOLTIP L(@"Int_rate_tooltip")
+#define MEAN_RATE_TOOLTIP L(@"Mean_rate_tooltip")
+#define QTC_STEP_1_TOOLTIP L(@"QTc_step_1_tooltip")
+#define QTC_STEP_2_TOOLTIP L(@"QTc_step_2_tooltip")
 #define WHITE [UIColor whiteColor]
 #define GRAY [UIColor lightGrayColor]
 
@@ -109,27 +123,31 @@
 @property (strong, nonatomic) NSDictionary *regularFontAttributes;
 @property (nonatomic) CGPoint pressLocation;
 
-// help tooltips
+// tooltips
+// tooltips shown at start
 @property (strong, nonatomic) CMPopTipView *navBarLeftButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *navBarRightButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *measurementToolbarPopTipView;
 @property (strong, nonatomic) CMPopTipView *caliperPopTipView;
 @property (strong, nonatomic) CMPopTipView *imagePopTipView;
 @property (strong, nonatomic) CMPopTipView *longPressPopTipView;
+// button tooltips
 @property (strong, nonatomic) CMPopTipView *setupCalibrationButtonPopTipView;
+@property (strong, nonatomic) CMPopTipView *setCalibrationButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *clearCalibrationButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *intRateButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *meanRateButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *qtcStep1ButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *qtcStep2ButtonPopTipView;
 
+
 @property (nonatomic) BOOL showSetupCalibrationToolTip;
+@property (nonatomic) BOOL showSetCalibrationToolTip;
 @property (nonatomic) BOOL showClearCalibrationToolTip;
 @property (nonatomic) BOOL showIntRateToolTip;
 @property (nonatomic) BOOL showMeanRateToolTip;
 @property (nonatomic) BOOL showQtcStep1ToolTip;
 @property (nonatomic) BOOL showQtcStep2ToolTip;
-
 @end
 
 @implementation EPSMainViewController
@@ -139,18 +157,7 @@
     BOOL isLeftToRight;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    EPSLog(@"viewDidLoad");
-    
-    pdfRef = NULL;
-
-    self.pressLocation = CGPointMake(0, 0);
-    
-    self.settings = [[Settings alloc] init];
-    [self.settings loadPreferences];
-
-    // fonts
+- (void)loadFonts {
     NSUInteger verySmallFontSize = VERY_SMALL_FONT;
     self.verySmallFont = [UIFont boldSystemFontOfSize:verySmallFontSize];
     self.verySmallFontAttributes = @{NSFontAttributeName: self.verySmallFont};
@@ -163,6 +170,21 @@
     NSUInteger regularFontSize = REGULAR_FONT;
     self.regularFont = [UIFont boldSystemFontOfSize:regularFontSize];
     self.regularFontAttributes = @{NSFontAttributeName: self.regularFont};
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    EPSLog(@"viewDidLoad");
+
+    pdfRef = NULL;
+
+    self.pressLocation = CGPointMake(0, 0);
+
+    self.settings = [[Settings alloc] init];
+    [self.settings loadPreferences];
+
+    // fonts
+    [self loadFonts];
     
     self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
     [self createToolbars];
@@ -196,6 +218,7 @@
     // hide hamburger menu
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
+    self.hamburgerViewController.imageIsLocked = self.calipersView.locked;
     self.blackView.alpha = 0;
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
@@ -289,6 +312,7 @@
     [self.navigationController setToolbarHidden:NO];
 
     if (self.firstRun) {
+        EPSLog(@"++++++++Rescaling image++++++++++++");
         //  scale image for imageView;
         // autolayout not done in viewDidLoad
         CGRect screenRect = [[UIScreen mainScreen] bounds];
@@ -331,15 +355,10 @@
         
         self.firstRun = NO;
 
-        if (!(TEST_QUICK_START || self.isNewInstallation || self.isUpgrade)) {
-            // app already launched
-            EPSLog(@"Not first launch");
-        }
-        else
-        {
-            EPSLog(@"First launch");
+        if (TEST_QUICK_START || [self shouldShowTooltipsAtStart]) {
             [self showToolTips];
         }
+
         if (self.isNewInstallation || self.isUpgrade) {
             [[NSUserDefaults standardUserDefaults] setObject:[Version getAppVersion] forKey:@"AppVersion"];
             [[NSUserDefaults standardUserDefaults] synchronize];
@@ -349,22 +368,52 @@
 }
 
 - (void)showToolTips {
+    // This method is a toggle.  Turn off tool tips if showing them.
+    if (self.showingToolTips) {
+        [self disableToolTips];
+        return;
+    }
     [self initToolTips];
     if (!SKIP_INTRO_TOOLTIPS) {
-        self.navBarRightButtonPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Add calipers")];
+        self.navBarRightButtonPopTipView = [[CMPopTipView alloc] initWithMessage:ADD_TOOLTIP];
         [self setupToolTip:self.navBarRightButtonPopTipView];
         [self.navBarRightButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
     }
 }
 
+// TODO: You might change this with future releases.  For example, someone upgrading from 3.0 to 3.1
+// wouldn't necessarily want to see the tooltips again post upgrade.  However anyone upgrading from
+// version 2.X.Y. would want to see them.  For version 3.0, everyone gets to see the tooltips.
+- (BOOL)shouldShowTooltipsAtStart {
+    return self.isNewInstallation || self.isUpgrade;
+}
+
+- (void)setToolTipState:(BOOL)value {
+    self.showSetupCalibrationToolTip = value;
+    self.showSetCalibrationToolTip = value;
+    self.showClearCalibrationToolTip = value;
+    self.showIntRateToolTip = value;
+    self.showMeanRateToolTip = value;
+    self.showQtcStep1ToolTip = value;
+    self.showQtcStep2ToolTip = value;
+
+}
+
+// TODO: update these tooltip settings
 - (void)initToolTips {
-    self.showSetupCalibrationToolTip = YES;
-    self.showIntRateToolTip = YES;
-    self.showMeanRateToolTip = YES;
-    self.showClearCalibrationToolTip = YES;
-    self.showQtcStep1ToolTip = YES;
-    self.showQtcStep2ToolTip = YES;
-    // TODO: any other tooltips?
+    [self setToolTipState:YES];
+    [self stillShowingToolTips];
+}
+
+- (void)disableToolTips {
+    [self setToolTipState:NO];
+    [self stillShowingToolTips];
+}
+
+- (void)stillShowingToolTips {
+    BOOL toolTipsRemain = self.showSetupCalibrationToolTip || self.showSetCalibrationToolTip || self.showIntRateToolTip || self.showMeanRateToolTip || self.showClearCalibrationToolTip || self.showQtcStep1ToolTip || self.showQtcStep2ToolTip;
+    self.showingToolTips = toolTipsRemain;
+    self.hamburgerViewController.showingToolTips = self.showingToolTips;
 }
 
 - (void)setupToolTip:(CMPopTipView *)toolTip {
@@ -394,47 +443,75 @@
 
     if ([popTipView isEqual:self.navBarRightButtonPopTipView]) {
         self.navBarRightButtonPopTipView = nil;
-        EPSLog(@"right popup gone.");
-        self.navBarLeftButtonPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Open a new image")];
+        self.navBarLeftButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SIDE_MENU_TOOLTIP];
         [self setupToolTip:self.navBarLeftButtonPopTipView];
         [self.navBarLeftButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.leftBarButtonItem animated:YES];
     }
+    
     if ([popTipView isEqual:self.navBarLeftButtonPopTipView]) {
         self.navBarLeftButtonPopTipView = nil;
-        self.caliperPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Adjust caliper position and size by dragging with your finger.  Tap caliper to select it.  Double-tap to delete it.")];
+        self.caliperPopTipView = [[CMPopTipView alloc] initWithMessage:MOVE_CALIPER_TOOLTIP];
         [self setupToolTip:self.caliperPopTipView];
         [self.caliperPopTipView presentPointingAtView:caliperTargetView inView:self.view animated:YES];
     }
+
     if ([popTipView isEqual:self.caliperPopTipView]) {
         self.caliperPopTipView = nil;
-        self.measurementToolbarPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Calibrate calipers, then make measurements")];
+        self.measurementToolbarPopTipView = [[CMPopTipView alloc] initWithMessage:MEASUREMENT_TOOLTIP];
         [self setupToolTip:self.measurementToolbarPopTipView];
         [self.measurementToolbarPopTipView presentPointingAtView:self.navigationController.toolbar inView:self.view animated:YES];
     }
+
     if ([popTipView isEqual:self.measurementToolbarPopTipView]) {
         self.measurementToolbarPopTipView = nil;
-        self.imagePopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Pinch to zoom and drag to reposition image")];
+        self.imagePopTipView = [[CMPopTipView alloc] initWithMessage:MOVE_IMAGE_TOOLTIP];
         [self setupToolTip:self.imagePopTipView];
         [self.imagePopTipView presentPointingAtView:imageTargetView inView:self.view animated:YES];
     }
+
     if ([popTipView isEqual:self.imagePopTipView]) {
         self.imagePopTipView = nil;
-        self.longPressPopTipView = [[CMPopTipView alloc] initWithMessage:L(@"Long press on the image or on a caliper to show additional options")];
+        self.longPressPopTipView = [[CMPopTipView alloc] initWithMessage:LONGPRESS_TOOLTIP];
         [self setupToolTip:self.longPressPopTipView];
         [self.longPressPopTipView presentPointingAtView:caliperTargetView inView:self.view animated:YES];
     }
+
     if ([popTipView isEqual:self.longPressPopTipView]) {
         self.longPressPopTipView = nil;
-        // TODO: move this to last shown tooltip
-//        self.toolTipsAreInProgress = NO;
     }
+
     [imageTargetView removeFromSuperview];
     imageTargetView = nil;
     [caliperTargetView removeFromSuperview];
     caliperTargetView = nil;
+
     if ([popTipView isEqual:self.setupCalibrationButtonPopTipView]) {
         self.showSetupCalibrationToolTip = NO;
-        [self setupCalibration];
+        [self stillShowingToolTips];
+    }
+    if ([popTipView isEqual:self.setCalibrationButtonPopTipView]) {
+        self.showSetCalibrationToolTip = NO;
+        [self stillShowingToolTips];
+    }
+    if ([popTipView isEqual:self.clearCalibrationButtonPopTipView]) {
+        self.showClearCalibrationToolTip = NO;
+        [self stillShowingToolTips];
+    }
+    if ([popTipView isEqual:self.intRateButtonPopTipView]) {
+        self.showIntRateToolTip = NO;
+        [self stillShowingToolTips];
+    }
+    if ([popTipView isEqual:self.meanRateButtonPopTipView]) {
+        self.showMeanRateToolTip = NO;
+        [self stillShowingToolTips];
+    }
+    if ([popTipView isEqual:self.qtcStep1ButtonPopTipView]) {
+        self.showQtcStep1ToolTip = NO;
+        [self stillShowingToolTips];
+    }
+    if ([popTipView isEqual:self.qtcStep2ButtonPopTipView]) {
+        self.showQtcStep2ToolTip = NO;
+        [self stillShowingToolTips];
     }
 }
 
@@ -481,6 +558,7 @@
     [sender.view becomeFirstResponder];
     UIMenuController *menu = UIMenuController.sharedMenuController;
     menu.arrowDirection = UIMenuControllerArrowDefault;
+    EPSLog(L(@"Rotate"));
     UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Rotate") action:@selector(rotateAction)];
     UIMenuItem *flipMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Flip") action:@selector(flipAction)];
     UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Reset") action:@selector(resetAction)];
@@ -708,11 +786,11 @@
     [label sizeToFit];
     label.textColor = GRAY;
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    UIBarButtonItem *measureRRButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
+    self.qtcMeasureRateButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
-                              measureRRButton,
+                              self.qtcMeasureRateButton,
                               cancelButton, nil];
     self.qtcStep1MenuItems = [self spaceoutToolbar:array];
 }
@@ -723,11 +801,11 @@
     [label sizeToFit];
     label.textColor = GRAY;
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    UIBarButtonItem *measureQTButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
+    self.qtcMeasureQTcButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
-                              measureQTButton,
+                              self.qtcMeasureQTcButton,
                               cancelButton, nil];
     self.qtcStep2MenuItems = [self spaceoutToolbar:array];
 }
@@ -832,11 +910,37 @@
 }
 
 - (void)toggleIntervalRate {
+    if (nil == self.intRateButtonPopTipView && self.showIntRateToolTip) {
+        self.intRateButtonPopTipView = [[CMPopTipView alloc] initWithMessage:INT_RATE_TOOLTIP];
+        [self setupToolTip:self.intRateButtonPopTipView];
+        [self.intRateButtonPopTipView presentPointingAtBarButtonItem:self.toggleIntervalRateButton animated:YES];
+        return;
+    }
+    else {
+        // Dismiss
+        [self.intRateButtonPopTipView dismissAnimated:YES];
+        self.intRateButtonPopTipView = nil;
+        self.showIntRateToolTip = NO;
+        [self stillShowingToolTips];
+    }
     self.horizontalCalibration.displayRate = ! self.horizontalCalibration.displayRate;
     [self.calipersView setNeedsDisplay];
 }
 
 - (void)meanRR {
+    if (nil == self.meanRateButtonPopTipView && self.showMeanRateToolTip) {
+        self.meanRateButtonPopTipView = [[CMPopTipView alloc] initWithMessage:MEAN_RATE_TOOLTIP];
+        [self setupToolTip:self.meanRateButtonPopTipView];
+        [self.meanRateButtonPopTipView presentPointingAtBarButtonItem:self.mRRButton animated:YES];
+        return;
+    }
+    else {
+        // Dismiss
+        [self.meanRateButtonPopTipView dismissAnimated:YES];
+        self.meanRateButtonPopTipView = nil;
+        self.showMeanRateToolTip = NO;
+        [self stillShowingToolTips];
+    }
     if (self.calipersView.calipers.count < 1) {
         [self showNoCalipersAlert];
         [self selectMainToolbar];
@@ -902,6 +1006,19 @@
 }
 
 - (void)qtcMeasureRR {
+    if (nil == self.qtcStep1ButtonPopTipView && self.showQtcStep1ToolTip) {
+        self.qtcStep1ButtonPopTipView = [[CMPopTipView alloc] initWithMessage:QTC_STEP_1_TOOLTIP];
+        [self setupToolTip:self.qtcStep1ButtonPopTipView];
+        [self.qtcStep1ButtonPopTipView presentPointingAtBarButtonItem:self.qtcMeasureRateButton animated:YES];
+        return;
+    }
+    else {
+        // Dismiss
+        [self.qtcStep1ButtonPopTipView dismissAnimated:YES];
+        self.qtcStep1ButtonPopTipView = nil;
+        self.showQtcStep1ToolTip = NO;
+        [self stillShowingToolTips];
+    }
     if ([self noTimeCaliperSelected]) {
         [self showNoTimeCaliperSelectedAlertView];
     }
@@ -943,6 +1060,19 @@
 }
 
 - (void)qtcMeasureQT {
+    if (nil == self.qtcStep2ButtonPopTipView && self.showQtcStep2ToolTip) {
+        self.qtcStep2ButtonPopTipView = [[CMPopTipView alloc] initWithMessage:QTC_STEP_2_TOOLTIP];
+        [self setupToolTip:self.qtcStep2ButtonPopTipView];
+        [self.qtcStep2ButtonPopTipView presentPointingAtBarButtonItem:self.qtcMeasureQTcButton animated:YES];
+        return;
+    }
+    else {
+        // Dismiss
+        [self.qtcStep2ButtonPopTipView dismissAnimated:YES];
+        self.qtcStep1ButtonPopTipView = nil;
+        self.showQtcStep2ToolTip = NO;
+        [self stillShowingToolTips];
+    }
     if ([self noTimeCaliperSelected]) {
         [self showNoTimeCaliperSelectedAlertView];
     }
@@ -1030,9 +1160,8 @@
 }
 
 - (void)clearCalibration {
-    // Toggle popTipView when a standard UIButton is pressed
     if (nil == self.clearCalibrationButtonPopTipView && self.showClearCalibrationToolTip) {
-        self.clearCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:@"Clear all calibration"];
+        self.clearCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:CLEAR_CALIBRATION_TOOLTIP];
         [self setupToolTip:self.clearCalibrationButtonPopTipView];
         [self.clearCalibrationButtonPopTipView presentPointingAtBarButtonItem:self.clearButton animated:YES];
         return;
@@ -1042,6 +1171,7 @@
         [self.clearCalibrationButtonPopTipView dismissAnimated:YES];
         self.clearCalibrationButtonPopTipView = nil;
         self.showClearCalibrationToolTip = NO;
+        [self stillShowingToolTips];
     }
     [self resetCalibration];
     [self.calipersView setNeedsDisplay];
@@ -1051,7 +1181,7 @@
 - (void)setupCalibration {
     // Toggle popTipView when a standard UIButton is pressed
     if (nil == self.setupCalibrationButtonPopTipView && self.showSetupCalibrationToolTip) {
-        self.setupCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:@"Select a caliper by tapping it. Measure a known interval (e.g. 1000 msec). Then press Set to calibrate."];
+        self.setupCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SETUP_CALIBRATION_TOOLTIP];
         [self setupToolTip:self.setupCalibrationButtonPopTipView];
         [self.setupCalibrationButtonPopTipView presentPointingAtBarButtonItem:self.calibrateCalipersButton  animated:YES];
         return;
@@ -1078,6 +1208,18 @@
 }
 
 - (void)setCalibration {
+    if (nil == self.setCalibrationButtonPopTipView && self.showSetCalibrationToolTip) {
+        self.setCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SET_CALIBRATION_TOOLTIP];
+        [self setupToolTip:self.setCalibrationButtonPopTipView];
+        [self.setCalibrationButtonPopTipView presentPointingAtBarButtonItem:self.setButton  animated:YES];
+        return;
+    }
+    else {
+        // Dismiss
+        [self.setCalibrationButtonPopTipView dismissAnimated:YES];
+        self.setCalibrationButtonPopTipView = nil;
+        self.showSetCalibrationToolTip = NO;
+    }
     if ([self.calipersView noCaliperIsSelected]) {
         [Alert showSimpleAlertWithTitle:L(@"No Caliper Selected") message:L(@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement.") viewController:self];
         return;
@@ -1689,8 +1831,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    EPSLog(@"viewWillTransitionToSize");
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [self.calipersView setNeedsDisplay];
-
 }
 
 - (BOOL)isCompactSizeClass {
@@ -1841,6 +1984,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                  forKey:@"SavedImageKey"];
     [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
 
+    // Note that image lock is intentionally not preserved when app goes to background.
+    // The reason is that image restoration moves the image location, so the process
+    // of going to background itself moves the image.  So it's really not locked in
+    // place.
+
     // calibration
     [self.horizontalCalibration encodeCalibrationState:coder withPrefix:@"Horizontal"];
     [self.verticalCalibration encodeCalibrationState:coder withPrefix:@"Vertical"];
@@ -1867,7 +2015,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
     self.imageView.image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
     self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomScaleKey"];
-    
+
     // calibration
     [self.horizontalCalibration decodeCalibrationState:coder withPrefix:@"Horizontal"];
     [self.verticalCalibration decodeCalibrationState:coder withPrefix:@"Vertical"];

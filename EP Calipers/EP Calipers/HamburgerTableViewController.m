@@ -35,6 +35,7 @@
     [super viewWillAppear:animated];
     self.mainViewController = (EPSMainViewController *)self.parentViewController;
     self.imageIsLocked = [self.mainViewController imageIsLocked];
+    self.showingToolTips = self.mainViewController.showingToolTips;
 }
 
 - (void)reloadData {
@@ -57,7 +58,7 @@
     HamburgerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HamburgerCell" forIndexPath:indexPath];
     HamburgerLayer* row = self.rows[indexPath.row];
 
-    if (row.layer == Lock && self.imageIsLocked) {
+    if ((row.layer == Lock && self.imageIsLocked) || (row.layer == ToolTips && self.showingToolTips)) {
         cell.label.text = row.altName;
         cell.icon.image = [UIImage imageNamed:row.altIconName];
     }

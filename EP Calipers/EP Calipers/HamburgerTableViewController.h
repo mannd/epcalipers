@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface HamburgerTableViewController : UITableViewController
 @property (strong, nonatomic) NSArray* rows;
 @property (nonatomic) BOOL imageIsLocked;
+@property (nonatomic) BOOL showingToolTips;
 
 - (void)reloadData;
 

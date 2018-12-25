@@ -121,3 +121,7 @@
 "Rotate" = "Tourner";
 "Go to" = "Aller à";
 "Go to Page..." = "Aller à la page";
+
+/* Tooltips */
+"Add_tooltip" = "Ajouter des compas";
+
