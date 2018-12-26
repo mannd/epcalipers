@@ -38,10 +38,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c" userLabel="containerView">
-                                        <rect key="frame" x="0.0" y="20" width="375" height="627"/>
+                                        <rect key="frame" x="0.0" y="64" width="375" height="539"/>
                                         <subviews>
                                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="ImageViewID" image="sampleECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView" customClass="EcgImageView">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="627"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="539"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
@@ -67,11 +67,11 @@
                                 <gestureRecognizers/>
                             </view>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Day-lu-Opi">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MbT-x5-FOE">
-                                <rect key="frame" x="0.0" y="20" width="250" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="250" height="603"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="250" id="aVl-LS-2Pq"/>
                                 </constraints>
@@ -110,19 +110,19 @@
                         <outlet property="imageContainerView" destination="blB-p5-m1c" id="pps-DN-j7O"/>
                         <outlet property="imageView" destination="H9Q-uG-yq7" id="P5j-pJ-mkb"/>
                         <outlet property="scrollView" destination="X5X-Yr-OYx" id="H47-qu-pna"/>
-                        <segue destination="F3l-Jg-V2u" kind="show" identifier="WebViewSegue" id="BOZ-jC-arD"/>
+                        <segue destination="DOW-IW-ucv" kind="show" identifier="showHelpImageSegue" id="3Ov-bv-qn1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="215.625" y="27.464788732394368"/>
+            <point key="canvasLocation" x="198" y="27"/>
         </scene>
         <!--Hamburger Table View Controller-->
         <scene sceneID="JpE-YD-Lql">
             <objects>
                 <tableViewController id="vgL-pG-7pH" customClass="HamburgerTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="jFn-S1-rEl">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <inset key="separatorInset" minX="48" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -192,19 +192,44 @@
                     </view>
                     <connections>
                         <outlet property="webView" destination="dhT-Iu-ikC" id="Aad-r6-6Kh"/>
-                        <segue destination="BYZ-38-t0r" kind="custom" identifier="DismissWebViewSegue" customClass="DismissSegue" id="Xdy-EN-bbI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hiY-F4-0ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="878" y="28"/>
+            <point key="canvasLocation" x="1278" y="-130"/>
+        </scene>
+        <!--Help Image View Controller-->
+        <scene sceneID="IFF-jU-PXb">
+            <objects>
+                <viewController id="DOW-IW-ucv" customClass="HelpImageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="VcN-Xt-KY5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HdN-fK-pbO">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="nku-a2-Ekt" firstAttribute="bottom" secondItem="HdN-fK-pbO" secondAttribute="bottom" id="0Tv-ra-Taq"/>
+                            <constraint firstItem="HdN-fK-pbO" firstAttribute="leading" secondItem="nku-a2-Ekt" secondAttribute="leading" id="H19-uS-J4U"/>
+                            <constraint firstItem="HdN-fK-pbO" firstAttribute="top" secondItem="nku-a2-Ekt" secondAttribute="top" id="KIw-ug-6S3"/>
+                            <constraint firstItem="nku-a2-Ekt" firstAttribute="trailing" secondItem="HdN-fK-pbO" secondAttribute="trailing" id="coz-gx-VL7"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nku-a2-Ekt"/>
+                    </view>
+                    <connections>
+                        <outlet property="helpImageView" destination="HdN-fK-pbO" id="HOT-mI-dqd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oP8-C9-GpV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="918" y="687"/>
         </scene>
     </scenes>
     <resources>
         <image name="camera" width="19.200000762939453" height="16.799999237060547"/>
         <image name="sampleECG.jpg" width="1411" height="676"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="Xdy-EN-bbI"/>
-    </inferredMetricsTieBreakers>
 </document>

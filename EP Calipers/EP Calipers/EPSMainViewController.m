@@ -31,6 +31,8 @@
 #define SKIP_INTRO_TOOLTIPS NO
 #endif
 
+// Minimum press duration for long presses (default = 0.5)
+#define MINIMUM_PRESS_DURATION 1
 #define ANIMATION_DURATION 0.5
 #define MAX_ZOOM 10.0
 #define MOVEMENT 1.0f
@@ -239,9 +241,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewBackToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 
     UILongPressGestureRecognizer *longPressScrollView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doScrollViewLongPress:)];
+    [longPressScrollView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
     [self.scrollView addGestureRecognizer:longPressScrollView];
 
     UILongPressGestureRecognizer *longPressCalipersView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doCalipersViewLongPress:)];
+    [longPressCalipersView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
     [self.calipersView addGestureRecognizer:longPressCalipersView];
 }
 
@@ -691,7 +695,8 @@
 }
 
 - (void)showHelp {
-    [self performSegueWithIdentifier:@"WebViewSegue" sender:self];
+    [self performSegueWithIdentifier:@"showHelpImageSegue" sender:self];
+//    [self performSegueWithIdentifier:@"WebViewSegue" sender:self];
 }
 
 - (void)showAbout {

@@ -28,3 +28,6 @@
 "Mean_rate_tooltip" = "Measure 2 or more intervals and calculate mean rate and interval";
 "QTc_step_1_tooltip" = "Measure 1 or more RR intervals";
 "QTc_step_2_tooltip" = "Measure the QT interval";
+
+/* Help image */
+"Help_image" = "epcalipershelp-en";

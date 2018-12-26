@@ -23,6 +23,7 @@
 		8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E559EA81ACD9262004A6F91 /* Launch Screen.xib */; };
 		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
 		8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */; };
+		8E600E9021D3FCF500C97425 /* HelpImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */; };
 		8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DDE381FF96D13007247DA /* MiniQTcResult.m */; };
 		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
 		8E9BA12E1EF47D1C00FC8DD2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */; };
@@ -90,6 +91,8 @@
 		8E5A8F701ACC7A54000EEA89 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DismissSegue.h; sourceTree = "<group>"; };
 		8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissSegue.m; sourceTree = "<group>"; };
+		8E600E8E21D3FCF500C97425 /* HelpImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpImageViewController.h; sourceTree = "<group>"; };
+		8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpImageViewController.m; sourceTree = "<group>"; };
 		8E7340F61FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/FCColorPickerViewController.strings; sourceTree = "<group>"; };
 		8E7340F71FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		8E7340F81FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ru; path = "ru.lproj/EPCalipers-help"; sourceTree = "<group>"; };
@@ -246,6 +249,8 @@
 				8E5A8F701ACC7A54000EEA89 /* WebViewController.m */,
 				8EA170CF21C6CDEF0082783D /* HamburgerTableViewController.h */,
 				8EA170D021C6CDEF0082783D /* HamburgerTableViewController.m */,
+				8E600E8E21D3FCF500C97425 /* HelpImageViewController.h */,
+				8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -525,6 +530,7 @@
 				8EA170D121C6CDEF0082783D /* HamburgerTableViewController.m in Sources */,
 				8E3F384C21C737AE003A944E /* HamburgerViewModel.m in Sources */,
 				8E3F384F21C73819003A944E /* HamburgerLayer.m in Sources */,
+				8E600E9021D3FCF500C97425 /* HelpImageViewController.m in Sources */,
 				8ECEDF681E8A1A1A00288EDE /* About.m in Sources */,
 				8EA170D421C6D0690082783D /* HamburgerCell.m in Sources */,
 				8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */,
