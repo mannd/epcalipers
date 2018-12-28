@@ -31,3 +31,13 @@
 
 /* Help image */
 "Help_image" = "epcalipershelp-en";
+
+
+/* Help topics */
+"Add_caliper_topic" = "Adding and deleting calipers";
+"Add_caliper_text" = "Select + to add new calipers. Select Time, Amplitude, or Angle to add the type of caliper you want. Double-tap a caliper to delete it.";
+"Move_caliper_topic" = "Moving calipers";
+"Move_caliper_text" = "Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers.  Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  Dragging either bar of an angle caliper a little distance away from the apex will open or close the angle.";
+"Select_caliper_topic" = "Selecting a caliper";
+"Select_caliper_text" = "When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red.  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.";
+

@@ -22,7 +22,7 @@
 #ifdef DEBUG
 //TODO: Make NO for release version
 // Set to yes to always show startup screen, for testing
-#define TEST_QUICK_START YES
+#define TEST_QUICK_START NO
 //TODO: Make NO for release version
 // Set to YES to skip introductory tooltips, for testing
 #define SKIP_INTRO_TOOLTIPS NO

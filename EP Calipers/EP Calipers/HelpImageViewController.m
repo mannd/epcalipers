@@ -19,6 +19,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.helpImageView.image = [UIImage imageNamed:L(@"Help_image")];
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
+    [btn addTarget:self action:@selector(showHelpTable) forControlEvents:UIControlEventTouchUpInside];
+    self.title = L(@"Quick Help");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -27,14 +31,8 @@
 
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)showHelpTable {
+    [self performSegueWithIdentifier:@"showHelpTableSegue" sender:self];
 }
-*/
 
 @end

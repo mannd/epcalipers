@@ -24,6 +24,11 @@
 		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
 		8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */; };
 		8E600E9021D3FCF500C97425 /* HelpImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */; };
+		8E600E9321D402B200C97425 /* HelpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E9221D402B200C97425 /* HelpTableViewController.m */; };
+		8E600E9621D41FD700C97425 /* HelpTopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E9521D41FD700C97425 /* HelpTopicTableViewCell.m */; };
+		8E600E9D21D43D0300C97425 /* HelpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E9C21D43D0300C97425 /* HelpModel.m */; };
+		8E600EA321D43FF700C97425 /* HelpTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600EA121D43FF700C97425 /* HelpTopic.m */; };
+		8E600EA621D440DA00C97425 /* HelpViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600EA521D440DA00C97425 /* HelpViewModel.m */; };
 		8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DDE381FF96D13007247DA /* MiniQTcResult.m */; };
 		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
 		8E9BA12E1EF47D1C00FC8DD2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */; };
@@ -93,6 +98,16 @@
 		8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissSegue.m; sourceTree = "<group>"; };
 		8E600E8E21D3FCF500C97425 /* HelpImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpImageViewController.h; sourceTree = "<group>"; };
 		8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpImageViewController.m; sourceTree = "<group>"; };
+		8E600E9121D402B200C97425 /* HelpTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpTableViewController.h; sourceTree = "<group>"; };
+		8E600E9221D402B200C97425 /* HelpTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpTableViewController.m; sourceTree = "<group>"; };
+		8E600E9421D41FD700C97425 /* HelpTopicTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpTopicTableViewCell.h; sourceTree = "<group>"; };
+		8E600E9521D41FD700C97425 /* HelpTopicTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpTopicTableViewCell.m; sourceTree = "<group>"; };
+		8E600E9B21D43D0300C97425 /* HelpModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpModel.h; sourceTree = "<group>"; };
+		8E600E9C21D43D0300C97425 /* HelpModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpModel.m; sourceTree = "<group>"; };
+		8E600EA121D43FF700C97425 /* HelpTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpTopic.m; sourceTree = "<group>"; };
+		8E600EA221D43FF700C97425 /* HelpTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpTopic.h; sourceTree = "<group>"; };
+		8E600EA421D440DA00C97425 /* HelpViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpViewModel.h; sourceTree = "<group>"; };
+		8E600EA521D440DA00C97425 /* HelpViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpViewModel.m; sourceTree = "<group>"; };
 		8E7340F61FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/FCColorPickerViewController.strings; sourceTree = "<group>"; };
 		8E7340F71FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		8E7340F81FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ru; path = "ru.lproj/EPCalipers-help"; sourceTree = "<group>"; };
@@ -199,6 +214,7 @@
 		8E14235A1AB5F16A00CC15BC /* EP Calipers */ = {
 			isa = PBXGroup;
 			children = (
+				8E600E9A21D43CD800C97425 /* Models */,
 				8E3F384921C736BC003A944E /* ViewModels */,
 				8E16B57220016B6A004202D1 /* Other */,
 				8E16B57020016A98004202D1 /* Calipers */,
@@ -251,6 +267,8 @@
 				8EA170D021C6CDEF0082783D /* HamburgerTableViewController.m */,
 				8E600E8E21D3FCF500C97425 /* HelpImageViewController.h */,
 				8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */,
+				8E600E9121D402B200C97425 /* HelpTableViewController.h */,
+				8E600E9221D402B200C97425 /* HelpTableViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -283,6 +301,8 @@
 				8EA170D321C6D0690082783D /* HamburgerCell.m */,
 				8E0D4AAC21C8BA9D0061158D /* EcgScrollView.h */,
 				8E0D4AAD21C8BA9D0061158D /* EcgScrollView.m */,
+				8E600E9421D41FD700C97425 /* HelpTopicTableViewCell.h */,
+				8E600E9521D41FD700C97425 /* HelpTopicTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -326,8 +346,21 @@
 				8E3F384B21C737AE003A944E /* HamburgerViewModel.m */,
 				8E3F384D21C73819003A944E /* HamburgerLayer.h */,
 				8E3F384E21C73819003A944E /* HamburgerLayer.m */,
+				8E600EA421D440DA00C97425 /* HelpViewModel.h */,
+				8E600EA521D440DA00C97425 /* HelpViewModel.m */,
 			);
 			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		8E600E9A21D43CD800C97425 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8E600EA221D43FF700C97425 /* HelpTopic.h */,
+				8E600EA121D43FF700C97425 /* HelpTopic.m */,
+				8E600E9B21D43D0300C97425 /* HelpModel.h */,
+				8E600E9C21D43D0300C97425 /* HelpModel.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		8ECEDF561E89F4F800288EDE /* ColorPicker */ = {
@@ -517,13 +550,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */,
+				8E600E9621D41FD700C97425 /* HelpTopicTableViewCell.m in Sources */,
 				8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */,
+				8E600EA321D43FF700C97425 /* HelpTopic.m in Sources */,
+				8E600EA621D440DA00C97425 /* HelpViewModel.m in Sources */,
 				8E13AB6021D13A430020896D /* Version.m in Sources */,
 				8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */,
 				8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */,
 				8E0D4AAE21C8BA9D0061158D /* EcgScrollView.m in Sources */,
 				8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */,
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
+				8E600E9321D402B200C97425 /* HelpTableViewController.m in Sources */,
 				8E365C1D21C5B7E300CD11B3 /* Alert.m in Sources */,
 				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
 				8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */,
@@ -539,6 +576,7 @@
 				8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */,
 				8EA170CE21C6C64A0082783D /* EcgImageView.m in Sources */,
 				8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */,
+				8E600E9D21D43D0300C97425 /* HelpModel.m in Sources */,
 				8EFCC6A71DE5FA5F00D1C58F /* AngleCaliper.m in Sources */,
 				8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */,
 			);
