@@ -113,8 +113,63 @@
     if (self.marching  && self.direction == Horizontal) {
         [self drawMarchingCalipers:context forRect:rect];
     }
-//    [self caliperText];
     [self caliperTextInCanvas:rect textPosition:self.textPosition optimizeTextPosition:true];
+
+    [self drawChosenComponent:context forRect:rect];
+}
+
+- (void)drawChosenComponent:(CGContextRef)context forRect:(CGRect)rect {
+    if (self.chosenComponent == None) {
+        return;
+    }
+    UIColor *chosenComponentColor;
+    if (self.selected) {
+        chosenComponentColor = self.unselectedColor;
+    }
+    else {
+        chosenComponentColor = self.selectedColor;
+    }
+    CGContextSetStrokeColorWithColor(context, [chosenComponentColor CGColor]);
+    switch (self.chosenComponent) {
+        case Bar1:
+            EPSLog(@"draw bar1");
+            if (self.direction == Horizontal) {
+                CGContextMoveToPoint(context, self.bar1Position, 0);
+                CGContextAddLineToPoint(context, self.bar1Position, rect.size.height);
+            }
+            else {
+                CGContextMoveToPoint(context, 0, self.bar1Position);
+                CGContextAddLineToPoint(context, rect.size.width, self.bar1Position);
+            }
+            break;
+        case Bar2:
+            EPSLog(@"draw bar2");
+            if (self.direction == Horizontal) {
+                CGContextMoveToPoint(context, self.bar2Position, 0);
+                CGContextAddLineToPoint(context, self.bar2Position, rect.size.height);
+            }
+            else {
+                CGContextMoveToPoint(context, 0, self.bar2Position);
+                CGContextAddLineToPoint(context, rect.size.width, self.bar2Position);
+            }
+            break;
+        case Crossbar:
+            EPSLog(@"draw crossbar");
+            if (self.direction == Horizontal) {
+                CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
+                CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
+            }
+            else {
+                CGContextMoveToPoint(context, self.crossBarPosition, self.bar2Position);
+                CGContextAddLineToPoint(context, self.crossBarPosition, self.bar1Position);
+            }
+            break;
+        case None:
+            break;
+        default:
+            break;
+    }
+    CGContextStrokePath(context);
 }
 
 // Assumes bar1 and bar positions are already set

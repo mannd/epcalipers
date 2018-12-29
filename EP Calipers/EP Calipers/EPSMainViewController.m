@@ -1355,6 +1355,7 @@
 - (void)doneTweaking {
     self.tweakingInProgress = NO;
     [self.calipersView clearAllChosenComponents];
+    [self.calipersView setNeedsDisplay];
     if (self.inQtc) {
         self.toolbarItems = self.qtcStep2MenuItems;
     }
@@ -1375,6 +1376,8 @@
     self.inQtc = NO;
     self.chosenCaliper = nil;
     self.chosenCaliperComponent = None;
+    [self.calipersView clearAllChosenComponents];
+    [self.calipersView setNeedsDisplay];
 }
 
 - (void)selectRotateImageToolbar {
@@ -1910,6 +1913,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.chosenCaliper = caliper;
     self.chosenCaliperComponent = component;
     caliper.chosenComponent = component;
+    [self.calipersView clearChosenComponentsExceptFor:caliper];
     [self.componentLabel setText:[caliper getComponentName:component smallSize:[self isCompactSizeClass]]];
     [self.componentLabel sizeToFit];
     BOOL disableUpDown = caliper.direction == Horizontal && component != Crossbar;
@@ -1922,6 +1926,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.microLeftButton.enabled = !disableLeftRight;
     self.rightButton.enabled = !disableLeftRight;
     self.microRightButton.enabled = !disableLeftRight;
+    [self.calipersView setNeedsDisplay];
     [self selectMovementToolbar];
 }
 
@@ -2055,7 +2060,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         }
         [self.calipersView.calipers addObject:newCaliper];
     }
-    
+
+    [self.calipersView setNeedsDisplay];
     [super decodeRestorableStateWithCoder:coder];
 }
 

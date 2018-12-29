@@ -91,10 +91,47 @@
         if ([self angleInSouthernHemisphere:self.angleBar1] && [self angleInSouthernHemisphere:self.angleBar2]) {
             double pointsPerMM = 1.0 / self.verticalCalibration.multiplier;
             [self drawTriangleBase:context rect:rect forHeight:5 * pointsPerMM];
-            // draw label
         }
     }
+
+    [self drawChosenComponent:context forRect:rect endPointBar1:endPointBar1 endPointBar2:endPointBar2];
 }
+
+- (void)drawChosenComponent:(CGContextRef)context forRect:(CGRect)rect endPointBar1:(CGPoint)endPointBar1 endPointBar2:(CGPoint)endPointBar2 {
+    if (self.chosenComponent == None) {
+        return;
+    }
+    UIColor *chosenComponentColor;
+    if (self.selected) {
+        chosenComponentColor = self.unselectedColor;
+    }
+    else {
+        chosenComponentColor = self.selectedColor;
+    }
+    CGContextSetStrokeColorWithColor(context, [chosenComponentColor CGColor]);
+    switch (self.chosenComponent) {
+        case Bar1:
+            CGContextMoveToPoint(context, self.bar1Position, self.crossBarPosition);
+            CGContextAddLineToPoint(context, endPointBar1.x, endPointBar1.y);
+            break;
+        case Bar2:
+            CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
+            CGContextAddLineToPoint(context, endPointBar2.x, endPointBar2.y);
+            break;
+        case Crossbar:
+            CGContextMoveToPoint(context, self.bar1Position, self.crossBarPosition);
+            CGContextAddLineToPoint(context, endPointBar1.x, endPointBar1.y);
+            CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
+            CGContextAddLineToPoint(context, endPointBar2.x, endPointBar2.y);
+            break;
+        case None:
+            break;
+        default:
+            break;
+    }
+    CGContextStrokePath(context);
+}
+
 
 - (void)drawTriangleBase:(CGContextRef)context rect:(CGRect)rect forHeight:(double)height {
     CGPoint point1 = [self getBasePoint1ForHeight:height];
