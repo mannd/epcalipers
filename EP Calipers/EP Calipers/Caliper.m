@@ -53,6 +53,7 @@
         self.marching = NO;
         self.textPosition = RightAbove;
         self.autoPositionText = YES;
+        self.chosenComponent = None;
     }
     return self;
 }

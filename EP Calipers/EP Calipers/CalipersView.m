@@ -231,6 +231,25 @@
     }
 }
 
+- (void)clearChosenComponentsExceptFor:(Caliper *)caliper {
+    if (caliper == nil) {
+        [self clearAllChosenComponents];
+    }
+    else {
+        for (Caliper *c in self.calipers) {
+            if (c != caliper) {
+                c.chosenComponent = None;
+            }
+        }
+    }
+}
+
+- (void)clearAllChosenComponents {
+    for (Caliper *c in self.calipers) {
+        c.chosenComponent = None;
+    }
+}
+
 - (Caliper *) caliperNearLocation:(CGPoint)location {
     for (Caliper *c in self.calipers) {
         if ([c pointNearCaliper:location]) {

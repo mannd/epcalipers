@@ -33,6 +33,7 @@
 @property (nonatomic) BOOL marching;
 @property (nonatomic) TextPosition textPosition;
 @property (nonatomic) BOOL autoPositionText;
+@property (nonatomic) CaliperComponent chosenComponent;
 
 - (double)intervalResult;
 - (double)rateResult:(double)interval;

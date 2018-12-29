@@ -46,5 +46,7 @@
 - (void) tweakPosition:(CGPoint)location;
 - (BOOL) caliperNearLocationIsTimeCaliper:(CGPoint)location;
 - (CGPoint)getATimeCaliperMidpoint;
+- (void)clearChosenComponentsExceptFor:(Caliper *)caliper;
+- (void)clearAllChosenComponents;
 
 @end

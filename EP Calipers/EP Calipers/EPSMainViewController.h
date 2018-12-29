@@ -105,6 +105,7 @@
 - (BOOL)imageIsLocked;
 - (void)showToolTips;
 
+@property (nonatomic) BOOL tweakingInProgress;
 @property (nonatomic) BOOL showingToolTips;
 
 //@property (nonatomic) CGPDFDocumentRef documentRef;

@@ -535,6 +535,10 @@
     [sender.view becomeFirstResponder];
     CGPoint location = [sender locationInView:sender.view];
     self.pressLocation = location;
+    if (self.tweakingInProgress) {
+        [self tweakAction];
+        return;
+    }
     UIMenuController *menu = UIMenuController.sharedMenuController;
     menu.arrowDirection = UIMenuControllerArrowDefault;
     UIMenuItem *colorMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Color") action:@selector(colorAction)];
@@ -1349,6 +1353,8 @@
 }
 
 - (void)doneTweaking {
+    self.tweakingInProgress = NO;
+    [self.calipersView clearAllChosenComponents];
     if (self.inQtc) {
         self.toolbarItems = self.qtcStep2MenuItems;
     }
@@ -1900,8 +1906,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)tweakComponent:(CaliperComponent)component forCaliper:(Caliper *)caliper {
+    self.tweakingInProgress = YES;
     self.chosenCaliper = caliper;
     self.chosenCaliperComponent = component;
+    caliper.chosenComponent = component;
     [self.componentLabel setText:[caliper getComponentName:component smallSize:[self isCompactSizeClass]]];
     [self.componentLabel sizeToFit];
     BOOL disableUpDown = caliper.direction == Horizontal && component != Crossbar;
