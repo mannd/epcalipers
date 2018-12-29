@@ -13,6 +13,8 @@
 #import "HelpModel.h"
 #include "Defs.h"
 
+#define ESTIMATED_ROW_HEIGHT 44
+
 @interface HelpTableViewController ()
 
 @end
@@ -25,7 +27,7 @@
     self.title = L(@"Help");
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView setEstimatedRowHeight:66];
+    [self.tableView setEstimatedRowHeight:ESTIMATED_ROW_HEIGHT];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 
     HelpModel *model = [[HelpModel alloc] init];
