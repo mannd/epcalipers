@@ -85,7 +85,6 @@
     EPSLog(@"row %ld selected", (long)indexPath.row);
 
     switch (indexPath.row) {
-        // FiXME: make sure camera is available
         case Camera:
             [self.mainViewController takePhoto];
             break;
@@ -106,6 +105,9 @@
             break;
         case Help:
             [self.mainViewController showHelp];
+            break;
+        case Acknowledgments:
+            [self.mainViewController showAcknowledgments];
             break;
         case About:
             [self.mainViewController showAbout];

@@ -28,6 +28,8 @@
     [array addObject:tooltipLayer];
     HamburgerLayer *helpLayer = [[HamburgerLayer alloc] initWithName:L(@"Help") iconName:@"help" layer:Help];
     [array addObject:helpLayer];
+    HamburgerLayer *acknowledgmentLayer = [[HamburgerLayer alloc] initWithName:L(@"Acknowledgments") iconName:@"people" layer:Acknowledgments];
+    [array addObject:acknowledgmentLayer];
     HamburgerLayer *aboutLayer = [[HamburgerLayer alloc] initWithName:L(@"About EP Calipers") iconName:@"about" layer:About];
     [array addObject:aboutLayer];
 

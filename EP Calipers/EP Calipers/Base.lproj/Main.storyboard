@@ -111,6 +111,7 @@
                         <outlet property="imageView" destination="H9Q-uG-yq7" id="P5j-pJ-mkb"/>
                         <outlet property="scrollView" destination="X5X-Yr-OYx" id="H47-qu-pna"/>
                         <segue destination="DOW-IW-ucv" kind="show" identifier="showHelpImageSegue" id="3Ov-bv-qn1"/>
+                        <segue destination="F3l-Jg-V2u" kind="show" identifier="showAcknowledgmentsSegue" id="o3d-ar-o8Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -177,7 +178,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-Iu-ikC">
-                                <rect key="frame" x="16" y="20" width="343" height="647"/>
+                                <rect key="frame" x="16" y="64" width="343" height="603"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                         </subviews>
@@ -196,7 +197,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hiY-F4-0ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-436" y="-796"/>
+            <point key="canvasLocation" x="953" y="744"/>
         </scene>
         <!--Help Image View Controller-->
         <scene sceneID="IFF-jU-PXb">

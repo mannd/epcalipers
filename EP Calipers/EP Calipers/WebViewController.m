@@ -10,7 +10,7 @@
 #import "Defs.h"
 #import "About.h"
 
-#define HELP_URL @"EPCalipers-help/epcalipers_help"
+#define HELP_URL @"EPCalipers-help/acknowledgments"
 
 @interface WebViewController ()
 
@@ -28,10 +28,7 @@
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
     [btn addTarget:self action:@selector(showAbout) forControlEvents:UIControlEventTouchUpInside];
-    NSString *title = L(@"Help");
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        title = L(@"EP Calipers Help");
-    }
+    NSString *title = L(@"Acknowledgments");
     [self.navigationItem setTitle:title];
     
     // centers view with navigationbar in place

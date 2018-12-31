@@ -698,6 +698,10 @@
     }];
 }
 
+- (void)showAcknowledgments {
+    [self performSegueWithIdentifier:@"showAcknowledgmentsSegue" sender:self];
+}
+
 - (void)showHelp {
     [self performSegueWithIdentifier:@"showHelpImageSegue" sender:self];
 //    [self performSegueWithIdentifier:@"WebViewSegue" sender:self];
