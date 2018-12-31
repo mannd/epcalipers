@@ -703,7 +703,8 @@
 }
 
 - (void)showHelp {
-    [self performSegueWithIdentifier:@"showHelpImageSegue" sender:self];
+    [self performSegueWithIdentifier:@"showHelpSegue" sender:self];
+//    [self performSegueWithIdentifier:@"showHelpImageSegue" sender:self];
 //    [self performSegueWithIdentifier:@"WebViewSegue" sender:self];
 }
 

@@ -41,6 +41,7 @@
 		8EB3DE391AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
 		8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE3D1AC616C0009376AD /* Settings.m */; };
 		8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB3DE401AC9A488009376AD /* Settings.bundle */; };
+		8EBD6D3221DAAFD200FF7748 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */; };
 		8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF581E89F54600288EDE /* FCColorPickerViewController.m */; };
 		8ECEDF5D1E89F62000288EDE /* colormap.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ECEDF5C1E89F62000288EDE /* colormap.png */; };
 		8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF611E89F83700288EDE /* FCBrightDarkGradView.m */; };
@@ -140,6 +141,8 @@
 		8EB3DE3C1AC616C0009376AD /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		8EB3DE3D1AC616C0009376AD /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 		8EB3DE401AC9A488009376AD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		8EBD6D3021DAAFD200FF7748 /* HelpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
+		8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		8ECEDF571E89F54600288EDE /* FCColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCColorPickerViewController.h; sourceTree = "<group>"; };
 		8ECEDF581E89F54600288EDE /* FCColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCColorPickerViewController.m; sourceTree = "<group>"; };
 		8ECEDF5C1E89F62000288EDE /* colormap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colormap.png; sourceTree = "<group>"; };
@@ -269,6 +272,8 @@
 				8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */,
 				8E600E9121D402B200C97425 /* HelpTableViewController.h */,
 				8E600E9221D402B200C97425 /* HelpTableViewController.m */,
+				8EBD6D3021DAAFD200FF7748 /* HelpViewController.h */,
+				8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -576,6 +581,7 @@
 				8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */,
 				8EA170CE21C6C64A0082783D /* EcgImageView.m in Sources */,
 				8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */,
+				8EBD6D3221DAAFD200FF7748 /* HelpViewController.m in Sources */,
 				8E600E9D21D43D0300C97425 /* HelpModel.m in Sources */,
 				8EFCC6A71DE5FA5F00D1C58F /* AngleCaliper.m in Sources */,
 				8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */,

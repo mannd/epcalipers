@@ -11,7 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HelpImageViewController : UIViewController
+
+@property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) IBOutlet UIImageView *helpImageView;
+@property (nonatomic) NSUInteger pageIndex;
 
 @end
 
