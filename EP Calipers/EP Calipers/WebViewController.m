@@ -10,7 +10,7 @@
 #import "Defs.h"
 #import "About.h"
 
-#define HELP_URL @"EPCalipers-help/acknowledgments"
+#define ACKNOWLEDGMENTS_URL @"EPCalipers-help/acknowledgments"
 
 @interface WebViewController ()
 
@@ -21,13 +21,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:HELP_URL ofType:@"html"] isDirectory:NO];
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:ACKNOWLEDGMENTS_URL ofType:@"html"] isDirectory:NO];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:requestObj];
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    [btn addTarget:self action:@selector(showAbout) forControlEvents:UIControlEventTouchUpInside];
     NSString *title = L(@"Acknowledgments");
     [self.navigationItem setTitle:title];
     
@@ -46,7 +43,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)showAbout {
-    [About show];
-}
 @end

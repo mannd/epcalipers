@@ -14,7 +14,6 @@
 #+LINK_HOME: 
 #+XSLT:
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-* Remerciements
 - Je remercie Dr. Michael Katz pour l'idée.
 - Je remercie Dr. Adrian Baranchuk et ses collaborateurs de l'Université Queen de Kingston en Ontario au Canada pour le concept du « Brugadometer » et pour leur aide en appliquant cet algorithme.
 - Je remercie Scott Kankkala pour l’idée des compas marchants.
