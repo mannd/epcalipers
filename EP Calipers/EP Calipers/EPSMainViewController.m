@@ -21,7 +21,7 @@
 // These can't be yes for release version
 #ifdef DEBUG
 // Set to yes to always show startup screen, for testing
-#define TEST_QUICK_START NO
+#define TEST_QUICK_START YES
 // Set to YES to skip introductory tooltips, for testing
 #define SKIP_INTRO_TOOLTIPS NO
 // Set to YES to show PDF menu regardless of their being a PDF
@@ -133,6 +133,8 @@
 @property (strong, nonatomic) CMPopTipView *meanRateButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *qtcStep1ButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *qtcStep2ButtonPopTipView;
+// don't allow buttons to work while showing first tooltips
+@property (nonatomic) BOOL showingInitialTooltips;
 
 
 @property (nonatomic) BOOL showSetupCalibrationToolTip;
@@ -371,6 +373,7 @@
     }
     [self initToolTips];
     if (!SKIP_INTRO_TOOLTIPS) {
+        self.showingInitialTooltips = YES;
         self.navBarRightButtonPopTipView = [[CMPopTipView alloc] initWithMessage:ADD_TOOLTIP];
         [self setupToolTip:self.navBarRightButtonPopTipView];
         [self.navBarRightButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItem animated:YES];
@@ -472,9 +475,13 @@
         [self.longPressPopTipView presentPointingAtView:caliperTargetView inView:self.view animated:YES];
     }
 
+    // This must be the last of the mandatory initial tooltips.
+    // Turning off showingInitialTooltips allows the buttons to work.
     if ([popTipView isEqual:self.longPressPopTipView]) {
         self.longPressPopTipView = nil;
+        self.showingInitialTooltips = NO;
     }
+
 
     [imageTargetView removeFromSuperview];
     imageTargetView = nil;
@@ -643,6 +650,9 @@
 }
 
 - (void)showAddCaliperMenu {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:L(@"Add Caliper") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* timeCaliperAction = [UIAlertAction actionWithTitle:L(@"Time Caliper") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addHorizontalCaliper];}];
     [actionSheet addAction:timeCaliperAction];
@@ -657,6 +667,9 @@
 }
 
 - (void)toggleHamburgerMenu {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (self.hamburgerMenuIsOpen) {
         [self hideHamburgerMenu];
     }
@@ -1799,8 +1812,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
 }
 
-// Note this generates warning: [Generic] Creating an image format with an unknown type is an error
-// However, it still works, and no solution found with ObjC (though maybe works in Swift 3).
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = nil;
     // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
