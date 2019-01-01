@@ -20,15 +20,16 @@
 
 // These can't be yes for release version
 #ifdef DEBUG
-//TODO: Make NO for release version
 // Set to yes to always show startup screen, for testing
 #define TEST_QUICK_START NO
-//TODO: Make NO for release version
 // Set to YES to skip introductory tooltips, for testing
 #define SKIP_INTRO_TOOLTIPS NO
+// Set to YES to show PDF menu regardless of their being a PDF
+#define SHOW_PDF_MENU YES
 #else
 #define TEST_QUICK_START NO
 #define SKIP_INTRO_TOOLTIPS NO
+#define SHOW_PDF_MENU NO
 #endif
 
 // Minimum press duration for long presses (default = 0.5)
@@ -97,21 +98,12 @@
 #define INTERMEDIATE_FONT 14
 #define REGULAR_FONT 17 // This is updated when menus created.
 
-// AlertView tags (arbitrary)
-#define CALIBRATION_ALERTVIEW 20
-#define MEAN_RR_ALERTVIEW 30
-#define MEAN_RR_FOR_QTC_ALERTVIEW 43
-#define NUM_PDF_PAGES_ALERTVIEW 101
-#define QTC_RESULT_ALERTVIEW 104
-
 #define CALIPERS_VIEW_TITLE L(@"EP Calipers")
 #define IMAGE_VIEW_TITLE L(@"Image Mode")
 
 #define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
 
 #define FLEX_SPACE [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]
-
-
 
 @interface EPSMainViewController ()
 
@@ -573,7 +565,7 @@
     UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Done") action:@selector(doneMenuAction)];
     // Determine if we add PDF menu item.
     BOOL isMultipagePDF = self.numberOfPages > 1 && pdfRef != NULL;
-    if (isMultipagePDF) {
+    if (isMultipagePDF || SHOW_PDF_MENU) {
         UIMenuItem *pdfMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"PDF") action:@selector(pdfAction)];
         menu.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, pdfMenuItem, doneMenuItem];
     }

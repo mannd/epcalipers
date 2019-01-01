@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HelpProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HelpTableViewController : UIViewController<UITableViewDelegate, UITableViewDataSource>
+@interface HelpTableViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, HelpProtocol>
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *helpArray;
+@property (nonatomic) NSUInteger pageIndex;
 @end
 
 NS_ASSUME_NONNULL_END

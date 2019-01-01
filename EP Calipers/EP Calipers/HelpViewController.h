@@ -7,15 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HelpImageViewController.h"
-#import "HelpTableViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface HelpViewController : UIViewController <UIPageViewControllerDataSource>
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSArray *viewControllers;
-@property (nonatomic) NSUInteger index;
+@property (strong, nonatomic) NSArray *images;
 @end
 
 NS_ASSUME_NONNULL_END

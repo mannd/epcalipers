@@ -143,6 +143,7 @@
 		8EB3DE401AC9A488009376AD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		8EBD6D3021DAAFD200FF7748 /* HelpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		8EBD6D3321DAF75E00FF7748 /* HelpProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpProtocol.h; sourceTree = "<group>"; };
 		8ECEDF571E89F54600288EDE /* FCColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCColorPickerViewController.h; sourceTree = "<group>"; };
 		8ECEDF581E89F54600288EDE /* FCColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCColorPickerViewController.m; sourceTree = "<group>"; };
 		8ECEDF5C1E89F62000288EDE /* colormap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colormap.png; sourceTree = "<group>"; };
@@ -274,6 +275,7 @@
 				8E600E9221D402B200C97425 /* HelpTableViewController.m */,
 				8EBD6D3021DAAFD200FF7748 /* HelpViewController.h */,
 				8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */,
+				8EBD6D3321DAF75E00FF7748 /* HelpProtocol.h */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";

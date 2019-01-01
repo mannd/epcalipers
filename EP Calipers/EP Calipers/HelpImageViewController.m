@@ -8,6 +8,7 @@
 
 #import "HelpImageViewController.h"
 #include "Defs.h"
+#import "EPSLogging.h"
 
 @interface HelpImageViewController ()
 
@@ -17,22 +18,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    EPSLog(@"HelpImageView did load");
     // Do any additional setup after loading the view.
-    self.helpImageView.image = [UIImage imageNamed:L(@"Help_image")];
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-    [btn addTarget:self action:@selector(showHelpTable) forControlEvents:UIControlEventTouchUpInside];
     self.title = L(@"Quick Help");
+    self.helpImageView.image = [UIImage imageNamed:self.imageName];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.navigationController setToolbarHidden:YES];
-
-}
-
-- (void)showHelpTable {
-    [self performSegueWithIdentifier:@"showHelpTableSegue" sender:self];
 }
 
 @end

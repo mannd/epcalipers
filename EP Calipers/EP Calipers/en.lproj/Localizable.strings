@@ -30,8 +30,8 @@
 "QTc_step_2_tooltip" = "Measure the QT interval";
 
 /* Help image */
-"Help_image" = "epcalipershelp-en";
-
+"Help_image_1" = "epcalipershelp-1-en";
+"Help_image_2" = "epcalipershelp-2-en";
 
 /* Help topics */
 "Add_caliper_topic" = "Adding and deleting calipers";
