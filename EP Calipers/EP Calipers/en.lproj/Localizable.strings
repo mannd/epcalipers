@@ -32,6 +32,7 @@
 /* Help image */
 "Help_image_1" = "epcalipershelp-1-en";
 "Help_image_2" = "epcalipershelp-2-en";
+"Help_image_3" = "epcalipershelp-3-en";
 
 /* Help topics */
 "Add_caliper_topic" = "Adding and deleting calipers";

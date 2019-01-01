@@ -13,7 +13,7 @@
 #include "Defs.h"
 #import "EPSLogging.h"
 
-#define VIEW_CONTROLLERS_COUNT 3
+#define VIEW_CONTROLLERS_COUNT 4
 
 @interface HelpViewController ()
 
@@ -27,7 +27,7 @@
     // Do any additional setup after loading the view.
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpPageViewController"];
     self.pageViewController.dataSource = self;
-    self.images = @[L(@"Help_image_1"), L(@"Help_image_2")];
+    self.images = @[L(@"Help_image_1"), L(@"Help_image_2"), L(@"Help_image_3")];
     UIViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -61,6 +61,12 @@
             return helpImageViewController;
         }
         case 2:
+        { HelpImageViewController *helpImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpImageViewController"];
+            helpImageViewController.imageName = self.images[index];
+            helpImageViewController.pageIndex = index;
+            return helpImageViewController;
+        }
+        case 3:
         { HelpTableViewController *helpTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpTableViewController"];
             helpTableViewController.pageIndex = index;
             return helpTableViewController;
