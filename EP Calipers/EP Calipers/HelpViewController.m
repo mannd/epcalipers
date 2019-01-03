@@ -9,6 +9,7 @@
 #import "HelpViewController.h"
 #import "HelpImageViewController.h"
 #import "HelpTableViewController.h"
+#import "WebViewController.h"
 #import "HelpProtocol.h"
 #include "Defs.h"
 #import "EPSLogging.h"
@@ -67,9 +68,9 @@
             return helpImageViewController;
         }
         case 3:
-        { HelpTableViewController *helpTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpTableViewController"];
-            helpTableViewController.pageIndex = index;
-            return helpTableViewController;
+        { WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WebVCID"];
+            webViewController.pageIndex = index;
+            return webViewController;
         }
         default:
             return nil;

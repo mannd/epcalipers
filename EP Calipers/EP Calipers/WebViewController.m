@@ -21,7 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:ACKNOWLEDGMENTS_URL ofType:@"html"] isDirectory:NO];
+    NSURL *url = [NSURL URLWithString:@"https://epstudiossoftware.com"];
+//    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:ACKNOWLEDGMENTS_URL ofType:@"html"] isDirectory:NO];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:requestObj];
     

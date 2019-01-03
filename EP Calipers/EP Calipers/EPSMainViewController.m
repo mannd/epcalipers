@@ -21,7 +21,7 @@
 // These can't be yes for release version
 #ifdef DEBUG
 // Set to yes to always show startup screen, for testing
-#define TEST_QUICK_START YES
+#define TEST_QUICK_START NO
 // Set to YES to skip introductory tooltips, for testing
 #define SKIP_INTRO_TOOLTIPS NO
 // Set to YES to show PDF menu regardless of their being a PDF
@@ -96,7 +96,6 @@
 #define VERY_SMALL_FONT 10
 #define SMALL_FONT 12
 #define INTERMEDIATE_FONT 14
-#define REGULAR_FONT 17 // This is updated when menus created.
 
 #define CALIPERS_VIEW_TITLE L(@"EP Calipers")
 #define IMAGE_VIEW_TITLE L(@"Image Mode")
@@ -163,9 +162,9 @@
     NSUInteger intermediateFontSize = INTERMEDIATE_FONT;
     self.intermediateFont = [UIFont boldSystemFontOfSize:intermediateFontSize];
     self.intermediateFontAttributes = @{NSFontAttributeName: self.intermediateFont};
-    NSUInteger regularFontSize = REGULAR_FONT;
-    self.regularFont = [UIFont boldSystemFontOfSize:regularFontSize];
+    self.regularFont = [UIFont boldSystemFontOfSize:[UIFont labelFontSize]];
     self.regularFontAttributes = @{NSFontAttributeName: self.regularFont};
+    EPSLog(@"Regular font = %f", self.regularFont.pointSize);
 }
 
 - (void)viewDidLoad {
@@ -752,7 +751,7 @@
     self.calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
-    self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:@"QTc" style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
+    self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:L(@"QTc") style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
     NSArray *array = [NSArray arrayWithObjects: self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, /* self.brugadaButton ? */ nil];
     self.mainMenuItems = [self spaceoutToolbar:array];
 }
@@ -843,17 +842,8 @@
 }
 
 - (void)createMovementToolbar {
-    
-    self.componentLabel = [UILabel new];
-    [self.componentLabel setText:@"Right"];
-    [self.componentLabel sizeToFit];
-    
-    // SNEAKY:  We adjust regular size font here
-    self.regularFont = self.componentLabel.font;
-    self.regularFontAttributes = @{NSFontAttributeName:self.regularFont};
-    
-    EPSLog(@"Regular font = %f", self.regularFont.pointSize);
-    
+
+
     self.componentLabelButton = [[UIBarButtonItem alloc] initWithCustomView:self.componentLabel];
     self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveLeft)];
     self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveRight)];
