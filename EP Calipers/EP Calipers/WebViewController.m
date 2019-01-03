@@ -10,7 +10,6 @@
 #import "Defs.h"
 #import "About.h"
 
-#define ACKNOWLEDGMENTS_URL @"EPCalipers-help/acknowledgments"
 #define EN @"en"
 #define FR @"fr"
 #define RU @"ru"
