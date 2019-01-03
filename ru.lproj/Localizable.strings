@@ -1,0 +1,140 @@
+/* 
+  Localizable.strings
+  EP Calipers
+
+  Created by David Mann on 6/16/17.
+  Copyright © 2017 EP Studios. All rights reserved.
+*/
+
+"lang" = "ru";
+"Image Mode" = "Режим изображения";
+"EP Calipers" = "ЭФИ калипер";
+"Help" = "Помощь";
+"About" = "О нас";
+"Cancel" = "Отмена";
+"Calibrate" = "Калибровка";
+"Set" = "Установить";
+"Clear" = "Очистить";
+"Back" = "Назад";
+"Calculate" = "Рассчитать";
+"Enter Number of Intervals" = "Ввести число интервалов";
+"How many intervals is this caliper measuring?" = "Сколько интервалов измерить в этом калипере?";
+"Cal" = "Калиб";
+/*"Cal" = "Счет";*/
+"Interval/Rate" = "Интервал/Частота";
+"I/R" = "И/Ч";
+"Mean Rate" = "Средняя частота";
+/*"MRate" = "срЧастота";*/
+"MRate" = "срЧСС";
+"More" = "Ещё";
+"Time" = "Время";
+"Preferences" = "Параметры";
+"Mean Interval and Rate" = "Средний интервал и частота";
+"Mean interval"="Средний интервал";
+"Multipage PDF" = "Многостраничный PDF";
+
+"App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages." = "Приложение восстановлено из фонового режима, поэтому отображается только текущая страница. Вам следует снова открыть PDF через приложение для просмотра всех страниц";
+
+"Select" = "Выбрать";
+//"Adjust" = "Выровнять";
+"Sample" = "Образец";
+"Next" = "Слудующий";
+"Previous" = "Предыдущий";
+"Prev" = "Пред";
+"Image" = "Изображение";
+"Measure" = "Измерить";
+"Calculated QTc" = "Рассчитать QTс";
+"No Angle Caliper Selected" = "Угол калипера не выбран";
+"No Caliper Selected" = "Калипер не выбран";
+
+"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement." = "Выберите калипер одним косанием. Переместите калипер к известному интервалу. Нажмите «Настройки», чтобы ввести калибровочное измерение.";
+
+"Enter measurement (e.g. %@)" = "Введите измерение (например %@)";
+"Adjust" = "Выровнять";
+//"90°R" = "90° вправо";
+//"90°L" = "90° влево";
+//"1°R" = "1° вправо";
+//"1°L" = "1° влево";
+//"0.1°R" = "0.1° вправо";
+//"0.1°L" = "0.1°влево";
+"90°R" = "90°⤾";
+"90°L" = "90°⤿";
+"1°R" = "1°⤾";
+"1°L" = "1°⤿";
+"0.1°R" = "0.1°⤾";
+"0.1°L" = "0.1°⤿";
+"Reset" = "Сброс";
+
+"Flip" = "Отразить";
+"RR interval(s)?" = "RR интервал?";
+"QT interval?" = "QT интервал?";
+"Color" = "Цвет";
+"Tweak" = "Точная настройка";
+"Tweak-iPhone" = "Точная";
+"Tweak-iPad" = "Точная настройка";
+"Lock" = "Закрепить";
+"Lock-iPhone" = "Замок";
+"Lock-iPad" = "Закрепить";
+"Unlock" = "Разблокировать";
+"Unlock-iPhone" = "Закре";
+"Unlock-iPad" = "Разблокировать";
+"Long press caliper" = "Длительно удерживайте калипер";
+/*"Long press caliper component" = "Длительно удерживайте компонент калипера";*/
+"Long press caliper component" = "Длительно удерживайте компонент";
+"Enter Number of Intervals" = "Введите количество интервалов";
+"Continue" = "Продолжить";
+"Mean RR" = "Средний RR";
+"Select an angle caliper." = "Выберите угол калипера";
+"No Time Caliper Selected" = "Время калипера не выбрано";
+"Select a time caliper to measure one or more RR intervals." = "Для измерения одного или более RR интервалов выберите время калипера";
+"Angle Caliper" = "Угол калипера";
+"Negatively Valued Caliper" = "Отрицательное значение калипера";
+"No Calipers To Use" = "Нет калиперов для использования";
+
+"Bad Input" = "Неверный ввод";
+"Add one or more calipers first before proceeding." = "Для продолжения введите один или несколько калиперов";
+"Empty input, negative number input, or other bad input." = "Данные не введены, введено отрицательное число или другой неверный ввод";
+"Amplitude" = "Амплитуда";
+"Angle" = "Угол";
+
+"Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers." = "Угол калипера не требует калибрования. Калибровать следует время или амплитуду калипера.\n\ Если вы хотите использовать угловой калипер в качестве Бругадометра, необходимо откалибровать время и амплитуду.";
+
+"IMAGE LOCK" = "Заблокировать изображение";
+"1000 ms" = "1000 мс";
+"10 mm" = "10 мм";
+"Crossbar" = "Планка";
+"Xbar" = "Планка";
+"Left bar" = "Левая планка";
+"Right bar" = "Правая планка";
+"Left" = "Влево";
+"Right" = "Вправо";
+"Top bar" = "Верхняя панель";
+"Top" = "Верхний";
+"Bottom bar" = "Нижняя панель";
+"Bottom" = "Нижний";
+"Apex" = "Вершина";
+"Copyright © 2015 - 2018 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Авторские права © 2015 - 2018 EP Studios, Inc.\ Все права защищены. \ Версия %@";
+
+"points" = "пикселей";
+"msec" = "мсек";
+"500 msec" = "500 мсек";
+"1000 msec" = "1000 мсек";
+"1 mV" = "1 милливольт";
+"10 mm" = "10 мм";
+/*"bpm" = "ударов в минуту";*/
+"bpm" = "уд/мин";
+
+"Mean interval = %.4g %@\nMean rate = %.4g bpm" = "Средний интервал = %.4g %@\nСредняя частота = %.4g уд/мин";
+"Mean RR = %.4g %@\nQT = %.4g %@" = "Средний RR = %.4g %@\nQT = %.4g %@";
+"\nQTc = %.4g %@ (%@ formula)" ="\nQTc = %.4g %@ (формула %@)";
+"Done" = "Готово";
+"Repeat QT" = "Повтор QT";
+"March" = "Шаг";
+"Bazett" = "Базетта";
+"Framingham" = "Фрамингема";
+"Fridericia" = "Фредерика";
+"Hodges" =  "Ходжеса";
+
+"Invalid Result" = "Недопустимый результат";
+
+
