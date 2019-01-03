@@ -106,9 +106,6 @@
         case Help:
             [self.mainViewController showHelp];
             break;
-        case Acknowledgments:
-            [self.mainViewController showAcknowledgments];
-            break;
         case About:
             [self.mainViewController showAbout];
             break;

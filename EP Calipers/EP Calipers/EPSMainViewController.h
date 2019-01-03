@@ -104,7 +104,6 @@
 - (void)lockImage;
 - (BOOL)imageIsLocked;
 - (void)showToolTips;
-- (void)showAcknowledgments;
 
 @property (nonatomic) BOOL tweakingInProgress;
 @property (nonatomic) BOOL showingToolTips;

@@ -8,7 +8,6 @@
 
 #import "HelpViewController.h"
 #import "HelpImageViewController.h"
-#import "HelpTableViewController.h"
 #import "WebViewController.h"
 #import "HelpProtocol.h"
 #include "Defs.h"
@@ -40,6 +39,8 @@
     pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
+
+    self.title = L(@"Help");
 }
 
 #pragma mark - Page view controller data source

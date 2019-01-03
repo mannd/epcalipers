@@ -11,6 +11,10 @@
 #import "About.h"
 
 #define ACKNOWLEDGMENTS_URL @"EPCalipers-help/acknowledgments"
+#define EN @"en"
+#define FR @"fr"
+#define RU @"ru"
+#define HELP_URL @"https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/epcalipers_help.html"
 
 @interface WebViewController ()
 
@@ -21,12 +25,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSURL *url = [NSURL URLWithString:@"https://epstudiossoftware.com"];
-//    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:ACKNOWLEDGMENTS_URL ofType:@"html"] isDirectory:NO];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:HELP_URL, L(@"lang")]];
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:requestObj];
     
-    NSString *title = L(@"Acknowledgments");
+    NSString *title = L(@"Help");
     [self.navigationItem setTitle:title];
     
     // centers view with navigationbar in place

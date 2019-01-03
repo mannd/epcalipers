@@ -702,10 +702,6 @@
     }];
 }
 
-- (void)showAcknowledgments {
-    [self performSegueWithIdentifier:@"showAcknowledgmentsSegue" sender:self];
-}
-
 - (void)showHelp {
     [self performSegueWithIdentifier:@"showHelpSegue" sender:self];
 //    [self performSegueWithIdentifier:@"showHelpImageSegue" sender:self];

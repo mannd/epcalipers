@@ -24,8 +24,6 @@
 		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
 		8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */; };
 		8E600E9021D3FCF500C97425 /* HelpImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */; };
-		8E600E9321D402B200C97425 /* HelpTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E9221D402B200C97425 /* HelpTableViewController.m */; };
-		8E600E9621D41FD700C97425 /* HelpTopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E9521D41FD700C97425 /* HelpTopicTableViewCell.m */; };
 		8E600E9D21D43D0300C97425 /* HelpModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E9C21D43D0300C97425 /* HelpModel.m */; };
 		8E600EA321D43FF700C97425 /* HelpTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600EA121D43FF700C97425 /* HelpTopic.m */; };
 		8E600EA621D440DA00C97425 /* HelpViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600EA521D440DA00C97425 /* HelpViewModel.m */; };
@@ -99,10 +97,6 @@
 		8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissSegue.m; sourceTree = "<group>"; };
 		8E600E8E21D3FCF500C97425 /* HelpImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpImageViewController.h; sourceTree = "<group>"; };
 		8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpImageViewController.m; sourceTree = "<group>"; };
-		8E600E9121D402B200C97425 /* HelpTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpTableViewController.h; sourceTree = "<group>"; };
-		8E600E9221D402B200C97425 /* HelpTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpTableViewController.m; sourceTree = "<group>"; };
-		8E600E9421D41FD700C97425 /* HelpTopicTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpTopicTableViewCell.h; sourceTree = "<group>"; };
-		8E600E9521D41FD700C97425 /* HelpTopicTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpTopicTableViewCell.m; sourceTree = "<group>"; };
 		8E600E9B21D43D0300C97425 /* HelpModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpModel.h; sourceTree = "<group>"; };
 		8E600E9C21D43D0300C97425 /* HelpModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpModel.m; sourceTree = "<group>"; };
 		8E600EA121D43FF700C97425 /* HelpTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpTopic.m; sourceTree = "<group>"; };
@@ -271,8 +265,6 @@
 				8EA170D021C6CDEF0082783D /* HamburgerTableViewController.m */,
 				8E600E8E21D3FCF500C97425 /* HelpImageViewController.h */,
 				8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */,
-				8E600E9121D402B200C97425 /* HelpTableViewController.h */,
-				8E600E9221D402B200C97425 /* HelpTableViewController.m */,
 				8EBD6D3021DAAFD200FF7748 /* HelpViewController.h */,
 				8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */,
 				8EBD6D3321DAF75E00FF7748 /* HelpProtocol.h */,
@@ -308,8 +300,6 @@
 				8EA170D321C6D0690082783D /* HamburgerCell.m */,
 				8E0D4AAC21C8BA9D0061158D /* EcgScrollView.h */,
 				8E0D4AAD21C8BA9D0061158D /* EcgScrollView.m */,
-				8E600E9421D41FD700C97425 /* HelpTopicTableViewCell.h */,
-				8E600E9521D41FD700C97425 /* HelpTopicTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -557,7 +547,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */,
-				8E600E9621D41FD700C97425 /* HelpTopicTableViewCell.m in Sources */,
 				8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */,
 				8E600EA321D43FF700C97425 /* HelpTopic.m in Sources */,
 				8E600EA621D440DA00C97425 /* HelpViewModel.m in Sources */,
@@ -567,7 +556,6 @@
 				8E0D4AAE21C8BA9D0061158D /* EcgScrollView.m in Sources */,
 				8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */,
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
-				8E600E9321D402B200C97425 /* HelpTableViewController.m in Sources */,
 				8E365C1D21C5B7E300CD11B3 /* Alert.m in Sources */,
 				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
 				8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */,

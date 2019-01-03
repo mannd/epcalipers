@@ -4,3 +4,6 @@ osx_image: xcode10.1
 xcode_workspace: ./EP Calipers/EP Calipers.xcworkspace
 xcode_scheme: EP Calipers
 xcode_destination: platform=iOS Simulator,OS=12.1,name=iPhone XR
+branches:
+  except:
+    - gh-pages
