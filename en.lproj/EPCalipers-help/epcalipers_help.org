@@ -5,7 +5,7 @@
 #+DESCRIPTION: EP Calipers Help
 #+KEYWORDS:
 #+LANGUAGE:  en
-#+OPTIONS:   H:3 num:nil toc:t \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
 #+EXPORT_SELECT_TAGS: export
@@ -14,13 +14,10 @@
 #+LINK_HOME: 
 #+XSLT:
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
-* You're on call, again...
-It's 2 AM and the phone rings.  It's a nurse on the cardiac unit.  Mr. Smith is due to get his antiarrhythmic drug (who comes up with these crazy drug schedules?) and his ECG has a borderline prolonged QTc interval, at least according to the computer.  She's not sure if it is safe to give the drug.  The nurse wants to send you the ECG.
-
-You open the ECG on your phone.  You look at the QT interval.  You're not sure about the computer's measurement.  You really should double check it.  You start counting little boxes.  You pull out the (t)rusty old pair of mechanical calipers some drug rep gave you many years ago, back when such largesse was still legal.  You think to yourself: I live in a digital age.  Am I really making measurements on my iPhone with a physical pair of calipers?
-* Electronic calipers
-*EP Calipers* provides *electronic calipers* for measuring intervals on images of electrocardiograms (ECGs) or electrophysiologic recordings.  In the electrophysiology lab electronic calipers are included as part of the recording system.  *EP Calipers* is intended to provide similar electronic calipers for use on your iPhone or iPad.  The electronic calipers of *EP Calipers* are more accurate, easier to use, and less dangerous than mechanical calipers (they don't have sharp points!).
 * Quick start
+:PROPERTIES:
+:CUSTOM_ID: quick-start-id
+:END:
 When *EP Calipers* starts, a sample ECG and a time caliper are loaded.
 Move the caliper around by touching the caliper's crossbar and
 dragging it with your finger.  Expand and contract the caliper by
@@ -170,6 +167,9 @@ Select *QTc*.  Stretch the selected caliper over one or more RR intervals and se
 ** Tweaking during QT measurement
 Note that during all other measurements, it is possible to micromove (i.e. "[[tweak][tweak]]") the caliper using the arrow buttons of the *Tweak* menu prior to making the measurement.  However, during the second step of measuring the QTc (the QT measurement), the *Tweak* menu item is not accessible due to the presence of the QT measurement menu.  Because of this, to allow micromovements when measuring the QT, a long press on the individual caliper components can be used to bring up the micromovement arrows and allow fine-tuning of the caliper position when measuring the QT, prior to the final QTc calculation.  However, this is an optional setting.  Some people hesitate while moving a caliper, but aren't intending to bring up the *Tweak* menu; in fact, this can be an annoyance.  This is why long press gestures are not implemented throughout the app.  But in the specific situation of measuring the QT, one might desire this functionality.  This is an opt-in preference.  Set it by toggling on the *Allow Tweak during QTc* [[app preferences][preference]].
 * Brugadometer
+:PROPERTIES:
+:CUSTOM_ID: brugadometer-id
+:END:
 The *Brugadometer* is a diagnostic tool for Brugada syndrome developed in collaboration with Dr. Adrian Baranchuk and his colleagues at Queen's University Kingston, Ontario, Canada.  It is a tool intended to distinguish between ECGs with a Brugada syndrome pattern in leads V1 or V2 and ECGs with incomplete right bundle branch block.  This tool is under development in *EP Calipers* and will likely evolve in future updates.  In order to use the *Brugadometer*, it is necessary to calibrate an amplitude caliper in millimeters (mm) and to calibrate a time caliper preferably in msec or mm.  After doing so, an angle caliper will appear to have a triangle at its apex as shown below.
 #+CAPTION: Brugadometer showing triangle base 5 mm below apex of caliper
 [[./img/brugadometer1.png]]
