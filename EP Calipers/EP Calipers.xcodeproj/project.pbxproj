@@ -30,7 +30,6 @@
 		8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DDE381FF96D13007247DA /* MiniQTcResult.m */; };
 		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
 		8E9BA12E1EF47D1C00FC8DD2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */; };
-		8E9BA1361EF6BED700FC8DD2 /* EPCalipers-help in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1331EF6BED700FC8DD2 /* EPCalipers-help */; };
 		8E9BA1371EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1391EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib */; };
 		8E9F71ED1F19CA1A00029BED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F71EF1F19CA1A00029BED /* InfoPlist.strings */; };
 		8EA170CE21C6C64A0082783D /* EcgImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA170CD21C6C64A0082783D /* EcgImageView.m */; };
@@ -108,7 +107,6 @@
 		8E600EA521D440DA00C97425 /* HelpViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpViewModel.m; sourceTree = "<group>"; };
 		8E7340F61FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/FCColorPickerViewController.strings; sourceTree = "<group>"; };
 		8E7340F71FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
-		8E7340F81FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ru; path = "ru.lproj/EPCalipers-help"; sourceTree = "<group>"; };
 		8E7340F91FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E7340FA1FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8E7E432521CD85CF00A0C828 /* CMPopTipView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CMPopTipView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,8 +117,6 @@
 		8E9BA12A1EF47CD700FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		8E9BA1311EF47D1E00FC8DD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8E9BA1321EF47D2100FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		8E9BA1341EF6BED700FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fr; path = "fr.lproj/EPCalipers-help"; sourceTree = "<group>"; };
-		8E9BA1351EF6BED700FC8DD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = folder; name = en; path = "en.lproj/EPCalipers-help"; sourceTree = "<group>"; };
 		8E9F71EE1F19CA1A00029BED /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E9F71F21F19CAF100029BED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8EA170CC21C6C64A0082783D /* EcgImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EcgImageView.h; sourceTree = "<group>"; };
@@ -228,7 +224,6 @@
 				8E16B56F200169DD004202D1 /* ViewControllers */,
 				8E16B57120016AB5004202D1 /* Views */,
 				8EF520FD1FF99BFC000B2C74 /* Storyboards */,
-				8E9BA1331EF6BED700FC8DD2 /* EPCalipers-help */,
 				8E1423681AB5F16A00CC15BC /* Images.xcassets */,
 				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
 				8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */,
@@ -495,7 +490,6 @@
 				8E9BA1371EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib in Resources */,
 				8ECEDF5D1E89F62000288EDE /* colormap.png in Resources */,
 				8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */,
-				8E9BA1361EF6BED700FC8DD2 /* EPCalipers-help in Resources */,
 				8E9F71ED1F19CA1A00029BED /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -633,16 +627,6 @@
 				8E7340FA1FFA9E020066A28C /* ru */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		8E9BA1331EF6BED700FC8DD2 /* EPCalipers-help */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8E9BA1341EF6BED700FC8DD2 /* fr */,
-				8E9BA1351EF6BED700FC8DD2 /* en */,
-				8E7340F81FFA9E020066A28C /* ru */,
-			);
-			name = "EPCalipers-help";
 			sourceTree = "<group>";
 		};
 		8E9BA1391EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib */ = {
