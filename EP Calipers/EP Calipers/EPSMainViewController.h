@@ -98,6 +98,7 @@
 - (void)takePhoto;
 - (void)selectPhoto;
 - (void)showHelp;
+- (void)showManual;
 - (void)loadDefaultImage;
 - (void)showAbout;
 - (void)openSettings;

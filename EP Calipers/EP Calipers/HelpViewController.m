@@ -13,7 +13,7 @@
 #include "Defs.h"
 #import "EPSLogging.h"
 
-#define VIEW_CONTROLLERS_COUNT 4
+#define VIEW_CONTROLLERS_COUNT 3
 
 @interface HelpViewController ()
 
@@ -40,7 +40,7 @@
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
 
-    self.title = L(@"Help");
+    self.title = L(@"Quick Help");
 }
 
 #pragma mark - Page view controller data source
@@ -49,33 +49,10 @@
     if (index >= VIEW_CONTROLLERS_COUNT) {
         return nil;
     }
-    switch (index) {
-        case 0:
-        { HelpImageViewController *helpImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpImageViewController"];
-            helpImageViewController.imageName = self.images[index];
-            helpImageViewController.pageIndex = index;
-            return helpImageViewController;
-        }
-        case 1:
-        { HelpImageViewController *helpImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpImageViewController"];
-            helpImageViewController.imageName = self.images[index];
-            helpImageViewController.pageIndex = index;
-            return helpImageViewController;
-        }
-        case 2:
-        { HelpImageViewController *helpImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpImageViewController"];
-            helpImageViewController.imageName = self.images[index];
-            helpImageViewController.pageIndex = index;
-            return helpImageViewController;
-        }
-        case 3:
-        { WebViewController *webViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"WebVCID"];
-            webViewController.pageIndex = index;
-            return webViewController;
-        }
-        default:
-            return nil;
-    }
+    HelpImageViewController *helpImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpImageViewController"];
+    helpImageViewController.imageName = self.images[index];
+    helpImageViewController.pageIndex = index;
+    return helpImageViewController;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {

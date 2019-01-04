@@ -106,6 +106,9 @@
         case Help:
             [self.mainViewController showHelp];
             break;
+        case Manual:
+            [self.mainViewController showManual];
+            break;
         case About:
             [self.mainViewController showAbout];
             break;

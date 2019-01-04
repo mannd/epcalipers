@@ -740,6 +740,10 @@
 //    [self performSegueWithIdentifier:@"WebViewSegue" sender:self];
 }
 
+- (void)showManual {
+    [self performSegueWithIdentifier:@"webViewSegue" sender:self];
+}
+
 - (void)showAbout {
     [About show];
 }

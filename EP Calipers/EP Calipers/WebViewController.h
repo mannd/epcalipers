@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HelpProtocol.h"
 
-@interface WebViewController : UIViewController <HelpProtocol>
+@interface WebViewController : UIViewController <UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
-@property (nonatomic) NSUInteger pageIndex;
 
 @end
