@@ -16,8 +16,8 @@
 
 /* Tooltips */
 "Add_tooltip" = "Add calipers";
-"Side_menu_tooltip" = "Use side menu to change image";
-"Move_caliper_tooltip" = "Move caliper by dragging.  Tap caliper to select it.  Double-tap to delete it.";
+"Side_menu_tooltip" = "Load a new image";
+"Move_caliper_tooltip" = "Move caliper by dragging crossbar.  Expand and contract it by dragging sidebars.  Tap to select it for measurements.  Double-tap to delete it.";
 "Measurement_tooltip" ="Use measurement toolbar to calibrate calipers, then make measurements";
 "Move_image_tooltip" = "Pinch to zoom and drag to reposition image"; 
 "Longpress_tooltip" = "Long press on image or caliper to show additional options";
