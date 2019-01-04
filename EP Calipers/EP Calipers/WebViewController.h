@@ -10,5 +10,6 @@
 
 @interface WebViewController : UIViewController <UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
+@property (strong, nonatomic) NSString *anchor;
 
 @end

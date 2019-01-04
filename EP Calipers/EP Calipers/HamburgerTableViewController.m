@@ -53,7 +53,6 @@
     return [self.rows count];
 }
 
-// TODO: check if camera available on device, see createImageMenu
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     HamburgerCell *cell = [tableView dequeueReusableCellWithIdentifier:@"HamburgerCell" forIndexPath:indexPath];
     HamburgerLayer* row = self.rows[indexPath.row];

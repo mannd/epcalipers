@@ -21,7 +21,7 @@
 // These can't be yes for release version
 #ifdef DEBUG
 // Set to yes to always show startup screen, for testing
-#define TEST_QUICK_START YES
+#define TEST_QUICK_START NO
 // Set to YES to skip introductory tooltips, for testing
 #define SKIP_INTRO_TOOLTIPS YES
 // Set to YES to show PDF menu regardless of their being a PDF
@@ -741,7 +741,7 @@
 }
 
 - (void)showManual {
-    [self performSegueWithIdentifier:@"webViewSegue" sender:self];
+    [self performSegueWithIdentifier:@"manualSegue" sender:self];
 }
 
 - (void)showAbout {

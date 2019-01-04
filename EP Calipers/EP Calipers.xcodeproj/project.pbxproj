@@ -45,6 +45,9 @@
 		8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF611E89F83700288EDE /* FCBrightDarkGradView.m */; };
 		8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */; };
 		8ECEDF681E8A1A1A00288EDE /* About.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF671E8A1A1A00288EDE /* About.m */; };
+		8ECF3F0D21DFC93A00E4DD8B /* ManualTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F0C21DFC93A00E4DD8B /* ManualTableViewController.m */; };
+		8ECF3F1021DFC96500E4DD8B /* ManualCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F0F21DFC96500E4DD8B /* ManualCell.m */; };
+		8ECF3F1321DFD0AA00E4DD8B /* ManualLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F1221DFD0AA00E4DD8B /* ManualLink.m */; };
 		8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */; };
 		8EFCC6A71DE5FA5F00D1C58F /* AngleCaliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */; };
 		BB677CB2C1D1D00F3CC7C063 /* libPods-EP CalipersTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA84B7561464AB7408ECA076 /* libPods-EP CalipersTests.a */; };
@@ -147,6 +150,12 @@
 		8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCColorSwatchView.m; sourceTree = "<group>"; };
 		8ECEDF661E8A1A1A00288EDE /* About.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = About.h; sourceTree = "<group>"; };
 		8ECEDF671E8A1A1A00288EDE /* About.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = About.m; sourceTree = "<group>"; };
+		8ECF3F0B21DFC93A00E4DD8B /* ManualTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManualTableViewController.h; sourceTree = "<group>"; };
+		8ECF3F0C21DFC93A00E4DD8B /* ManualTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManualTableViewController.m; sourceTree = "<group>"; };
+		8ECF3F0E21DFC96500E4DD8B /* ManualCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManualCell.h; sourceTree = "<group>"; };
+		8ECF3F0F21DFC96500E4DD8B /* ManualCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManualCell.m; sourceTree = "<group>"; };
+		8ECF3F1121DFD0AA00E4DD8B /* ManualLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManualLink.h; sourceTree = "<group>"; };
+		8ECF3F1221DFD0AA00E4DD8B /* ManualLink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManualLink.m; sourceTree = "<group>"; };
 		8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sampleECG.jpg; sourceTree = "<group>"; };
 		8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AngleCaliper.h; sourceTree = "<group>"; };
 		8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AngleCaliper.m; sourceTree = "<group>"; };
@@ -268,6 +277,8 @@
 				8EBD6D3021DAAFD200FF7748 /* HelpViewController.h */,
 				8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */,
 				8EBD6D3321DAF75E00FF7748 /* HelpProtocol.h */,
+				8ECF3F0B21DFC93A00E4DD8B /* ManualTableViewController.h */,
+				8ECF3F0C21DFC93A00E4DD8B /* ManualTableViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -300,6 +311,8 @@
 				8EA170D321C6D0690082783D /* HamburgerCell.m */,
 				8E0D4AAC21C8BA9D0061158D /* EcgScrollView.h */,
 				8E0D4AAD21C8BA9D0061158D /* EcgScrollView.m */,
+				8ECF3F0E21DFC96500E4DD8B /* ManualCell.h */,
+				8ECF3F0F21DFC96500E4DD8B /* ManualCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -356,6 +369,8 @@
 				8E600EA121D43FF700C97425 /* HelpTopic.m */,
 				8E600E9B21D43D0300C97425 /* HelpModel.h */,
 				8E600E9C21D43D0300C97425 /* HelpModel.m */,
+				8ECF3F1121DFD0AA00E4DD8B /* ManualLink.h */,
+				8ECF3F1221DFD0AA00E4DD8B /* ManualLink.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -561,12 +576,15 @@
 				8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */,
 				8EA170D121C6CDEF0082783D /* HamburgerTableViewController.m in Sources */,
 				8E3F384C21C737AE003A944E /* HamburgerViewModel.m in Sources */,
+				8ECF3F0D21DFC93A00E4DD8B /* ManualTableViewController.m in Sources */,
 				8E3F384F21C73819003A944E /* HamburgerLayer.m in Sources */,
 				8E600E9021D3FCF500C97425 /* HelpImageViewController.m in Sources */,
 				8ECEDF681E8A1A1A00288EDE /* About.m in Sources */,
+				8ECF3F1321DFD0AA00E4DD8B /* ManualLink.m in Sources */,
 				8EA170D421C6D0690082783D /* HamburgerCell.m in Sources */,
 				8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */,
 				8E14235E1AB5F16A00CC15BC /* main.m in Sources */,
+				8ECF3F1021DFC96500E4DD8B /* ManualCell.m in Sources */,
 				8EB3DE391AC603A3009376AD /* Calibration.m in Sources */,
 				8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */,
 				8EA170CE21C6C64A0082783D /* EcgImageView.m in Sources */,

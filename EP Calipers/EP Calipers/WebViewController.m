@@ -12,10 +12,25 @@
 #import "Alert.h"
 #import "EPSLogging.h"
 
+// These can't be yes for release version
+#ifdef DEBUG
+// Set to yes to use local web page for testing.
+#define USE_LOCAL_MANUAL_URL YES
+#else
+#define USE_LOCAL_MANUAL_URL NO
+#define SHOW_PDF_MENU NO
+#endif
+#ifdef USE_LOCAL_MANUAL_URL
+// MARK: To developers, this absolute path will need to be changed to your
+// file scheme.
+#define MANUAL_URL @"file://localhost/Users/mannd/dev/epcalipers-ghpages/%@.lproj/EPCalipers-help/epcalipers_help.html#%@"
+#else
+#define MANUAL_URL @"https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/epcalipers_help.html#%@"
+#endif
+
 #define EN @"en"
 #define FR @"fr"
 #define RU @"ru"
-#define HELP_URL @"https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/epcalipers_help.html"
 
 @interface WebViewController ()
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
@@ -31,12 +46,15 @@
     [self.activityView startAnimating];
     [self.view addSubview:self.activityView];
 
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:HELP_URL, L(@"lang")]];
+    // Add anchor to link.
+    NSString *link = [NSString stringWithFormat:MANUAL_URL, L(@"lang"), self.anchor];
+    NSURL *url = [NSURL URLWithString:link];
+
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:requestObj];
     self.webView.delegate = self;
 
-    NSString *title = L(@"Help");
+    NSString *title = L(@"Manual");
     [self.navigationItem setTitle:title];
     
     // centers view with navigationbar in place
