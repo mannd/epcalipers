@@ -12,8 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ManualLink : NSObject
 @property (strong, nonatomic) NSString *chapter;
-@property (strong, nonatomic) NSString *anchor;
+@property (nullable, strong, nonatomic) NSString *anchor;
+@property (nullable, strong, nonatomic) NSString *fullLink;
 - (instancetype)initWithChapter:(NSString *)chapter anchor:(NSString *)anchor;
+- (instancetype)initWithChapter:(NSString *)chapter link:(NSString *)link;
 @end
 
 NS_ASSUME_NONNULL_END

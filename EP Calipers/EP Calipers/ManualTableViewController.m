@@ -12,6 +12,21 @@
 #import "WebViewController.h"
 #include "Defs.h"
 
+// These can't be yes for release version
+#ifdef DEBUG
+// Set to yes to use local web page for testing.
+#define USE_LOCAL_ACKNOWLEDGMENTS_URL YES
+#else
+#define USE_LOCAL_ACKNOWLEDGMENTS_URL NO
+#endif
+#ifdef USE_LOCAL_ACKNOWLEDGMENTS_URL
+// MARK: To developers, this absolute path will need to be changed to your
+// file scheme.
+#define ACKNOWLEDGMENTS_URL @"file://localhost/Users/mannd/dev/epcalipers-ghpages/%@.lproj/EPCalipers-help/acknowledgments_ios.html"
+#else
+#define ACKNOWLEDGMENTS_URL @"https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/acknowledgments_ios.html"
+#endif
+
 @interface ManualTableViewController ()
 
 @end
@@ -24,6 +39,7 @@
     NSMutableArray *array = [[NSMutableArray alloc] init];
     [array addObject:[[ManualLink alloc] initWithChapter:L(@"Quick start") anchor:@"quick-start-id"]];
     [array addObject:[[ManualLink alloc] initWithChapter:L(@"Brugadometer") anchor:@"brugadometer-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Acknowledgments") link:ACKNOWLEDGMENTS_URL]];
     self.links = array;
     self.title = L(@"Topics");
 }
@@ -55,6 +71,7 @@
         WebViewController *vc = [segue destinationViewController];
         ManualLink *link = self.links[indexPath.row];
         vc.anchor = link.anchor;
+        vc.fullLink = link.fullLink;
     }
 }
 

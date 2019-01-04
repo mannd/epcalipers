@@ -18,7 +18,6 @@
 #define USE_LOCAL_MANUAL_URL YES
 #else
 #define USE_LOCAL_MANUAL_URL NO
-#define SHOW_PDF_MENU NO
 #endif
 #ifdef USE_LOCAL_MANUAL_URL
 // MARK: To developers, this absolute path will need to be changed to your
@@ -46,8 +45,14 @@
     [self.activityView startAnimating];
     [self.view addSubview:self.activityView];
 
-    // Add anchor to link.
-    NSString *link = [NSString stringWithFormat:MANUAL_URL, L(@"lang"), self.anchor];
+    // If fullLink is nil, add anchor to link.
+    NSString *link;
+    if (self.fullLink == nil) {
+        link = [NSString stringWithFormat:MANUAL_URL, L(@"lang"), self.anchor];
+    }
+    else {
+        link = [NSString stringWithFormat:self.fullLink, L(@"lang")];
+    }
     NSURL *url = [NSURL URLWithString:link];
 
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
