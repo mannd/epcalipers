@@ -9,6 +9,8 @@
 #import "HamburgerViewModel.h"
 #include "Defs.h"
 
+// TODO: define strings with new keys
+
 @implementation HamburgerViewModel
 
 // NOTE: These must be added in same order as HamburgerLayer enum.

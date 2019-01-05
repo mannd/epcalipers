@@ -52,17 +52,24 @@
 #define OK L(@"OK")
 #define DONE L(@"Done")
 
-#define SWITCH_IPAD L(@"Image")
-#define SWITCH_IPHONE L(@"Image")
-#define SWITCH_BACK L(@"Measure")
-#define TWEAK_IPAD L(@"Tweak-iPad")
-#define TWEAK_IPHONE L(@"Tweak-iPhone")
+#define COLOR L(@"Color")
+#define TWEAK L(@"Tweak")
+#define MARCH L(@"March")
+
+#define ROTATE L(@"Rotate")
+#define FLIP L(@"Flip")
+#define RESET L(@"Reset")
+#define PDF L(@"PDF")
+
 #define LOCK_IPAD L(@"Lock-iPad")
 #define LOCK_IPHONE L(@"Lock-iPhone")
 #define UNLOCK_IPAD L(@"Unlock-iPad")
 #define UNLOCK_IPHONE L(@"Unlock-iPhone")
+
+// For future use
 //#define BRUGADA_IPAD @"Brugada"
 //#define BRUGADA_IPHONE @"BrS"
+
 #define LEFT_ARROW @"⇦"
 #define RIGHT_ARROW @"⇨"
 #define MICRO_LEFT_ARROW @"←"
@@ -87,6 +94,33 @@
 #define QTC_STEP_1_TOOLTIP L(@"QTc_step_1_tooltip")
 #define QTC_STEP_2_TOOLTIP L(@"QTc_step_2_tooltip")
 
+// Dialog titles and messages
+#define ADD_CALIPER L(@"Add_caliper")
+#define TIME_CALIPER L(@"Time_caliper")
+#define AMPLITUDE_CALIPER L(@"Amplitude_caliper")
+#define ANGLE_CALIPER L(@"Angle_caliper")
+#define NUMBER_OF_INTERVALS L(@"Number_of_intervals")
+#define HOW_MANY_INTERVALS L(@"How_many_intervals")
+#define NEGATIVE_CALIPER L(@"Negative_caliper")
+#define NO_CALIPERS_TO_USE L(@"No_calipers_to_use")
+#define ADD_SOME_CALIPERS L(@"Add_some_calipers")
+#define BAD_INPUT L(@"Bad_input")
+#define EMPTY_BAD_INPUT L(@"Empty_bad_input")
+#define SELECT_ANGLE_CALIPER L(@"Select_angle_caliper")
+#define NO_ANGLE_CALIPER_SELECTED L(@"No_angle_caliper_selected")
+#define MULTIPAGE_PDF L(@"Multipage_pdf")
+#define MULTIPAGE_PDF_WARNING L(@"Multipage_pdf_warning")
+#define NO_TIME_CALIPER_SELECTED_MESSAGE L(@"No_time_caliper_selected_message")
+#define SELECT_TIME_CALIPER_MESSAGE L(@"Select_time_caliper_message")
+#define MEAN_INTERVAL_RATE_LABEL L(@"Mean_interval_rate_label")
+#define MEAN_INTERVAL_RATE_RESULT L(@"Mean_interval_rate_result")
+#define NO_CALIPER_SELECTED_MESSAGE L(@"No_caliper_selected_message")
+#define CALIBRATION_INSTRUCTIONS L(@"Calibration_instructions")
+#define DO_NOT_CALIBRATE_ANGLE_CALIPERS L(@"Do_not_calibrate_angle_calipers")
+#define QTC L(@"QTc")
+#define CALCULATED_QTC L(@"Calculated_qtc")
+#define REPEAT_QT L(@"Repeat_qt")
+
 #define WHITE [UIColor whiteColor]
 #define GRAY [UIColor lightGrayColor]
 
@@ -95,7 +129,6 @@
 #define INTERMEDIATE_FONT 14
 
 #define CALIPERS_VIEW_TITLE L(@"EP Calipers")
-#define IMAGE_VIEW_TITLE L(@"Image Mode")
 
 #define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
 
@@ -342,7 +375,7 @@
         }
         
         if (self.wasLaunchedFromUrl) {
-            [Alert showSimpleAlertWithTitle:L(@"Multipage PDF") message:L(@"App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages.") viewController:self];
+            [Alert showSimpleAlertWithTitle:MULTIPAGE_PDF message:MULTIPAGE_PDF_WARNING viewController:self];
             self.launchURL = nil;
             self.numberOfPages = 0;
             self.wasLaunchedFromUrl = NO;
@@ -544,10 +577,10 @@
     }
     UIMenuController *menu = UIMenuController.sharedMenuController;
     menu.arrowDirection = UIMenuControllerArrowDefault;
-    UIMenuItem *colorMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Color") action:@selector(colorAction)];
-    UIMenuItem *tweakMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Tweak") action:@selector(tweakAction)];
-    UIMenuItem *marchMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"March") action:@selector(marchAction)];
-    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Done") action:@selector(doneMenuAction)];
+    UIMenuItem *colorMenuItem = [[UIMenuItem alloc] initWithTitle:COLOR action:@selector(colorAction)];
+    UIMenuItem *tweakMenuItem = [[UIMenuItem alloc] initWithTitle:TWEAK action:@selector(tweakAction)];
+    UIMenuItem *marchMenuItem = [[UIMenuItem alloc] initWithTitle:MARCH action:@selector(marchAction)];
+    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:DONE action:@selector(doneMenuAction)];
     // Only include march menu if we are on a time caliper.
     if ([self.calipersView caliperNearLocationIsTimeCaliper:location]) {
         menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, doneMenuItem];
@@ -569,15 +602,14 @@
     [sender.view becomeFirstResponder];
     UIMenuController *menu = UIMenuController.sharedMenuController;
     menu.arrowDirection = UIMenuControllerArrowDefault;
-    EPSLog(L(@"Rotate"));
-    UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Rotate") action:@selector(rotateAction)];
-    UIMenuItem *flipMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Flip") action:@selector(flipAction)];
-    UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Reset") action:@selector(resetAction)];
-    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"Done") action:@selector(doneMenuAction)];
+    UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:ROTATE action:@selector(rotateAction)];
+    UIMenuItem *flipMenuItem = [[UIMenuItem alloc] initWithTitle:FLIP action:@selector(flipAction)];
+    UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:RESET action:@selector(resetAction)];
+    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:DONE action:@selector(doneMenuAction)];
     // Determine if we add PDF menu item.
     BOOL isMultipagePDF = self.numberOfPages > 1 && pdfRef != NULL;
     if (isMultipagePDF || SHOW_PDF_MENU) {
-        UIMenuItem *pdfMenuItem = [[UIMenuItem alloc] initWithTitle:L(@"PDF") action:@selector(pdfAction)];
+        UIMenuItem *pdfMenuItem = [[UIMenuItem alloc] initWithTitle:PDF action:@selector(pdfAction)];
         menu.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, pdfMenuItem, doneMenuItem];
     }
     else {
@@ -669,12 +701,12 @@
     if (self.showingInitialTooltips) {
         return;
     }
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:L(@"Add Caliper") message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction* timeCaliperAction = [UIAlertAction actionWithTitle:L(@"Time Caliper") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addHorizontalCaliper];}];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:ADD_CALIPER message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* timeCaliperAction = [UIAlertAction actionWithTitle:TIME_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addHorizontalCaliper];}];
     [actionSheet addAction:timeCaliperAction];
-    UIAlertAction* amplitudeCaliperAction = [UIAlertAction actionWithTitle:L(@"Amplitude Caliper") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addVerticalCaliper];}];
+    UIAlertAction* amplitudeCaliperAction = [UIAlertAction actionWithTitle:AMPLITUDE_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addVerticalCaliper];}];
     [actionSheet addAction:amplitudeCaliperAction];
-    UIAlertAction* angleCaliperAction = [UIAlertAction actionWithTitle:L(@"Angle Caliper") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addAngleCaliper];}];
+    UIAlertAction* angleCaliperAction = [UIAlertAction actionWithTitle:ANGLE_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addAngleCaliper];}];
     [actionSheet addAction:angleCaliperAction];
     UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:nil];
     [actionSheet addAction:cancelAction];
@@ -780,7 +812,7 @@
     self.calibrateCalipersButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(setupCalibration)];
     self.toggleIntervalRateButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(toggleIntervalRate)];
     self.mRRButton = [[UIBarButtonItem alloc] initWithTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE] style:UIBarButtonItemStylePlain target:self action:@selector(meanRR)];
-    self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:L(@"QTc") style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
+    self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:QTC style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
     NSArray *array = [NSArray arrayWithObjects: self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, /* self.brugadaButton ? */ nil];
     self.mainMenuItems = [self spaceoutToolbar:array];
 }
@@ -993,7 +1025,7 @@
         [self showNoTimeCaliperSelectedAlertView];
         return;
     }
-    UIAlertController *calculateMeanRRAlertController = [UIAlertController alertControllerWithTitle:L(@"Enter Number of Intervals") message:L(@"How many intervals is this caliper measuring?") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *calculateMeanRRAlertController = [UIAlertController alertControllerWithTitle:NUMBER_OF_INTERVALS  message:HOW_MANY_INTERVALS preferredStyle:UIAlertControllerStyleAlert];
     [calculateMeanRRAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.text = L(@"3");
         textField.clearButtonMode = UITextFieldViewModeAlways;
@@ -1014,7 +1046,7 @@
             double intervalResult = fabs(c.intervalResult);
             double meanRR = intervalResult / divisor;
             double meanRate = [c rateResult:meanRR];
-            [Alert showSimpleAlertWithTitle:L(@"Mean Interval and Rate")  message:[NSString localizedStringWithFormat:L(@"Mean interval = %.4g %@\nMean rate = %.4g bpm"), meanRR, [c.calibration rawUnits], meanRate] viewController:self];
+            [Alert showSimpleAlertWithTitle:MEAN_INTERVAL_RATE_LABEL  message:[NSString localizedStringWithFormat:MEAN_INTERVAL_RATE_RESULT, meanRR, [c.calibration rawUnits], meanRate] viewController:self];
         }
         else {
             [self showBadValueDialog];
@@ -1061,7 +1093,7 @@
         [self showNoTimeCaliperSelectedAlertView];
     }
     else {
-        UIAlertController *calculateMeanRRAlertController = [UIAlertController alertControllerWithTitle:L(@"Enter Number of Intervals") message:L(@"How many intervals is this caliper measuring?") preferredStyle:UIAlertControllerStyleAlert];
+      UIAlertController *calculateMeanRRAlertController = [UIAlertController alertControllerWithTitle:NUMBER_OF_INTERVALS message:HOW_MANY_INTERVALS preferredStyle:UIAlertControllerStyleAlert];
         [calculateMeanRRAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.text = L(@"1");
             textField.clearButtonMode = UITextFieldViewModeAlways;
@@ -1115,17 +1147,16 @@
         [self showNoTimeCaliperSelectedAlertView];
     }
     else {
-        EPSLog(@"QTc formula is %lu", (unsigned long)self.settings.qtcFormula);
         Caliper *c = [self.calipersView activeCaliper];
         float qt = fabs([c intervalInSecs:c.intervalResult]);
         float meanRR = fabs(self.rrIntervalForQTc);  // already in secs
         MiniQTcResult *qtcResult = [[MiniQTcResult alloc] init];
         NSString *result = [qtcResult calculateFromQtInSec:qt rrInSec:meanRR formula:self.settings.qtcFormula convertToMsec:c.calibration.unitsAreMsec units:c.calibration.units];
-        UIAlertController *qtcResultAlertController = [UIAlertController alertControllerWithTitle:L(@"Calculated QTc") message:result preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *qtcResultAlertController = [UIAlertController alertControllerWithTitle:CALCULATED_QTC message:result preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAlertAction = [UIAlertAction actionWithTitle:DONE style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [self selectMainToolbar];
         }];
-        UIAlertAction *repeatQtcAction = [UIAlertAction actionWithTitle:L(@"Repeat QT") style:UIAlertActionStyleDefault handler:^(UIAlertAction *alert) {
+        UIAlertAction *repeatQtcAction = [UIAlertAction actionWithTitle:REPEAT_QT style:UIAlertActionStyleDefault handler:^(UIAlertAction *alert) {
             self.toolbarItems = self.qtcStep2MenuItems;
         }];
         [qtcResultAlertController addAction:cancelAlertAction];
@@ -1149,7 +1180,7 @@
         [self unselectCalipersExcept:singleAngleCaliper];
     }
     if ([self noAngleCaliperSelected]) {
-        [Alert showSimpleAlertWithTitle:L(@"No Angle Caliper Selected") message:L(@"Select an angle caliper.") viewController:self];
+        [Alert showSimpleAlertWithTitle:NO_ANGLE_CALIPER_SELECTED message:SELECT_ANGLE_CALIPER  viewController:self];
         return;
     }
     // this had better be true
@@ -1194,7 +1225,7 @@
 }
 
 - (void)showNoTimeCaliperSelectedAlertView {
-    [Alert showSimpleAlertWithTitle:L(@"No Time Caliper Selected") message:L(@"Select a time caliper to measure one or more RR intervals.") viewController:self];
+  [Alert showSimpleAlertWithTitle:NO_TIME_CALIPER_SELECTED_MESSAGE message:SELECT_TIME_CALIPER_MESSAGE viewController:self];
 }
 
 - (void)clearCalibration {
@@ -1259,17 +1290,17 @@
         self.showSetCalibrationToolTip = NO;
     }
     if ([self.calipersView noCaliperIsSelected]) {
-        [Alert showSimpleAlertWithTitle:L(@"No Caliper Selected") message:L(@"Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement.") viewController:self];
+        [Alert showSimpleAlertWithTitle:NO_CALIPER_SELECTED_MESSAGE message:CALIBRATION_INSTRUCTIONS viewController:self];
         return;
     }
     Caliper* c = self.calipersView.activeCaliper;
     // Angle calipers don't require calibration
     if (![c requiresCalibration]) {
-        [Alert showSimpleAlertWithTitle:L(@"Angle Caliper") message:L(@"Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers.") viewController:self];
+      [Alert showSimpleAlertWithTitle:ANGLE_CALIPER message:DO_NOT_CALIBRATE_ANGLE_CALIPERS viewController:self];
         return;
     }
     if (c.valueInPoints <= 0) {
-        [Alert showSimpleAlertWithTitle:L(@"Negatively Valued Caliper") message:L(@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration.") viewController:self];
+        [Alert showSimpleAlertWithTitle:NEGATIVE_CALIPER message:L(@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration.") viewController:self];
         return;
     }
     NSString *example = @"";
@@ -1322,7 +1353,7 @@
 }
 
 - (void)showNoCalipersAlert {
-    [Alert showSimpleAlertWithTitle:L(@"No Calipers To Use") message:L(@"Add one or more calipers first before proceeding.") viewController:self];
+    [Alert showSimpleAlertWithTitle:NO_CALIPERS_TO_USE message:ADD_SOME_CALIPERS viewController:self];
 }
 
 - (Caliper *)getLoneTimeCaliper {
@@ -1772,7 +1803,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)showBadValueDialog {
-    [Alert showSimpleAlertWithTitle:L(@"Bad Input") message:L(@"Empty input, negative number input, or other bad input.") viewController:self];
+    [Alert showSimpleAlertWithTitle:BAD_INPUT message:EMPTY_BAD_INPUT viewController:self];
 }
 
 // Can only get at this embedded view controller via its segue.
