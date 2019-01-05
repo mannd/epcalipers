@@ -15,7 +15,7 @@
 @implementation About
 
 + (void)show {
-    NSString *message = [NSString localizedStringWithFormat:L(@"Copyright © 2015-2019 EP Studios, Inc.\nAll rights reserved.\nVersion %@"), [self getVersion]];
+    NSString *message = [NSString localizedStringWithFormat:L(@"Copyright_message"), [self getVersion]];
     UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     [Alert showSimpleAlertWithTitle:L(@"EP Calipers") message:message viewController:vc];
 }

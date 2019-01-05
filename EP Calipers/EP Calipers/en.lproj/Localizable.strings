@@ -33,3 +33,6 @@
 "Help_image_1" = "epcalipershelp-1-en";
 "Help_image_2" = "epcalipershelp-2-en";
 "Help_image_3" = "epcalipershelp-3-en";
+
+/* New shortcut strings */
+"Copyright_message" = "Copyright © 2015-2019 EP Studios, Inc.\nAll rights reserved.\nVersion %@";

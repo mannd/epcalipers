@@ -46,13 +46,9 @@
 #define TOGGLE_INT_RATE_IPHONE L(@"Int/Rate")
 #define MEAN_RATE_IPAD L(@"Mean Rate")
 #define MEAN_RATE_IPHONE L(@"MeanRate")
-#define HELP L(@"Help")
 #define CANCEL L(@"Cancel")
-#define ABOUT L(@"About")
-#define BACK L(@"Back")
 #define SET L(@"Set")
 #define CLEAR L(@"Clear")
-#define MORE L(@"More")
 #define OK L(@"OK")
 #define DONE L(@"Done")
 
@@ -90,6 +86,7 @@
 #define MEAN_RATE_TOOLTIP L(@"Mean_rate_tooltip")
 #define QTC_STEP_1_TOOLTIP L(@"QTc_step_1_tooltip")
 #define QTC_STEP_2_TOOLTIP L(@"QTc_step_2_tooltip")
+
 #define WHITE [UIColor whiteColor]
 #define GRAY [UIColor lightGrayColor]
 
@@ -1444,8 +1441,7 @@
         picker.allowsEditing = YES;
     }
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        EPSLog(@"Camera not available");
-        [Alert showSimpleAlertWithTitle:@"Camera not available" message:@"Camera is not available on this device." viewController:self];
+        [Alert showSimpleAlertWithTitle:L(@"Camera not available") message:L(@"Camera is not available on this device.") viewController:self];
         return;
     }
 

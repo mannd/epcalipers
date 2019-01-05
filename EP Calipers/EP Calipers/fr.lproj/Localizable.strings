@@ -88,7 +88,7 @@
 "Angle" = "Angle";
 "Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers." = "Les compas d'angle ne nécessitent pas d'étalonnage.  Seuls les compas de temps ou d'amplitude doivent être étalonnés.\n\nSi vous voulez utiliser un compas d'angle comme un « Brugadometer » vous devez d'abord étalonner les compas de temps et d'amplitude.";
 "IMAGE LOCK" = "IMAGE BLOQUÉE";
-"1000 ms" = "1 000 mse";
+"1000 ms" = "1 000 msec";
 "10 mm" = "10 mm";
 "Crossbar" = "Barre transversale";
 "Xbar" = "Barre t";
@@ -101,7 +101,6 @@
 "Bottom bar" = "Barre inférieure";
 "Bottom" = "Barre inf";
 "Apex" = "Sommet";
-"Copyright © 2015 - 2018 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Copyright © 2015 - 2018 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
 "Mean RR = %.4g %@\nQT = %.4g %@" = "RR moyen = %.4g %@\nQT = %.4g %@";
 "\nQTc = %.4g %@ (%@ formula)" ="\nQTc = %.4g %@ (formule de %@)";
 "Done" = "OK";
@@ -111,7 +110,7 @@
 /* new strings EPCalipers-3 */
 
 "Camera not available" = "Caméra non disponible";
-"Camera not available on this device" = "Aucune caméra n'est disponible pour cet appareil.";
+"Camera is not available on this device." = "Aucune caméra n'est disponible pour cet appareil.";
 "Take photo" = "Prendre une photo";
 "Select image" = "Choisir une image";
 "Lock image" = "Immobiliser l'image";
@@ -124,9 +123,14 @@
 
 /* Tooltips */
 "Show tooltips" = "Afficher les infobulles";
+"Hide tooltips" = "Masquer les infobulles";
 "Add_tooltip" = "Ajouter des compas";
 
 "Acknowledgments" = "Remerciements";
 "Quick start" = "Commencement rapide";
 "Topics" = "Sujets";
 "Manual" = "Manuel";
+"Quick help" = "Aide rapide";
+
+/* new shortcut strings */
+"Copyright_message" = "Copyright © 2015-2019 EP Studios, Inc.\nTous droits réservés.\nVersion %@";

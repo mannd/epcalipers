@@ -119,7 +119,7 @@
 "Bottom bar" = "Нижняя панель";
 "Bottom" = "Нижний";
 "Apex" = "Вершина";
-"Copyright © 2015 - 2018 EP Studios, Inc.\nAll rights reserved.\nVersion %@" = "Авторские права © 2015 - 2018 EP Studios, Inc.\ Все права защищены. \ Версия %@";
+"Copyright_message" = "Авторские права © 2015-2019 EP Studios, Inc.\ Все права защищены. \ Версия %@";
 
 "points" = "пикселей";
 "msec" = "мсек";
