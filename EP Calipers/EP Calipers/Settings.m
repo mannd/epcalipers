@@ -7,6 +7,7 @@
 //
 
 #import "Settings.h"
+#import "Translation.h"
 #import "EPSLogging.h"
 #import "Defs.h"
 

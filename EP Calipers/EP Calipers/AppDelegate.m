@@ -10,6 +10,7 @@
 #import "EPSMainViewController.h"
 #import "Version.h"
 #import "EPSLogging.h"
+#import "Translation.h"
 #import "Defs.h"
 
 @interface AppDelegate ()

@@ -7,7 +7,8 @@
 //
 
 #import "Alert.h"
-#include "Defs.h"
+#import "Translation.h"
+#import "Defs.h"
 
 @implementation Alert
 

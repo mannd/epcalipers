@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "Defs.h"
+#import "Defs.h"
 
 typedef NS_ENUM(NSUInteger, QTcFormulaPreference) {
     Bazett = 0,

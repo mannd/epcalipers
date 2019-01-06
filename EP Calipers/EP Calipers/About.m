@@ -9,8 +9,9 @@
 #import "About.h"
 #import "Alert.h"
 #import "Version.h"
+#import "Translation.h"
 #import <UIKit/UIKit.h>
-#include "Defs.h"
+#import "Defs.h"
 
 @implementation About
 

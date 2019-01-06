@@ -10,7 +10,8 @@
 #import "HelpImageViewController.h"
 #import "WebViewController.h"
 #import "HelpProtocol.h"
-#include "Defs.h"
+#import "Translation.h"
+#import "Defs.h"
 #import "EPSLogging.h"
 
 #define VIEW_CONTROLLERS_COUNT 3

@@ -8,8 +8,9 @@
 
 #import "Caliper.h"
 #import "EPSLogging.h"
-#include <math.h>
-#include "Defs.h"
+#import "Translation.h"
+#import <math.h>
+#import "Defs.h"
 
 
 #define DELTA 20.0

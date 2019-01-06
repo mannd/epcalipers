@@ -8,7 +8,8 @@
 
 #import "HelpModel.h"
 #import "HelpTopic.h"
-#include "Defs.h"
+#import "Translation.h"
+#import "Defs.h"
 
 @implementation HelpModel
 - (instancetype)init {

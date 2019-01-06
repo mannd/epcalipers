@@ -7,7 +7,8 @@
 //
 
 #import "HelpImageViewController.h"
-#include "Defs.h"
+#import "Translation.h"
+#import "Defs.h"
 #import "EPSLogging.h"
 
 @interface HelpImageViewController ()

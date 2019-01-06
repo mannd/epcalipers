@@ -94,19 +94,21 @@
 "Interval_rate_iphone" = "Int/Rate";
 "Mean_rate_ipad" = "Mean Rate";
 "Mean_rate_iphone_alt_ru" = "MeanRate";
-"Mean_rate_iphone " = "MeanRate";
+"Mean_rate_iphone" = "MeanRate";
 "Mean_rate_iphone_shortest" = "MRate";
 "Time" = "Time";
 "Preferences" = "Preferences";
 "Select" = "Select";
 "Sample" = "Sample";
 "Adjust" = "Adjust";
+
 "Rotate_90_R" = "90°R";
 "Rotate_90_L" = "90°L";
 "Rotate_1_R" = "1°R";
 "Rotate_1_L" = "1°L";
 "Rotate_01_R" = "0.1°R";
 "Rotate_01_L" = "0.1°L";
+
 "Reset" = "Reset";
 "Flip" = "Flip";
 "Num_RRs" = "RR interval(s)?";
@@ -198,7 +200,8 @@
 // New
 "Measure" = "Measure";
 "Calculate" = "Calculate";
-
+"Enter_measurement" = "Enter measurement (e.g. %@)";
+"PDF" = "PDF";
 // ?????
 "Time caliper" = "Time caliper";
 

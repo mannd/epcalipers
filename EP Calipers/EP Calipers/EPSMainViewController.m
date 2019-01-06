@@ -16,7 +16,8 @@
 #import "MiniQTcResult.h"
 #import "Alert.h"
 #import "Version.h"
-#include "Defs.h"
+#import "Translation.h"
+#import "Defs.h"
 
 // These can't be yes for release version
 #ifdef DEBUG
@@ -44,10 +45,10 @@
 // TODO: Do we need short forms for any language for below?
 #define CALIBRATE_IPAD L(@"Calibrate")
 #define CALIBRATE_IPHONE L(@"Calibrate")
-#define TOGGLE_INT_RATE_IPAD L(@"Interval/Rate")
-#define TOGGLE_INT_RATE_IPHONE L(@"Int/Rate")
-#define MEAN_RATE_IPAD L(@"Mean Rate")
-#define MEAN_RATE_IPHONE L(@"MeanRate")
+#define TOGGLE_INT_RATE_IPAD L(@"Interval_rate_ipad")
+#define TOGGLE_INT_RATE_IPHONE L(@"Interval_rate_iphone")
+#define MEAN_RATE_IPAD L(@"Mean_rate_ipad")
+#define MEAN_RATE_IPHONE L(@"Mean_rate_iphone")
 #define CANCEL L(@"Cancel")
 #define SET L(@"Set")
 #define CLEAR L(@"Clear")
@@ -119,6 +120,7 @@
 #define NO_CALIPER_SELECTED_MESSAGE L(@"No_caliper_selected_message")
 #define CALIBRATION_INSTRUCTIONS L(@"Calibration_instructions")
 #define DO_NOT_CALIBRATE_ANGLE_CALIPERS L(@"Do_not_calibrate_angle_calipers")
+#define ENTER_MEASUREMENT L(@"Enter_measurement")
 #define QTC L(@"QTc")
 #define CALCULATED_QTC L(@"Calculated_qtc")
 #define REPEAT_QT L(@"Repeat_qt")
@@ -800,7 +802,6 @@
     [self createSetupCalibrationToolbar];
     [self createQTcStep1Toolbar];
     [self createQTcStep2Toolbar];
-    [self createColorToolbar];
     [self createMovementToolbar];
     [self fixupMenus:[self isCompactSizeClass]];
 }
@@ -902,19 +903,6 @@
                               self.qtcMeasureQTcButton,
                               cancelButton, nil];
     self.qtcStep2MenuItems = [self spaceoutToolbar:array];
-}
-
-- (void)createColorToolbar {
-    UILabel *label = [[UILabel alloc] init];
-    [label setText:L(@"Long press caliper")];
-    if ([self usingRussian]) {
-        [label setFont:self.intermediateFont];
-    }
-    [label sizeToFit];
-
-    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
-    self.colorMenuItems = [NSArray arrayWithObjects:labelBarButtonItem, cancelButton, nil];
 }
 
 - (void)createMovementToolbar {
@@ -1325,7 +1313,7 @@
     else {
         example = L(@"500 msec");
     }
-    NSString *message = [NSString stringWithFormat:L(@"Enter measurement (e.g. %@)"), example];
+    NSString *message = [NSString stringWithFormat:ENTER_MEASUREMENT, example];
     // see https://stackoverflow.com/questions/33996443/how-to-add-text-input-in-alertview-of-ios-8 for using text fields with UIAlertController.
     UIAlertController *calibrationAlertController = [UIAlertController alertControllerWithTitle:CALIBRATE message:message preferredStyle:UIAlertControllerStyleAlert];
     [calibrationAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {

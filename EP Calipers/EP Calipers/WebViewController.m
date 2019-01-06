@@ -10,6 +10,7 @@
 #import "Defs.h"
 #import "About.h"
 #import "Alert.h"
+#import "Translation.h"
 #import "EPSLogging.h"
 
 // These can't be yes for release version

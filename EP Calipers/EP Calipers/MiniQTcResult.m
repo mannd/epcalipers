@@ -7,6 +7,7 @@
 //
 
 #import "MiniQTcResult.h"
+#import "Translation.h"
 #import "Defs.h"
 
 

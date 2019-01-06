@@ -10,7 +10,8 @@
 #import "ManualLink.h"
 #import "ManualCell.h"
 #import "WebViewController.h"
-#include "Defs.h"
+#import "Translation.h"
+#import "Defs.h"
 
 // These can't be yes for release version
 #ifdef DEBUG
