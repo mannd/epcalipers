@@ -43,8 +43,13 @@ typedef NS_ENUM(NSInteger, TextPosition) {
     Bottom
 };
 
-
-// make my own simpler localization macro
+// Look for untranslated string by default.
+#ifdef DEBUG
+#define X(s) [NSString stringWithFormat:@"*<%@>*", s]
+#define L(s) NSLocalizedStringWithDefaultValue(s, @"Localizable", [NSBundle mainBundle], X(s), @"")
+#else
+// make my own simpler localization macrt
 #define L(s) NSLocalizedString(s, nil)
+#endif
 
 #endif

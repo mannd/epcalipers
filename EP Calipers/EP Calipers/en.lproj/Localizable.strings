@@ -109,8 +109,8 @@
 "Rotate_01_L" = "0.1°L";
 "Reset" = "Reset";
 "Flip" = "Flip";
-"Num_RRs?" = "RR interval(s)?";
-"QT?" = "QT interval?";
+"Num_RRs" = "RR interval(s)?";
+"QT" = "QT interval?";
 "Color" = "Color";
 "Tweak" = "Tweak";
 "Tweak-iPhone" = "Tweak";
@@ -194,6 +194,10 @@
 "QTc_step_2_tooltip" = "Measure the QT interval";
 "Side menu" = "Side menu";
 "Take photos, Load images, Preferences, Help" = "Take photos, Load images, Preferences, Help";
+
+// New
+"Measure" = "Measure";
+"Calculate" = "Calculate";
 
 // ?????
 "Time caliper" = "Time caliper";

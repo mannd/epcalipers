@@ -40,6 +40,8 @@
 #define MICRO_MOVEMENT 0.1f
 #define MAX_BLACKVIEW_ALPHA 0.4f
 
+#define CALIBRATE L(@"Calibrate")
+// TODO: Do we need short forms for any language for below?
 #define CALIBRATE_IPAD L(@"Calibrate")
 #define CALIBRATE_IPHONE L(@"Calibrate")
 #define TOGGLE_INT_RATE_IPAD L(@"Interval/Rate")
@@ -120,6 +122,19 @@
 #define QTC L(@"QTc")
 #define CALCULATED_QTC L(@"Calculated_qtc")
 #define REPEAT_QT L(@"Repeat_qt")
+#define GO_TO L(@"Go_to")
+#define GO_TO_PAGE L(@"Go_to_page")
+#define ROTATE_90_R L(@"Rotate_90_R")
+#define ROTATE_90_L L(@"Rotate_90_L")
+#define ROTATE_1_R L(@"Rotate_1_R")
+#define ROTATE_1_L L(@"Rotate_1_L")
+#define ROTATE_01_R L(@"Rotate_01_R")
+#define ROTATE_01_L L(@"Rotate_01_L")
+#define NUM_RRS L(@"Num_RRs")
+#define QT L(@"QT")
+#define MEASURE L(@"Measure")
+#define CALCULATE L(@"Calculate")
+
 
 #define WHITE [UIColor whiteColor]
 #define GRAY [UIColor lightGrayColor]
@@ -821,7 +836,7 @@
     // these 2 buttons only enable for multipage PDFs
     self.nextPageButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"whitenextpage"] style:UIBarButtonItemStylePlain target:self action:@selector(gotoNextPage)];
     self.previousPageButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"whitepreviouspage"] style:UIBarButtonItemStylePlain target:self action:@selector(gotoPreviousPage)];
-    UIBarButtonItem *gotoPageButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Go to") style:UIBarButtonItemStylePlain target:self action:@selector(gotoPage)];
+    UIBarButtonItem *gotoPageButton = [[UIBarButtonItem alloc] initWithTitle:GO_TO style:UIBarButtonItemStylePlain target:self action:@selector(gotoPage)];
     [self enablePageButtons:NO];
     UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     NSArray *array = [NSArray arrayWithObjects: self.previousPageButton, self.nextPageButton, gotoPageButton, backToMainMenuButton, nil];
@@ -829,12 +844,12 @@
 }
 
 - (void)rotateImageToolbar {
-  UIBarButtonItem *rotateImageRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"90°R") style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageRight:)];
-  UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"90°L") style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
-  UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"1°R") style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
-  UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"1°L") style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
-    UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:L(@"0.1°R") style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
-    UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:L(@"0.1°L") style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
+  UIBarButtonItem *rotateImageRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_R style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageRight:)];
+  UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_L style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
+  UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_R style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
+  UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_L style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
+    UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_01_R style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
+    UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_01_L style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
     UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
     
     NSArray *array = [NSArray arrayWithObjects:rotateImageRightButton,
@@ -861,11 +876,11 @@
 
 - (void)createQTcStep1Toolbar {
     UILabel *label = [[UILabel alloc] init];
-    [label setText:L(@"RR interval(s)?")];
+    [label setText:NUM_RRS];
     [label sizeToFit];
     label.textColor = GRAY;
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    self.qtcMeasureRateButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
+    self.qtcMeasureRateButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
@@ -876,11 +891,11 @@
 
 - (void)createQTcStep2Toolbar {
     UILabel *label = [[UILabel alloc] init];
-    [label setText:L(@"QT interval?")];
+    [label setText:QT];
     [label sizeToFit];
     label.textColor = GRAY;
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    self.qtcMeasureQTcButton = [[UIBarButtonItem alloc] initWithTitle:L(@"Measure") style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
+    self.qtcMeasureQTcButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
     
     NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
@@ -1034,7 +1049,7 @@
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [self selectMainToolbar];
     }];
-    UIAlertAction *calculateAction = [UIAlertAction actionWithTitle:L(@"Calculate") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+    UIAlertAction *calculateAction = [UIAlertAction actionWithTitle:CALCULATE style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         NSArray *textFields = calculateMeanRRAlertController.textFields;
         UITextField *rawTextField = textFields[0];
         int divisor = [rawTextField.text intValue];
@@ -1102,7 +1117,7 @@
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [self selectMainToolbar];
         }];
-        UIAlertAction *calculateAction = [UIAlertAction actionWithTitle:L(@"Calculate") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        UIAlertAction *calculateAction = [UIAlertAction actionWithTitle:CALCULATE style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
             NSArray *textFields = calculateMeanRRAlertController.textFields;
             UITextField *rawTextField = textFields[0];
             int divisor = [rawTextField.text intValue];
@@ -1312,7 +1327,7 @@
     }
     NSString *message = [NSString stringWithFormat:L(@"Enter measurement (e.g. %@)"), example];
     // see https://stackoverflow.com/questions/33996443/how-to-add-text-input-in-alertview-of-ios-8 for using text fields with UIAlertController.
-    UIAlertController *calibrationAlertController = [UIAlertController alertControllerWithTitle:L(@"Calibrate") message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *calibrationAlertController = [UIAlertController alertControllerWithTitle:CALIBRATE message:message preferredStyle:UIAlertControllerStyleAlert];
     [calibrationAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.clearButtonMode = UITextFieldViewModeAlways;
         textField.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -1559,7 +1574,7 @@
 - (void)gotoPage {
     // show goto page dialog here
     EPSLog(@"Goto page selected");
-    UIAlertController *gotoPageAlertController = [UIAlertController alertControllerWithTitle:L(@"Go to Page...") message:nil preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *gotoPageAlertController = [UIAlertController alertControllerWithTitle:GO_TO_PAGE message:nil preferredStyle:UIAlertControllerStyleAlert];
     [gotoPageAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         NSString *stringCurrentPage = [NSString stringWithFormat:@"%i", self.pageNumber];
         textField.text = stringCurrentPage;
