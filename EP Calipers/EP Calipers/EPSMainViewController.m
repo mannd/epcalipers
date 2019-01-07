@@ -24,7 +24,7 @@
 // Set to yes to always show startup screen, for testing
 #define TEST_QUICK_START NO
 // Set to YES to skip introductory tooltips, for testing
-#define SKIP_INTRO_TOOLTIPS YES
+#define SKIP_INTRO_TOOLTIPS NO
 // Set to YES to show PDF menu regardless of their being a PDF
 #define SHOW_PDF_MENU YES
 #else
@@ -32,6 +32,9 @@
 #define SKIP_INTRO_TOOLTIPS NO
 #define SHOW_PDF_MENU NO
 #endif
+
+// Language for localization
+#define LANG L(@"lang")
 
 // Minimum press duration for long presses (default = 0.5)
 #define MINIMUM_PRESS_DURATION 1
@@ -70,8 +73,15 @@
 #define UNLOCK_IPHONE L(@"Unlock-iPhone")
 
 // For future use
-//#define BRUGADA_IPAD @"Brugada"
-//#define BRUGADA_IPHONE @"BrS"
+#define BRUGADA_IPAD L(@"Brugada_ipad")
+#define BRUGADA_IPHONE L(@"Brugada_iphone")
+#define LOW_BRUGADA_RISK L(@"Low_brugada_risk")
+#define BRUGADA_BASE_MEASUREMENT L(@"Brugada_base_measurement")
+#define BRUGADA_RISK_STATEMENT L(@"Brugada_risk_statement")
+#define BRUGADA_CALIBRATION_STATEMENT L(@"Brugada_calibration_statement")
+#define BRUGADA_BETA_ANGLE L(@"Brugada_beta_angle")
+#define BRUGADA_RESULTS_TITLE L(@"Brugada_results_title")
+#define BRUGADA_INCREASED_RISK L(@"Brugada_increased_risk")
 
 #define LEFT_ARROW @"⇦"
 #define RIGHT_ARROW @"⇨"
@@ -94,6 +104,7 @@
 #define CLEAR_CALIBRATION_TOOLTIP L(@"Clear_calibration_tooltip")
 #define INT_RATE_TOOLTIP L(@"Int_rate_tooltip")
 #define MEAN_RATE_TOOLTIP L(@"Mean_rate_tooltip")
+#define QTC_TOOLTIP L(@"QTc_tooltip")
 #define QTC_STEP_1_TOOLTIP L(@"QTc_step_1_tooltip")
 #define QTC_STEP_2_TOOLTIP L(@"QTc_step_2_tooltip")
 
@@ -105,6 +116,7 @@
 #define NUMBER_OF_INTERVALS L(@"Number_of_intervals")
 #define HOW_MANY_INTERVALS L(@"How_many_intervals")
 #define NEGATIVE_CALIPER L(@"Negative_caliper")
+#define NEGATIVE_CALIPER_MESSAGE L(@"Negative_caliper_message")
 #define NO_CALIPERS_TO_USE L(@"No_calipers_to_use")
 #define ADD_SOME_CALIPERS L(@"Add_some_calipers")
 #define BAD_INPUT L(@"Bad_input")
@@ -136,7 +148,12 @@
 #define QT L(@"QT")
 #define MEASURE L(@"Measure")
 #define CALCULATE L(@"Calculate")
-
+#define THREE L(@"Three")
+#define ONE L(@"One")
+#define ONE_MV L(@"One_mv")
+#define FIVE_HUNDRED_MSEC L(@"Five_hundred_msec")
+#define CAMERA_NOT_AVAILABLE_TITLE L(@"Camera_not_available_title")
+#define CAMERA_NOT_AVAILABLE_MESSAGE L(@"Camera_not_available_message")
 
 #define WHITE [UIColor whiteColor]
 #define GRAY [UIColor lightGrayColor]
@@ -179,6 +196,7 @@
 @property (strong, nonatomic) CMPopTipView *clearCalibrationButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *intRateButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *meanRateButtonPopTipView;
+@property (strong, nonatomic) CMPopTipView *calculateQTcPopTipView;
 @property (strong, nonatomic) CMPopTipView *qtcStep1ButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *qtcStep2ButtonPopTipView;
 // Target views for tooltips
@@ -195,6 +213,7 @@
 @property (nonatomic) BOOL showClearCalibrationToolTip;
 @property (nonatomic) BOOL showIntRateToolTip;
 @property (nonatomic) BOOL showMeanRateToolTip;
+@property (nonatomic) BOOL showCalculateQTcToolTip;
 @property (nonatomic) BOOL showQtcStep1ToolTip;
 @property (nonatomic) BOOL showQtcStep2ToolTip;
 @end
@@ -448,6 +467,7 @@
     self.showClearCalibrationToolTip = value;
     self.showIntRateToolTip = value;
     self.showMeanRateToolTip = value;
+    self.showCalculateQTcToolTip = value;
     self.showQtcStep1ToolTip = value;
     self.showQtcStep2ToolTip = value;
 
@@ -562,6 +582,10 @@
         self.showMeanRateToolTip = NO;
         [self stillShowingToolTips];
     }
+    if ([popTipView isEqual:self.calculateQTcPopTipView]) {
+        self.showCalculateQTcToolTip = NO;
+        [self stillShowingToolTips];
+    }
     if ([popTipView isEqual:self.qtcStep1ButtonPopTipView]) {
         self.showQtcStep1ToolTip = NO;
         [self stillShowingToolTips];
@@ -573,7 +597,7 @@
 }
 
 - (NSString *)applicationLanguage {
-    return L(@"lang");
+    return LANG;
 }
 
 - (BOOL)usingRussian {
@@ -1030,7 +1054,7 @@
     }
     UIAlertController *calculateMeanRRAlertController = [UIAlertController alertControllerWithTitle:NUMBER_OF_INTERVALS  message:HOW_MANY_INTERVALS preferredStyle:UIAlertControllerStyleAlert];
     [calculateMeanRRAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.text = L(@"3");
+        textField.text = THREE;
         textField.clearButtonMode = UITextFieldViewModeAlways;
         textField.keyboardType = UIKeyboardTypeNumberPad;
     }];
@@ -1062,6 +1086,19 @@
 }
 
 - (void)calculateQTc {
+    if (nil == self.calculateQTcPopTipView && self.showCalculateQTcToolTip) {
+        self.calculateQTcPopTipView = [[CMPopTipView alloc] initWithMessage:QTC_TOOLTIP];
+        [self setupToolTip:self.calculateQTcPopTipView];
+        [self.calculateQTcPopTipView presentPointingAtBarButtonItem:self.qtcButton animated:YES];
+        return;
+    }
+    else {
+        // Dismiss
+        [self.calculateQTcPopTipView dismissAnimated:YES];
+        self.calculateQTcPopTipView = nil;
+        self.showCalculateQTcToolTip = NO;
+        [self stillShowingToolTips];
+    }
     self.horizontalCalibration.displayRate = NO;
     Caliper *singleHorizontalCaliper = [self getLoneTimeCaliper];
     if (singleHorizontalCaliper != nil) {
@@ -1098,7 +1135,7 @@
     else {
       UIAlertController *calculateMeanRRAlertController = [UIAlertController alertControllerWithTitle:NUMBER_OF_INTERVALS message:HOW_MANY_INTERVALS preferredStyle:UIAlertControllerStyleAlert];
         [calculateMeanRRAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            textField.text = L(@"1");
+            textField.text = ONE;
             textField.clearButtonMode = UITextFieldViewModeAlways;
             textField.keyboardType = UIKeyboardTypeNumberPad;
         }];
@@ -1195,7 +1232,7 @@
     BOOL amplitudeCalibratedInMM = [self.verticalCalibration unitsAreMM];
     BOOL timeCalibratedInMsec = [self.horizontalCalibration unitsAreMsec];
     NSString *calibrationStatement = @"";
-    NSString *riskStatement = @"Low risk of Brugada syndrome";
+    NSString *riskStatement = LOW_BRUGADA_RISK;
     if (amplitudeCalibratedInMM && timeCalibratedInMsec) {
         // calculate length of triangle base 5 mm away from apex of angle
         double pointsPerMM = 1.0 / self.verticalCalibration.multiplier;
@@ -1203,19 +1240,19 @@
         double base = [AngleCaliper calculateBaseFromHeight:5 * pointsPerMM andAngle1:c.angleBar1 andAngle2:c.angleBar2];
         double baseInMM = base / pointsPerMM;
         base /= pointsPerMsec;
-        calibrationStatement = [NSString stringWithFormat:@"\n\nBase of triangle 5 mm from apex = %.1f msec.", base];
+        calibrationStatement = [NSString stringWithFormat:BRUGADA_BASE_MEASUREMENT, base];
         double riskV1 = [AngleCaliper brugadaRiskV1ForBetaAngle:angleInRadians andBase:baseInMM];
         double riskV2 = [AngleCaliper brugadaRiskV2ForBetaAngle:angleInRadians andBase:baseInMM];
-        riskStatement = [NSString stringWithFormat:@"V1 risk is %f.  V2 risk is %f.", riskV1, riskV2];
+        riskStatement = [NSString stringWithFormat:BRUGADA_RISK_STATEMENT, riskV1, riskV2];
     }
     else {
-        calibrationStatement = @"\n\nFurther risk calculations can be made if you calibrate time calipers in milliseconds (msec) and amplitude calipers in millimeters (mm).";
+        calibrationStatement = BRUGADA_CALIBRATION_STATEMENT;
     }
 //    if (angleInDegrees > 58.0) {
-//        riskStatement = @"Increased risk of Brugada syndrome";
+//        riskStatement = BRUGADA_INCREASED_RISK;
 //    }
-    NSString *message = [NSString stringWithFormat:@"Beta angle = %.1f°%@%@", angleInDegrees, calibrationStatement, riskStatement];
-    [Alert showSimpleAlertWithTitle:@"Brugada Syndrome Results" message:message viewController:self];
+    NSString *message = [NSString stringWithFormat:BRUGADA_BETA_ANGLE, angleInDegrees, calibrationStatement, riskStatement];
+    [Alert showSimpleAlertWithTitle:BRUGADA_RESULTS_TITLE message:message viewController:self];
 }
 
 - (BOOL)noTimeCaliperSelected {
@@ -1303,15 +1340,15 @@
         return;
     }
     if (c.valueInPoints <= 0) {
-        [Alert showSimpleAlertWithTitle:NEGATIVE_CALIPER message:L(@"Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration.") viewController:self];
+        [Alert showSimpleAlertWithTitle:NEGATIVE_CALIPER message:NEGATIVE_CALIPER_MESSAGE viewController:self];
         return;
     }
     NSString *example = @"";
     if (c!= nil && c.direction == Vertical) {
-        example = L(@"1 mV");
+        example = ONE_MV;
     }
     else {
-        example = L(@"500 msec");
+        example = FIVE_HUNDRED_MSEC;
     }
     NSString *message = [NSString stringWithFormat:ENTER_MEASUREMENT, example];
     // see https://stackoverflow.com/questions/33996443/how-to-add-text-input-in-alertview-of-ios-8 for using text fields with UIAlertController.
@@ -1475,7 +1512,7 @@
         picker.allowsEditing = YES;
     }
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        [Alert showSimpleAlertWithTitle:L(@"Camera not available") message:L(@"Camera is not available on this device.") viewController:self];
+        [Alert showSimpleAlertWithTitle:CAMERA_NOT_AVAILABLE_TITLE message:CAMERA_NOT_AVAILABLE_MESSAGE viewController:self];
         return;
     }
 

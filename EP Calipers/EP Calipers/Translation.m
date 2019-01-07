@@ -14,7 +14,7 @@
 + (NSString *)translatedKey:(NSString *)key {
     NSString *notFound = [NSString stringWithFormat:@"*<%@>*", key];
     NSString *translated = NSLocalizedStringWithDefaultValue(key, @"Localizable", [NSBundle mainBundle], notFound, @"");
-    if ([[translated substringToIndex:2] isEqualToString:@"*<"]) {
+    if ([translated length] > 1 && [[translated substringToIndex:2] isEqualToString:@"*<"]) {
         NSLog(@"Untranslated key %@", notFound);
     }
     return translated;

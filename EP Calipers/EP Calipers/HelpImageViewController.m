@@ -21,7 +21,7 @@
     [super viewDidLoad];
     EPSLog(@"HelpImageView did load");
     // Do any additional setup after loading the view.
-    self.title = L(@"Quick Help");
+    self.title = L(@"Quick_help");
     self.helpImageView.image = [UIImage imageNamed:self.imageName];
 }
 

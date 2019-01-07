@@ -9,7 +9,7 @@
 #import "CalipersView.h"
 #import "EPSLogging.h"
 
-#define IMAGE_LOCK NSLocalizedString(@"IMAGE LOCK", nil)
+#define IMAGE_LOCK NSLocalizedString(@"Image_lock", nil)
 
 @implementation CalipersView
 
@@ -156,7 +156,6 @@
 }
 
 - (void)dragging:(UIPanGestureRecognizer *)p {
-    EPSLog(@"dragging");
     CGPoint location = [p locationInView:self];
     static Caliper *selectedCaliper = nil;
     static BOOL bar1Selected = NO;
@@ -224,7 +223,6 @@
     for (Caliper *c in self.calipers) {
         CaliperComponent component = [c getCaliperComponent:location];
         if (component != None) {
-            EPSLog(@"Near component");
             [self.delegate tweakComponent:component forCaliper:c];
             break;
         }

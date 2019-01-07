@@ -38,7 +38,7 @@
     [super viewDidLoad];
 
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Quick start") anchor:@"quick-start-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Quick_start") anchor:@"quick-start-id"]];
     [array addObject:[[ManualLink alloc] initWithChapter:L(@"Brugadometer") anchor:@"brugadometer-id"]];
     [array addObject:[[ManualLink alloc] initWithChapter:L(@"Acknowledgments") link:ACKNOWLEDGMENTS_URL]];
     self.links = array;

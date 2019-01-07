@@ -54,6 +54,7 @@
     else {
         link = [NSString stringWithFormat:self.fullLink, L(@"lang")];
     }
+    EPSLog(@"URL is %@", link);
     NSURL *url = [NSURL URLWithString:link];
 
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
@@ -89,7 +90,7 @@
     EPSLog(@"webViewDidFailLoad");
     EPSLog(@"error is %lu", error.code);
     [self.activityView stopAnimating];
-    UIAlertController *aboutAlertController = [UIAlertController alertControllerWithTitle:L(@"Error") message:L(@"Internet connection failed.") preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *aboutAlertController = [UIAlertController alertControllerWithTitle:L(@"Error") message:L(@"Internet_connection_failed") preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:L(@"OK") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){[self.navigationController popViewControllerAnimated:YES];}];
     [aboutAlertController addAction:okAction];
     [self presentViewController:aboutAlertController animated:YES completion:nil];

@@ -123,10 +123,8 @@
 "Unlock" = "Unlock";
 "Unlock-iPhone" = "Unlock";
 "Unlock-iPad" = "Unlock";
-"" = "";
 "March" = "March";
 "Continue" = "Continue";
-"" = "";
 "Angle_caliper" = "Angle Caliper";
 "Time_caliper" = "Time Caliper";
 "Amplitude_caliper" = "Amplitude Caliper";
@@ -148,7 +146,6 @@
 "Apex" = "Apex";
 "Mean_rr_result_for_qtc" = "Mean RR = %.4g %@\nQT";
 "QTc_result" = "\nQTc = %.4g %@ (%@ formula)";
-"" = "";
 "Invalid_result" = "Invalid Result";
 "points" = "points";
 "msec" = "msec";
@@ -202,6 +199,30 @@
 "Calculate" = "Calculate";
 "Enter_measurement" = "Enter measurement (e.g. %@)";
 "PDF" = "PDF";
+"Three" = "3";
+"One" = "1";
+"OK" = "OK";
+"QTc_tooltip" = "Calculate the QTc";
+"Negative_caliper_message" = "Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration.";
+"One_mv" = "1 mV";
+"Five_hundred_msed" = "500 msec";
+"Mini_qtc_result" = "Mean RR = %.4g %@\nQT = %.4g %@";
+"Internet_connection_failed" = "Internet connection failed.";
+"Error" = "Error";
+"Brugadometer" = "Brugadometer";
+
+// Brugada (unused in active code)
+
+"Brugada_ipad" = "Brugada";
+"Brugada_iphone" = "BrS";
+"Low_brugada_risk" = "Low risk of Brugada syndrome";
+"Brugada_base_measurement" = "\n\nBase of triangle 5 mm from apex = %.1f msec.";
+"Brugada_risk_statement" = "V1 risk is %f.  V2 risk is %f.";
+"Brugada_calibration_statement" = "\n\nFurther risk calculations can be made if you calibrate time calipers in milliseconds (msec) and amplitude calipers in millimeters (mm).";
+"Brugada_beta_angle" = "Beta angle = %.1f°%@%@";
+"Brugada_results_title" = "Brugada Syndrome Results"; 
+"Brugada_increased_risk" = "Increased risk of Brugada syndrome";
+
 // ?????
 "Time caliper" = "Time caliper";
 
@@ -263,7 +284,7 @@
 "Amplitude Caliper Text" = "Amplitude Caliper Text";
 "Dark Theme" = "Dark Theme";
 "/* To be provided by developer */" = "";
-"lang" = "en ";
+"lang" = "en";
 "Help_image_1" = "epcalipershelp-1-en";
 "Help_image_2" = "epcalipershelp-2-en";
 "Help_image_3" = "epcalipershelp-3-en";

@@ -41,7 +41,7 @@
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
 
-    self.title = L(@"Quick Help");
+    self.title = L(@"Quick_help");
 }
 
 #pragma mark - Page view controller data source

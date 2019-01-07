@@ -16,7 +16,7 @@
 - (NSString *)calculateFromQtInSec:(double)qtInSec rrInSec:(double)rrInSec formula:(QTcFormulaPreference)formula convertToMsec:(BOOL)convertToMsec units:(NSString *)units {
     
     NSDictionary *formulaNames = [NSDictionary dictionaryWithObjectsAndKeys:L(@"Bazett"), [NSNumber numberWithInteger:Bazett], L(@"Framingham"), [NSNumber numberWithInteger:Framingham], L(@"Fridericia"), [NSNumber numberWithInteger:Fridericia], L(@"Hodges"), [NSNumber numberWithInteger:Hodges], nil];
-    NSString *errorResult = L(@"Invalid Result");
+    NSString *errorResult = L(@"Invalid_result");
     if (rrInSec <= 0) {
         return errorResult;
     }
@@ -45,7 +45,7 @@
         meanRR *= 1000;
         qt *= 1000;
     }
-    NSString *result = [NSString localizedStringWithFormat:NSLocalizedString(@"Mean RR = %.4g %@\nQT = %.4g %@", comment:@""), meanRR, units, qt, units];
+    NSString *result = [NSString localizedStringWithFormat:NSLocalizedString(@"Mini_qtc_result", comment:@""), meanRR, units, qt, units];
     double qtc = 0;
     for (NSNumber *calculator in formulas) {
         QTcFormulaPreference calc = (QTcFormulaPreference)[calculator integerValue];
@@ -72,7 +72,7 @@
         if (convertToMsec) {
             qtc *= 1000;
         }
-        NSString *qtcResult = [NSString localizedStringWithFormat:NSLocalizedString(@"\nQTc = %.4g %@ (%@ formula)", comment:""), qtc, units, [formulaNames objectForKey:calculator]];
+        NSString *qtcResult = [NSString localizedStringWithFormat:NSLocalizedString(@"QTc_result", comment:""), qtc, units, [formulaNames objectForKey:calculator]];
         result = [result stringByAppendingString:qtcResult];
     }
     
