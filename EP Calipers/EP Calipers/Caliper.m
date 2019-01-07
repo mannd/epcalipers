@@ -14,17 +14,6 @@
 
 
 #define DELTA 20.0
-#define CROSSBAR L(@"Crossbar")
-#define CROSSBAR_SMALL L(@"Xbar")
-#define LEFT_BAR L(@"Left bar")
-#define LEFT_BAR_SMALL L(@"Left")
-#define RIGHT_BAR L(@"Right bar")
-#define RIGHT_BAR_SMALL L(@"Right")
-#define UP_BAR L(@"Top bar")
-#define UP_BAR_SMALL L(@"Top")
-#define DOWN_BAR L(@"Bottom bar")
-#define DOWN_BAR_SMALL L(@"Bottom")
-#define APEX_BAR L(@"Apex")
 #define MIN_DISTANCE_FOR_MARCH 20.0f
 #define MAX_MARCHING_CALIPERS 20
 
@@ -526,28 +515,6 @@
     }
     else {
         return None;
-    }
-}
-
-- (NSString *)getComponentName:(CaliperComponent)component smallSize:(BOOL)smallSize {
-    NSString *crossBarName = smallSize ? CROSSBAR_SMALL : CROSSBAR;
-    NSString *leftBarName = smallSize ? LEFT_BAR_SMALL : LEFT_BAR;
-    NSString *rightBarName = smallSize ? RIGHT_BAR_SMALL : RIGHT_BAR;
-    NSString *upBarName = smallSize ? UP_BAR_SMALL : UP_BAR;
-    NSString *downBarName = smallSize ? DOWN_BAR_SMALL : DOWN_BAR;
-    switch (component) {
-        case Crossbar:
-            return (self.isAngleCaliper ? APEX_BAR : crossBarName);
-            break;
-        case Bar1:
-            return (self.direction == Horizontal ? leftBarName : upBarName);
-            break;
-        case Bar2:
-            return (self.direction == Horizontal ? rightBarName : downBarName);
-            break;
-        default:
-            return @"";
-            break;
     }
 }
 

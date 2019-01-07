@@ -59,7 +59,6 @@
 - (void)caliperTextInCanvas:(CGRect)canvas textPosition:(TextPosition)textPosition optimizeTextPosition:(BOOL)optimizeTextPosition;
 - (CGRect)caliperTextPosition:(TextPosition)textPosition left:(CGFloat)left right:(CGFloat)right center:(CGFloat)center size:(CGSize)size canvas:(CGRect)canvas optimizeTextPosition:(BOOL)optimizeTextPosition;
 - (CaliperComponent)getCaliperComponent:(CGPoint)point;
-- (NSString *)getComponentName:(CaliperComponent)component smallSize:(BOOL)smallSize;
 - (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key;
 - (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;
 - (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix;

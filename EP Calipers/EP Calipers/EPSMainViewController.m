@@ -930,9 +930,6 @@
 }
 
 - (void)createMovementToolbar {
-
-
-    self.componentLabelButton = [[UIBarButtonItem alloc] initWithCustomView:self.componentLabel];
     self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveLeft)];
     self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveRight)];
     
@@ -972,7 +969,6 @@
 }
 
 - (void)shrinkMenus {
-    [self.componentLabel setFont:self.smallFont];
     [self shrinkButtonFontSize:self.movementMenuItems];
     [self shrinkButtonFontSize:self.rotateImageMenuItems];
     if ([self usingRussian]) {
@@ -986,7 +982,6 @@
 }
 
 - (void)enlargeMenus {
-    [self.componentLabel setFont:self.regularFont];
     [self expandButtonFontSize:self.movementMenuItems];
     [self expandButtonFontSize:self.rotateImageMenuItems];
     if ([self usingRussian]) {
@@ -1968,10 +1963,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         [self.toggleIntervalRateButton setTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE]];
         [self.mRRButton setTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE]];
         [self.calibrateCalipersButton setTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE]];
-        if (self.chosenCaliper != nil) {
-            [self.componentLabel setText:[self.chosenCaliper getComponentName:self.chosenCaliperComponent smallSize:[self isCompactSizeClass]]];
-            [self.componentLabel sizeToFit];
-        }
     }
 }
 
@@ -2011,8 +2002,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.chosenCaliperComponent = component;
     caliper.chosenComponent = component;
     [self.calipersView clearChosenComponentsExceptFor:caliper];
-    [self.componentLabel setText:[caliper getComponentName:component smallSize:[self isCompactSizeClass]]];
-    [self.componentLabel sizeToFit];
     BOOL disableUpDown = caliper.direction == Horizontal && component != Crossbar;
     BOOL disableLeftRight = caliper.direction == Vertical && component != Crossbar;
     self.upButton.enabled = !disableUpDown;

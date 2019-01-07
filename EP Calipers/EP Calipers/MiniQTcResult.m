@@ -45,7 +45,7 @@
         meanRR *= 1000;
         qt *= 1000;
     }
-    NSString *result = [NSString localizedStringWithFormat:NSLocalizedString(@"Mini_qtc_result", comment:@""), meanRR, units, qt, units];
+    NSString *result = [NSString localizedStringWithFormat:NSLocalizedString(@"Mean_rr_result_for_qtc", comment:@""), meanRR, units, qt, units];
     double qtc = 0;
     for (NSNumber *calculator in formulas) {
         QTcFormulaPreference calc = (QTcFormulaPreference)[calculator integerValue];
