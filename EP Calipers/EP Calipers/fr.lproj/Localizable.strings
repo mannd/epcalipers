@@ -6,11 +6,10 @@
   Copyright © 2017 EP Studios. All rights reserved.
 */
 
-/* Strings needing translation */
 "EP Calipers" = "Compas EP";
 "Copyright_message" = "Copyright © 2015-2019 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
 
-/* Simple dialog button labels */
+/* Sorted dialog titles, messages, button labels */
 "10 mm" = "10 mm";
 "1000 msec" = "1000 msec";
 "500 msec" = "500 msec";
@@ -96,7 +95,6 @@
 "Select_time_caliper_message" = "Choisir un compas pour mesurer un (ou plus) intervalle RR.";
 "Set" = "Définir";
 //"Show_tooltips" = "";
-//"Side menu" = "";
 "Three" = "3";
 "Time" = "Temps";
 "Time_caliper" = "Compas de temps";

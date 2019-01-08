@@ -96,10 +96,10 @@
 "Select_angle_caliper" = "Select an angle caliper.";
 "Select_time_caliper_message" = "Select a time caliper to measure one or more RR intervals.";
 "Set" = "Set";
-"Side menu" = "Side menu";
 "Three" = "3";
 "Time" = "Time";
 "Time_caliper" = "Time Caliper";
+"Topics" = "Topics";
 "Tweak" = "Tweak";
 "Tweak-iPad" = "Tweak";
 "Tweak-iPhone" = "Tweak";
@@ -154,7 +154,7 @@
 "QTc_tooltip" = "Calculate the QTc";
 "Set_calibration_tooltip" = "Measure a know interval with selected caliper.";
 "Setup_calibration_tooltip" = "Select a caliper by tapping it. Use it to measure a known interval (e.g. 1000 msec).";
-"Side_menu_tooltip" = "Load a new image";
+"Side_menu_tooltip" = "Load a new image, change preferences, get help";
 
 /* Brugada (defined but unused in active code.  No harm if not translated) */
 "Brugada_ipad" = "Brugada";
@@ -169,13 +169,11 @@
 
 /* To be provided by developer */
 "lang" = "en";
-
-/* Help image */
 "Help_image_1" = "epcalipershelp-1-en";
 "Help_image_2" = "epcalipershelp-2-en";
 "Help_image_3" = "epcalipershelp-3-en";
 
-/* Unused at present */
+/* Unused at present (incomplete list here, see FR or RU Localizable.strings for full list */
 //"Add calipers" = "Add calipers";
 //"Calibrate_short_alt_ru" = "Cal";
 //"Long_press_caliper_component_alt_ru" = "Long press caliper component";

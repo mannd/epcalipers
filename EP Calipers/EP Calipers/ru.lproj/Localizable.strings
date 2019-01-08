@@ -9,6 +9,7 @@
 /* Strings needing translation */
 "EP Calipers" = "ЭФИ калипер";
 "Copyright_message" = "Авторские права © 2015-2019 EP Studios, Inc.\ Все права защищены. \ Версия %@";
+
 /* Simple dialog button labels */
 "10 mm" = "10 мм";
 "1000 msec" = "1000 мсек";
@@ -75,7 +76,7 @@
 "OK" = "Готово";
 "One" = "1";
 "One_mv" = "1 милливольт";
-//"PDF" = "PDF";
+"PDF" = "PDF";
 "points" = "пикселей";
 "QT" = "QT интервал?";
 "QTc" = "QTc";
@@ -95,7 +96,6 @@
 "Select_time_caliper_message" = "Для измерения одного или более RR интервалов выберите время калипера";
 "Set" = "Установить";
 //"Show_tooltips" = "";
-//"Side menu" = "";
 "Three" = "3";
 "Time" = "Время";
 "Time_caliper" = "Время калипера";
@@ -106,6 +106,7 @@
 "Unlock" = "Разблокировать";
 "Unlock-iPad" = "Разблокировать";
 "Unlock-iPhone" = "Закре";
+
 /* Side menu */
 //"About_ep_calipers" = "";
 //"Hide_tooltips" = "";
@@ -119,10 +120,26 @@
 //"Take_photo" = "";
 //"Topics" = "";
 //"Unlock_image" = "";
+
 /* Help topics */
-//"Acknowledgments" = "";
-//"Brugadometer" = "";
-//"Quick_start" = "";
+"Quick_start_ht" = "Быстрый старт";
+"Loading_image_ht" = "Загрузка изображения";
+"Adjusting_image_ht" = "Настойка изображения";
+"Lock_image_ht" = "Заблокировать изображение на месте";
+"Moving_calipers_ht" = "Настройка калиперов";
+"Adding_deleting_calipers_ht" = "Добавляйте и удаляйте калиперы";
+"Selecting_caliper_ht" = "Выбор калипера";
+"More_caliper_options_ht" = "Больше возможностей калипера";
+"Calibration_ht" = "Калибровка";
+"Changing_calibration_ht" = "Изменение калибровки";
+"Making_measurements_ht" = "Выполнение измерений";
+"Interval_rate_ht" = "Интервал / Частота";
+"Mean_rate_ht" = "Расчет средней частоты и интервала";
+"QTc_ht" = "Расчет QTc";
+"Brugadometer_ht" = "Бругадометр";
+"Preferences_ht" = "Индивидуальные настройки";
+"Acknowledgments_ht" = "Благодарности";
+
 /* Tooltips */
 //"Add_tooltip" = "";
 //"Clear_calibration_tooltip" = "";
@@ -138,63 +155,7 @@
 //"Set_calibration_tooltip" = "";
 //"Setup_calibration_tooltip" = "";
 //"Side_menu_tooltip" = "";
-/* Quick help figure text */
-//"Side menu" = "";
-"Take photos, Load images, Preferences, Help" = "";
-//"Time caliper" = "";
-//"Drag crossbar, Drag sidebars, Tap to select, Double tap to delete" = "";
-//"Measurement toolbar" = "";
-//"Calibrate, Toggle rate and interval, Calculate mean rate and interval, Calculate QTc" = "";
-//"Add calipers" = "";
-//"Time, Amplitude, Angle" = "";
-//"ECG image" = "";
-//"Pinch to zoom, Drag to move" = "";
-//"Change preferences" = "";
-//"Caliper colors, Line width, QTc formula, etc." = "";
-//"Change image" = "";
-//"Use the camera or select an image from your photos" = "";
-//"Long press image" = "";
-//"Long press caliper" = "";
-///* Color dialog */
-//"Choose" = "Выбрать";
-//"Cancel" = "Отмена";
-///* Settings bundle */
-//"Black" = "Черный";
-//"Magenta" = "Фуксия";
-//"Light Gray" = "Светло серый";
-//"Green" = "Зеленый";
-//"White" = "Белый";
-//"Red" = "Красный";
-//"Yellow" = "Желтый";
-//"Orange" = "Оранжевый";
-//"Round Msec and Rate" = "Округленние Мсек и Частоты";
-//"Default Time Calibration" = "Калибровка времени по умолчанию";
-//"Default Amplitude Calibration" = "Калибровка амплитуды по умолчанию";
-//"Caliper Color" = "Цвет калипера";
-//"Highlight Color" = "Цвет подсветки";
-//"Line Width" = "Ширина линии";
-//"EP Calipers" = "ЭФИ калипер";
-//"QTc Formula" = "Формула QTc";
-//"Bazett" = "Базетта";
-//"Framingham" = "Фрамингема";
-//"Fridericia" = "Фредерика";
-//"Hodges" = "Ходжеса";
-//"All" = "Все";
-//"1 point" = "1 пиксель";
-//"2 points" = "2 пикселя";
-//"3 points" = "3 пикселя";
-//"4 points" = "4 пикселя";
-//"5 points" = "5 пикселей";
-//"Center Above" = "сверху посередине";
-//"Center Below" = "снизу посередине";
-//"Left" = "Слева";
-//"Right" = "Справа";
-//"Top" = "наверху";
-//"Bottom" = "внизу";
-//"Auto-position Text" = "авто-позиционирование текста";
-//"Time Caliper Text" = "текст временного калипера";
-//"Amplitude Caliper Text" = "текст амплитудного калипера";
-//"Dark Theme" = "";
+
 /* Brugada functionality not implemented yet.  There is no harm if these strings aren't translated */
 "Brugada_ipad" = "";
 "Brugada_iphone" = "";
@@ -205,38 +166,40 @@
 "Brugada_beta_angle" = "";
 "Brugada_results_title" = "";
 "Brugada_increased_risk" = "";
+
 /* To be provided by developer */
 "lang" = "ru";
 "Help_image_1" = "epcalipershelp-1-ru";
 "Help_image_2" = "epcalipershelp-2-ru";
 "Help_image_3" = "epcalipershelp-3-ru";
+
 /* Unused or obsolete strings */
-"Help" = "Помощь";
-"About" = "О нас";
-"Back" = "Назад";
-"Next" = "Слудующий";
-"Previous" = "Предыдущий";
-"Previous_iphone" = "Пред";
-"Image" = "Изображение";
-"1000 ms" = "1000 мс";
-"bpm_alt_ru" = "ударов в минуту";
-"Calibrate_short_alt_ru" = "Счет";
-"Calibrate_short" = "Калиб";
-"interval_rate_iphone_shortest" = "И/Ч";
-"Long_press_caliper" = "Длительно удерживайте калипер";
-"Long_press_caliper_component_alt_ru" = "Длительно удерживайте компонент калипера";
-"Long_press_component" = "Длительно удерживайте компонент";
-"Mean_rate_iphone_alt_ru" = "срЧастота";
-"Crossbar" = "Планка";
-"Xbar" = "Планка";
-"Left_bar" = "Левая планка";
-"Right_bar" = "Правая планка";
-"Left" = "Влево";
-"Right" = "Вправо";
-"Top_bar" = "Верхняя панель";
-"Top" = "Верхний";
-"Bottom" = "Нижний";
-"Bottom_bar" = "Нижняя панель";
-"Apex" = "Вершина";
-"measure RR" = "Средний RR";
-"Allow Tweak during QTc" = "Разрешить точную настройку QTс";
+// "Help" = "Помощь";
+// "About" = "О нас";
+// "Back" = "Назад";
+// "Next" = "Слудующий";
+// "Previous" = "Предыдущий";
+// "Previous_iphone" = "Пред";
+// "Image" = "Изображение";
+// "1000 ms" = "1000 мс";
+// "bpm_alt_ru" = "ударов в минуту";
+// "Calibrate_short_alt_ru" = "Счет";
+// "Calibrate_short" = "Калиб";
+// "interval_rate_iphone_shortest" = "И/Ч";
+// "Long_press_caliper" = "Длительно удерживайте калипер";
+// "Long_press_caliper_component_alt_ru" = "Длительно удерживайте компонент калипера";
+// "Long_press_component" = "Длительно удерживайте компонент";
+// "Mean_rate_iphone_alt_ru" = "срЧастота";
+// "Crossbar" = "Планка";
+// "Xbar" = "Планка";
+// "Left_bar" = "Левая планка";
+// "Right_bar" = "Правая планка";
+// "Left" = "Влево";
+// "Right" = "Вправо";
+// "Top_bar" = "Верхняя панель";
+// "Top" = "Верхний";
+// "Bottom" = "Нижний";
+// "Bottom_bar" = "Нижняя панель";
+// "Apex" = "Вершина";
+// "measure RR" = "Средний RR";
+// "Allow Tweak during QTc" = "Разрешить точную настройку QTс";

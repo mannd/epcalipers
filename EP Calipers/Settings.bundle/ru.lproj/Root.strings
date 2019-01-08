@@ -1,3 +1,4 @@
+/* A single strings file, whose title is specified in your preferences schema. The strings files provide the localized content to display to the user for each of your preferences. */
 
 "Blue" = "Синий";
 "Black" = "Черный";
@@ -16,12 +17,12 @@
 "Highlight Color" = "Цвет подсветки";
 "Line Width" = "Ширина линии";
 "EP Calipers" = "ЭФИ калипер";
+"All" = "Все";
 "QTc Formula" = "Формула QTc";
 "Bazett" = "Базетта";
 "Framingham" = "Фрамингема";
 "Fridericia" = "Фредерика";
 "Hodges" =  "Ходжеса";
-"All" = "Все";
 "1 point" = "1 пиксель";
 "2 points" = "2 пикселя";
 "3 points" = "3 пикселя";
@@ -36,3 +37,4 @@
 "Auto-position Text" = "Автоматический текст";
 "Time Caliper Text" = "Текст калиперы времени";
 "Amplitude Caliper Text" = "Текст калиперы амплитуды";
+"Dark Theme" = "";
