@@ -24,24 +24,45 @@ zoom the underlying ECG image as needed to enlarge or shrink it.  If
 the ECG is bigger than your screen, you can drag the image around with
 your finger to choose a place to measure.  Calibrate a caliper to make measurements.  
 * Loading an image
+:PROPERTIES:
+:CUSTOM_ID: loading-image-id
+:END:
 There are several ways to load an ECG image.
 ** Take a photo of an ECG
 ** Select a photo from your photos collection
 ** Select a photo or PDF using the *Share* menu from other apps
 ** /AliveCor/
 To view ECGs in the /AliveCor Kardia/ app, select *Journal*, then *Share* for the specific saved ECG you want to view.  After selecting the *Share* button, select *PDF* from the options that appear.  Then select the *Share* button at the top right of the screen.  
-** Adjusting the image
+* Adjusting the image
+:PROPERTIES:
+:CUSTOM_ID: adjusting-image-id
+:END:
 You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  *Long press on the image to bring up a menu that allows you to rotate the image and change pages if you have loaded a PDF.*
-** Lock the image in place
+* Lock the image in place
+:PROPERTIES:
+:CUSTOM_ID: lock-image-id
+:END:
 When moving and adjusting calipers, you may sometimes inadvertently move the underlying image.  Select *Lock* to lock the image in place.  A message appears at the top of the screen indicating the image is locked.  Unlock the image by selecting *Unlock*.
 * Moving calipers
+:PROPERTIES:
+:CUSTOM_ID: moving-calipers-id
+:END:
 Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers. Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  
 * Adding and deleting calipers
+:PROPERTIES:
+:CUSTOM_ID: adding-deleting-calipers-id
+:END:
 Select + to add new calipers. Select *Time*, *Amplitude*, or *Angle* to add the type of caliper you want. 
 Double-tap a caliper to delete it.
 * Selecting a caliper
+:PROPERTIES:
+:CUSTOM_ID: selecting-caliper-id
+:END:
 When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red.  You can change these colors using app [[app preferences][preferences]].  It is also possible to [[colors][change individual caliper colors]].  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  
 * More caliper options
+:PROPERTIES:
+:CUSTOM_ID: more-caliper-options-id
+:END:
 ** <<colors>>Change caliper colors
 *Long press a caliper and select Color to change caliper colors.*
 ** Tweak caliper position
@@ -49,16 +70,34 @@ When more than one caliper is present, it is necessary that one is selected to b
 ** Marching calipers
 *Long press a caliper and* select *March* to convert a time caliper to a marching caliper.  Vertical caliper lines will appear equal to the caliper width on either side of the caliper.  This is very useful to assess the regularity or irregularity of a rhythm, or to detect P waves marching through a tachycardia or during heart block.  Select *March* again to change the marching caliper back to normal again.
 * Calibration
+:PROPERTIES:
+:CUSTOM_ID: calibration-id
+:END:
 Select *Calibrate*.  Stretch the selected caliper over a known interval (such as 1000 msec for time, or 10 mm for amplitude calipers).  Select *Set*.  In the dialog box, make sure the interval matches what you are measuring.  Enter both the calibration interval and units (e.g. 500 msec, or 1 sec, or 1 mV).  Select *Set* in the dialog box to set the calibration.  Note that time and amplitude calipers need to be calibrated separately.  Once calibrated, calipers will show intervals in the units used to calibrate.  Newly created calipers will use the same calibration. Angle calipers do not need to be calibrated.  However, after calibration of time and amplitude calipers, angle calipers can be used as a Brugadometer.
 * Changing calibration
+:PROPERTIES:
+:CUSTOM_ID: changing-calibration-id
+:END:
 You can recalibrate at any time.  You can clear all calibration by selecting *Clear* in the calibration toolbar.  Note that calibration is maintained if the device is rotated or the image is zoomed.  Selecting a new image will reset calibration.
 * Making measurements
+:PROPERTIES:
+:CUSTOM_ID: making-measurements-id
+:END:
 The interval measured by time or amplitude calipers is displayed on top of or next to the crossbar of the caliper.  Until these calipers are calibrated, measurements are displayed in arbitrary units (points, roughly equivalent to screen pixels).  Angle calipers show a measurement of the current angle in degrees and do not need to be calibrated to display angles.
 * Interval/Rate
+:PROPERTIES:
+:CUSTOM_ID: interval-rate-id
+:END:
 Once a time (horizontal) caliper is calibrated, provided you use time units (such as msec or sec) for the calibration, it is possible to toggle between interval measurements (e.g. 600 msec) and heart rate measurements (e.g. 100 bpm) by selecting *Interval/Rate* on iPads (or *Int/Rate* on iPhones).
 * Mean rate and interval calculation
-Select a calibrated caliper and stretch it over a number of intervals.  Select *Mean Rate* or *MRate* and enter the number of intervals measured.  A dialog box will show the calculated mean heart rate and interval.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
+:PROPERTIES:
+:CUSTOM_ID: mean-rate-id
+:END:
+Select a calibrated caliper and stretch it over a number of intervals.  Select *Mean Rate* and enter the number of intervals measured.  A dialog box will show the calculated mean heart rate and interval.  This is useful for calculating rates and intervals in irregular rhythms, such as atrial fibrillation.
 * QTc calculation
+:PROPERTIES:
+:CUSTOM_ID: qtc-id
+:END:
 Select *QTc*.  Stretch the selected caliper over one or more RR intervals and select *Measure*.  Enter the number of intervals the caliper is stretched over and select *Continue*.  Then use the same caliper to measure the QT interval.  Select *Measure*.  A dialog box will give the calculated QTc using Bazett's formula by default.  Select *Repeat QT* to make another QT measurement using the same measured RR interval.  Select *Done* to finish measuring the QTc.  You can change the QTc formula using app preferences. 
 * Brugadometer
 :PROPERTIES:

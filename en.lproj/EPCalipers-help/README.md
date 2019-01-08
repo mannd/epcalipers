@@ -17,7 +17,7 @@ French translation by David Mann, Gretchen Mann, Juliet Mann and Jean-Claude Hou
 
 Thanks to Victoria Churilina for the Russian translation.
 
-The CSS file used is from [gongzhitaao](https://github.com/gongzhitaao/orgcss), used under the [MIT License](https://github.com/gongzhitaao/orgcss/blob/master/LICENSE.md).
+The CSS file is copyright 2016 by [gongzhitaao](https://github.com/gongzhitaao/orgcss) and is used under the [MIT License](https://github.com/gongzhitaao/orgcss/blob/master/LICENSE.md).
 
 ## Author
 David Mann
