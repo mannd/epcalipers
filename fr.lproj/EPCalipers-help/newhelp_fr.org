@@ -64,6 +64,9 @@ Quand il y a plus d'un compas sur l'écran, il faut qu'un compas soit choisi com
 ** Petits mouvements
 *Long press a caliper and select Tweak from the menu.*  Appuyer pendant quelques secondes sur un des composants du compas choisi (barre transversale, barre latérale ou, en cas d'un compas d'angle, peut-être le sommet) et un menu avec des boutons du mouvement apparaîtra.  Des boutons avec des flèches à gauche, à droite, montantes ou descendantes déplaceront le composant choisi ou tout le compas en utilisant des petits mouvements.  Vous pouvez les déplacer par un seul point ou par un dixième d'un point, selon quel type de flèche vous appuyez (⇨ or →).  Appuyer le bouton *OK* pour retourner au menu principal.
 ** Les compas marchants
+#+CAPTION: Un compas marchant
+[[./img/marching_calipers2.png]]
+
 *long press a caliper and* choisir *March* pour changer un compas de temps à un compas qui marche.  Des lignes verticales apparaîtront égales à la largeur du compas à chaque côté.  C’est utile pour l’évaluation les rythmes irréguliers ou réguliers, ou pour détecter les ondes P marchantes pendant une tachycardie ou un bloc cardiaque.  Choisir *March* encore pour changer à un compas normal.
 * Étalonnage
 :PROPERTIES:
@@ -99,6 +102,9 @@ Choisir *QTc*.  Étendre le compas sélectionné sur un ou plusieurs intervalles
 :PROPERTIES:
 :CUSTOM_ID: brugadometer-id
 :END:
+#+CAPTION: Brugadometer avec une base de triangle 5 mm au-dessous du sommet de le compas
+[[./img/brugadometer2.png]]
+
 Le *Brugadometer* est un outil de diagnostic, utilisé pour l'analyse du syndrome de Brugada.  Cet outil a été développé en collaboration avec Dr. Adrian Baranchuk et ses collègues à l'Université Queens, Kingston, en Ontario.  Le Brugadometer peut distinguer entre un bloc de branche droite incomplète, et un motif du syndrome de Brugada aux fils V1 ou V2.  Cet outil est en cours de développement dans *Compas EP* et il évoluera dans des futures versions.  Pour utiliser le *Brugadometer*, il faut étalonner un compas de temps en msec ou mm et un compas d'amplitude en mm.  Ensuite, un compas d'angle apparaîtra avec un triangle au sommet. La base du triangle sera localisée à 5 mm au-dessous du sommet du triangle.  L'alignement correct de ce triangle avec l'onde r' pour un individu soupçonné d'avoir le syndrome de Brugada donnera la mesure de l'angle beta et la mesure de la base du triangle 5 mm au-dessous du sommet.  Une base de triangle qui est > 160 msec (4 mm à une vitesse standard de 25 mm par seconde) suggère la présence du syndrome de Brugada.  Voici [[https://www.ncbi.nlm.nih.gov /pmc/articles/PMC4040869/][de Luna AB, Garcia-Niebla J, Baranchuk A.  New electrocardiographic features in Brugada syndrome. Curr Cardiol Rev. 2014 Aug; 10(3): 175-180]] pour plus d'informations.
 * <<app preferences>>Préférences
 :PROPERTIES:
