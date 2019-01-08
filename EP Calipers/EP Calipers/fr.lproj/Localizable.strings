@@ -123,9 +123,23 @@
 "Unlock_image" = "Débloquer l'image";
 
 /* Help topics */
-"Acknowledgments" = "Remerciements";
-"Brugadometer" = "Brugadometer";
-"Quick_start" = "Commencement rapide";
+"Quick_start_ht" = "Commencement rapide";
+"Loading_image_ht" = "Charger une image";
+"Adjusting_image_ht" = "Ajustement de l'image";
+"Lock_image_ht" = "Fixer l'image";
+"Moving_calipers_ht" = "Déplacement des compas";
+"Adding_deleting_calipers_ht" = "Addition et suppression de compas";
+"Selecting_caliper_ht" = "Sélection d'un compas";
+"More_caliper_options_ht" = "Plus d'options";
+"Calibration_ht" = "Étalonnage";
+"Changing_calibration_ht" = "Changement de l'étalonnage";
+"Making_measurements_ht" = "Prendre des mesures";
+"Interval_rate_ht" = "Intervalle/fréquence";
+"Mean_rate_ht" = "Calcul de la fréquence moyenne";
+"QTc_ht" = "Calcul du QT corrigé";
+"Brugadometer_ht" = "Brugadometer";
+"Preferences_ht" = "Préférences";
+"Acknowledgments_ht" = "Remerciements";
 
 /* Tooltips */
 "Add_tooltip" = "Ajouter des compas";

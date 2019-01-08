@@ -23,14 +23,12 @@
 #ifdef USE_LOCAL_MANUAL_URL
 // MARK: To developers, this absolute path will need to be changed to your
 // file scheme.
-#define MANUAL_URL @"file://localhost/Users/mannd/dev/epcalipers-ghpages/%@.lproj/EPCalipers-help/epcalipers_help.html#%@"
+#define MANUAL_URL @"file://localhost/Users/mannd/dev/epcalipers-ghpages/%@.lproj/EPCalipers-help/newhelp.html#%@"
 #else
-#define MANUAL_URL @"https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/epcalipers_help.html#%@"
+#define MANUAL_URL @"https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/newhelp.html.html#%@"
 #endif
 
-#define EN @"en"
-#define FR @"fr"
-#define RU @"ru"
+#define LANG L(@"lang")
 
 @interface WebViewController ()
 @property (strong, nonatomic) UIActivityIndicatorView *activityView;
@@ -49,10 +47,10 @@
     // If fullLink is nil, add anchor to link.
     NSString *link;
     if (self.fullLink == nil) {
-        link = [NSString stringWithFormat:MANUAL_URL, L(@"lang"), self.anchor];
+        link = [NSString stringWithFormat:MANUAL_URL, LANG, self.anchor];
     }
     else {
-        link = [NSString stringWithFormat:self.fullLink, L(@"lang")];
+        link = [NSString stringWithFormat:self.fullLink, LANG];
     }
     EPSLog(@"URL is %@", link);
     NSURL *url = [NSURL URLWithString:link];

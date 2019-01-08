@@ -38,9 +38,22 @@
     [super viewDidLoad];
 
     NSMutableArray *array = [[NSMutableArray alloc] init];
-    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Quick_start") anchor:@"quick-start-id"]];
-    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Brugadometer") anchor:@"brugadometer-id"]];
-    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Acknowledgments") link:ACKNOWLEDGMENTS_URL]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Quick_start_ht") anchor:@"quick-start-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Loading_image_ht") anchor:@"loading-image-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Adjusting_image_ht") anchor:@"adjusting-image-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Lock_image_ht") anchor:@"lock-image-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Moving_calipers_ht") anchor:@"moving-calipers-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Adding_deleting_calipers_ht") anchor:@"adding-deleting-calipers-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Selecting_caliper_ht") anchor:@"selecting-caliper-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"More_caliper_options_ht") anchor:@"more-caliper-options-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Calibration_ht") anchor:@"calibration-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Changing_calibration_ht") anchor:@"changing-calibration-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Making_measurements_ht") anchor:@"making-measurements-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Interval_rate_ht") anchor:@"interval-rate-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Mean_rate_ht") anchor:@"mean-rate-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"QTc_ht") anchor:@"qtc-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Brugadometer_ht") anchor:@"brugadometer-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Acknowledgments_ht") link:ACKNOWLEDGMENTS_URL]];
     self.links = array;
     self.title = L(@"Topics");
 }

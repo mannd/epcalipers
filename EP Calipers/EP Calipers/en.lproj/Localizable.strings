@@ -67,7 +67,7 @@
 "Multipage_pdf" = "Multipage PDF";
 "Multipage_pdf_warning" = "App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages.";
 "Negative_caliper" = "Negatively Valued Caliper";
-"Negative_caliper_message" = "Please select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration.";
+"Negative_caliper_message" = "Select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration.";
 "No_angle_caliper_selected" = "No Angle Caliper Selected";
 "No_caliper_selected_message" = "No Caliper Selected";
 "No_calipers_to_use" = "No Calipers To Use";
@@ -122,9 +122,23 @@
 "Unlock_image" = "Unlock image";
 
 /* Help Topics */
-"Acknowledgments" = "Acknowledgments";
-"Brugadometer" = "Brugadometer";
-"Quick_start" = "Quick start";
+"Quick_start_ht" = "Quick start";
+"Loading_image_ht" = "Loading an image";
+"Adjusting_image_ht" = "Adjusting the image";
+"Lock_image_ht" = "Lock the image in place";
+"Moving_calipers_ht" = "Moving calipers";
+"Adding_deleting_calipers_ht" = "Adding and deleting calipers";
+"Selecting_caliper_ht" = "Selecting a caliper";
+"More_caliper_options_ht" = "More caliper options";
+"Calibration_ht" = "Calibration";
+"Changing_calibration_ht" = "Changing calibration";
+"Making_measurements_ht" = "Making measurements";
+"Interval_rate_ht" = "Interval/Rate";
+"Mean_rate_ht" = "Mean rate and interval calculation";
+"QTc_ht" = "QTc calculation";
+"Brugadometer_ht" = "Brugadometer";
+"Preferences_ht" = "Preferences";
+"Acknowledgments_ht" = "Acknowledgments";
 
 /* Tooltips */
 "Add_tooltip" = "Add calipers";
