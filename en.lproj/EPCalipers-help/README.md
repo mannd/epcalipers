@@ -1,7 +1,6 @@
 EP Calipers HTML Help
 =====================
 
-
 ## Description
 This repository provides online Help files for [EP Calipers](https://github.com/mannd/epcalipers).   These help files are being implemented for the Apple iOS version of EP Calipers, but the goal is to make them generic enough for the Android version as well.  EP Calipers for iOS is open source, and licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).  When used with Apple devices via the iTunes App Store, it is subject to the [standard Apple iOS license agreement](http://images.apple.com/legal/sla/docs/AppleStoreApp.pdf).
 
@@ -17,6 +16,8 @@ See the [EP Calipers GitHub page](https://github.com/mannd/epcalipers) for full 
 French translation by David Mann, Gretchen Mann, Juliet Mann and Jean-Claude Hounou.  Also thanks to Dr. Pierre Taboulet for confirming to me that a cardiologist's caliper is a "Compas" and not an "Étrier!"
 
 Thanks to Victoria Churilina for the Russian translation.
+
+The CSS file used is from [gongzhitaao](https://github.com/gongzhitaao/orgcss), used under the [MIT License](https://github.com/gongzhitaao/orgcss/blob/master/LICENSE.md).
 
 ## Author
 David Mann
