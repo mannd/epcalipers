@@ -4,7 +4,7 @@
 #+DATE:      [2015-04-02 Thu]
 #+DESCRIPTION: EP Calipers Help
 #+KEYWORDS:
-#+LANGUAGE:  en
+#+LANGUAGE:  ru
 #+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc 
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
@@ -46,7 +46,7 @@
 :CUSTOM_ID: moving-calipers-id
 :END:
 Перетащите планку калипера, чтобы переместить его как единое целое. Передвиньте левую или правую планку (или сверху или снизу если это калиперы амплитуды), чтобы растянуть или сжать калиперы. Калиперы угла перемещаются как единое целое, перемещаясь в вершине или чуть выше вершины угла. 
-* Добавляйте и удаляйте калиперы 
+* Добавляйте и удаляйте калиперы
 :PROPERTIES:
 :CUSTOM_ID: adding-deleting-calipers-id
 :END:
