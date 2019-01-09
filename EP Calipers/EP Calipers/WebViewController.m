@@ -24,7 +24,7 @@
 // file scheme.
 #define MANUAL_URL @"file://localhost/Users/mannd/dev/epcalipers-ghpages/%@.lproj/EPCalipers-help/newhelp.html#%@"
 #else
-#define MANUAL_URL @"https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/newhelp.html%@"
+#define MANUAL_URL @"https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/newhelp.html#%@"
 #endif
 
 #define LANG L(@"lang")
@@ -51,7 +51,7 @@
     else {
         link = [NSString stringWithFormat:self.fullLink, LANG];
     }
-    EPSLog(@"URL is %@", link);
+    NSLog(@"URL is %@", link);
     NSURL *url = [NSURL URLWithString:link];
 
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];

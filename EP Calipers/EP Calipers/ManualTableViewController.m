@@ -16,10 +16,9 @@
 // These can't be yes for release version
 #ifdef DEBUG
 // Set to yes to use local web page for testing.
-#define USE_LOCAL_ACKNOWLEDGMENTS_URL YES
-#else
-#define USE_LOCAL_ACKNOWLEDGMENTS_URL NO
+#define USE_LOCAL_ACKNOWLEDGMENTS_URL
 #endif
+
 #ifdef USE_LOCAL_ACKNOWLEDGMENTS_URL
 // MARK: To developers, this absolute path will need to be changed to your
 // file scheme.
