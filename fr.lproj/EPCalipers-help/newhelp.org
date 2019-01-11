@@ -19,7 +19,7 @@
 :PROPERTIES:
 :CUSTOM_ID: quick-start-id
 :END:
-Quand le *Compas EP* commence, un échantillon d'ECG et un compas de temps sont chargés.  Déplacer le compas en touchant la barre transversale et en la glissant avec votre doigt.  Élargir et contracter le compas en touchant la barre verticale et en le glissant.  Pincer et zoomer l'image de l'ECG pour l'agrandir ou le rétrécir selon votre besoin.  Si l'ECG est plus grand que votre écran, vous pouvez le glisser avec votre doigt afin de trouver un endroit pour mesurer.  Il faut étalonner un compas pour faire des mesures.  
+Quand le *Compas EP* commence, un échantillon d'ECG et un compas de temps sont chargés.  Déplacer le compas en touchant la barre transversale et en la glissant avec votre doigt.  Élargir et contracter le compas en touchant une barre verticale et en la glissant.  Pincer et zoomer l'image de l'ECG pour l'agrandir ou la rétrécir selon votre besoin.  Si l'ECG est plus grand que votre écran, vous pouvez le glisser avec votre doigt afin de trouver un endroit pour mesurer.  Il faut étalonner un compas pour faire des mesures.  
 * Charger une image
 :PROPERTIES:
 :CUSTOM_ID: loading-image-id
@@ -29,23 +29,23 @@ Il y a plusieurs manières de charger une image d'un ECG.
 ** Choisir une photo de votre collection de photos
 ** Choisir une photo ou un PDF avec l'icône de partage d'autres applications
 ** /AliveCor Kardia/
-Pour regarder des ECGs dans l'application /AliveCor Kardia/, choisir *Journal*, puis *Partage* pour l'ECG que vous voulez regarder. Après la sélection du bouton *Partage*, choisir *PDF* de la liste d'options qui apparaît.  Ensuite choisir le bouton *Partage* en haut à droite de l'écran. 
+Pour regarder des ECGs dans l'application /AliveCor Kardia/, choisir *Journal*, puis *Partage* pour l'ECG que vous voulez regarder. Après la sélection du bouton *Partage*, choisir *PDF* de la liste d'options qui apparaît.  Ensuite taper le bouton *Partage* et choisir *Compas EP*. 
 * Ajustement de l'image
 :PROPERTIES:
 :CUSTOM_ID: adjusting-image-id
 :END:
-Vous pouvez réajuster la position d'une image en utilisant les gestes de multitouche.  Pincer pour la zoomer et glisser pour la faire défiler. *Long press on the image to bring up a menu that allows you to rotate the image and change pages if you have loaded a PDF.*
+Vous pouvez réajuster la position d'une image en utilisant les gestes de multitouche.  Pincer pour la zoomer et glisser pour la faire défiler.  Appuyer longuement sur l'image pour montrer un menu avec des options pour tourner l'image et changer la page si vous avez chargé un PDF.
 * Fixer l'image
 :PROPERTIES:
 :CUSTOM_ID: lock-image-id
 :END:
-Pendant le mouvement et l'ajustement des compas, vous pouvez parfois déplacer l'image ECG involontairement.  Choisir *Immobil* ou *Immobiliser* pour immobiliser l'image sur l'écran.  Un message apparaîtra en haut de l'écran pour indiquer que l'image est immobilisée.  Démobiliser l'image en choisissant *Débloq* ou *Débloquer*.
+Pendant le mouvement et l'ajustement des compas, vous pouvez parfois déplacer l'image ECG involontairement.  Choisir *Immobiliser l'image* pour immobiliser l'image sur l'écran.  Un message apparaîtra en haut de l'écran pour indiquer que l'image est immobilisée.  Démobiliser l'image en choisissant *Débloquer l'image*.
 * Déplacement des compas
 :PROPERTIES:
 :CUSTOM_ID: moving-calipers-id
 :END:
 Glisser la barre transversale d'un compas pour le déplacer comme une unité.  Glisser les barres à gauche ou à droite (ou en haut ou en bas pour les compas d'amplitude) pour les étendre ou réduire.  Les compas d'angle sont déplacés comme une unité en glissant l'angle au sommet ou juste au-dessus du sommet. 
-* Addition et suppression de compas
+* Addition et suppression des compas
 :PROPERTIES:
 :CUSTOM_ID: adding-deleting-calipers-id
 :END:
@@ -60,14 +60,14 @@ Quand il y a plus d'un compas sur l'écran, il faut qu'un compas soit choisi com
 :CUSTOM_ID: more-caliper-options-id
 :END:
 ** <<colors>>Changer les couleurs de compas
-*Long press a caliper and select Color to change caliper colors.*
+Appuyer pendant quelques secondes sur un compas et choisir *Couleur* pour changer sa couleur.
 ** Petits mouvements
-*Long press a caliper and select Tweak from the menu.*  Appuyer pendant quelques secondes sur un des composants du compas choisi (barre transversale, barre latérale ou, en cas d'un compas d'angle, peut-être le sommet) et un menu avec des boutons du mouvement apparaîtra.  Des boutons avec des flèches à gauche, à droite, montantes ou descendantes déplaceront le composant choisi ou tout le compas en utilisant des petits mouvements.  Vous pouvez les déplacer par un seul point ou par un dixième d'un point, selon quel type de flèche vous appuyez (⇨ or →).  Appuyer le bouton *OK* pour retourner au menu principal.
+Appuyer pendant quelques secondes sur un compas et choisir *Régler* dans le menu qui apparaît.  Appuyer longuement sur un des composants du compas choisi (barre transversale, barre latérale ou, en cas d'un compas d'angle, peut-être le sommet) et un menu avec des boutons du mouvement apparaîtra.  Des boutons avec des flèches à gauche, à droite, montantes ou descendantes déplaceront le composant choisi ou tout le compas en utilisant des petits mouvements.  Vous pouvez les déplacer par un seul point ou par un dixième d'un point, selon quel type de flèche vous appuyez (⇨ ou →).  Appuyer le bouton *OK* pour retourner au menu principal.
 ** Les compas marchants
 #+CAPTION: Un compas marchant
 [[./img/marching_calipers2.png]]
 
-*long press a caliper and* choisir *March* pour changer un compas de temps à un compas qui marche.  Des lignes verticales apparaîtront égales à la largeur du compas à chaque côté.  C’est utile pour l’évaluation les rythmes irréguliers ou réguliers, ou pour détecter les ondes P marchantes pendant une tachycardie ou un bloc cardiaque.  Choisir *March* encore pour changer à un compas normal.
+ Appuyer longuement sur un compas et choisir *March* pour changer un compas de temps en un compas qui marche.  Des lignes verticales apparaîtront égales à la largeur du compas à chaque côté.  C’est utile pour l’évaluation les rythmes irréguliers ou réguliers, ou pour détecter les ondes P marchantes pendant une tachycardie ou un bloc cardiaque.  Choisir *March* encore pour changer à un compas normal.
 * Étalonnage
 :PROPERTIES:
 :CUSTOM_ID: calibration-id

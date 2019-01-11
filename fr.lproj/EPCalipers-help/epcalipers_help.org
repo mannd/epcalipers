@@ -98,7 +98,7 @@ Les compas d'angle sont déplacés comme une unité en glissant l'angle au somme
 Il est aussi possible de déplacer les compas à un petit intervalle en utilisant les boutons fléchés.  Voici [[tweak][petits mouvements]].
 * Prendre des mesures
 L'intervalle mesuré par les compas de temps ou d'amplitude est affiché près de la barre transversale de le compas.  Avant l'étalonnage des compas, les mesures sont affichées en unités arbitraires (les pointes sont à peu près égales aux pixels).  Les compas d'angle montrent une mesure de l'angle actuel et il ne faut pas les étalonner.
-* Addition et suppression de compas
+* Addition et suppression des compas
 Choisir *+* sur le menu principal pour ajouter de nouveaux compas.
 #+CAPTION: Menu principal
 [[./img/main_menu2.png]]
