@@ -382,36 +382,9 @@
 }
 
 
-- (void)caliperText {
-    NSString *text = [self measurement];
-    self.paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
-    self.paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    [self.attributes setObject:self.textFont forKey:NSFontAttributeName];
-    [self.attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
-    [self.attributes setObject:self.color forKey:NSForegroundColorAttributeName];
-    
-    if (self.direction == Horizontal) {
-        // the math here insures that the label doesn't get so small that it can't be read
-        [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position - 25: self.bar2Position - 25), self.crossBarPosition - 22,  fmaxf(100.0, fabsf(self.bar2Position - self.bar1Position) + 50), 20)  withAttributes:self.attributes];
-    }
-    else {
-        [text drawInRect:CGRectMake(self.crossBarPosition + 5, self.bar1Position - 10 + (self.bar2Position - self.bar1Position)/2, 140, 20) withAttributes:self.attributes];
-    }
-}
-
 // returns significant bar coordinate depending on direction of caliper
 - (float)barCoord:(CGPoint)p {
     return (self.direction == Horizontal ? p.x : p.y);
-}
-
-// returns CGRect containing caliper
-- (CGRect)rect:(CGRect)containerRect {
-    if (self.direction == Horizontal) {
-        return CGRectMake(self.bar1Position, containerRect.origin.y, self.bar2Position - self.bar1Position, containerRect.size.height);
-    } else { // vertical caliper
-        return CGRectMake(0, self.bar1Position, containerRect.size.width, self.bar2Position - self.bar1Position);
-    }
 }
 
 - (NSString *)measurement {

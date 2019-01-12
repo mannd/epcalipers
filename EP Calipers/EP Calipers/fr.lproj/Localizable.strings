@@ -46,7 +46,7 @@
 "Hodges" = "Hodges";
 "How_many_intervals" = "Combien d'intervalles ce compas mesure-t-il ?";
 "Image_lock" = "IMAGE BLOQUÉE";
-//"Internet_connection_failed" = "";
+"Internet_connection_failed" = "Veuillez vérifier votre connextion à internet.";
 "Interval_rate_ipad" = "Intervalle/FC";
 "Interval_rate_iphone" = "Int/FC";
 "Invalid_result" = "Résultat invalide";
@@ -65,7 +65,7 @@
 "Multipage_pdf" = "Multipage PDF";
 "Multipage_pdf_warning" = "L'application a été restaurée. Alors la multipage PDF montrera seulement une page.  Vous devez rouvrir le PDF avec l’application pour voir toutes les pages.";
 "Negative_caliper" = "Compas à valeur négative";
-//"Negative_caliper_message" = "";
+"Negative_caliper_message" = "Choisir un compas avec valeur positive et étalonner encore.";
 "No_angle_caliper_selected" = "Compas d'angle pas choisi";
 "No_caliper_selected_message" = "Compas pas choisi";
 "No_calipers_to_use" = "Pas de compas à utiliser";
@@ -94,11 +94,10 @@
 "Select_angle_caliper" = "Choisir un compas d'angle.";
 "Select_time_caliper_message" = "Choisir un compas pour mesurer un (ou plus) intervalle RR.";
 "Set" = "Définir";
-//"Show_tooltips" = "";
 "Three" = "3";
 "Time" = "Temps";
 "Time_caliper" = "Compas de temps";
-//"Topics" = "";
+"Topics" = "Sujets";
 "Tweak" = "Régler";
 "Tweak-iPad" = "Régler";
 "Tweak-iPhone" = "Régler";
@@ -126,7 +125,7 @@
 "Adjusting_image_ht" = "Ajustement de l'image";
 "Lock_image_ht" = "Fixer l'image";
 "Moving_calipers_ht" = "Déplacement des compas";
-"Adding_deleting_calipers_ht" = "Addition et suppression de compas";
+"Adding_deleting_calipers_ht" = "Addition et suppression des compas";
 "Selecting_caliper_ht" = "Sélection d'un compas";
 "More_caliper_options_ht" = "Plus d'options";
 "Calibration_ht" = "Étalonnage";
@@ -141,18 +140,18 @@
 
 /* Tooltips */
 "Add_tooltip" = "Ajouter des compas";
-//"Clear_calibration_tooltip" = "";
-//"Int_rate_tooltip" = "";
-//"Longpress_tooltip" = "";
-//"Mean_rate_tooltip" = "";
-//"Measurement_tooltip" = "";
-//"Move_caliper_tooltip" = "";
-//"Move_image_tooltip" = "";
+"Clear_calibration_tooltip" = "Effacer tout l'étalonnage";
+"Int_rate_tooltip" = "Changer entre intervalle et fréquence cardiaque";
+"Longpress_tooltip" = "Appuyer pendant quelques secondes sur l'image ou sur un compas pour montrer plus d'options";
+"Mean_rate_tooltip" = "Mesurer 2 ou plus d'intervalles pour calculer l'intervalle moyen et la fréquence cardiaque moyenne";
+"Measurement_tooltip" = "Utiliser le menu des mesures pour l'étalonnage des compas et puis prendre des mesures";
+"Move_caliper_tooltip" = "Déplacer le compas en glissant la barre transversale.  Élarger et contracter le compas en glissant les barres verticales.  Taper pour le choisir.  Taper deux fois pour le supprimer.";
+"Move_image_tooltip" = "Pincer et zoomer ou glisser pour repositionner l'image";
 "QTc_step_1_tooltip" = "Mesurer un ou plus des intervalles RR";
 "QTc_step_2_tooltip" = "Mesurer l'intervalle QT";
-"QTc_tooltip" = "";
-//"Set_calibration_tooltip" = "";
-//"Setup_calibration_tooltip" = "";
+"QTc_tooltip" = "Calculer l'intervalle QTc";
+"Set_calibration_tooltip" = "Mesurer un intervalle connu avec le compas choisi";
+"Setup_calibration_tooltip" = "Choisir un compas en le tapant.  Utiliser le compas pour mesurer un intervalle connu, par exemple 1 000 msec.";
 "Side_menu_tooltip" = "Choisir une nouvelle image";
 
 /* Brugada functionality not implemented yet.  There is no harm if these strings aren't translated */
