@@ -253,9 +253,7 @@
                 textOrigin.y = origin.y - yOffset;
                 break;
             default:
-//                if (BuildConfig.DEBUG) {
-//                    throw new AssertionError("Invalid TextPosition.");
-//                }
+                NSAssert(NO, @"Invalid TextPosition.");
                 break;
         }
     }

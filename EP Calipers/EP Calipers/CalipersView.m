@@ -42,15 +42,6 @@
     return YES;
 }
 
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
-        if ([(Caliper *)self.calipers[i] pointNearCaliper:point]) {
-            return YES;
-        }
-    }
-    return NO;
-}
-
 - (void)drawRect:(CGRect)rect {
     CGContextRef con = UIGraphicsGetCurrentContext();
     for (Caliper *caliper in self.calipers) {
@@ -65,17 +56,10 @@
     NSString *text = IMAGE_LOCK;
     NSMutableDictionary *attributes = [NSMutableDictionary new];
     UIFont *textFont = [UIFont fontWithName:@"Helvetica" size:14.0];
-
-//    NSMutableParagraphStyle paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
-//    self.paragraphStyle.alignment = (self.direction == Horizontal ? NSTextAlignmentCenter : NSTextAlignmentLeft);
-//    
     [attributes setObject:textFont forKey:NSFontAttributeName];
-//    [attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
     [attributes setObject:self.lockImageMessageForegroundColor forKey:NSForegroundColorAttributeName];
     [attributes setObject:self.lockImageMessageBackgroundColor forKey:NSBackgroundColorAttributeName];
-    
     rect = CGRectMake(rect.origin.x + 5, rect.origin.y + 5, rect.size.width, rect.size.height);
-    
     [text drawInRect:rect withAttributes:attributes];
 }
 
@@ -125,17 +109,6 @@
     if (caliperToggled) {
         [self setNeedsDisplay];
     }
-}
-
-// method not used at present
-- (Caliper *)getSelectedCaliper:(CGPoint) point {
-    Caliper *foundCaliper = nil;
-    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
-        if ([(Caliper *)self.calipers[i] pointNearCaliper:point] && foundCaliper == nil) {
-            foundCaliper = (Caliper *)self.calipers[i];
-        }
-    }
-    return foundCaliper;
 }
 
 - (void)doubleTap:(UITapGestureRecognizer *)t {

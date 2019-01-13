@@ -510,10 +510,126 @@
     c.bar1Position = 20;
     c.bar2Position = 180;
     [view drawRect:rect];
+}
+
+- (void)testMiscCaliperTests {
+    Caliper *c = [[Caliper alloc] init];
+    c.bar1Position = 100;
+    c.bar2Position = 50;
+    c.crossBarPosition = 120;
+    XCTAssertEqual(c.valueInPoints, -50);
+    XCTAssertTrue([c pointNearBar1:CGPointMake(90, 130)]);
+    XCTAssertTrue([c pointNearBar2:CGPointMake(45, 180)]);
+    XCTAssertTrue([c pointNearCrossBar:CGPointMake(70, 130)]);
+    CGPoint closePoint = CGPointMake(110, 110);
+    CGPoint farPoint = CGPointMake(130, 150);
+    XCTAssertTrue([c pointNearCaliper:closePoint]);
+    XCTAssertFalse([c pointNearCaliper:farPoint]);
+    c.direction = Vertical;
+    XCTAssertTrue([c pointNearCaliper:closePoint]);
+    XCTAssertFalse([c pointNearCaliper:farPoint]);
+    CGPoint closePoint2 = CGPointMake(110, 75);
+    XCTAssertTrue([c pointNearCaliper:closePoint2]);
+    XCTAssertEqual([c intervalInMsec:0.100], 100);
+    XCTAssertEqual([c intervalInSecs:200], 0.2);
+    Calibration *cal = [[Calibration alloc] init];
+    cal.units = @"msec";
+    c.calibration = cal;
+    XCTAssertEqual([c intervalInMsec:100], 100);
+    cal.units = @"SEC";
+    XCTAssertEqual([c intervalInSecs:0.314], 0.314);
+    CaliperComponent cc = [c getCaliperComponent:closePoint2];
+    XCTAssertEqual(cc, Crossbar);
+    CaliperComponent cc1 = [c getCaliperComponent:CGPointMake(0, 115)];
+    XCTAssertEqual(cc1, Bar1);
+    CaliperComponent cc2 = [c getCaliperComponent:CGPointMake(0, 40)];
+    XCTAssertEqual(cc2, Bar2);
+    CaliperComponent cc3 = [c getCaliperComponent:CGPointMake(0, 400)];
+    XCTAssertEqual(cc3, None);
+    c.direction = Horizontal;
+    [c moveBarInDirection:Right distance:5 forComponent:Bar1];
+    XCTAssertEqual(c.bar1Position, 105);
+    [c moveBarInDirection:Left distance:10 forComponent:Bar2];
+    XCTAssertEqual(c.bar2Position, 40);
+    [c moveBarInDirection:Up distance:20 forComponent:Crossbar];
+    XCTAssertEqual(c.bar2Position, 40);
+    XCTAssertEqual(c.crossBarPosition, 100);
+    [c moveBarInDirection:Down distance:35 forComponent:Crossbar];
+    XCTAssertEqual(c.crossBarPosition, 135);
+    [c moveCrossBar:CGPointMake(0, 30)];
+    XCTAssertEqual(c.crossBarPosition, 165);
+    [c moveCrossBar:CGPointMake(10, -65)];
+    XCTAssertEqual(c.crossBarPosition, 100);
+    XCTAssertEqual(c.bar1Position, 115);
+    XCTAssertEqual(c.bar2Position, 50);
+    [c moveBar1:CGPointMake(10, 10) forLocation:CGPointMake(0, 0)];
+    XCTAssertEqual(c.bar1Position, 125);
+    [c moveBar2:CGPointMake(-10, 10) forLocation:CGPointMake(0, 0)];
+    XCTAssertEqual(c.bar2Position, 40);
+    [c moveBarInDirection:Down distance:35 forComponent:None];
+    XCTAssertEqual(c.bar1Position, 125);
+    XCTAssertEqual(c.bar2Position, 40);
+    XCTAssertEqual(c.crossBarPosition, 100);
+    c.direction = Vertical;
+    [c moveCrossbarInDirection:Up distance:100];
+    XCTAssertEqual(c.crossBarPosition, 100);
+    [c moveCrossbarInDirection:Down distance:100];
+    XCTAssertEqual(c.crossBarPosition, 100);
+    [c moveCrossbarInDirection:Left distance:100];
+    XCTAssertEqual(c.crossBarPosition, 0);
+    [c moveCrossbarInDirection:Right distance:100];
+    XCTAssertEqual(c.crossBarPosition, 100);
+    [c moveCrossbarInDirection:Right distance:0];
+    XCTAssertEqual(c.crossBarPosition, 100);
+    XCTAssertFalse([c isTimeCaliper]);
+    c.direction = Horizontal;
+    XCTAssert([c isTimeCaliper]);
+}
+
+- (void)testMiscCalipersView {
+    CalipersView *cv = [[CalipersView alloc] init];
+    XCTAssertEqualObjects([cv activeCaliper], nil);
+    Caliper *c = [[Caliper alloc] init];
+    Caliper *d = [[Caliper alloc] init];
+    cv.calipers = [[NSMutableArray alloc] init];
+    [cv.calipers addObject:c];
+    [cv.calipers addObject:d];
+    c.bar1Position = 100;
+    c.bar2Position = 200;
+    c.crossBarPosition = 150;
+    XCTAssertEqual([c getCaliperMidPoint].x, 150);
+    XCTAssert([cv caliperNearLocationIsTimeCaliper:CGPointMake(93, 0)]);
+    c.direction = Vertical;
+    XCTAssertFalse([cv caliperNearLocationIsTimeCaliper:CGPointMake(93, 0)]);
+    XCTAssert([cv noCaliperIsSelected]);
+    [cv selectCaliperIfNoneSelected];
+    XCTAssertFalse([cv noCaliperIsSelected]);
+    // Last caliper added is selected
+    XCTAssert(d.selected == YES);
+    XCTAssertFalse(c.selected == YES);
+    XCTAssertEqual([cv count], 2);
+    XCTAssertEqualObjects([cv activeCaliper], d);
+    d.selected = NO;
+    XCTAssertEqualObjects([cv activeCaliper], nil);
+    [cv selectCaliper:d];
+    XCTAssertEqualObjects([cv activeCaliper], d);
+    [cv unselectCaliper:d];
+    XCTAssertEqualObjects([cv activeCaliper], nil);
+    CGRect rect = CGRectMake(0, 0, 300, 300);
+    [cv.calipers removeObject:d];
+    XCTAssertEqual([cv count], 1);
+    cv.lockImageScreen = YES;
+    cv.lockImageMessageBackgroundColor = [UIColor blackColor];
+    cv.lockImageMessageForegroundColor = [UIColor redColor];
+    [cv drawRect:rect];
+    cv.lockImageScreen = NO;
+    [cv drawRect:rect];
+
+
+
 
 
 
 
 }
-
 @end
