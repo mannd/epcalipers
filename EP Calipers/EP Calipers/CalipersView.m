@@ -350,4 +350,14 @@
     return caliper;
 }
 
+// This is a overriden UIView procedure that lets the event go down to the view beneath.
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
+        if ([(Caliper *)self.calipers[i] pointNearCaliper:point]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 @end
