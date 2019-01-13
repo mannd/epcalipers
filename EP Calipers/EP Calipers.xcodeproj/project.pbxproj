@@ -32,7 +32,6 @@
 		8E9BA12E1EF47D1C00FC8DD2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */; };
 		8E9BA1371EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1391EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib */; };
 		8E9F71ED1F19CA1A00029BED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F71EF1F19CA1A00029BED /* InfoPlist.strings */; };
-		8EA170CE21C6C64A0082783D /* EcgImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA170CD21C6C64A0082783D /* EcgImageView.m */; };
 		8EA170D121C6CDEF0082783D /* HamburgerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA170D021C6CDEF0082783D /* HamburgerTableViewController.m */; };
 		8EA170D421C6D0690082783D /* HamburgerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA170D321C6D0690082783D /* HamburgerCell.m */; };
 		8EB3DE391AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
@@ -48,6 +47,7 @@
 		8ECF3F1021DFC96500E4DD8B /* ManualCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F0F21DFC96500E4DD8B /* ManualCell.m */; };
 		8ECF3F1321DFD0AA00E4DD8B /* ManualLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F1221DFD0AA00E4DD8B /* ManualLink.m */; };
 		8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */; };
+		8EE36EAE21EBC5F600E39030 /* BlackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE36EAD21EBC5F600E39030 /* BlackView.m */; };
 		8EEB386521E26B8A00568B6F /* Translation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EEB386421E26B8A00568B6F /* Translation.m */; };
 		8EFCC6A71DE5FA5F00D1C58F /* AngleCaliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */; };
 		BB677CB2C1D1D00F3CC7C063 /* libPods-EP CalipersTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA84B7561464AB7408ECA076 /* libPods-EP CalipersTests.a */; };
@@ -120,8 +120,6 @@
 		8E9BA1321EF47D2100FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8E9F71EE1F19CA1A00029BED /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E9F71F21F19CAF100029BED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		8EA170CC21C6C64A0082783D /* EcgImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EcgImageView.h; sourceTree = "<group>"; };
-		8EA170CD21C6C64A0082783D /* EcgImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EcgImageView.m; sourceTree = "<group>"; };
 		8EA170CF21C6CDEF0082783D /* HamburgerTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HamburgerTableViewController.h; sourceTree = "<group>"; };
 		8EA170D021C6CDEF0082783D /* HamburgerTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerTableViewController.m; sourceTree = "<group>"; };
 		8EA170D221C6D0690082783D /* HamburgerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HamburgerCell.h; sourceTree = "<group>"; };
@@ -154,6 +152,8 @@
 		8ECF3F1121DFD0AA00E4DD8B /* ManualLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManualLink.h; sourceTree = "<group>"; };
 		8ECF3F1221DFD0AA00E4DD8B /* ManualLink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManualLink.m; sourceTree = "<group>"; };
 		8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sampleECG.jpg; sourceTree = "<group>"; };
+		8EE36EAC21EBC5F600E39030 /* BlackView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlackView.h; sourceTree = "<group>"; };
+		8EE36EAD21EBC5F600E39030 /* BlackView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlackView.m; sourceTree = "<group>"; };
 		8EEB386321E26B8A00568B6F /* Translation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Translation.h; sourceTree = "<group>"; };
 		8EEB386421E26B8A00568B6F /* Translation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Translation.m; sourceTree = "<group>"; };
 		8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AngleCaliper.h; sourceTree = "<group>"; };
@@ -303,14 +303,14 @@
 			children = (
 				8E9A33381AC09DE90037E694 /* CalipersView.h */,
 				8E9A33391AC09DE90037E694 /* CalipersView.m */,
-				8EA170CC21C6C64A0082783D /* EcgImageView.h */,
-				8EA170CD21C6C64A0082783D /* EcgImageView.m */,
 				8EA170D221C6D0690082783D /* HamburgerCell.h */,
 				8EA170D321C6D0690082783D /* HamburgerCell.m */,
 				8E0D4AAC21C8BA9D0061158D /* EcgScrollView.h */,
 				8E0D4AAD21C8BA9D0061158D /* EcgScrollView.m */,
 				8ECF3F0E21DFC96500E4DD8B /* ManualCell.h */,
 				8ECF3F0F21DFC96500E4DD8B /* ManualCell.m */,
+				8EE36EAC21EBC5F600E39030 /* BlackView.h */,
+				8EE36EAD21EBC5F600E39030 /* BlackView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -578,6 +578,7 @@
 				8E3F384C21C737AE003A944E /* HamburgerViewModel.m in Sources */,
 				8ECF3F0D21DFC93A00E4DD8B /* ManualTableViewController.m in Sources */,
 				8E3F384F21C73819003A944E /* HamburgerLayer.m in Sources */,
+				8EE36EAE21EBC5F600E39030 /* BlackView.m in Sources */,
 				8E600E9021D3FCF500C97425 /* HelpImageViewController.m in Sources */,
 				8ECEDF681E8A1A1A00288EDE /* About.m in Sources */,
 				8ECF3F1321DFD0AA00E4DD8B /* ManualLink.m in Sources */,
@@ -587,7 +588,6 @@
 				8ECF3F1021DFC96500E4DD8B /* ManualCell.m in Sources */,
 				8EB3DE391AC603A3009376AD /* Calibration.m in Sources */,
 				8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */,
-				8EA170CE21C6C64A0082783D /* EcgImageView.m in Sources */,
 				8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */,
 				8EBD6D3221DAAFD200FF7748 /* HelpViewController.m in Sources */,
 				8E600E9D21D43D0300C97425 /* HelpModel.m in Sources */,

@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CalipersView.h"
-#import "EcgImageView.h"
+//#import "EcgImageView.h"
+#import "BlackView.h"
 #import "Calibration.h"
 #import "Settings.h"
 #import "FCColorPickerViewController.h"
@@ -21,13 +22,14 @@
 
 @interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, FCColorPickerViewControllerDelegate, CalipersViewDelegate, HamburgerDelegate, CMPopTipViewDelegate>
 
-@property (strong, nonatomic) IBOutlet EcgImageView *imageView;
+@property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (strong, nonatomic) IBOutlet CalipersView *calipersView;
 @property (strong, nonatomic) IBOutlet UIView *imageContainerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintHamburgerLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *constraintHamburgerWidth;
-@property (weak, nonatomic) IBOutlet UIView *blackView;
+@property (weak, nonatomic) IBOutlet BlackView *blackView;
+@property (nonatomic) CGFloat maxBlackAlpha;
 
 // We get this view via its embed segue!  See prepareForSegue:
 @property (strong, nonatomic) HamburgerTableViewController *hamburgerViewController;
@@ -93,6 +95,7 @@
 
 - (void)openURL:(NSURL *)url;
 - (void)hideHamburgerMenu;
+- (void)showHamburgerMenu;  
 - (void)takePhoto;
 - (void)selectPhoto;
 - (void)showHelp;

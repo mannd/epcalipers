@@ -40,7 +40,7 @@
                                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c" userLabel="containerView">
                                         <rect key="frame" x="0.0" y="64" width="375" height="539"/>
                                         <subviews>
-                                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="ImageViewID" image="sampleECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView" customClass="EcgImageView">
+                                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="ImageViewID" image="sampleECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="539"/>
                                             </imageView>
                                         </subviews>
@@ -66,7 +66,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <gestureRecognizers/>
                             </view>
-                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Day-lu-Opi">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Day-lu-Opi" customClass="BlackView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>

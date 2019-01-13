@@ -245,6 +245,7 @@
     EPSLog(@"viewDidLoad");
 
     pdfRef = NULL;
+    self.maxBlackAlpha = MAX_BLACKVIEW_ALPHA;
 
     self.pressLocation = CGPointMake(0, 0);
 
@@ -257,7 +258,8 @@
     self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
     [self createToolbars];
 
-    self.imageView.delegate = self;
+    //self.imageView.delegate = self;
+    self.blackView.delegate = self;
     [self.imageView setContentMode:UIViewContentModeCenter];
     
     self.scrollView.delegate = self;
@@ -788,7 +790,7 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
-        self.blackView.alpha = MAX_BLACKVIEW_ALPHA;
+        self.blackView.alpha = self.maxBlackAlpha;
     }];
 }
 
