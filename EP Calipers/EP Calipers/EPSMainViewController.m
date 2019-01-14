@@ -728,6 +728,9 @@
 }
 
 - (void)showAddCaliperMenu {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (nil == self.addCaliperButtonPopTipView && self.showAddCaliperButtonToolTip) {
         self.addCaliperButtonPopTipView = [[CMPopTipView alloc] initWithMessage:ADD_TOOLTIP];
         [self setupToolTip:self.addCaliperButtonPopTipView];
@@ -739,10 +742,6 @@
         [self.addCaliperButtonPopTipView dismissAnimated:YES];
         self.addCaliperButtonPopTipView = nil;
         self.showAddCaliperButtonToolTip = NO;
-    }
-
-    if (self.showingInitialTooltips) {
-        return;
     }
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:ADD_CALIPER message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* timeCaliperAction = [UIAlertAction actionWithTitle:TIME_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addHorizontalCaliper];}];
@@ -758,6 +757,9 @@
 }
 
 - (void)toggleHamburgerMenu {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (nil == self.sideMenuButtonPopTipView && self.showSideMenuButtonToolTip) {
         self.sideMenuButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SIDE_MENU_TOOLTIP];
         [self setupToolTip:self.sideMenuButtonPopTipView];
@@ -769,9 +771,6 @@
         [self.sideMenuButtonPopTipView dismissAnimated:YES];
         self.sideMenuButtonPopTipView = nil;
         self.showSideMenuButtonToolTip = NO;
-    }
-    if (self.showingInitialTooltips) {
-        return;
     }
     if (self.hamburgerMenuIsOpen) {
         [self hideHamburgerMenu];
@@ -1004,6 +1003,9 @@
 }
 
 - (void)toggleIntervalRate {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (nil == self.intRateButtonPopTipView && self.showIntRateToolTip) {
         self.intRateButtonPopTipView = [[CMPopTipView alloc] initWithMessage:INT_RATE_TOOLTIP];
         [self setupToolTip:self.intRateButtonPopTipView];
@@ -1022,6 +1024,9 @@
 }
 
 - (void)meanRR {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (nil == self.meanRateButtonPopTipView && self.showMeanRateToolTip) {
         self.meanRateButtonPopTipView = [[CMPopTipView alloc] initWithMessage:MEAN_RATE_TOOLTIP];
         [self setupToolTip:self.meanRateButtonPopTipView];
@@ -1083,6 +1088,9 @@
 }
 
 - (void)calculateQTc {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (nil == self.calculateQTcPopTipView && self.showCalculateQTcToolTip) {
         self.calculateQTcPopTipView = [[CMPopTipView alloc] initWithMessage:QTC_TOOLTIP];
         [self setupToolTip:self.calculateQTcPopTipView];
@@ -1113,6 +1121,9 @@
 }
 
 - (void)qtcMeasureRR {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (nil == self.qtcStep1ButtonPopTipView && self.showQtcStep1ToolTip) {
         self.qtcStep1ButtonPopTipView = [[CMPopTipView alloc] initWithMessage:QTC_STEP_1_TOOLTIP];
         [self setupToolTip:self.qtcStep1ButtonPopTipView];
@@ -1167,6 +1178,9 @@
 }
 
 - (void)qtcMeasureQT {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (nil == self.qtcStep2ButtonPopTipView && self.showQtcStep2ToolTip) {
         self.qtcStep2ButtonPopTipView = [[CMPopTipView alloc] initWithMessage:QTC_STEP_2_TOOLTIP];
         [self setupToolTip:self.qtcStep2ButtonPopTipView];
@@ -1266,6 +1280,9 @@
 }
 
 - (void)clearCalibration {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (nil == self.clearCalibrationButtonPopTipView && self.showClearCalibrationToolTip) {
         self.clearCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:CLEAR_CALIBRATION_TOOLTIP];
         [self setupToolTip:self.clearCalibrationButtonPopTipView];
@@ -1286,6 +1303,9 @@
 
 - (void)setupCalibration {
     // Toggle popTipView when a standard UIButton is pressed
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (nil == self.setupCalibrationButtonPopTipView && self.showSetupCalibrationToolTip) {
         self.setupCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SETUP_CALIBRATION_TOOLTIP];
         [self setupToolTip:self.setupCalibrationButtonPopTipView];
@@ -1314,6 +1334,9 @@
 }
 
 - (void)setCalibration {
+    if (self.showingInitialTooltips) {
+        return;
+    }
     if (nil == self.setCalibrationButtonPopTipView && self.showSetCalibrationToolTip) {
         self.setCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SET_CALIBRATION_TOOLTIP];
         [self setupToolTip:self.setCalibrationButtonPopTipView];

@@ -6,6 +6,8 @@
 //  Copyright © 2018 EP Studios. All rights reserved.
 //
 
+// Side "hamburger" menu implentation based on https://medium.com/@qbo/hamburger-menu-on-ios-done-right-a1b076cbdea1
+
 #import "HamburgerTableViewController.h"
 #import "HamburgerCell.h"
 #import "HamburgerViewModel.h"
