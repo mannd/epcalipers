@@ -28,6 +28,7 @@
     // Do any additional setup after loading the view.
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpPageViewController"];
     self.pageViewController.dataSource = self;
+    self.pageViewController.delegate = self;
     self.images = @[L(@"Help_image_1"), L(@"Help_image_2"), L(@"Help_image_3")];
     UIViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
@@ -85,6 +86,20 @@
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
     return 0;
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController
+        didFinishAnimating:(BOOL)finished
+   previousViewControllers:(NSArray *)previousViewControllers
+       transitionCompleted:(BOOL)completed {
+    NSUInteger index = ((UIViewController<HelpProtocol> *)self.pageViewController.viewControllers[0]).pageIndex;
+    if (index == VIEW_CONTROLLERS_COUNT - 1) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(quitHelp)];
+    }
+}
+
+- (void)quitHelp {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end
