@@ -34,7 +34,7 @@ Pour regarder des ECGs dans l'application /AliveCor Kardia/, choisir *Journal*, 
 :PROPERTIES:
 :CUSTOM_ID: adjusting-image-id
 :END:
-Vous pouvez réajuster la position d'une image en utilisant les gestes de multitouche.  Pincer pour la zoomer et glisser pour la faire défiler.  Appuyer longuement sur l'image pour montrer un menu avec des options pour tourner l'image et changer la page si vous avez chargé un PDF.
+Vous pouvez réajuster la position d'une image en utilisant les gestes de multitouche.  Pincer pour la zoomer et glisser pour la faire défiler.  Appuyer quelques secondes sur l'image pour montrer un menu avec des options pour tourner l'image et changer la page si vous avez chargé un PDF.
 * Fixer l'image
 :PROPERTIES:
 :CUSTOM_ID: lock-image-id
@@ -59,15 +59,15 @@ Quand il y a plus d'un compas sur l'écran, il faut qu'un compas soit choisi com
 :PROPERTIES:
 :CUSTOM_ID: more-caliper-options-id
 :END:
-** <<colors>>Changer les couleurs de compas
+** <<colors>>Changer les couleurs des compas
 Appuyer pendant quelques secondes sur un compas et choisir *Couleur* pour changer sa couleur.
 ** Petits mouvements
-Appuyer pendant quelques secondes sur un compas et choisir *Régler* dans le menu qui apparaît.  Appuyer longuement sur un des composants du compas choisi (barre transversale, barre latérale ou, en cas d'un compas d'angle, peut-être le sommet) et un menu avec des boutons du mouvement apparaîtra.  Des boutons avec des flèches à gauche, à droite, montantes ou descendantes déplaceront le composant choisi ou tout le compas en utilisant des petits mouvements.  Vous pouvez les déplacer par un seul point ou par un dixième d'un point, selon quel type de flèche vous appuyez (⇨ ou →).  Appuyer le bouton *OK* pour retourner au menu principal.
+Appuyer pendant quelques secondes sur un compas et choisir *Régler* dans le menu qui apparaît.  Appuyer quelques secondes sur un des composants du compas choisi (barre transversale, barre latérale ou, en cas d'un compas d'angle, peut-être le sommet) et un menu avec des boutons du mouvement apparaîtra.  Des boutons avec des flèches à gauche, à droite, montantes ou descendantes déplaceront le composant choisi ou tout le compas en utilisant des petits mouvements.  Vous pouvez les déplacer par un seul point ou par un dixième d'un point, selon quel type de flèche vous appuyez (⇨ ou →).  Appuyer le bouton *OK* pour retourner au menu principal.
 ** Les compas marchants
 #+CAPTION: Un compas marchant
 [[./img/marching_calipers2.png]]
 
- Appuyer longuement sur un compas et choisir *March* pour changer un compas de temps en un compas qui marche.  Des lignes verticales apparaîtront égales à la largeur du compas à chaque côté.  C’est utile pour l’évaluation les rythmes irréguliers ou réguliers, ou pour détecter les ondes P marchantes pendant une tachycardie ou un bloc cardiaque.  Choisir *March* encore pour changer à un compas normal.
+ Appuyer quelques secondes sur un compas et choisir *March* pour changer un compas de temps en un compas qui marche.  Des lignes verticales apparaîtront égales à la largeur du compas à chaque côté.  C’est utile pour l’évaluation les rythmes irréguliers ou réguliers, ou pour détecter les ondes P marchantes pendant une tachycardie ou un bloc cardiaque.  Choisir *March* encore pour changer à un compas normal.
 * Étalonnage
 :PROPERTIES:
 :CUSTOM_ID: calibration-id
