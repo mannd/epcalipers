@@ -18,7 +18,6 @@ typedef NS_ENUM(NSInteger, Layer) {
     SampleEcg,
     Preferences,
     ToolTips,
-    Help,
     Manual,
     About
 };

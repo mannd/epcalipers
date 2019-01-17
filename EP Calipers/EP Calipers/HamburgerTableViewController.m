@@ -104,9 +104,9 @@
         case ToolTips:
             [self.mainViewController showToolTips];
             break;
-        case Help:
-            [self.mainViewController showHelp];
-            break;
+//        case Help:
+//            [self.mainViewController showHelp];
+//            break;
         case Manual:
             [self.mainViewController showManual];
             break;

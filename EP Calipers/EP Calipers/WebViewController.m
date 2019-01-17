@@ -58,7 +58,7 @@
     [self.webView loadRequest:requestObj];
     self.webView.delegate = self;
 
-    NSString *title = L(@"Manual");
+    NSString *title = L(@"Help");
     [self.navigationItem setTitle:title];
     
     // centers view with navigationbar in place

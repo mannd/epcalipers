@@ -29,9 +29,9 @@
     [array addObject:preferencesLayer];
     HamburgerLayer *tooltipLayer = [[HamburgerLayer alloc] initWithName:L(@"Show_tooltips") iconName:@"lightning" layer:ToolTips altName:L(@"Hide_tooltips") altIconName:@"lightning"];
     [array addObject:tooltipLayer];
-    HamburgerLayer *helpLayer = [[HamburgerLayer alloc] initWithName:L(@"Quick_help") iconName:@"help" layer:Help];
-    [array addObject:helpLayer];
-    HamburgerLayer *manualLayer = [[HamburgerLayer alloc] initWithName:L(@"Manual") iconName:@"manual" layer:Manual];
+//    HamburgerLayer *helpLayer = [[HamburgerLayer alloc] initWithName:L(@"Quick_help") iconName:@"help" layer:Help];
+//    [array addObject:helpLayer];
+    HamburgerLayer *manualLayer = [[HamburgerLayer alloc] initWithName:L(@"Help") iconName:@"manual" layer:Manual];
     [array addObject:manualLayer];
     HamburgerLayer *aboutLayer = [[HamburgerLayer alloc] initWithName:L(@"About_ep_calipers") iconName:@"about" layer:About];
     [array addObject:aboutLayer];
