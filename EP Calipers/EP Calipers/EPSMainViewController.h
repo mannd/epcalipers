@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "CalipersView.h"
-//#import "EcgImageView.h"
 #import "BlackView.h"
 #import "Calibration.h"
 #import "Settings.h"
@@ -77,6 +76,7 @@
 @property (nonatomic) BOOL isIpad;
 @property (nonatomic) double rrIntervalForQTc;
 @property (nonatomic) BOOL firstRun;
+@property (nonatomic) BOOL firstStart;
 @property (nonatomic) BOOL launchFromURL;
 @property (strong, nonatomic) NSURL *launchURL;
 @property (nonatomic) BOOL hamburgerMenuIsOpen;

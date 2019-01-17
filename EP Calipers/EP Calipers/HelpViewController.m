@@ -42,7 +42,13 @@
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
 
-    self.title = L(@"Quick_help");
+    if (self.firstStart) {
+        [self.navigationController setNavigationBarHidden:YES];
+        self.title = @"";
+    }
+    else {
+        self.title = L(@"Quick_help");
+    }
 }
 
 #pragma mark - Page view controller data source
@@ -94,6 +100,10 @@
        transitionCompleted:(BOOL)completed {
     NSUInteger index = ((UIViewController<HelpProtocol> *)self.pageViewController.viewControllers[0]).pageIndex;
     if (index == VIEW_CONTROLLERS_COUNT - 1) {
+        if (self.firstStart) {
+            self.navigationItem.hidesBackButton = YES;
+            [self.navigationController setNavigationBarHidden:NO];
+        }
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(quitHelp)];
     }
 }

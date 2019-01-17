@@ -16,6 +16,7 @@
 		8E1423671AB5F16A00CC15BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423651AB5F16A00CC15BC /* Main.storyboard */; };
 		8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423681AB5F16A00CC15BC /* Images.xcassets */; };
 		8E172D971F9C205200CD50D6 /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
+		8E1F500821EF9090004527C9 /* EP_CalipersUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F500721EF9090004527C9 /* EP_CalipersUITests.m */; };
 		8E365C1D21C5B7E300CD11B3 /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E365C1C21C5B7E300CD11B3 /* Alert.m */; };
 		8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BBC541EA0340200ECB992 /* CaliperFactory.m */; };
 		8E3F384C21C737AE003A944E /* HamburgerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F384B21C737AE003A944E /* HamburgerViewModel.m */; };
@@ -62,6 +63,13 @@
 			remoteGlobalIDString = 8E1423571AB5F16A00CC15BC;
 			remoteInfo = "EP Calipers";
 		};
+		8E1F500A21EF9090004527C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E1423501AB5F16A00CC15BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8E1423571AB5F16A00CC15BC;
+			remoteInfo = "EP Calipers";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +93,9 @@
 		8E1423711AB5F16A00CC15BC /* EP CalipersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EP CalipersTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1423761AB5F16A00CC15BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EP_CalipersTests.m; sourceTree = "<group>"; };
+		8E1F500521EF9090004527C9 /* EP CalipersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EP CalipersUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E1F500721EF9090004527C9 /* EP_CalipersUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EP_CalipersUITests.m; sourceTree = "<group>"; };
+		8E1F500921EF9090004527C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E365C1B21C5B7E300CD11B3 /* Alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Alert.h; sourceTree = "<group>"; };
 		8E365C1C21C5B7E300CD11B3 /* Alert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
 		8E3BBC531EA0340200ECB992 /* CaliperFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaliperFactory.h; sourceTree = "<group>"; };
@@ -181,6 +192,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8E1F500221EF9090004527C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -202,6 +220,7 @@
 				8ECEDF561E89F4F800288EDE /* ColorPicker */,
 				8E14235A1AB5F16A00CC15BC /* EP Calipers */,
 				8E1423741AB5F16A00CC15BC /* EP CalipersTests */,
+				8E1F500621EF9090004527C9 /* EP CalipersUITests */,
 				8E1423591AB5F16A00CC15BC /* Products */,
 				8E172D7E1F9C04F200CD50D6 /* Frameworks */,
 				341383020FBFA8D513A1DB0E /* Pods */,
@@ -213,6 +232,7 @@
 			children = (
 				8E1423581AB5F16A00CC15BC /* EP Calipers.app */,
 				8E1423711AB5F16A00CC15BC /* EP CalipersTests.xctest */,
+				8E1F500521EF9090004527C9 /* EP CalipersUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -349,6 +369,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8E1F500621EF9090004527C9 /* EP CalipersUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8E1F500721EF9090004527C9 /* EP_CalipersUITests.m */,
+				8E1F500921EF9090004527C9 /* Info.plist */,
+			);
+			path = "EP CalipersUITests";
+			sourceTree = "<group>";
+		};
 		8E3F384921C736BC003A944E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,6 +468,24 @@
 			productReference = 8E1423711AB5F16A00CC15BC /* EP CalipersTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		8E1F500421EF9090004527C9 /* EP CalipersUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E1F500E21EF9090004527C9 /* Build configuration list for PBXNativeTarget "EP CalipersUITests" */;
+			buildPhases = (
+				8E1F500121EF9090004527C9 /* Sources */,
+				8E1F500221EF9090004527C9 /* Frameworks */,
+				8E1F500321EF9090004527C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8E1F500B21EF9090004527C9 /* PBXTargetDependency */,
+			);
+			name = "EP CalipersUITests";
+			productName = "EP CalipersUITests";
+			productReference = 8E1F500521EF9090004527C9 /* EP CalipersUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -457,6 +504,12 @@
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = W74NPJXYEG;
 						LastSwiftMigration = 0900;
+						TestTargetID = 8E1423571AB5F16A00CC15BC;
+					};
+					8E1F500421EF9090004527C9 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = W74NPJXYEG;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 8E1423571AB5F16A00CC15BC;
 					};
 				};
@@ -478,6 +531,7 @@
 			targets = (
 				8E1423571AB5F16A00CC15BC /* EP Calipers */,
 				8E1423701AB5F16A00CC15BC /* EP CalipersTests */,
+				8E1F500421EF9090004527C9 /* EP CalipersUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -500,6 +554,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8E14236F1AB5F16A00CC15BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E1F500321EF9090004527C9 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -604,6 +665,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8E1F500121EF9090004527C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E1F500821EF9090004527C9 /* EP_CalipersUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -611,6 +680,11 @@
 			isa = PBXTargetDependency;
 			target = 8E1423571AB5F16A00CC15BC /* EP Calipers */;
 			targetProxy = 8E1423721AB5F16A00CC15BC /* PBXContainerItemProxy */;
+		};
+		8E1F500B21EF9090004527C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8E1423571AB5F16A00CC15BC /* EP Calipers */;
+			targetProxy = 8E1F500A21EF9090004527C9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -840,6 +914,57 @@
 			};
 			name = Release;
 		};
+		8E1F500C21EF9090004527C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = W74NPJXYEG;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "EP CalipersUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.EP-CalipersUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "EP Calipers";
+			};
+			name = Debug;
+		};
+		8E1F500D21EF9090004527C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = W74NPJXYEG;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "EP CalipersUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.EP-CalipersUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "EP Calipers";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -866,6 +991,15 @@
 			buildConfigurations = (
 				8E14237F1AB5F16A00CC15BC /* Debug */,
 				8E1423801AB5F16A00CC15BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8E1F500E21EF9090004527C9 /* Build configuration list for PBXNativeTarget "EP CalipersUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E1F500C21EF9090004527C9 /* Debug */,
+				8E1F500D21EF9090004527C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

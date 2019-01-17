@@ -63,6 +63,16 @@
                ReferencedContainer = "container:EP Calipers.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "8E1F500421EF9090004527C9"
+               BuildableName = "EP CalipersUITests.xctest"
+               BlueprintName = "EP CalipersUITests"
+               ReferencedContainer = "container:EP Calipers.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

@@ -17,19 +17,22 @@
 #import "Alert.h"
 #import "Version.h"
 #import "Translation.h"
+#import "HelpViewController.h"
 #import "Defs.h"
 
 // These can't be yes for release version
 #ifdef DEBUG
 // Set to yes to always show startup screen, for testing
-#define TEST_QUICK_START NO
+#define TEST_QUICK_START YES
 // Set to YES to skip introductory tooltips, for testing
-#define SKIP_INTRO_TOOLTIPS NO
+#define SKIP_INTRO_TOOLTIPS YES
 // Set to YES to show PDF menu regardless of their being a PDF
-#define SHOW_PDF_MENU YES
+#define SHOW_PDF_MENU NO
 #else
 #define TEST_QUICK_START NO
-#define SKIP_INTRO_TOOLTIPS NO
+// We are using the quick help images now rather than the intro tooltips,
+// so skip them.
+#define SKIP_INTRO_TOOLTIPS YES
 #define SHOW_PDF_MENU NO
 #endif
 
@@ -37,7 +40,7 @@
 #define LANG L(@"lang")
 
 // Minimum press duration for long presses (default = 0.5)
-#define MINIMUM_PRESS_DURATION 1
+#define MINIMUM_PRESS_DURATION 0.8
 #define ANIMATION_DURATION 0.5
 #define MAX_ZOOM 10.0
 #define MOVEMENT 1.0f
@@ -419,21 +422,24 @@
             self.wasLaunchedFromUrl = NO;
         }
         
-        [self.imageView setHidden:NO];
-        // When starting add a caliper if one isn't there already
-        if ([self.calipersView count] == 0) {
-            [self addHorizontalCaliper];
-        }
-        
         self.firstRun = NO;
+        self.firstStart = NO;
 
         if (TEST_QUICK_START || [self shouldShowTooltipsAtStart]) {
+            self.firstStart = YES;
+            [self showHelp];
+            self.firstStart = NO;
             [self showToolTips];
         }
 
         if (self.isNewInstallation || self.isUpgrade) {
             [[NSUserDefaults standardUserDefaults] setObject:[Version getAppVersion] forKey:@"AppVersion"];
             [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+        [self.imageView setHidden:NO];
+        // When starting add a caliper if one isn't there already
+        if ([self.calipersView count] == 0) {
+            [self addHorizontalCaliper];
         }
         [self selectMainToolbar];
     }
@@ -743,7 +749,7 @@
         self.addCaliperButtonPopTipView = nil;
         self.showAddCaliperButtonToolTip = NO;
     }
-    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:ADD_CALIPER message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* timeCaliperAction = [UIAlertAction actionWithTitle:TIME_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addHorizontalCaliper];}];
     [actionSheet addAction:timeCaliperAction];
     UIAlertAction* amplitudeCaliperAction = [UIAlertAction actionWithTitle:AMPLITUDE_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addVerticalCaliper];}];
@@ -1869,8 +1875,12 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 // Can only get at this embedded view controller via its segue.
 // See https://stackoverflow.com/questions/29582200/how-do-i-get-the-views-inside-a-container-in-swift.
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier  isEqual: @"EmbedSegue"]) {
+    if ([segue.identifier isEqual: @"EmbedSegue"]) {
         self.hamburgerViewController = (HamburgerTableViewController *)segue.destinationViewController;
+    }
+    if ([segue.identifier isEqualToString:@"showHelpSegue"]) {
+        HelpViewController *hvc = (HelpViewController *)segue.destinationViewController;
+        hvc.firstStart = self.firstStart;
     }
 }
 
