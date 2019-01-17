@@ -152,7 +152,7 @@
 "QTc_step_1_tooltip" = "Measure 1 or more RR intervals";
 "QTc_step_2_tooltip" = "Measure the QT interval";
 "QTc_tooltip" = "Calculate the QTc";
-"Set_calibration_tooltip" = "Measure a know interval with selected caliper.";
+"Set_calibration_tooltip" = "Measure a known interval with selected caliper.";
 "Setup_calibration_tooltip" = "Select a caliper by tapping it. Use it to measure a known interval (e.g. 1000 msec).";
 "Side_menu_tooltip" = "Load a new image, change preferences, get help";
 
