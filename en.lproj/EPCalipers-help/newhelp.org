@@ -37,7 +37,7 @@ To view ECGs in the /AliveCor Kardia/ app, select *Journal*, then *Share* for th
 :PROPERTIES:
 :CUSTOM_ID: adjusting-image-id
 :END:
-You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  *Long press on the image to bring up a menu that allows you to rotate the image and change pages if you have loaded a PDF.*
+You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Long press on the image to bring up a menu that allows you to rotate the image and change pages if you have loaded a PDF.
 * Lock the image in place
 :PROPERTIES:
 :CUSTOM_ID: lock-image-id
@@ -64,14 +64,14 @@ When more than one caliper is present, it is necessary that one is selected to b
 :CUSTOM_ID: more-caliper-options-id
 :END:
 ** <<colors>>Change caliper colors
-*Long press a caliper and select Color to change caliper colors.*
+Long press a caliper and select Color to change caliper colors.
 ** Tweak caliper position
-*Long press a caliper and select Tweak from the menu.* Then long press a caliper component (crossbar, sidebar, or, in case of an angle caliper, the apex of the angle) and a menu with movement buttons will appear.  Buttons with left and right or up and down arrows move the selected caliper component or the whole caliper using micromovements.  You can move either sidebar (or either angle of an angle caliper) or a caliper as a whole by gradations of a single point (≈ pixel) or a tenth of a point, depending on which type of arrow you press (⇨ or →).  Press the *Done* button to return to the main menu.
+Long press a caliper and select Tweak from the menu.  Then long press a caliper component (crossbar, sidebar, or, in case of an angle caliper, the apex of the angle) and a menu with movement buttons will appear.  Buttons with left and right or up and down arrows move the selected caliper component or the whole caliper using micromovements.  You can move either sidebar (or either angle of an angle caliper) or a caliper as a whole by gradations of a single point (≈ pixel) or a tenth of a point, depending on which type of arrow you press (⇨ or →).  Press the *Done* button to return to the main menu.
 ** Marching calipers
 #+CAPTION: Marching calipers
 [[./img/marching_calipers2.png]]
 
-*Long press a caliper and* select *March* to convert a time caliper to a marching caliper.  Vertical caliper lines will appear equal to the caliper width on either side of the caliper.  This is very useful to assess the regularity or irregularity of a rhythm, or to detect P waves marching through a tachycardia or during heart block.  Select *March* again to change the marching caliper back to normal again.
+Long press a caliper and select *March* to convert a time caliper to a marching caliper.  Vertical caliper lines will appear equal to the caliper width on either side of the caliper.  This is very useful to assess the regularity or irregularity of a rhythm, or to detect P waves marching through a tachycardia or during heart block.  Select *March* again to change the marching caliper back to normal again.
 * Calibration
 :PROPERTIES:
 :CUSTOM_ID: calibration-id
