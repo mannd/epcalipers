@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSArray *viewControllers;
 @property (strong, nonatomic) NSArray *images;
+@property (strong, nonatomic) NSArray *titles;
 @property (nonatomic) BOOL firstStart;
 @end
 

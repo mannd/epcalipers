@@ -67,6 +67,7 @@
 "Multipage_pdf_warning" = "L'application a été restaurée. Alors la multipage PDF montrera seulement une page.  Vous devez rouvrir le PDF avec l’application pour voir toutes les pages.";
 "Negative_caliper" = "Compas à valeur négative";
 "Negative_caliper_message" = "Choisir un compas avec valeur positive et étalonner encore.";
+"Next" = "Prochain";
 "No_angle_caliper_selected" = "Compas d'angle pas choisi";
 "No_caliper_selected_message" = "Compas pas choisi";
 "No_calipers_to_use" = "Pas de compas à utiliser";
@@ -95,6 +96,7 @@
 "Select_angle_caliper" = "Choisir un compas d'angle.";
 "Select_time_caliper_message" = "Choisir un compas pour mesurer un (ou plus) intervalle RR.";
 "Set" = "Définir";
+"Skip" = "Passer";
 "Three" = "3";
 "Time" = "Temps";
 "Time_caliper" = "Compas de temps";

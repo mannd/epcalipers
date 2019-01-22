@@ -376,6 +376,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     EPSLog(@"ViewDidAppear");
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 
     // Sometimes calipers are malpositioned when view restored.
     [self.calipersView setNeedsDisplay];

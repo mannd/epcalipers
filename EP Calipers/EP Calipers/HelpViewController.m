@@ -14,7 +14,7 @@
 #import "Defs.h"
 #import "EPSLogging.h"
 
-#define VIEW_CONTROLLERS_COUNT 3
+#define VIEW_CONTROLLERS_COUNT 4
 
 @interface HelpViewController ()
 
@@ -29,7 +29,8 @@
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpPageViewController"];
     self.pageViewController.dataSource = self;
     self.pageViewController.delegate = self;
-    self.images = @[L(@"Help_image_1"), L(@"Help_image_2"), L(@"Help_image_3")];
+    self.images = @[@"move-caliper", @"tap-caliper", @"zoom-ecg", @"longpress"];
+    self.titles = @[L(@"Move_caliper_label"), L(@"Tap_caliper_label"), L(@"Zoom_ecg_label"), L(@"Longpress_label")];
     UIViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -42,13 +43,8 @@
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
 
-    if (self.firstStart) {
-        [self.navigationController setNavigationBarHidden:YES];
-        self.title = @"";
-    }
-    else {
-        self.title = L(@"Quick_help");
-    }
+    [self.navigationController setNavigationBarHidden:YES];
+    self.title = @"";
 }
 
 #pragma mark - Page view controller data source
@@ -59,6 +55,13 @@
     }
     HelpImageViewController *helpImageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpImageViewController"];
     helpImageViewController.imageName = self.images[index];
+    helpImageViewController.labelText = self.titles[index];
+    if (index == VIEW_CONTROLLERS_COUNT - 1) {
+        helpImageViewController.skipButtonText = L(@"Done");
+    }
+    else {
+        helpImageViewController.skipButtonText = L(@"Skip");
+    }
     helpImageViewController.pageIndex = index;
     return helpImageViewController;
 }
@@ -92,20 +95,6 @@
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
     return 0;
-}
-
-- (void)pageViewController:(UIPageViewController *)pageViewController
-        didFinishAnimating:(BOOL)finished
-   previousViewControllers:(NSArray *)previousViewControllers
-       transitionCompleted:(BOOL)completed {
-    NSUInteger index = ((UIViewController<HelpProtocol> *)self.pageViewController.viewControllers[0]).pageIndex;
-    if (index == VIEW_CONTROLLERS_COUNT - 1) {
-        if (self.firstStart) {
-            self.navigationItem.hidesBackButton = YES;
-            [self.navigationController setNavigationBarHidden:NO];
-        }
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(quitHelp)];
-    }
 }
 
 - (void)quitHelp {

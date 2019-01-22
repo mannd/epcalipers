@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSArray* rows;
 @property (nonatomic) BOOL imageIsLocked;
 @property (nonatomic) BOOL showingToolTips;
-
+- (void)nextPage;
 - (void)reloadData;
 
 @end

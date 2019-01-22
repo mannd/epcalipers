@@ -70,6 +70,10 @@
     return cell;
 }
 
+- (void)nextPage {
+    EPSLog(@"Next page");
+}
+
 /*
 #pragma mark - Navigation
 

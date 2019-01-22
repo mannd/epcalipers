@@ -21,8 +21,9 @@
     [super viewDidLoad];
     EPSLog(@"HelpImageView did load");
     // Do any additional setup after loading the view.
-    self.title = L(@"Quick_help");
     self.helpImageView.image = [UIImage imageNamed:self.imageName];
+    self.label.text = self.labelText;
+    [self.skipButton setTitle:self.skipButtonText forState:UIControlStateNormal];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -30,4 +31,8 @@
     [self.navigationController setToolbarHidden:YES];
 }
 
+
+- (IBAction)skipAction:(id)sender {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+}
 @end
