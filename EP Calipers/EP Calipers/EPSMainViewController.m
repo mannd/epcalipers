@@ -376,16 +376,13 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     EPSLog(@"ViewDidAppear");
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
 
     // Sometimes calipers are malpositioned when view restored.
     [self.calipersView setNeedsDisplay];
 
-//    EPSLog(@"Language code using preferredLanguages = %@", [[NSLocale preferredLanguages] firstObject]);
-//    EPSLog(@"Language code using localizedStrings = %@", [self applicationLanguage]);
-
     [self.view setUserInteractionEnabled:YES];
-    [self.navigationController setToolbarHidden:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setToolbarHidden:NO animated:YES];
 
     if (self.firstRun) {
         EPSLog(@"++++++++Rescaling image++++++++++++");
@@ -482,7 +479,6 @@
 
 }
 
-// TODO: update these tooltip settings
 - (void)initToolTips {
     [self initToolTipTargets];
     [self setToolTipState:YES];

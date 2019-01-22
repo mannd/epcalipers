@@ -157,6 +157,13 @@
 "Setup_calibration_tooltip" = "Choisir un compas en le tapant.  Utiliser le compas pour mesurer un intervalle connu, par exemple 1 000 msec.";
 "Side_menu_tooltip" = "Choisir une nouvelle image";
 
+/* Onboard labels */
+"Move_caliper_label" = "Glisser les barres";
+"Single_tap_caliper_label" = "Taper pour choisir ce compas";
+"Double_tap_caliper_label" = "Taper deux fois pour le supprimer";
+"Zoom_ecg_label" = "Pincer pour zoomer, glisser pour déplacer l'image";
+"Longpress_label" = "Appuyer pendant quelques secondes pour plus d'options";
+
 /* Brugada functionality not implemented yet.  There is no harm if these strings aren't translated */
 //"Brugada_ipad" = "";
 //"Brugada_iphone" = "";

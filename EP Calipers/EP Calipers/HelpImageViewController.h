@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSString *labelText;
 @property (strong, nonatomic) IBOutlet UIButton *skipButton;
 @property (strong, nonatomic) NSString *skipButtonText;
+@property (nonatomic) BOOL hideSkipButton;
 - (IBAction)skipAction:(id)sender;
 @end
 

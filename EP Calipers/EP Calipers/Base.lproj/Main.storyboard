@@ -287,7 +287,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="feu-NA-F7G">
-                                <rect key="frame" x="172.5" y="627" width="30" height="30"/>
+                                <rect key="frame" x="166.5" y="621" width="42" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <state key="normal" title="Skip"/>
                                 <connections>
                                     <action selector="skipAction:" destination="DOW-IW-ucv" eventType="touchUpInside" id="TDd-Ak-STo"/>

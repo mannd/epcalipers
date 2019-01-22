@@ -24,6 +24,7 @@
     self.helpImageView.image = [UIImage imageNamed:self.imageName];
     self.label.text = self.labelText;
     [self.skipButton setTitle:self.skipButtonText forState:UIControlStateNormal];
+    [self.skipButton setHidden:self.hideSkipButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

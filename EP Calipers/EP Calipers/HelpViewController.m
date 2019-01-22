@@ -14,7 +14,7 @@
 #import "Defs.h"
 #import "EPSLogging.h"
 
-#define VIEW_CONTROLLERS_COUNT 4
+#define VIEW_CONTROLLERS_COUNT 5
 
 @interface HelpViewController ()
 
@@ -29,8 +29,8 @@
     self.pageViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"helpPageViewController"];
     self.pageViewController.dataSource = self;
     self.pageViewController.delegate = self;
-    self.images = @[@"move-caliper", @"tap-caliper", @"zoom-ecg", @"longpress"];
-    self.titles = @[L(@"Move_caliper_label"), L(@"Tap_caliper_label"), L(@"Zoom_ecg_label"), L(@"Longpress_label")];
+    self.images = @[@"move-caliper", @"single-tap-caliper", @"double-tap-caliper", @"zoom-ecg", @"longpress"];
+    self.titles = @[L(@"Move_caliper_label"), L(@"Single_tap_caliper_label"), L(@"Double_tap_caliper_label"), L(@"Zoom_ecg_label"), L(@"Longpress_label")];
     UIViewController *startingViewController = [self viewControllerAtIndex:0];
     NSArray *viewControllers = @[startingViewController];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -57,9 +57,11 @@
     helpImageViewController.imageName = self.images[index];
     helpImageViewController.labelText = self.titles[index];
     if (index == VIEW_CONTROLLERS_COUNT - 1) {
+        helpImageViewController.hideSkipButton = NO;
         helpImageViewController.skipButtonText = L(@"Done");
     }
     else {
+        helpImageViewController.hideSkipButton = YES;
         helpImageViewController.skipButtonText = L(@"Skip");
     }
     helpImageViewController.pageIndex = index;

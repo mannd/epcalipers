@@ -160,10 +160,11 @@
 "Side_menu_tooltip" = "Load a new image, change preferences, get help";
 
 /* Onboard labels */
-"Move_caliper_label" = "Drag crossbar, drag sidebars to adjust calipers";
-"Tap_caliper_label" = "Tap to select, Double-tap to delete calipers";
+"Move_caliper_label" = "Drag crossbar, drag sidebars";
+"Single_tap_caliper_label" = "Tap to select";
+"Double_tap_caliper_label" = "Double-tap to delete";
 "Zoom_ecg_label" = "Pinch to zoom, drag to move image";
-"Longpress_label" = "Long press caliper or image for popup menus";
+"Longpress_label" = "Long press caliper or image for more options";
 
 /* Brugada (defined but unused in active code.  No harm if not translated) */
 "Brugada_ipad" = "Brugada";

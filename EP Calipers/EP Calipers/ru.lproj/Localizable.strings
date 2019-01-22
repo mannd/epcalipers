@@ -156,6 +156,13 @@
 "Setup_calibration_tooltip" = "Выбирайте калипер нажав на него. Используйте его для измерения известного интервала (например, 1000 мсек).";
 "Side_menu_tooltip" = "Загрузить новое изображение";
 
+/* Onboard labels */
+"Move_caliper_label" = "Переместите планку, Переместите боковую панель";
+"Single_tap_caliper_label" = "Нажмите чтобы выбрать";
+"Double_tap_caliper_label" = "Двойное нажатие чтобы удалить";
+"Zoom_ecg_label" = "Раздвиньте для увеличения, Удерживайте для перемещения";
+//"Longpress_label" = "Appuyer pendant quelques secondes pour plus d'options";
+
 /* Brugada functionality not implemented yet.  There is no harm if these strings aren't translated */
 "Brugada_ipad" = "";
 "Brugada_iphone" = "";
