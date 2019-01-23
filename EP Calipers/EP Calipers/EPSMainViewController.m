@@ -1564,6 +1564,7 @@
     if (pdfRef != NULL) {
         CGPDFDocumentRelease(pdfRef);
         pdfRef = NULL;
+        self.numberOfPages = 0;
     }
 }
 

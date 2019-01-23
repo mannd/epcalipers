@@ -117,8 +117,8 @@
 "Quick_help" = "Быстрая помощь";
 "Sample_ecg" = "Пример ЭКГ";
 "Select_image" = "Выбрать изображение";
-"Show_tooltips" = "Показать подсказки ";
-"Take_photo" = "Сделать фото ";
+"Show_tooltips" = "Показать подсказки";
+"Take_photo" = "Сделать фото";
 "Unlock_image" = "Открепить изображение";
 
 /* Help topics */
@@ -161,7 +161,7 @@
 "Single_tap_caliper_label" = "Нажмите чтобы выбрать";
 "Double_tap_caliper_label" = "Двойное нажатие чтобы удалить";
 "Zoom_ecg_label" = "Раздвиньте для увеличения, Удерживайте для перемещения";
-//"Longpress_label" = "Appuyer pendant quelques secondes pour plus d'options";
+"Longpress_label" = "Долгое нажатие вызовет меню";
 
 /* Brugada functionality not implemented yet.  There is no harm if these strings aren't translated */
 "Brugada_ipad" = "";

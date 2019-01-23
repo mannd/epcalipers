@@ -61,10 +61,12 @@
 
     if ((row.layer == Lock && self.imageIsLocked) || (row.layer == ToolTips && self.showingToolTips)) {
         cell.label.text = row.altName;
+        cell.label.adjustsFontSizeToFitWidth = YES;
         cell.icon.image = [UIImage imageNamed:row.altIconName];
     }
     else {
         cell.label.text = row.name;
+        cell.label.adjustsFontSizeToFitWidth = YES;
         cell.icon.image = [UIImage imageNamed:row.iconName];
     }
     return cell;
