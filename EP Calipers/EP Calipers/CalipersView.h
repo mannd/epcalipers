@@ -25,7 +25,6 @@
 @property (nonatomic, strong) NSMutableArray *calipers;
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (nonatomic) BOOL locked;
-@property (nonatomic) BOOL allowColorChange;
 @property (nonatomic) BOOL allowTweakPosition;
 @property (nonatomic) BOOL lockImageScreen;
 @property (nonatomic, strong) UIColor *lockImageMessageForegroundColor;
@@ -41,6 +40,13 @@
 - (void)unselectCaliperNoNeedsDisplay:(Caliper *)c;
 - (void)updateCaliperPreferences:(UIColor *)unselectedColor selectedColor:(UIColor*)selectedColor lineWidth:(NSInteger)lineWidth roundMsec:(BOOL)roundMsec autoPositionText:(BOOL)autoPositionText timeTextPosition:(TextPosition)timeTextPosition amplitudeTextPosition:(TextPosition)amplitudeTextPosition;
 - (NSUInteger)count;
-- (void)toggleShowMarchingCaliper;
+- (void)toggleShowMarchingCaliper:(CGPoint)location;
+- (BOOL)canBecomeFirstResponder;
+- (void)changeColor:(CGPoint)location;
+- (void) tweakPosition:(CGPoint)location;
+- (BOOL) caliperNearLocationIsTimeCaliper:(CGPoint)location;
+- (CGPoint)getATimeCaliperMidpoint;
+- (void)clearChosenComponentsExceptFor:(Caliper *)caliper;
+- (void)clearAllChosenComponents;
 
 @end

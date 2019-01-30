@@ -8,22 +8,12 @@
 
 #import "Caliper.h"
 #import "EPSLogging.h"
-#include <math.h>
-#include "Defs.h"
+#import "Translation.h"
+#import <math.h>
+#import "Defs.h"
 
 
 #define DELTA 20.0
-#define CROSSBAR L(@"Crossbar")
-#define CROSSBAR_SMALL L(@"Xbar")
-#define LEFT_BAR L(@"Left bar")
-#define LEFT_BAR_SMALL L(@"Left")
-#define RIGHT_BAR L(@"Right bar")
-#define RIGHT_BAR_SMALL L(@"Right")
-#define UP_BAR L(@"Top bar")
-#define UP_BAR_SMALL L(@"Top")
-#define DOWN_BAR L(@"Bottom bar")
-#define DOWN_BAR_SMALL L(@"Bottom")
-#define APEX_BAR L(@"Apex")
 #define MIN_DISTANCE_FOR_MARCH 20.0f
 #define MAX_MARCHING_CALIPERS 20
 
@@ -53,6 +43,7 @@
         self.marching = NO;
         self.textPosition = RightAbove;
         self.autoPositionText = YES;
+        self.chosenComponent = None;
     }
     return self;
 }
@@ -112,8 +103,63 @@
     if (self.marching  && self.direction == Horizontal) {
         [self drawMarchingCalipers:context forRect:rect];
     }
-//    [self caliperText];
     [self caliperTextInCanvas:rect textPosition:self.textPosition optimizeTextPosition:true];
+
+    [self drawChosenComponent:context forRect:rect];
+}
+
+- (void)drawChosenComponent:(CGContextRef)context forRect:(CGRect)rect {
+    if (self.chosenComponent == None) {
+        return;
+    }
+    UIColor *chosenComponentColor;
+    if (self.selected) {
+        chosenComponentColor = self.unselectedColor;
+    }
+    else {
+        chosenComponentColor = self.selectedColor;
+    }
+    CGContextSetStrokeColorWithColor(context, [chosenComponentColor CGColor]);
+    switch (self.chosenComponent) {
+        case Bar1:
+            EPSLog(@"draw bar1");
+            if (self.direction == Horizontal) {
+                CGContextMoveToPoint(context, self.bar1Position, 0);
+                CGContextAddLineToPoint(context, self.bar1Position, rect.size.height);
+            }
+            else {
+                CGContextMoveToPoint(context, 0, self.bar1Position);
+                CGContextAddLineToPoint(context, rect.size.width, self.bar1Position);
+            }
+            break;
+        case Bar2:
+            EPSLog(@"draw bar2");
+            if (self.direction == Horizontal) {
+                CGContextMoveToPoint(context, self.bar2Position, 0);
+                CGContextAddLineToPoint(context, self.bar2Position, rect.size.height);
+            }
+            else {
+                CGContextMoveToPoint(context, 0, self.bar2Position);
+                CGContextAddLineToPoint(context, rect.size.width, self.bar2Position);
+            }
+            break;
+        case Crossbar:
+            EPSLog(@"draw crossbar");
+            if (self.direction == Horizontal) {
+                CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
+                CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
+            }
+            else {
+                CGContextMoveToPoint(context, self.crossBarPosition, self.bar2Position);
+                CGContextAddLineToPoint(context, self.crossBarPosition, self.bar1Position);
+            }
+            break;
+        case None:
+            break;
+        default:
+            break;
+    }
+    CGContextStrokePath(context);
 }
 
 // Assumes bar1 and bar positions are already set
@@ -207,9 +253,7 @@
                 textOrigin.y = origin.y - yOffset;
                 break;
             default:
-//                if (BuildConfig.DEBUG) {
-//                    throw new AssertionError("Invalid TextPosition.");
-//                }
+                NSAssert(NO, @"Invalid TextPosition.");
                 break;
         }
     }
@@ -336,36 +380,9 @@
 }
 
 
-- (void)caliperText {
-    NSString *text = [self measurement];
-    self.paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
-    self.paragraphStyle.alignment = NSTextAlignmentCenter;
-    
-    [self.attributes setObject:self.textFont forKey:NSFontAttributeName];
-    [self.attributes setObject:self.paragraphStyle forKey:NSParagraphStyleAttributeName];
-    [self.attributes setObject:self.color forKey:NSForegroundColorAttributeName];
-    
-    if (self.direction == Horizontal) {
-        // the math here insures that the label doesn't get so small that it can't be read
-        [text drawInRect:CGRectMake((self.bar2Position > self.bar1Position ? self.bar1Position - 25: self.bar2Position - 25), self.crossBarPosition - 22,  fmaxf(100.0, fabsf(self.bar2Position - self.bar1Position) + 50), 20)  withAttributes:self.attributes];
-    }
-    else {
-        [text drawInRect:CGRectMake(self.crossBarPosition + 5, self.bar1Position - 10 + (self.bar2Position - self.bar1Position)/2, 140, 20) withAttributes:self.attributes];
-    }
-}
-
 // returns significant bar coordinate depending on direction of caliper
 - (float)barCoord:(CGPoint)p {
     return (self.direction == Horizontal ? p.x : p.y);
-}
-
-// returns CGRect containing caliper
-- (CGRect)rect:(CGRect)containerRect {
-    if (self.direction == Horizontal) {
-        return CGRectMake(self.bar1Position, containerRect.origin.y, self.bar2Position - self.bar1Position, containerRect.size.height);
-    } else { // vertical caliper
-        return CGRectMake(0, self.bar1Position, containerRect.size.width, self.bar2Position - self.bar1Position);
-    }
 }
 
 - (NSString *)measurement {
@@ -469,28 +486,6 @@
     }
     else {
         return None;
-    }
-}
-
-- (NSString *)getComponentName:(CaliperComponent)component smallSize:(BOOL)smallSize {
-    NSString *crossBarName = smallSize ? CROSSBAR_SMALL : CROSSBAR;
-    NSString *leftBarName = smallSize ? LEFT_BAR_SMALL : LEFT_BAR;
-    NSString *rightBarName = smallSize ? RIGHT_BAR_SMALL : RIGHT_BAR;
-    NSString *upBarName = smallSize ? UP_BAR_SMALL : UP_BAR;
-    NSString *downBarName = smallSize ? DOWN_BAR_SMALL : DOWN_BAR;
-    switch (component) {
-        case Crossbar:
-            return (self.isAngleCaliper ? APEX_BAR : crossBarName);
-            break;
-        case Bar1:
-            return (self.direction == Horizontal ? leftBarName : upBarName);
-            break;
-        case Bar2:
-            return (self.direction == Horizontal ? rightBarName : downBarName);
-            break;
-        default:
-            return @"";
-            break;
     }
 }
 
@@ -618,6 +613,21 @@
     self.selectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
     self.roundMsecRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
     self.marching = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Marching"]];
+}
+
+- (CGPoint)getCaliperMidPoint {
+    CGPoint point = CGPointMake(0, 0);
+    CGFloat x = fabs(self.bar2Position - self.bar1Position) / 2 + fmin(self.bar1Position, self.bar2Position);
+    CGFloat y = self.crossBarPosition;
+    if (self.direction == Horizontal) {
+        point.x = x;
+        point.y = y;
+    }
+    else {
+        point.x = y;
+        point.y = x;
+    }
+    return point;
 }
 
 

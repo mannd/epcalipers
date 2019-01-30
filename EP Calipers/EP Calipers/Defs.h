@@ -43,8 +43,4 @@ typedef NS_ENUM(NSInteger, TextPosition) {
     Bottom
 };
 
-
-// make my own simpler localization macro
-#define L(s) NSLocalizedString(s, nil)
-
 #endif

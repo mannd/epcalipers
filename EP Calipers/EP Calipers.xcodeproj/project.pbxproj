@@ -8,32 +8,48 @@
 
 /* Begin PBXBuildFile section */
 		8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0208A61AC2A8B300FE7EC5 /* Caliper.m */; };
+		8E0D4AAE21C8BA9D0061158D /* EcgScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D4AAD21C8BA9D0061158D /* EcgScrollView.m */; };
+		8E13AB6021D13A430020896D /* Version.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E13AB5F21D13A430020896D /* Version.m */; };
 		8E14235E1AB5F16A00CC15BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E14235D1AB5F16A00CC15BC /* main.m */; };
 		8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423601AB5F16A00CC15BC /* AppDelegate.m */; };
 		8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */; };
 		8E1423671AB5F16A00CC15BC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423651AB5F16A00CC15BC /* Main.storyboard */; };
 		8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E1423681AB5F16A00CC15BC /* Images.xcassets */; };
 		8E172D971F9C205200CD50D6 /* EP_CalipersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */; };
+		8E1F500821EF9090004527C9 /* EP_CalipersUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E1F500721EF9090004527C9 /* EP_CalipersUITests.m */; };
+		8E365C1D21C5B7E300CD11B3 /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E365C1C21C5B7E300CD11B3 /* Alert.m */; };
 		8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BBC541EA0340200ECB992 /* CaliperFactory.m */; };
+		8E3F384C21C737AE003A944E /* HamburgerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F384B21C737AE003A944E /* HamburgerViewModel.m */; };
+		8E3F384F21C73819003A944E /* HamburgerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F384E21C73819003A944E /* HamburgerLayer.m */; };
 		8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E559EA81ACD9262004A6F91 /* Launch Screen.xib */; };
 		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
 		8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */; };
+		8E600E9021D3FCF500C97425 /* HelpImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */; };
 		8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DDE381FF96D13007247DA /* MiniQTcResult.m */; };
 		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
 		8E9BA12E1EF47D1C00FC8DD2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */; };
-		8E9BA1361EF6BED700FC8DD2 /* EPCalipers-help in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1331EF6BED700FC8DD2 /* EPCalipers-help */; };
 		8E9BA1371EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1391EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib */; };
 		8E9F71ED1F19CA1A00029BED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E9F71EF1F19CA1A00029BED /* InfoPlist.strings */; };
+		8EA170D121C6CDEF0082783D /* HamburgerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA170D021C6CDEF0082783D /* HamburgerTableViewController.m */; };
+		8EA170D421C6D0690082783D /* HamburgerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EA170D321C6D0690082783D /* HamburgerCell.m */; };
 		8EB3DE391AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
 		8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE3D1AC616C0009376AD /* Settings.m */; };
 		8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB3DE401AC9A488009376AD /* Settings.bundle */; };
+		8EBD6D3221DAAFD200FF7748 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */; };
 		8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF581E89F54600288EDE /* FCColorPickerViewController.m */; };
 		8ECEDF5D1E89F62000288EDE /* colormap.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ECEDF5C1E89F62000288EDE /* colormap.png */; };
 		8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF611E89F83700288EDE /* FCBrightDarkGradView.m */; };
 		8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */; };
 		8ECEDF681E8A1A1A00288EDE /* About.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF671E8A1A1A00288EDE /* About.m */; };
+		8ECF3F0D21DFC93A00E4DD8B /* ManualTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F0C21DFC93A00E4DD8B /* ManualTableViewController.m */; };
+		8ECF3F1021DFC96500E4DD8B /* ManualCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F0F21DFC96500E4DD8B /* ManualCell.m */; };
+		8ECF3F1321DFD0AA00E4DD8B /* ManualLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F1221DFD0AA00E4DD8B /* ManualLink.m */; };
 		8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */; };
+		8EE36EAE21EBC5F600E39030 /* BlackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE36EAD21EBC5F600E39030 /* BlackView.m */; };
+		8EEB386521E26B8A00568B6F /* Translation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EEB386421E26B8A00568B6F /* Translation.m */; };
 		8EFCC6A71DE5FA5F00D1C58F /* AngleCaliper.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */; };
+		BB677CB2C1D1D00F3CC7C063 /* libPods-EP CalipersTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EA84B7561464AB7408ECA076 /* libPods-EP CalipersTests.a */; };
+		C447064F47438C8FE4FFBCF6 /* libPods-EP Calipers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E780D594419161D7CC562F /* libPods-EP Calipers.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,11 +60,24 @@
 			remoteGlobalIDString = 8E1423571AB5F16A00CC15BC;
 			remoteInfo = "EP Calipers";
 		};
+		8E1F500A21EF9090004527C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8E1423501AB5F16A00CC15BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8E1423571AB5F16A00CC15BC;
+			remoteInfo = "EP Calipers";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		170AF01C02A50FA535F68754 /* Pods-EP CalipersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EP CalipersTests.debug.xcconfig"; path = "Target Support Files/Pods-EP CalipersTests/Pods-EP CalipersTests.debug.xcconfig"; sourceTree = "<group>"; };
+		73EC2DF73B1FA3841D22C775 /* Pods-EP CalipersTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EP CalipersTests.release.xcconfig"; path = "Target Support Files/Pods-EP CalipersTests/Pods-EP CalipersTests.release.xcconfig"; sourceTree = "<group>"; };
 		8E0208A51AC2A8B300FE7EC5 /* Caliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Caliper.h; sourceTree = "<group>"; };
 		8E0208A61AC2A8B300FE7EC5 /* Caliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Caliper.m; sourceTree = "<group>"; };
+		8E0D4AAC21C8BA9D0061158D /* EcgScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EcgScrollView.h; sourceTree = "<group>"; };
+		8E0D4AAD21C8BA9D0061158D /* EcgScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EcgScrollView.m; sourceTree = "<group>"; };
+		8E13AB5E21D13A430020896D /* Version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Version.h; sourceTree = "<group>"; };
+		8E13AB5F21D13A430020896D /* Version.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Version.m; sourceTree = "<group>"; };
 		8E1423581AB5F16A00CC15BC /* EP Calipers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "EP Calipers.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E14235C1AB5F16A00CC15BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E14235D1AB5F16A00CC15BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -61,18 +90,29 @@
 		8E1423711AB5F16A00CC15BC /* EP CalipersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EP CalipersTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E1423761AB5F16A00CC15BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8E1423771AB5F16A00CC15BC /* EP_CalipersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EP_CalipersTests.m; sourceTree = "<group>"; };
+		8E1F500521EF9090004527C9 /* EP CalipersUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "EP CalipersUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E1F500721EF9090004527C9 /* EP_CalipersUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EP_CalipersUITests.m; sourceTree = "<group>"; };
+		8E1F500921EF9090004527C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8E365C1B21C5B7E300CD11B3 /* Alert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Alert.h; sourceTree = "<group>"; };
+		8E365C1C21C5B7E300CD11B3 /* Alert.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
 		8E3BBC531EA0340200ECB992 /* CaliperFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CaliperFactory.h; sourceTree = "<group>"; };
 		8E3BBC541EA0340200ECB992 /* CaliperFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CaliperFactory.m; sourceTree = "<group>"; };
+		8E3F384A21C737AE003A944E /* HamburgerViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HamburgerViewModel.h; sourceTree = "<group>"; };
+		8E3F384B21C737AE003A944E /* HamburgerViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerViewModel.m; sourceTree = "<group>"; };
+		8E3F384D21C73819003A944E /* HamburgerLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HamburgerLayer.h; sourceTree = "<group>"; };
+		8E3F384E21C73819003A944E /* HamburgerLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerLayer.m; sourceTree = "<group>"; };
 		8E559EA81ACD9262004A6F91 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
 		8E5A8F6F1ACC7A54000EEA89 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		8E5A8F701ACC7A54000EEA89 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DismissSegue.h; sourceTree = "<group>"; };
 		8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissSegue.m; sourceTree = "<group>"; };
+		8E600E8E21D3FCF500C97425 /* HelpImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpImageViewController.h; sourceTree = "<group>"; };
+		8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpImageViewController.m; sourceTree = "<group>"; };
 		8E7340F61FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/FCColorPickerViewController.strings; sourceTree = "<group>"; };
 		8E7340F71FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
-		8E7340F81FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ru; path = "ru.lproj/EPCalipers-help"; sourceTree = "<group>"; };
 		8E7340F91FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E7340FA1FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8E7E432521CD85CF00A0C828 /* CMPopTipView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CMPopTipView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E8DDE371FF96D13007247DA /* MiniQTcResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MiniQTcResult.h; sourceTree = "<group>"; };
 		8E8DDE381FF96D13007247DA /* MiniQTcResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MiniQTcResult.m; sourceTree = "<group>"; };
 		8E9A33381AC09DE90037E694 /* CalipersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalipersView.h; sourceTree = "<group>"; };
@@ -80,10 +120,12 @@
 		8E9BA12A1EF47CD700FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
 		8E9BA1311EF47D1E00FC8DD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		8E9BA1321EF47D2100FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		8E9BA1341EF6BED700FC8DD2 /* fr */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fr; path = "fr.lproj/EPCalipers-help"; sourceTree = "<group>"; };
-		8E9BA1351EF6BED700FC8DD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = folder; name = en; path = "en.lproj/EPCalipers-help"; sourceTree = "<group>"; };
 		8E9F71EE1F19CA1A00029BED /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E9F71F21F19CAF100029BED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8EA170CF21C6CDEF0082783D /* HamburgerTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HamburgerTableViewController.h; sourceTree = "<group>"; };
+		8EA170D021C6CDEF0082783D /* HamburgerTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerTableViewController.m; sourceTree = "<group>"; };
+		8EA170D221C6D0690082783D /* HamburgerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HamburgerCell.h; sourceTree = "<group>"; };
+		8EA170D321C6D0690082783D /* HamburgerCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerCell.m; sourceTree = "<group>"; };
 		8EB2F65D1EF6EF09003B82A6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FCColorPickerViewController.xib; sourceTree = "<group>"; };
 		8EB2F65E1EF6EF7C003B82A6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/FCColorPickerViewController.strings; sourceTree = "<group>"; };
 		8EB3DE351AC344CC009376AD /* EPSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EPSLogging.h; sourceTree = "<group>"; };
@@ -93,6 +135,9 @@
 		8EB3DE3C1AC616C0009376AD /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		8EB3DE3D1AC616C0009376AD /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 		8EB3DE401AC9A488009376AD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		8EBD6D3021DAAFD200FF7748 /* HelpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
+		8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
+		8EBD6D3321DAF75E00FF7748 /* HelpProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpProtocol.h; sourceTree = "<group>"; };
 		8ECEDF571E89F54600288EDE /* FCColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCColorPickerViewController.h; sourceTree = "<group>"; };
 		8ECEDF581E89F54600288EDE /* FCColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCColorPickerViewController.m; sourceTree = "<group>"; };
 		8ECEDF5C1E89F62000288EDE /* colormap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colormap.png; sourceTree = "<group>"; };
@@ -102,9 +147,23 @@
 		8ECEDF631E89F83700288EDE /* FCColorSwatchView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCColorSwatchView.m; sourceTree = "<group>"; };
 		8ECEDF661E8A1A1A00288EDE /* About.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = About.h; sourceTree = "<group>"; };
 		8ECEDF671E8A1A1A00288EDE /* About.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = About.m; sourceTree = "<group>"; };
+		8ECF3F0B21DFC93A00E4DD8B /* ManualTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManualTableViewController.h; sourceTree = "<group>"; };
+		8ECF3F0C21DFC93A00E4DD8B /* ManualTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManualTableViewController.m; sourceTree = "<group>"; };
+		8ECF3F0E21DFC96500E4DD8B /* ManualCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManualCell.h; sourceTree = "<group>"; };
+		8ECF3F0F21DFC96500E4DD8B /* ManualCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManualCell.m; sourceTree = "<group>"; };
+		8ECF3F1121DFD0AA00E4DD8B /* ManualLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManualLink.h; sourceTree = "<group>"; };
+		8ECF3F1221DFD0AA00E4DD8B /* ManualLink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManualLink.m; sourceTree = "<group>"; };
 		8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sampleECG.jpg; sourceTree = "<group>"; };
+		8EE36EAC21EBC5F600E39030 /* BlackView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlackView.h; sourceTree = "<group>"; };
+		8EE36EAD21EBC5F600E39030 /* BlackView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlackView.m; sourceTree = "<group>"; };
+		8EEB386321E26B8A00568B6F /* Translation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Translation.h; sourceTree = "<group>"; };
+		8EEB386421E26B8A00568B6F /* Translation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Translation.m; sourceTree = "<group>"; };
 		8EFCC6A51DE5FA5F00D1C58F /* AngleCaliper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AngleCaliper.h; sourceTree = "<group>"; };
 		8EFCC6A61DE5FA5F00D1C58F /* AngleCaliper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AngleCaliper.m; sourceTree = "<group>"; };
+		B483D0269B9745F9D159766F /* Pods-EP Calipers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EP Calipers.release.xcconfig"; path = "Target Support Files/Pods-EP Calipers/Pods-EP Calipers.release.xcconfig"; sourceTree = "<group>"; };
+		B7E780D594419161D7CC562F /* libPods-EP Calipers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EP Calipers.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D16E9BDFAC77A2377883E14A /* Pods-EP Calipers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EP Calipers.debug.xcconfig"; path = "Target Support Files/Pods-EP Calipers/Pods-EP Calipers.debug.xcconfig"; sourceTree = "<group>"; };
+		EA84B7561464AB7408ECA076 /* libPods-EP CalipersTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EP CalipersTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,10 +171,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C447064F47438C8FE4FFBCF6 /* libPods-EP Calipers.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		8E14236E1AB5F16A00CC15BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB677CB2C1D1D00F3CC7C063 /* libPods-EP CalipersTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8E1F500221EF9090004527C9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -125,6 +193,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		341383020FBFA8D513A1DB0E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D16E9BDFAC77A2377883E14A /* Pods-EP Calipers.debug.xcconfig */,
+				B483D0269B9745F9D159766F /* Pods-EP Calipers.release.xcconfig */,
+				170AF01C02A50FA535F68754 /* Pods-EP CalipersTests.debug.xcconfig */,
+				73EC2DF73B1FA3841D22C775 /* Pods-EP CalipersTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		8E14234F1AB5F16A00CC15BC = {
 			isa = PBXGroup;
 			children = (
@@ -132,8 +211,10 @@
 				8ECEDF561E89F4F800288EDE /* ColorPicker */,
 				8E14235A1AB5F16A00CC15BC /* EP Calipers */,
 				8E1423741AB5F16A00CC15BC /* EP CalipersTests */,
+				8E1F500621EF9090004527C9 /* EP CalipersUITests */,
 				8E1423591AB5F16A00CC15BC /* Products */,
 				8E172D7E1F9C04F200CD50D6 /* Frameworks */,
+				341383020FBFA8D513A1DB0E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,6 +223,7 @@
 			children = (
 				8E1423581AB5F16A00CC15BC /* EP Calipers.app */,
 				8E1423711AB5F16A00CC15BC /* EP CalipersTests.xctest */,
+				8E1F500521EF9090004527C9 /* EP CalipersUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -149,12 +231,13 @@
 		8E14235A1AB5F16A00CC15BC /* EP Calipers */ = {
 			isa = PBXGroup;
 			children = (
+				8E600E9A21D43CD800C97425 /* Models */,
+				8E3F384921C736BC003A944E /* ViewModels */,
 				8E16B57220016B6A004202D1 /* Other */,
 				8E16B57020016A98004202D1 /* Calipers */,
 				8E16B56F200169DD004202D1 /* ViewControllers */,
 				8E16B57120016AB5004202D1 /* Views */,
 				8EF520FD1FF99BFC000B2C74 /* Storyboards */,
-				8E9BA1331EF6BED700FC8DD2 /* EPCalipers-help */,
 				8E1423681AB5F16A00CC15BC /* Images.xcassets */,
 				8E14235B1AB5F16A00CC15BC /* Supporting Files */,
 				8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */,
@@ -196,6 +279,15 @@
 				8E1423631AB5F16A00CC15BC /* EPSMainViewController.m */,
 				8E5A8F6F1ACC7A54000EEA89 /* WebViewController.h */,
 				8E5A8F701ACC7A54000EEA89 /* WebViewController.m */,
+				8EA170CF21C6CDEF0082783D /* HamburgerTableViewController.h */,
+				8EA170D021C6CDEF0082783D /* HamburgerTableViewController.m */,
+				8E600E8E21D3FCF500C97425 /* HelpImageViewController.h */,
+				8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */,
+				8EBD6D3021DAAFD200FF7748 /* HelpViewController.h */,
+				8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */,
+				8EBD6D3321DAF75E00FF7748 /* HelpProtocol.h */,
+				8ECF3F0B21DFC93A00E4DD8B /* ManualTableViewController.h */,
+				8ECF3F0C21DFC93A00E4DD8B /* ManualTableViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -222,6 +314,14 @@
 			children = (
 				8E9A33381AC09DE90037E694 /* CalipersView.h */,
 				8E9A33391AC09DE90037E694 /* CalipersView.m */,
+				8EA170D221C6D0690082783D /* HamburgerCell.h */,
+				8EA170D321C6D0690082783D /* HamburgerCell.m */,
+				8E0D4AAC21C8BA9D0061158D /* EcgScrollView.h */,
+				8E0D4AAD21C8BA9D0061158D /* EcgScrollView.m */,
+				8ECF3F0E21DFC96500E4DD8B /* ManualCell.h */,
+				8ECF3F0F21DFC96500E4DD8B /* ManualCell.m */,
+				8EE36EAC21EBC5F600E39030 /* BlackView.h */,
+				8EE36EAD21EBC5F600E39030 /* BlackView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -240,6 +340,12 @@
 				8EB3DE3D1AC616C0009376AD /* Settings.m */,
 				8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */,
 				8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */,
+				8E365C1B21C5B7E300CD11B3 /* Alert.h */,
+				8E365C1C21C5B7E300CD11B3 /* Alert.m */,
+				8E13AB5E21D13A430020896D /* Version.h */,
+				8E13AB5F21D13A430020896D /* Version.m */,
+				8EEB386321E26B8A00568B6F /* Translation.h */,
+				8EEB386421E26B8A00568B6F /* Translation.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -247,8 +353,40 @@
 		8E172D7E1F9C04F200CD50D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E7E432521CD85CF00A0C828 /* CMPopTipView.framework */,
+				B7E780D594419161D7CC562F /* libPods-EP Calipers.a */,
+				EA84B7561464AB7408ECA076 /* libPods-EP CalipersTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8E1F500621EF9090004527C9 /* EP CalipersUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8E1F500721EF9090004527C9 /* EP_CalipersUITests.m */,
+				8E1F500921EF9090004527C9 /* Info.plist */,
+			);
+			path = "EP CalipersUITests";
+			sourceTree = "<group>";
+		};
+		8E3F384921C736BC003A944E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				8E3F384A21C737AE003A944E /* HamburgerViewModel.h */,
+				8E3F384B21C737AE003A944E /* HamburgerViewModel.m */,
+				8E3F384D21C73819003A944E /* HamburgerLayer.h */,
+				8E3F384E21C73819003A944E /* HamburgerLayer.m */,
+			);
+			name = ViewModels;
+			sourceTree = "<group>";
+		};
+		8E600E9A21D43CD800C97425 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8ECF3F1121DFD0AA00E4DD8B /* ManualLink.h */,
+				8ECF3F1221DFD0AA00E4DD8B /* ManualLink.m */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		8ECEDF561E89F4F800288EDE /* ColorPicker */ = {
@@ -282,6 +420,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E14237B1AB5F16A00CC15BC /* Build configuration list for PBXNativeTarget "EP Calipers" */;
 			buildPhases = (
+				31E0ADCA713C08AF3C9E5807 /* [CP] Check Pods Manifest.lock */,
 				8E1423541AB5F16A00CC15BC /* Sources */,
 				8E1423551AB5F16A00CC15BC /* Frameworks */,
 				8E1423561AB5F16A00CC15BC /* Resources */,
@@ -299,6 +438,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8E14237E1AB5F16A00CC15BC /* Build configuration list for PBXNativeTarget "EP CalipersTests" */;
 			buildPhases = (
+				9D952F799E3013DD58CE4048 /* [CP] Check Pods Manifest.lock */,
 				8E14236D1AB5F16A00CC15BC /* Sources */,
 				8E14236E1AB5F16A00CC15BC /* Frameworks */,
 				8E14236F1AB5F16A00CC15BC /* Resources */,
@@ -312,6 +452,24 @@
 			productName = "EP CalipersTests";
 			productReference = 8E1423711AB5F16A00CC15BC /* EP CalipersTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8E1F500421EF9090004527C9 /* EP CalipersUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8E1F500E21EF9090004527C9 /* Build configuration list for PBXNativeTarget "EP CalipersUITests" */;
+			buildPhases = (
+				8E1F500121EF9090004527C9 /* Sources */,
+				8E1F500221EF9090004527C9 /* Frameworks */,
+				8E1F500321EF9090004527C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8E1F500B21EF9090004527C9 /* PBXTargetDependency */,
+			);
+			name = "EP CalipersUITests";
+			productName = "EP CalipersUITests";
+			productReference = 8E1F500521EF9090004527C9 /* EP CalipersUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -333,6 +491,12 @@
 						LastSwiftMigration = 0900;
 						TestTargetID = 8E1423571AB5F16A00CC15BC;
 					};
+					8E1F500421EF9090004527C9 = {
+						CreatedOnToolsVersion = 10.1;
+						DevelopmentTeam = W74NPJXYEG;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 8E1423571AB5F16A00CC15BC;
+					};
 				};
 			};
 			buildConfigurationList = 8E1423531AB5F16A00CC15BC /* Build configuration list for PBXProject "EP Calipers" */;
@@ -352,6 +516,7 @@
 			targets = (
 				8E1423571AB5F16A00CC15BC /* EP Calipers */,
 				8E1423701AB5F16A00CC15BC /* EP CalipersTests */,
+				8E1F500421EF9090004527C9 /* EP CalipersUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -369,7 +534,6 @@
 				8E9BA1371EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib in Resources */,
 				8ECEDF5D1E89F62000288EDE /* colormap.png in Resources */,
 				8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */,
-				8E9BA1361EF6BED700FC8DD2 /* EPCalipers-help in Resources */,
 				8E9F71ED1F19CA1A00029BED /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -381,7 +545,61 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8E1F500321EF9090004527C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		31E0ADCA713C08AF3C9E5807 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EP Calipers-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9D952F799E3013DD58CE4048 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-EP CalipersTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8E1423541AB5F16A00CC15BC /* Sources */ = {
@@ -390,18 +608,32 @@
 			files = (
 				8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */,
 				8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */,
+				8E13AB6021D13A430020896D /* Version.m in Sources */,
 				8E1423641AB5F16A00CC15BC /* EPSMainViewController.m in Sources */,
 				8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */,
+				8E0D4AAE21C8BA9D0061158D /* EcgScrollView.m in Sources */,
 				8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */,
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
+				8E365C1D21C5B7E300CD11B3 /* Alert.m in Sources */,
 				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
+				8EEB386521E26B8A00568B6F /* Translation.m in Sources */,
 				8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */,
+				8EA170D121C6CDEF0082783D /* HamburgerTableViewController.m in Sources */,
+				8E3F384C21C737AE003A944E /* HamburgerViewModel.m in Sources */,
+				8ECF3F0D21DFC93A00E4DD8B /* ManualTableViewController.m in Sources */,
+				8E3F384F21C73819003A944E /* HamburgerLayer.m in Sources */,
+				8EE36EAE21EBC5F600E39030 /* BlackView.m in Sources */,
+				8E600E9021D3FCF500C97425 /* HelpImageViewController.m in Sources */,
 				8ECEDF681E8A1A1A00288EDE /* About.m in Sources */,
+				8ECF3F1321DFD0AA00E4DD8B /* ManualLink.m in Sources */,
+				8EA170D421C6D0690082783D /* HamburgerCell.m in Sources */,
 				8ECEDF651E89F83700288EDE /* FCColorSwatchView.m in Sources */,
 				8E14235E1AB5F16A00CC15BC /* main.m in Sources */,
+				8ECF3F1021DFC96500E4DD8B /* ManualCell.m in Sources */,
 				8EB3DE391AC603A3009376AD /* Calibration.m in Sources */,
 				8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */,
 				8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */,
+				8EBD6D3221DAAFD200FF7748 /* HelpViewController.m in Sources */,
 				8EFCC6A71DE5FA5F00D1C58F /* AngleCaliper.m in Sources */,
 				8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */,
 			);
@@ -415,6 +647,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8E1F500121EF9090004527C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E1F500821EF9090004527C9 /* EP_CalipersUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -422,6 +662,11 @@
 			isa = PBXTargetDependency;
 			target = 8E1423571AB5F16A00CC15BC /* EP Calipers */;
 			targetProxy = 8E1423721AB5F16A00CC15BC /* PBXContainerItemProxy */;
+		};
+		8E1F500B21EF9090004527C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8E1423571AB5F16A00CC15BC /* EP Calipers */;
+			targetProxy = 8E1F500A21EF9090004527C9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -444,16 +689,6 @@
 				8E7340FA1FFA9E020066A28C /* ru */,
 			);
 			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-		8E9BA1331EF6BED700FC8DD2 /* EPCalipers-help */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8E9BA1341EF6BED700FC8DD2 /* fr */,
-				8E9BA1351EF6BED700FC8DD2 /* en */,
-				8E7340F81FFA9E020066A28C /* ru */,
-			);
-			name = "EPCalipers-help";
 			sourceTree = "<group>";
 		};
 		8E9BA1391EF6E7BF00FC8DD2 /* FCColorPickerViewController.xib */ = {
@@ -526,7 +761,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -574,7 +809,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -585,12 +820,13 @@
 		};
 		8E14237C1AB5F16A00CC15BC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D16E9BDFAC77A2377883E14A /* Pods-EP Calipers.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "EP Calipers/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -602,12 +838,13 @@
 		};
 		8E14237D1AB5F16A00CC15BC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B483D0269B9745F9D159766F /* Pods-EP Calipers.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "EP Calipers/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -618,6 +855,7 @@
 		};
 		8E14237F1AB5F16A00CC15BC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 170AF01C02A50FA535F68754 /* Pods-EP CalipersTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
@@ -641,6 +879,7 @@
 		};
 		8E1423801AB5F16A00CC15BC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73EC2DF73B1FA3841D22C775 /* Pods-EP CalipersTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
@@ -654,6 +893,57 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "EP CalipersTests/EP CalipersTests-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EP Calipers.app/EP Calipers";
+			};
+			name = Release;
+		};
+		8E1F500C21EF9090004527C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = W74NPJXYEG;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "EP CalipersUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.EP-CalipersUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "EP Calipers";
+			};
+			name = Debug;
+		};
+		8E1F500D21EF9090004527C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = W74NPJXYEG;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "EP CalipersUITests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.EP-CalipersUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "EP Calipers";
 			};
 			name = Release;
 		};
@@ -683,6 +973,15 @@
 			buildConfigurations = (
 				8E14237F1AB5F16A00CC15BC /* Debug */,
 				8E1423801AB5F16A00CC15BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8E1F500E21EF9090004527C9 /* Build configuration list for PBXNativeTarget "EP CalipersUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8E1F500C21EF9090004527C9 /* Debug */,
+				8E1F500D21EF9090004527C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

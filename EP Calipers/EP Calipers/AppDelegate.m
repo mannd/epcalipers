@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 #import "EPSMainViewController.h"
+#import "Version.h"
 #import "EPSLogging.h"
+#import "Translation.h"
 #import "Defs.h"
 
 @interface AppDelegate ()
@@ -20,8 +22,47 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    UINavigationController *navigationController = (UINavigationController *)  self.window.rootViewController;
+    EPSMainViewController *mainViewController = (EPSMainViewController *) [navigationController.viewControllers objectAtIndex:0];
+
+    Version *version = [[Version alloc] init];
+    mainViewController.isUpgrade = [version isUpgrade];
+    mainViewController.isNewInstallation = [version isNewInstallation];
     return YES;
 }
+
+// TODO: use this strategy to determine first use vs upgrade.
+//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+//{
+//    // ...
+//
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//
+//    NSString *currentAppVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+//    NSString *previousVersion = [defaults objectForKey:@"appVersion"];
+//    if (!previousVersion) {
+//        // first launch
+//
+//        // ...
+//
+//        [defaults setObject:currentAppVersion forKey:@"appVersion"];
+//        [defaults synchronize];
+//    } else if ([previousVersion isEqualToString:currentAppVersion]) {
+//        // same version
+//    } else {
+//        // other version
+//
+//        // ...
+//
+//        [defaults setObject:currentAppVersion forKey:@"appVersion"];
+//        [defaults synchronize];
+//    }
+//
+//
+//
+//    return YES;
+//}
+
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -29,11 +70,12 @@
                                         [NSNumber numberWithInt:2], @"lineWidthPreference",
                                         L(@"1000 msec"), @"calibrationPreference",
                                         L(@"10 mm"), @"verticalCalibrationPreference",
-                                        L(@"Blue"), @"caliperColorPreference",
-                                        L(@"Red"), @"highlightColorPreference",
+                                        @"Blue", @"caliperColorPreference",
+                                        @"Red", @"highlightColorPreference",
                                         [NSNumber numberWithBool:YES], @"autopositionPreference",
                                         @"0", @"timeTextPositionPreference",
                                         @"3", @"amplitudeTextPositionPreference",
+                                        [NSNumber numberWithBool:YES], @"darkThemePreference",
                                         nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
     
@@ -63,7 +105,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)app openURL:(nonnull NSURL *)url options:(nonnull NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     EPSLog(@"application:openURL:sourceApplication:annotation");
     
     UINavigationController *navigationController = (UINavigationController *)  self.window.rootViewController;

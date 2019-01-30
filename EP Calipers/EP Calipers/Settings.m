@@ -7,6 +7,7 @@
 //
 
 #import "Settings.h"
+#import "Translation.h"
 #import "EPSLogging.h"
 #import "Defs.h"
 
@@ -22,11 +23,11 @@
         self.defaultCalibration = L(@"1000 msec");
         self.defaultVerticalCalibration = L(@"10 mm");
         self.roundMsecRate = YES;
-        self.allowTweakDuringQtc = NO;
         self.qtcFormula = Bazett;
         self.autoPositionText = YES;
         self.timeTextPosition = CenterAbove;
         self.amplitudeTextPosition = RightAbove;
+        self.darkTheme = YES;
     }
     return self;
 }
@@ -55,10 +56,7 @@
     NSString *highlightColorName = [defaults objectForKey:@"highlightColorPreference"];
     self.caliperColor = [colorMap valueForKey:colorName];
     self.highlightColor = [colorMap valueForKey:highlightColorName];
-
     self.roundMsecRate = [defaults boolForKey:@"roundMsecRatePreference"];
-    self.allowTweakDuringQtc = [defaults boolForKey:@"allowTweakDuringQtc"];
-    
     NSString *qtcFormulaName = [defaults objectForKey:@"qtcFormulaPreference"];
     self.qtcFormula = (QTcFormulaPreference)[[qtcFormulaMap valueForKey:qtcFormulaName] integerValue];
     self.autoPositionText = [defaults boolForKey:@"autopositionPreference"];
@@ -67,6 +65,7 @@
     self.timeTextPosition = [timeTextPositionValue integerValue];
     NSString *amplitudeTextPositionValue = [defaults objectForKey:@"amplitudeTextPositionPreference"];
     self.amplitudeTextPosition = [amplitudeTextPositionValue integerValue];
+    self.darkTheme = [defaults boolForKey:@"darkThemePreference"];
 }
 
 @end

@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface WebViewController : UIViewController
+@interface WebViewController : UIViewController <UIWebViewDelegate>
 @property (strong, nonatomic) IBOutlet UIWebView *webView;
-
+@property (nullable, strong, nonatomic) NSString *anchor;
+@property (nullable, strong, nonatomic) NSString *fullLink;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "Calibration.h"
 #import "EPSLogging.h"
+#import "Translation.h"
 #import "Defs.h"
 
 @implementation Calibration

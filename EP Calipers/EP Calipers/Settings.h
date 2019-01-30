@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#include "Defs.h"
+#import "Defs.h"
 
 typedef NS_ENUM(NSUInteger, QTcFormulaPreference) {
     Bazett = 0,
@@ -25,11 +25,11 @@ typedef NS_ENUM(NSUInteger, QTcFormulaPreference) {
 @property (strong, nonatomic) NSString *defaultCalibration;
 @property (strong, nonatomic) NSString *defaultVerticalCalibration;
 @property (nonatomic) BOOL roundMsecRate;
-@property (nonatomic) BOOL allowTweakDuringQtc;
 @property (nonatomic) QTcFormulaPreference qtcFormula;
 @property (nonatomic) BOOL autoPositionText;
 @property (nonatomic) TextPosition timeTextPosition;
 @property (nonatomic) TextPosition amplitudeTextPosition;
+@property (nonatomic) BOOL darkTheme;
 
 - (instancetype)init;
 - (void)loadPreferences;

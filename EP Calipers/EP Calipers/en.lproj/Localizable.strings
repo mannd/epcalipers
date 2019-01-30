@@ -6,10 +6,193 @@
   Copyright © 2017 EP Studios. All rights reserved.
 */
 
-"lang" = "en";
-"Tweak-iPhone" = "Tweak";
-"Tweak-iPad" = "Tweak";
-"Lock-iPhone" = "Lock";
+"Copyright_message" = "Copyright © 2015-2019 EP Studios, Inc.\nAll rights reserved.\nVersion %@";
+"EP Calipers" = "EP Calipers";
+
+/* Sorted dialog titles, messages, button labels */
+"10 mm" = "10 mm";
+"1000 msec" = "1000 msec";
+"500 msec" = "500 msec";
+"Add_caliper" = "Add Caliper";
+"Add_some_calipers" = "Add one or more calipers first before proceeding.";
+"Adjust" = "Adjust";
+"Amplitude" = "Amplitude";
+"Amplitude_caliper" = "Amplitude Caliper";
+"Angle" = "Angle";
+"Angle_caliper" = "Angle Caliper";
+"Bad_input" = "Bad Input";
+"Bazett" = "Bazett";
+"bpm" = "bpm";
+"Calculate" = "Calculate";
+"Calculated_qtc" = "Calculated QTc";
+"Calibrate" = "Calibrate";
+"Calibration_instructions" = "Select a caliper by single-tapping it.  Move the caliper to a known interval.  Touch Set to enter the calibration measurement.";
+"Camera_not_available_message" = "Camera is not available on this device.";
+"Camera_not_available_title" = "Camera not available";
+"Cancel" = "Cancel";
+"Clear" = "Clear";
+"Color" = "Color";
+"Continue" = "Continue";
+"Do_not_calibrate_angle_calipers" = "Angle calipers don't require calibration.  Only time or amplitude calipers need to be calibrated.\n\nIf you want to use an angle caliper as a Brugadometer, you must first calibrate time and amplitude calipers.";
+"Done" = "Done";
+"Empty_bad_input" = "Empty input, negative number input, or other bad input.";
+"Enter_measurement" = "Enter measurement (e.g. %@)";
+"Error" = "Error";
+"Five_hundred_msec" = "500 msec";
+"Flip" = "Flip";
+"Framingham" = "Framingham";
+"Fridericia" = "Fridericia";
+"Go_to" = "Go to";
+"Go_to_page" = "Go to Page...";
+"Help" = "Help";
+"Hodges" = "Hodges";
+"How_many_intervals" = "How many intervals is this caliper measuring?";
+"Image_lock" = "IMAGE LOCK";
+"Internet_connection_failed" = "Internet connection failed.";
+"Interval_rate_ipad" = "Interval/Rate";
+"Interval_rate_iphone" = "Int/Rate";
+"Invalid_result" = "Invalid Result";
+"Lock" = "Lock";
 "Lock-iPad" = "Lock";
-"Unlock-iPhone" = "Unlock";
+"Lock-iPhone" = "Lock";
+"March" = "March";
+"Mean_interval_rate_label" = "Mean Interval and Rate";
+"Mean_interval_rate_result" = "Mean interval = %.4g %@\nMean rate = %.4g bpm";
+"Mean_rate_ipad" = "Mean Rate";
+"Mean_rate_iphone" = "MeanRate";
+"Mean_rate_iphone_shortest" = "MRate";
+"Mean_rate_tooltip" = "Measure 2 or more intervals and calculate mean rate and interval";
+"Mean_rr_result_for_qtc" = "Mean RR = %.4g %@\nQT = %.4g %@";
+"Measure" = "Measure";
+"msec" = "msec";
+"Multipage_pdf" = "Multipage PDF";
+"Multipage_pdf_warning" = "App has been restored from background, so multipage PDF will only show current page.  You will need to reopen PDF with the app to view all pages.";
+"Negative_caliper" = "Negatively Valued Caliper";
+"Negative_caliper_message" = "Select a caliper with a positive value, or change this caliper to a positive value, and then repeat calibration.";
+"Next" = "Next";
+"No_angle_caliper_selected" = "No Angle Caliper Selected";
+"No_caliper_selected_message" = "No Caliper Selected";
+"No_calipers_to_use" = "No Calipers To Use";
+"No_time_caliper_selected_message" = "No Time Caliper Selected";
+"Num_RRs" = "RR interval(s)?";
+"Number_of_intervals" = "Enter Number of Intervals";
+"OK" = "OK";
+"One" = "1";
+"One_mv" = "1 mV";
+"PDF" = "PDF";
+"points" = "points";
+"QT" = "QT interval?";
+"QTc" = "QTc";
+"QTc_result" = "\nQTc = %.4g %@ (%@ formula)";
+"Repeat_qt" = "Repeat QT";
+"Reset" = "Reset";
+"Rotate" = "Rotate";
+"Rotate_01_L" = "0.1°L";
+"Rotate_01_R" = "0.1°R";
+"Rotate_1_L" = "1°L";
+"Rotate_1_R" = "1°R";
+"Rotate_90_L" = "90°L";
+"Rotate_90_R" = "90°R";
+"Sample" = "Sample";
+"Select" = "Select";
+"Select_angle_caliper" = "Select an angle caliper.";
+"Select_time_caliper_message" = "Select a time caliper to measure one or more RR intervals.";
+"Set" = "Set";
+"Skip" = "Skip";
+"Three" = "3";
+"Time" = "Time";
+"Time_caliper" = "Time Caliper";
+"Topics" = "Topics";
+"Tweak" = "Tweak";
+"Tweak-iPad" = "Tweak";
+"Tweak-iPhone" = "Tweak";
+"Unlock" = "Unlock";
 "Unlock-iPad" = "Unlock";
+"Unlock-iPhone" = "Unlock";
+
+/* Side menu */
+"About_ep_calipers" = "About EP Calipers";
+"Hide_tooltips" = "Hide tooltips";
+"Lock_image" = "Lock image";
+"Manual" = "Manual";
+"Preferences" = "Preferences";
+"Quick_help" = "Quick help";
+"Sample_ecg" = "Sample ECG";
+"Select_image" = "Select image";
+"Show_tooltips" = "Show tooltips";
+"Take_photo" = "Take photo";
+"Topics" = "Topics";
+"Unlock_image" = "Unlock image";
+
+/* Help Topics */
+"Quick_start_ht" = "Quick start";
+"Loading_image_ht" = "Loading an image";
+"Adjusting_image_ht" = "Adjusting the image";
+"Lock_image_ht" = "Lock the image in place";
+"Moving_calipers_ht" = "Moving calipers";
+"Adding_deleting_calipers_ht" = "Adding and deleting calipers";
+"Selecting_caliper_ht" = "Selecting a caliper";
+"More_caliper_options_ht" = "More caliper options";
+"Calibration_ht" = "Calibration";
+"Changing_calibration_ht" = "Changing calibration";
+"Making_measurements_ht" = "Making measurements";
+"Interval_rate_ht" = "Interval/Rate";
+"Mean_rate_ht" = "Mean rate and interval calculation";
+"QTc_ht" = "QTc calculation";
+"Brugadometer_ht" = "Brugadometer";
+"Preferences_ht" = "Preferences";
+"Acknowledgments_ht" = "Acknowledgments";
+
+/* Tooltips */
+"Add_tooltip" = "Add calipers";
+"Clear_calibration_tooltip" = "Clear all calibration";
+"Int_rate_tooltip" = "Toggle between interval and heart rate";
+"Longpress_tooltip" = "Long press on image or caliper to show additional options";
+"Mean_rate_tooltip" = "Measure 2 or more intervals and calculate mean rate and interval";
+"Measurement_tooltip" ="Use measurement toolbar to calibrate calipers, then make measurements";
+"Move_caliper_tooltip" = "Move caliper by dragging crossbar.  Expand and contract it by dragging sidebars.  Tap to select it for measurements.  Double-tap to delete it.";
+"Move_image_tooltip" = "Pinch to zoom and drag to reposition image"; 
+"QTc_step_1_tooltip" = "Measure 1 or more RR intervals";
+"QTc_step_2_tooltip" = "Measure the QT interval";
+"QTc_tooltip" = "Calculate the QTc";
+"Set_calibration_tooltip" = "Measure a known interval with selected caliper.";
+"Setup_calibration_tooltip" = "Select a caliper by tapping it. Use it to measure a known interval (e.g. 1000 msec).";
+"Side_menu_tooltip" = "Load a new image, change preferences, get help";
+
+/* Onboard labels */
+"Move_caliper_label" = "Drag crossbar, drag sidebars";
+"Single_tap_caliper_label" = "Tap to select";
+"Double_tap_caliper_label" = "Double-tap to delete";
+"Zoom_ecg_label" = "Pinch to zoom, drag to move image";
+"Longpress_label" = "Long press caliper or image for more options";
+
+/* Brugada (defined but unused in active code.  No harm if not translated) */
+"Brugada_ipad" = "Brugada";
+"Brugada_iphone" = "BrS";
+"Low_brugada_risk" = "Low risk of Brugada syndrome";
+"Brugada_base_measurement" = "\n\nBase of triangle 5 mm from apex = %.1f msec.";
+"Brugada_risk_statement" = "V1 risk is %f.  V2 risk is %f.";
+"Brugada_calibration_statement" = "\n\nFurther risk calculations can be made if you calibrate time calipers in milliseconds (msec) and amplitude calipers in millimeters (mm).";
+"Brugada_beta_angle" = "Beta angle = %.1f°%@%@";
+"Brugada_results_title" = "Brugada Syndrome Results"; 		   
+"Brugada_increased_risk" = "Increased risk of Brugada syndrome";
+
+/* To be provided by developer */
+"lang" = "en";
+"Help_image_1" = "epcalipershelp-1-en";
+"Help_image_2" = "epcalipershelp-2-en";
+"Help_image_3" = "epcalipershelp-3-en";
+
+/* Unused at present (incomplete list here, see FR or RU Localizable.strings for full list */
+//"Add calipers" = "Add calipers";
+//"Calibrate_short_alt_ru" = "Cal";
+//"Long_press_caliper_component_alt_ru" = "Long press caliper component";
+//"Mean_rate_iphone_alt_ru" = "MeanRate";
+//"1 mV" = "1 mV";
+//"10 mm" = "10 mm";
+//"bpm_alt_ru" = "bpm";
+//"Calibrate_short" = "Cal";
+//"Long_press_caliper" = "Long press caliper";
+//"Long_press_component" = "Long press caliper component";
+//"1000 ms" = "1000 ms";
+//"interval_rate_iphone_shortest" = "I/R";
