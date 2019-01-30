@@ -24,7 +24,8 @@
 #ifdef DEBUG
 // Set to yes to always show startup screen, for testing
 #define TEST_QUICK_START YES
-// Set to YES to skip introductory tooltips, for testing
+// Set to YES to skip introductory tooltips, for testing.
+// Note though that as of now these tooltips are NOT used.
 #define SKIP_INTRO_TOOLTIPS YES
 // Set to YES to show PDF menu regardless of their being a PDF
 #define SHOW_PDF_MENU NO
@@ -264,7 +265,7 @@
     //self.imageView.delegate = self;
     self.blackView.delegate = self;
     [self.imageView setContentMode:UIViewContentModeCenter];
-    
+
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = 1.0;
     self.scrollView.maximumZoomScale = MAX_ZOOM;
@@ -419,7 +420,12 @@
             self.numberOfPages = 0;
             self.wasLaunchedFromUrl = NO;
         }
-        
+
+        // Recenter image after app restored.
+        CGFloat newContentOffsetX = (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2;
+        CGFloat newContentOffsetY = (self.scrollView.contentSize.height - self.scrollView.frame.size.height) / 2;
+        self.scrollView.contentOffset = CGPointMake(newContentOffsetX, newContentOffsetY);
+
         self.firstRun = NO;
         self.firstStart = NO;
 
@@ -2143,6 +2149,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)decodeRestorableStateWithCoder:(NSCoder *)coder
 {
     EPSLog(@"decodeRestorableStateWithCoder");
+    //self.firstRun = NO;
     self.launchURL = [coder decodeObjectForKey:@"LaunchURL"];
     self.numberOfPages = (int)[coder decodeIntegerForKey:@"NumberOfPages"];
     if (self.launchURL != nil && self.numberOfPages > 0) {
