@@ -28,7 +28,7 @@
 "Calculated_qtc" = "Рассчитать QTс";
 "Calibrate" = "Калибровка";
 "Calibration_instructions" = "Выберите калипер одним косанием. Переместите калипер к известному интервалу. Нажмите «Настройки», чтобы ввести калибровочное измерение.";
-"Camera_not_available_message" = "Камера на доступна на этом устройстве";
+"Camera_not_available_message" = "Камера не доступна на вашем устройстве";
 "Camera_not_available_title" = "Камера не доступна";
 "Cancel" = "Отмена";
 "Clear" = "Очистить";
@@ -109,8 +109,8 @@
 "Unlock-iPhone" = "Закре";
 
 /* Side menu */
-"About_ep_calipers" = "О приложении EP Calipers";
-"Hide_tooltips" = "Скрыть подсказки ";
+"About_ep_calipers" = "О приложении";
+"Hide_tooltips" = "Скрыть подсказки";
 "Lock_image" = "Закрепить изображение";
 "Manual" = "Вручную";
 "Preferences" = "Настройки";
@@ -160,8 +160,8 @@
 "Move_caliper_label" = "Переместите планку, Переместите боковую панель";
 "Single_tap_caliper_label" = "Нажмите чтобы выбрать";
 "Double_tap_caliper_label" = "Двойное нажатие чтобы удалить";
-"Zoom_ecg_label" = "Раздвиньте для увеличения, Удерживайте для перемещения";
-"Longpress_label" = "Долгое нажатие вызовет меню";
+"Zoom_ecg_label" = "Раздвигайте для увеличения, Удерживайте для перемещения";
+"Longpress_label" = "Удерживайте калипер или изображение до появления дополнительных опций";
 
 /* Brugada functionality not implemented yet.  There is no harm if these strings aren't translated */
 "Brugada_ipad" = "";

@@ -51,7 +51,6 @@
     else {
         link = [NSString stringWithFormat:self.fullLink, LANG];
     }
-    NSLog(@"URL is %@", link);
     NSURL *url = [NSURL URLWithString:link];
 
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];

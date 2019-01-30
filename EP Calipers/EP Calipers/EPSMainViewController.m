@@ -1560,11 +1560,11 @@
 }
 
 - (void)clearPDF {
+    self.numberOfPages = 0;
     // when opening new image or PDF, clear out any old PDF
     if (pdfRef != NULL) {
         CGPDFDocumentRelease(pdfRef);
         pdfRef = NULL;
-        self.numberOfPages = 0;
     }
 }
 
@@ -1949,7 +1949,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // remove any prior PDF from memory
     [self clearPDF];
     self.launchURL = nil;
-    self.numberOfPages = 0;
     [self selectMainToolbar];
 }
 
