@@ -20,9 +20,6 @@
 #endif
 
 #ifdef USE_LOCAL_MANUAL_URL
-        "https:///mannd.github.io/epcalipers/en.lproj/EPCalipers-help/newhelp.html";
-//        "https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/newhelp.html#%@";
-//    private static final String englishHelpPath = "file:///android_asset/help.html";
 // MARK: To developers, this absolute path will need to be changed to your
 // file scheme.
 #define MANUAL_URL @"file://localhost/Users/mannd/dev/epcalipers-ghpages/%@.lproj/EPCalipers-help/newhelp.html#%@"
