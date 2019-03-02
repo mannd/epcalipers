@@ -1,3 +1,20 @@
+#+TITLE:     
+#+AUTHOR:    David Mann
+#+EMAIL:     mannd@epstudiossoftware.com
+#+DATE:      [2015-04-02 Thu]
+#+DESCRIPTION: EP Calipers Help
+#+KEYWORDS:
+#+LANGUAGE:  en
+#+OPTIONS:   H:3 num:nil toc:nil \n:nil @:t ::t |:t ^:t -:t f:t *:t <:t
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:http://orgmode.org/org-info.js
+#+EXPORT_SELECT_TAGS: export
+#+EXPORT_EXCLUDE_TAGS: noexport
+#+LINK_UP:   
+#+LINK_HOME: 
+#+XSLT:
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../../org.css">
+#+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
 * Remerciements
 - Je remercie Dr. Michael Katz pour l'idée.
 - Je remercie Dr. Adrian Baranchuk et ses collaborateurs de l'Université Queen de Kingston en Ontario au Canada pour le concept du « Brugadometer » et pour leur aide en appliquant cet algorithme.

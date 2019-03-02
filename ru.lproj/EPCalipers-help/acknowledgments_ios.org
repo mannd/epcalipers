@@ -13,6 +13,7 @@
 #+LINK_UP:   
 #+LINK_HOME: 
 #+XSLT:
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="../../org.css">
 #+HTML_HEAD: <style media="screen" type="text/css"> img {max-width: 100%; height: auto;} </style>
 * Благодарности
 - Спасибо д-ру Майклу Кацу (Dr. Michael Katz) за концепцию.
