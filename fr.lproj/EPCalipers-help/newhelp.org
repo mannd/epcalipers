@@ -110,4 +110,4 @@ Le *Brugadometer* est un outil de diagnostic, utilisé pour l'analyse du syndrom
 :PROPERTIES:
 :CUSTOM_ID: preferences-id
 :END:
-Vos préférences comme les couleurs des compas et les intervalles par défaut de l'étalonnage peuvent être choisies dans l'application de préférences de votre appareil sous la catégorie *Compas EP*. Vous pouvez les changer également en choisissant le menu *Préférences*.  Après le changement des préférences, retourner à l'application par la sélection du bouton de retour en haut à gauche de l'écran des préférences.
+Vos préférences comme les couleurs des compas et les intervalles par défaut de l'étalonnage peuvent être choisies en choisissant le menu *Paramètres* ou *Préférences* selon la version de l'application. 
