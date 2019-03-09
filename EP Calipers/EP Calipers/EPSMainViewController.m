@@ -1768,7 +1768,6 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
     [caliper setInitialPositionInRect:self.calipersView.bounds];
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
-    [self selectMainToolbar];
 }
 
 - (void)updateCaliperSettings:(Caliper *)caliper {
@@ -1796,7 +1795,6 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
     
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
-    [self selectMainToolbar];
 }
 
 - (void)resetCalibration {
