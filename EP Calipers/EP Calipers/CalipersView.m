@@ -87,9 +87,6 @@
 // second tap unselects it.  Quick double tap is used
 // to delete caliper.  This is new behavior with v2.0+.
 - (void)singleTap:(UITapGestureRecognizer *)t {
-    if (self.locked) {
-        return;
-    }
     CGPoint location = [t locationInView:self];
     BOOL caliperToggled = NO;
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
@@ -112,9 +109,6 @@
 }
 
 - (void)doubleTap:(UITapGestureRecognizer *)t {
-    if (self.locked) {
-        return;
-    }
     CGPoint location = [t locationInView:self];
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
         if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {

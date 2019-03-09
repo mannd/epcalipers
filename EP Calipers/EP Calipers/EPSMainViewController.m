@@ -284,6 +284,7 @@
     // init QTc variables
     self.rrIntervalForQTc = 0.0;
     self.inQtc = NO;
+    self.inRRForQTc = NO;
 
     // After experimentation, white background color seems best.
     self.imageView.backgroundColor = WHITE;
@@ -1141,7 +1142,7 @@
     else {
         self.rrIntervalForQTc = 0.0;
         self.toolbarItems = self.qtcStep1MenuItems;
-        self.calipersView.locked = YES;
+        self.inRRForQTc = YES;
     }
 }
 
@@ -1189,6 +1190,7 @@
                 self.rrIntervalForQTc = [c intervalInSecs:meanRR];
                 self.toolbarItems = self.qtcStep2MenuItems;
                 self.inQtc = YES;
+                self.inRRForQTc = NO;
             }
             else {
                 [self showBadValueDialog];
@@ -1354,7 +1356,6 @@
     else {
         self.toolbarItems = self.calibrateMenuItems;
         [self.calipersView selectCaliperIfNoneSelected];
-        self.calipersView.locked = NO;
     }
 }
 
@@ -1504,6 +1505,9 @@
     if (self.inQtc) {
         self.toolbarItems = self.qtcStep2MenuItems;
     }
+    else if (self.inRRForQTc) {
+        self.toolbarItems = self.qtcStep1MenuItems;
+    }
     else {
         [self selectMainToolbar];
     }
@@ -1516,9 +1520,9 @@
     [self.toggleIntervalRateButton setEnabled:enable];
     [self.mRRButton setEnabled:enable];
     [self.qtcButton setEnabled:enable];
-    self.calipersView.locked = NO;
     self.calipersView.allowTweakPosition = NO;
     self.inQtc = NO;
+    self.inRRForQTc = NO;
     self.chosenCaliper = nil;
     self.chosenCaliperComponent = None;
     [self.calipersView clearAllChosenComponents];
