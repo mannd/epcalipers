@@ -292,7 +292,7 @@
     // hide hamburger menu
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
-    self.hamburgerViewController.imageIsLocked = self.calipersView.locked;
+    self.hamburgerViewController.imageIsLocked = self.imageIsLocked;
     self.blackView.alpha = 0;
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
