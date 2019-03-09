@@ -28,6 +28,9 @@
     Version *version = [[Version alloc] init];
     mainViewController.isUpgrade = [version isUpgrade];
     mainViewController.isNewInstallation = [version isNewInstallation];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotated) name:NSNotificationCenter.UIDeviceOrientationDidChangeNotification object:nil];
+//    NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
+
     return YES;
 }
 

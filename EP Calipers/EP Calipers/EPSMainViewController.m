@@ -312,6 +312,12 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewBackToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
 
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(orientationChanged:)
+     name:UIDeviceOrientationDidChangeNotification
+     object:[UIDevice currentDevice]];
+
     UILongPressGestureRecognizer *longPressScrollView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doScrollViewLongPress:)];
     [longPressScrollView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
     [self.scrollView addGestureRecognizer:longPressScrollView];
@@ -332,6 +338,11 @@
     CGContextRelease(context);
     CGColorSpaceRelease(colorSpace);
     return image;
+}
+
+- (void) orientationChanged:(NSNotification *)notification {
+    // To avoid zoomed images from getting off-center, we recenter with rotation.
+    [self recenterImage];
 }
 
 - (void)setupTheme {
@@ -359,6 +370,7 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (void)viewBackToForeground {
@@ -372,6 +384,12 @@
     [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate autoPositionText:self.settings.autoPositionText timeTextPosition:self.settings.timeTextPosition amplitudeTextPosition:self.settings.amplitudeTextPosition];
     [self.calipersView setNeedsDisplay];
     
+}
+
+- (void)recenterImage {
+    CGFloat newContentOffsetX = (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2;
+    CGFloat newContentOffsetY = (self.scrollView.contentSize.height - self.scrollView.frame.size.height) / 2;
+    self.scrollView.contentOffset = CGPointMake(newContentOffsetX, newContentOffsetY);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -422,9 +440,7 @@
         }
 
         // Recenter image after app restored.
-        CGFloat newContentOffsetX = (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2;
-        CGFloat newContentOffsetY = (self.scrollView.contentSize.height - self.scrollView.frame.size.height) / 2;
-        self.scrollView.contentOffset = CGPointMake(newContentOffsetX, newContentOffsetY);
+        [self recenterImage];
 
         self.firstRun = NO;
         self.firstStart = NO;
