@@ -284,6 +284,7 @@
     // init QTc variables
     self.rrIntervalForQTc = 0.0;
     self.inQtc = NO;
+    self.inRRForQTc = NO;
 
     // After experimentation, white background color seems best.
     self.imageView.backgroundColor = WHITE;
@@ -292,7 +293,7 @@
     // hide hamburger menu
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
-    self.hamburgerViewController.imageIsLocked = self.calipersView.locked;
+    self.hamburgerViewController.imageIsLocked = self.imageIsLocked;
     self.blackView.alpha = 0;
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
@@ -311,6 +312,12 @@
     self.wasLaunchedFromUrl = NO;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewBackToForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(orientationChanged:)
+     name:UIDeviceOrientationDidChangeNotification
+     object:[UIDevice currentDevice]];
 
     UILongPressGestureRecognizer *longPressScrollView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doScrollViewLongPress:)];
     [longPressScrollView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
@@ -332,6 +339,11 @@
     CGContextRelease(context);
     CGColorSpaceRelease(colorSpace);
     return image;
+}
+
+- (void) orientationChanged:(NSNotification *)notification {
+    // To avoid zoomed images from getting off-center, we recenter with rotation.
+    [self recenterImage];
 }
 
 - (void)setupTheme {
@@ -359,6 +371,7 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
 - (void)viewBackToForeground {
@@ -372,6 +385,12 @@
     [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate autoPositionText:self.settings.autoPositionText timeTextPosition:self.settings.timeTextPosition amplitudeTextPosition:self.settings.amplitudeTextPosition];
     [self.calipersView setNeedsDisplay];
     
+}
+
+- (void)recenterImage {
+    CGFloat newContentOffsetX = (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2;
+    CGFloat newContentOffsetY = (self.scrollView.contentSize.height - self.scrollView.frame.size.height) / 2;
+    self.scrollView.contentOffset = CGPointMake(newContentOffsetX, newContentOffsetY);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -422,9 +441,7 @@
         }
 
         // Recenter image after app restored.
-        CGFloat newContentOffsetX = (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2;
-        CGFloat newContentOffsetY = (self.scrollView.contentSize.height - self.scrollView.frame.size.height) / 2;
-        self.scrollView.contentOffset = CGPointMake(newContentOffsetX, newContentOffsetY);
+        [self recenterImage];
 
         self.firstRun = NO;
         self.firstStart = NO;
@@ -1125,7 +1142,7 @@
     else {
         self.rrIntervalForQTc = 0.0;
         self.toolbarItems = self.qtcStep1MenuItems;
-        self.calipersView.locked = YES;
+        self.inRRForQTc = YES;
     }
 }
 
@@ -1173,6 +1190,7 @@
                 self.rrIntervalForQTc = [c intervalInSecs:meanRR];
                 self.toolbarItems = self.qtcStep2MenuItems;
                 self.inQtc = YES;
+                self.inRRForQTc = NO;
             }
             else {
                 [self showBadValueDialog];
@@ -1338,7 +1356,6 @@
     else {
         self.toolbarItems = self.calibrateMenuItems;
         [self.calipersView selectCaliperIfNoneSelected];
-        self.calipersView.locked = NO;
     }
 }
 
@@ -1488,6 +1505,9 @@
     if (self.inQtc) {
         self.toolbarItems = self.qtcStep2MenuItems;
     }
+    else if (self.inRRForQTc) {
+        self.toolbarItems = self.qtcStep1MenuItems;
+    }
     else {
         [self selectMainToolbar];
     }
@@ -1500,9 +1520,9 @@
     [self.toggleIntervalRateButton setEnabled:enable];
     [self.mRRButton setEnabled:enable];
     [self.qtcButton setEnabled:enable];
-    self.calipersView.locked = NO;
     self.calipersView.allowTweakPosition = NO;
     self.inQtc = NO;
+    self.inRRForQTc = NO;
     self.chosenCaliper = nil;
     self.chosenCaliperComponent = None;
     [self.calipersView clearAllChosenComponents];
@@ -1748,7 +1768,6 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
     [caliper setInitialPositionInRect:self.calipersView.bounds];
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
-    [self selectMainToolbar];
 }
 
 - (void)updateCaliperSettings:(Caliper *)caliper {
@@ -1776,7 +1795,6 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
     
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
-    [self selectMainToolbar];
 }
 
 - (void)resetCalibration {

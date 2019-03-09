@@ -52,6 +52,7 @@
     [array addObject:[[ManualLink alloc] initWithChapter:L(@"Mean_rate_ht") anchor:@"mean-rate-id"]];
     [array addObject:[[ManualLink alloc] initWithChapter:L(@"QTc_ht") anchor:@"qtc-id"]];
     [array addObject:[[ManualLink alloc] initWithChapter:L(@"Brugadometer_ht") anchor:@"brugadometer-id"]];
+    [array addObject:[[ManualLink alloc] initWithChapter:L(@"Preferences_ht") anchor:@"preferences-id"]];
     [array addObject:[[ManualLink alloc] initWithChapter:L(@"Acknowledgments_ht") link:ACKNOWLEDGMENTS_URL]];
     self.links = array;
     self.title = L(@"Topics");

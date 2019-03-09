@@ -122,6 +122,7 @@
 @property (nonatomic) CaliperComponent chosenCaliperComponent;
 
 @property (nonatomic) BOOL wasLaunchedFromUrl;
+@property (nonatomic) BOOL inRRForQTc;
 @property (nonatomic) BOOL inQtc;
 
 // New installation, upgrade?
