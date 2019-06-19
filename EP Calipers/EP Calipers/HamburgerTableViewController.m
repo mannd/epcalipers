@@ -72,8 +72,9 @@
     return cell;
 }
 
-- (void)nextPage {
-    EPSLog(@"Next page");
+// Default header is a little too big when using a grouped tableview.
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 5.0f;
 }
 
 /*
