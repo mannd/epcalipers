@@ -388,6 +388,12 @@
 //    else {
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
+    if (@available(iOS 13.0, *)) {
+        self.navigationController.navigationBar.barTintColor = [UIColor secondarySystemBackgroundColor];
+        self.navigationController.toolbar.barTintColor = [UIColor secondarySystemBackgroundColor];
+    } else {
+        // Fallback on earlier versions
+    }
 //    }
 }
 
