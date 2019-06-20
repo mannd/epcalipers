@@ -27,7 +27,6 @@
         self.autoPositionText = YES;
         self.timeTextPosition = CenterAbove;
         self.amplitudeTextPosition = RightAbove;
-        self.darkTheme = YES;
     }
     return self;
 }
@@ -65,7 +64,6 @@
     self.timeTextPosition = [timeTextPositionValue integerValue];
     NSString *amplitudeTextPositionValue = [defaults objectForKey:@"amplitudeTextPositionPreference"];
     self.amplitudeTextPosition = [amplitudeTextPositionValue integerValue];
-    self.darkTheme = [defaults boolForKey:@"darkThemePreference"];
 }
 
 @end

@@ -78,7 +78,6 @@
                                         [NSNumber numberWithBool:YES], @"autopositionPreference",
                                         @"0", @"timeTextPositionPreference",
                                         @"3", @"amplitudeTextPositionPreference",
-                                        [NSNumber numberWithBool:YES], @"darkThemePreference",
                                         nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
     

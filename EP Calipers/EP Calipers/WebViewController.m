@@ -51,6 +51,7 @@
     else {
         link = [NSString stringWithFormat:self.fullLink, LANG];
     }
+    EPSLog(@"Link ==================== %@", link);
     NSURL *url = [NSURL URLWithString:link];
 
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];

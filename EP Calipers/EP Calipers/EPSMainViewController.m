@@ -389,12 +389,19 @@
 //    else {
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
-    if (@available(iOS 13.0, *)) {
-        self.navigationController.navigationBar.barTintColor = [UIColor secondarySystemBackgroundColor];
-        self.navigationController.toolbar.barTintColor = [UIColor secondarySystemBackgroundColor];
+    if (@available(iOS 11.0, *)) {
+        self.navigationController.navigationBar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
+//        self.navigationController.navigationBar.backgroundColor = [UIColor colorNamed:@"customToolbarColor"];
+        self.navigationController.toolbar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
     } else {
         // Fallback on earlier versions
     }
+//    if (@available(iOS 13.0, *)) {
+//        self.navigationController.navigationBar.barTintColor = [UIColor secondarySystemBackgroundColor];
+//        self.navigationController.toolbar.barTintColor = [UIColor secondarySystemBackgroundColor];
+//    } else {
+//        // Fallback on earlier versions
+//    }
 //    }
 }
 
@@ -2039,20 +2046,21 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     EPSLog(@"traitCollectionDidChange");
-    if (@available(iOS 12.0, *)) {
-        // Detect mode: .unspecified, .light, or .dark.
-        UIUserInterfaceStyle userInterfaceStyle = self.traitCollection.userInterfaceStyle;
-        EPSLog(@"userInterfaceStyle = %ld", (long)userInterfaceStyle);
-        // Update UI depending on mode...
-        if (@available(iOS 13.0, *)) {
-            // Detect mode change.
-            Boolean userInterfaceStyleHasChanged = [previousTraitCollection hasDifferentColorAppearanceComparedToTraitCollection:self.traitCollection];
-            EPSLog(@"userInterfaceStyleHasChanged = %hhu", userInterfaceStyleHasChanged);
-            // React to mode change...
-        } else {
-            // Ignore
-        }
-    }
+    // FIXME: Dark theme detection, not used thus far.
+//    if (@available(iOS 12.0, *)) {
+//        // Detect mode: .unspecified, .light, or .dark.
+//        UIUserInterfaceStyle userInterfaceStyle = self.traitCollection.userInterfaceStyle;
+//        EPSLog(@"userInterfaceStyle = %ld", (long)userInterfaceStyle);
+//        // Update UI depending on mode...
+//        if (@available(iOS 13.0, *)) {
+//            // Detect mode change.
+//            Boolean userInterfaceStyleHasChanged = [previousTraitCollection hasDifferentColorAppearanceComparedToTraitCollection:self.traitCollection];
+//            EPSLog(@"userInterfaceStyleHasChanged = %hhu", userInterfaceStyleHasChanged);
+//            // React to mode change...
+//        } else {
+//            // Ignore
+//        }
+//    }
     if ((self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass)
         || (self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass)) {
         // note that this fixes menus for future use after rotation, but it doesn't immediately change font
