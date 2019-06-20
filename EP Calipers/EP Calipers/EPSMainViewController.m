@@ -30,6 +30,7 @@
 // Set to YES to show PDF menu regardless of their being a PDF
 #define SHOW_PDF_MENU NO
 #else
+// These settings are for the release version.  Don't change them!!
 #define TEST_QUICK_START NO
 // We are using the quick help images now rather than the intro tooltips,
 // so skip them.
@@ -43,13 +44,13 @@
 // Minimum press duration for long presses (default = 0.5)
 #define MINIMUM_PRESS_DURATION 0.8
 #define ANIMATION_DURATION 0.5
+#define MIN_ZOOM 1.0
 #define MAX_ZOOM 10.0
 #define MOVEMENT 1.0f
 #define MICRO_MOVEMENT 0.1f
 #define MAX_BLACKVIEW_ALPHA 0.4f
 
 #define CALIBRATE L(@"Calibrate")
-// TODO: Do we need short forms for any language for below?
 #define CALIBRATE_IPAD L(@"Calibrate")
 #define CALIBRATE_IPHONE L(@"Calibrate")
 #define TOGGLE_INT_RATE_IPAD L(@"Interval_rate_ipad")
@@ -267,7 +268,7 @@
     [self.imageView setContentMode:UIViewContentModeCenter];
 
     self.scrollView.delegate = self;
-    self.scrollView.minimumZoomScale = 1.0;
+    self.scrollView.minimumZoomScale = MIN_ZOOM;
     self.scrollView.maximumZoomScale = MAX_ZOOM;
 
     // init calibration
@@ -2038,6 +2039,20 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     EPSLog(@"traitCollectionDidChange");
+    if (@available(iOS 12.0, *)) {
+        // Detect mode: .unspecified, .light, or .dark.
+        UIUserInterfaceStyle userInterfaceStyle = self.traitCollection.userInterfaceStyle;
+        EPSLog(@"userInterfaceStyle = %ld", (long)userInterfaceStyle);
+        // Update UI depending on mode...
+        if (@available(iOS 13.0, *)) {
+            // Detect mode change.
+            Boolean userInterfaceStyleHasChanged = [previousTraitCollection hasDifferentColorAppearanceComparedToTraitCollection:self.traitCollection];
+            EPSLog(@"userInterfaceStyleHasChanged = %hhu", userInterfaceStyleHasChanged);
+            // React to mode change...
+        } else {
+            // Ignore
+        }
+    }
     if ((self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass)
         || (self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass)) {
         // note that this fixes menus for future use after rotation, but it doesn't immediately change font

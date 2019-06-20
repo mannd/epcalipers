@@ -61,8 +61,15 @@
         helpImageViewController.skipButtonText = L(@"Done");
     }
     else {
-        helpImageViewController.hideSkipButton = YES;
-        helpImageViewController.skipButtonText = L(@"Skip");
+        // We are hiding the Skip button in Russian for the stupid reason we don't have
+        // good translation of "skip" for Russian!
+        if ([L(@"lang") isEqualToString:@"ru"]) {
+            helpImageViewController.hideSkipButton = YES;
+        }
+        else {
+            helpImageViewController.hideSkipButton = NO;
+            helpImageViewController.skipButtonText = L(@"Skip_label");
+        }
     }
     helpImageViewController.pageIndex = index;
     return helpImageViewController;
