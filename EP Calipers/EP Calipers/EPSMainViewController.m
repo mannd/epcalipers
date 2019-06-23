@@ -393,6 +393,9 @@
         self.navigationController.navigationBar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
 //        self.navigationController.navigationBar.backgroundColor = [UIColor colorNamed:@"customToolbarColor"];
         self.navigationController.toolbar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
+        self.navigationController.navigationBar.tintColor = [UIColor colorNamed:@"customTintColor"];
+        self.navigationController.toolbar.tintColor = [UIColor colorNamed:@"customTintColor"];
+
     } else {
         // Fallback on earlier versions
     }
