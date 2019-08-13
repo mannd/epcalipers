@@ -288,7 +288,12 @@
     self.inRRForQTc = NO;
 
     // After experimentation, white background color seems best.
-    self.imageView.backgroundColor = WHITE;
+    // BUT, maybe not so much for dark mode...
+    if (@available(iOS 13.0, *)) {
+        self.imageView.backgroundColor = [UIColor tertiarySystemBackgroundColor];
+    } else {
+        self.imageView.backgroundColor = WHITE;
+    }
     [self.imageView setHidden:YES];  // hide view until it is rescaled
 
     // hide hamburger menu
