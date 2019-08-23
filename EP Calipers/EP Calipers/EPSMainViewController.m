@@ -374,43 +374,27 @@
 //    -        self.navigationController.navigationBar.tintColor = nil;
 
 - (void)setupTheme {
-    // FIXME: We will temporarily ignore theme, in preparation for iOS 13 native dark mode
-//    self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.translucent = YES;
 
-//    self.navigationController.toolbar.translucent = YES;
-//    if (self.settings.darkTheme) {
-//        // Note that toolbar background colors don't work.  See
-//        // https://stackoverflow.com/questions/4996906/uitoolbar-with-reduced-alpha-want-uibarbuttonitem-to-have-alpha-1/26642590#26642590
-//
-//        // Below uses a white on black color
-//        [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
-//        self.navigationController.toolbar.tintColor = WHITE;
-//        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-//        self.navigationController.navigationBar.tintColor = WHITE;
-//        // Use this if you want tinted bars.
-//        // [self.navigationController.toolbar setBackgroundImage:[self onePixelImageWithColor:[barColor colorWithAlphaComponent:0.2]] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
-//    }
-//    else {
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
-    if (@available(iOS 11.0, *)) {
-        self.navigationController.navigationBar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
-//        self.navigationController.navigationBar.backgroundColor = [UIColor colorNamed:@"customToolbarColor"];
-        self.navigationController.toolbar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
-        self.navigationController.navigationBar.tintColor = [UIColor colorNamed:@"customTintColor"];
-        self.navigationController.toolbar.tintColor = [UIColor colorNamed:@"customTintColor"];
+    // FIXME: Need to decide on white or blue toolbar/navigation buttons.  Or make a setting for this.
+    // Note: code commented out below uses a white text on black background during dark mode, which looks nice and is similar to faked dark mode before, but looks different from all other EP Studios apps.  So, for the sake of uniformity...
+//    if (@available(iOS 11.0, *)) {
+//        self.navigationController.navigationBar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
+//        self.navigationController.toolbar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
+//        self.navigationController.navigationBar.tintColor = [UIColor colorNamed:@"customTintColor"];
+//        self.navigationController.toolbar.tintColor = [UIColor colorNamed:@"customTintColor"];
 
-    } else {
-        // Fallback on earlier versions
-    }
-//    if (@available(iOS 13.0, *)) {
-//        self.navigationController.navigationBar.barTintColor = [UIColor secondarySystemBackgroundColor];
-//        self.navigationController.toolbar.barTintColor = [UIColor secondarySystemBackgroundColor];
 //    } else {
-//        // Fallback on earlier versions
+//        // Use default colors
 //    }
-//    }
+    if (@available(iOS 13.0, *)) {
+        self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
+        self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
+    } else {
+        // Use default colors
+    }
 }
 
 - (void)dealloc {
@@ -2102,7 +2086,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 // from https://github.com/fcanas/ios-color-picker
 - (void)chooseColor:(Caliper *)caliper {
     FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
-    colorPicker.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        colorPicker.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        colorPicker.backgroundColor = [UIColor whiteColor];
+    }
     self.chosenCaliper = caliper;
     colorPicker.color = caliper.unselectedColor;
     colorPicker.delegate = self;
