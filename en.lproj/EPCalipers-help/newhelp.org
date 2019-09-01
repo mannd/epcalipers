@@ -39,26 +39,26 @@ To view ECGs in the /AliveCor Kardia/ app, select *Journal*, then *Share* for th
 :END:
 You can adjust the positioning of the image using pinch-to-zoom gestures and finger scrolling.  Long press on the image to bring up a menu that allows you to rotate the image and change pages if you have loaded a PDF.
 * Lock the image in place
-:properties:
-:custom_id: lock-image-id
-:end:
-when moving and adjusting calipers, you may sometimes inadvertently move the underlying image.  select *lock* to lock the image in place.  a message appears at the top of the screen indicating the image is locked.  unlock the image by selecting *unlock*.
-* moving calipers
-:properties:
-:custom_id: moving-calipers-id
-:end:
-drag the crossbar of a caliper to move it as a unit.  drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers. angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  
-* adding and deleting calipers
-:properties:
-:custom_id: adding-deleting-calipers-id
-:end:
-select + to add new calipers. select *time*, *amplitude*, or *angle* to add the type of caliper you want. 
-double-tap a caliper to delete it.
-* selecting a caliper
-:properties:
-:custom_id: selecting-caliper-id
-:end:
-when more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  by default an unselected caliper is blue and a selected caliper is red.  you can change these colors using app [[app preferences][preferences]].  it is also possible to [[colors][change individual caliper colors]].  single tapping an unselected caliper will select it.  tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  
+:PROPERTIES:
+:CUSTOM_ID: lock-image-id
+:END:
+When moving and adjusting calipers, you may sometimes inadvertently move the underlying image.  Select *Lock* to lock the image in place.  A message appears at the top of the screen indicating the image is locked.  Unlock the image by selecting *Unlock*.
+* Moving calipers
+:PROPERTIES:
+:CUSTOM_ID: moving-calipers-id
+:END:
+Drag the crossbar of a caliper to move it as a unit.  Drag the left or right bars (or top or bottom in the case of amplitude calipers) to stretch or shrink the calipers. Angle calipers are moved as a unit by dragging at the apex or just above the apex of the angle.  
+* Adding and deleting calipers
+:PROPERTIES:
+:CUSTOM_ID: adding-deleting-calipers-id
+:END:
+Select + to add new calipers. Select *Time*, *Amplitude*, or *Angle* to add the type of caliper you want. 
+Double-tap a caliper to delete it.
+* Selecting a caliper
+:PROPERTIES:
+:CUSTOM_ID: selecting-caliper-id
+:END:
+When more than one caliper is present, it is necessary that one is selected to be the active caliper when calibrating or making calculated measurements.  By default an unselected caliper is blue and a selected caliper is red.  You can change these colors using app [[app preferences][preferences]].  It is also possible to [[colors][change individual caliper colors]].  Single tapping an unselected caliper will select it.  Tap it again (but not too fast, as a double tap deletes the caliper) to unselect it.  
 * More caliper options
 :PROPERTIES:
 :CUSTOM_ID: more-caliper-options-id
