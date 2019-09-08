@@ -32,7 +32,7 @@
         self.allowTweakPosition = NO;
         self.lockImageScreen = NO;
         self.lockImageMessageForegroundColor = [UIColor whiteColor];
-        self.lockImageMessageBackgroundColor = [UIColor redColor];
+        self.lockImageMessageBackgroundColor = [UIColor systemRedColor];
         self.aCaliperIsMarching = NO;
    }
     return self;

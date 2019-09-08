@@ -2,16 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "longpress.png"
     },
     {
       "idiom" : "universal",
-      "filename" : "longpress.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "longpress-dark.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {

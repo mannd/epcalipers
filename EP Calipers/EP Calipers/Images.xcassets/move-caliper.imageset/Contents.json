@@ -2,16 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "move-caliper.png"
     },
     {
       "idiom" : "universal",
-      "filename" : "move-caliper.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "move-caliper-dark.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {

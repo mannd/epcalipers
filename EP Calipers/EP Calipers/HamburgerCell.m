@@ -18,12 +18,11 @@
     self.selectedBackgroundView = bgColorView;
     // FIXME: Need to make final decision on hamberger icon colors
     // Note: Uncommenting below will make icons white
-    if (@available(iOS 11.0, *)) {
+//    if (@available(iOS 11.0, *)) {
 //        self.icon.tintColor = [UIColor colorNamed:@"customIconColor"];
-    } else {
-        // Fallback on earlier versions
-    }
-
+//    } else {
+//        // Fallback on earlier versions
+//    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

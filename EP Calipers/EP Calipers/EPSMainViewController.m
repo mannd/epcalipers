@@ -23,7 +23,7 @@
 // These can't be yes for release version
 #ifdef DEBUG
 // Set to yes to always show startup screen, for testing
-#define TEST_QUICK_START NO
+#define TEST_QUICK_START YES
 // Set to YES to skip introductory tooltips, for testing.
 // Note though that as of now these tooltips are NOT used.
 #define SKIP_INTRO_TOOLTIPS YES

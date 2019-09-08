@@ -30,9 +30,9 @@
         self.bar1Position = bar1Position;
         self.bar2Position = bar2Position;
         self.crossBarPosition = crossBarPosition;
-        self.unselectedColor = [UIColor blueColor];
-        self.selectedColor = [UIColor redColor];
-        self.color = [UIColor blueColor];
+        self.unselectedColor = [UIColor systemBlueColor];
+        self.selectedColor = [UIColor systemRedColor];
+        self.color = [UIColor systemBlueColor];
         self.lineWidth = 2;
         self.selected = NO;
         self.textFont = [UIFont fontWithName:@"Helvetica" size:18.0];

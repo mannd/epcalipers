@@ -17,8 +17,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.caliperColor = [UIColor blueColor];
-        self.highlightColor = [UIColor redColor];
+        self.caliperColor = [UIColor systemBlueColor];
+        self.highlightColor = [UIColor systemRedColor];
         self.lineWidth = 2;
         self.defaultCalibration = L(@"1000 msec");
         self.defaultVerticalCalibration = L(@"10 mm");
@@ -33,7 +33,7 @@
 
 - (void)loadPreferences {
     NSArray *colorKeys = [NSArray arrayWithObjects:@"Black", @"Magenta", @"Light Gray", @"Blue", @"Green", @"White", @"Red", @"Yellow", @"Orange", nil];
-    NSArray *colorValues = [NSArray arrayWithObjects:[UIColor blackColor], [UIColor magentaColor], [UIColor lightGrayColor], [UIColor blueColor], [UIColor greenColor], [UIColor whiteColor], [UIColor redColor], [UIColor yellowColor], [UIColor orangeColor], nil];
+    NSArray *colorValues = [NSArray arrayWithObjects:[UIColor blackColor], [UIColor magentaColor], [UIColor lightGrayColor], [UIColor systemBlueColor], [UIColor systemGreenColor], [UIColor whiteColor], [UIColor systemRedColor], [UIColor systemYellowColor], [UIColor systemOrangeColor], nil];
     NSDictionary *colorMap = [NSDictionary dictionaryWithObjects:colorValues forKeys:colorKeys];
     
     NSArray *qtcFormulaKeys = [NSArray arrayWithObjects:@"Bazett", @"Framingham", @"Hodges", @"Fridericia", @"All", nil];

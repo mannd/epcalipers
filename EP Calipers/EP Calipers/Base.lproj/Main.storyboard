@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14810.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6xA-Uv-Lhv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14854.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6xA-Uv-Lhv">
     <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.15"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14806.4"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -40,7 +40,7 @@
                                         <subviews>
                                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="ImageViewID" image="sampleECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="579"/>
-                                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             </imageView>
                                         </subviews>
                                         <constraints>
@@ -51,7 +51,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstItem="blB-p5-m1c" firstAttribute="topMargin" secondItem="X5X-Yr-OYx" secondAttribute="topMargin" id="DHj-WM-deL"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="blB-p5-m1c" secondAttribute="bottomMargin" id="MTN-Ls-Xwe"/>
@@ -79,7 +79,7 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="bjk-CB-7Bp" firstAttribute="bottom" secondItem="D98-VW-HwH" secondAttribute="bottom" id="10L-uH-NeD"/>
                             <constraint firstAttribute="trailing" secondItem="Day-lu-Opi" secondAttribute="trailing" id="611-Eo-GwK"/>
@@ -178,10 +178,10 @@
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhT-Iu-ikC">
                                 <rect key="frame" x="16" y="44" width="343" height="623"/>
-                                <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </webView>
                         </subviews>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="dhT-Iu-ikC" firstAttribute="top" secondItem="Xvd-42-oOX" secondAttribute="top" id="Cg8-WD-7HJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dhT-Iu-ikC" secondAttribute="trailing" id="MRz-og-kWW"/>
@@ -259,7 +259,7 @@
                     <view key="view" contentMode="scaleToFill" id="zGa-BO-zaH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Mm3-tz-lkk"/>
                     </view>
                 </viewController>
@@ -293,7 +293,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Qua-5J-lUy" firstAttribute="bottom" secondItem="HdN-fK-pbO" secondAttribute="bottom" constant="60" id="0Tv-ra-Taq"/>
                             <constraint firstItem="v2U-mG-yeE" firstAttribute="top" secondItem="Qua-5J-lUy" secondAttribute="top" constant="10" id="1PM-Kk-3oy"/>

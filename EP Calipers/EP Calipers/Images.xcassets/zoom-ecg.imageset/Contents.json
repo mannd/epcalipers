@@ -2,16 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "filename" : "zoom-ecg.png"
     },
     {
       "idiom" : "universal",
-      "filename" : "zoom-ecg.png",
-      "scale" : "2x"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "zoom-ecg-dark.png",
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ]
     }
   ],
   "info" : {
