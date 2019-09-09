@@ -11,14 +11,13 @@
 #import "EPSLogging.h"
 #import "Defs.h"
 
-
 @implementation Settings
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.caliperColor = [UIColor systemBlueColor];
-        self.highlightColor = [UIColor systemRedColor];
+        self.caliperColor = BLUE_COLOR;
+        self.highlightColor = RED_COLOR;
         self.lineWidth = 2;
         self.defaultCalibration = L(@"1000 msec");
         self.defaultVerticalCalibration = L(@"10 mm");
@@ -33,7 +32,7 @@
 
 - (void)loadPreferences {
     NSArray *colorKeys = [NSArray arrayWithObjects:@"Black", @"Magenta", @"Light Gray", @"Blue", @"Green", @"White", @"Red", @"Yellow", @"Orange", nil];
-    NSArray *colorValues = [NSArray arrayWithObjects:[UIColor blackColor], [UIColor magentaColor], [UIColor lightGrayColor], [UIColor systemBlueColor], [UIColor systemGreenColor], [UIColor whiteColor], [UIColor systemRedColor], [UIColor systemYellowColor], [UIColor systemOrangeColor], nil];
+    NSArray *colorValues = [NSArray arrayWithObjects:BLACK_COLOR, MAGENTA_COLOR, GRAY_COLOR, BLUE_COLOR, GREEN_COLOR, WHITE_COLOR, RED_COLOR, YELLOW_COLOR, ORANGE_COLOR, nil];
     NSDictionary *colorMap = [NSDictionary dictionaryWithObjects:colorValues forKeys:colorKeys];
     
     NSArray *qtcFormulaKeys = [NSArray arrayWithObjects:@"Bazett", @"Framingham", @"Hodges", @"Fridericia", @"All", nil];

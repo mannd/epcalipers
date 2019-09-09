@@ -20,6 +20,7 @@
 #import "HelpViewController.h"
 #import "Defs.h"
 
+
 // These can't be yes for release version
 #ifdef DEBUG
 // Set to yes to always show startup screen, for testing
@@ -160,9 +161,6 @@
 #define CAMERA_NOT_AVAILABLE_TITLE L(@"Camera_not_available_title")
 #define CAMERA_NOT_AVAILABLE_MESSAGE L(@"Camera_not_available_message")
 
-#define WHITE [UIColor whiteColor]
-#define GRAY [UIColor lightGrayColor]
-
 #define VERY_SMALL_FONT 10
 #define SMALL_FONT 12
 #define INTERMEDIATE_FONT 14
@@ -292,7 +290,7 @@
     if (@available(iOS 13.0, *)) {
         self.imageView.backgroundColor = [UIColor tertiarySystemBackgroundColor];
     } else {
-        self.imageView.backgroundColor = WHITE;
+        self.imageView.backgroundColor = WHITE_COLOR;
     }
     [self.imageView setHidden:YES];  // hide view until it is rescaled
 
@@ -958,7 +956,7 @@
     UILabel *label = [[UILabel alloc] init];
     [label setText:NUM_RRS];
     [label sizeToFit];
-    label.textColor = GRAY;
+    label.textColor = GRAY_COLOR;
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     self.qtcMeasureRateButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
@@ -973,7 +971,7 @@
     UILabel *label = [[UILabel alloc] init];
     [label setText:QT];
     [label sizeToFit];
-    label.textColor = GRAY;
+    label.textColor = GRAY_COLOR;
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     self.qtcMeasureQTcButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];

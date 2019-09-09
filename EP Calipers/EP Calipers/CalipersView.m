@@ -31,8 +31,8 @@
         self.clearsContextBeforeDrawing = YES;
         self.allowTweakPosition = NO;
         self.lockImageScreen = NO;
-        self.lockImageMessageForegroundColor = [UIColor whiteColor];
-        self.lockImageMessageBackgroundColor = [UIColor systemRedColor];
+        self.lockImageMessageForegroundColor = WHITE_COLOR;
+        self.lockImageMessageBackgroundColor = RED_COLOR;
         self.aCaliperIsMarching = NO;
    }
     return self;

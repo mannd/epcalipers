@@ -39,13 +39,13 @@
     [self didMoveToParentViewController:self];
 
     UIPageControl *pageControl = [UIPageControl appearance];
-    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
+    pageControl.pageIndicatorTintColor = GRAY_COLOR;
     if (@available(iOS 13.0, *)) {
         pageControl.backgroundColor = [UIColor systemBackgroundColor];
         pageControl.currentPageIndicatorTintColor = [UIColor labelColor];
     } else {
-        pageControl.backgroundColor = [UIColor whiteColor];
-        pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
+        pageControl.backgroundColor = WHITE_COLOR;
+        pageControl.currentPageIndicatorTintColor = BLACK_COLOR;
 
     }
 
