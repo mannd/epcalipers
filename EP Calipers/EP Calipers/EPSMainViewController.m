@@ -24,7 +24,7 @@
 // These can't be yes for release version
 #ifdef DEBUG
 // Set to yes to always show startup screen, for testing
-#define TEST_QUICK_START YES
+#define TEST_QUICK_START NO
 // Set to YES to skip introductory tooltips, for testing.
 // Note though that as of now these tooltips are NOT used.
 #define SKIP_INTRO_TOOLTIPS YES
@@ -511,7 +511,17 @@
 // wouldn't necessarily want to see the tooltips again post upgrade.  However anyone upgrading from
 // version 2.X.Y. would want to see them.  For version 3.0, everyone gets to see the tooltips.
 - (BOOL)shouldShowTooltipsAtStart {
-    return self.isNewInstallation || self.isUpgrade;
+    EPSLog(@"Previous app version = %@", self.priorVersion);
+    EPSLog(@"Current app version = %@", self.currentVersion);
+    EPSLog(@"Previous app major version = %@", self.priorMajorVersion);
+    if (self.isNewInstallation) {
+        return YES;
+    }
+    // Only show tooltips if upgrade from version 1 or 2
+    if (self.isUpgrade && (self.priorMajorVersion == nil || [self.priorMajorVersion  isEqual: @"1"] || [self.priorMajorVersion  isEqual: @"2"])) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)setToolTipState:(BOOL)value {

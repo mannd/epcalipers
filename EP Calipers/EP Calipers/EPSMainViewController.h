@@ -128,6 +128,9 @@
 // New installation, upgrade?
 @property (nonatomic) BOOL isNewInstallation;
 @property (nonatomic) BOOL isUpgrade;
+@property (strong, nonatomic) NSString* priorMajorVersion;
+@property (strong, nonatomic) NSString* priorVersion;
+@property (strong, nonatomic) NSString* currentVersion;
 
 @end
 

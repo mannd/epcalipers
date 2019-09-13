@@ -62,7 +62,10 @@
 + (NSString *)getMajorVersion:(NSString *)version {
     // This tests for nil and empty string.
     if ([version length] > 0) {
-        return [version substringToIndex:1];
+        NSArray* substrings = [version componentsSeparatedByString:@"."];
+        if ([substrings count] > 0) {
+            return substrings[0];
+        }
     }
     return version;
 }
