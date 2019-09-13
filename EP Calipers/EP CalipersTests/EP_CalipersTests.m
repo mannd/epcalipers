@@ -301,6 +301,10 @@
     XCTAssertTrue([versionTest isNewInstallation]);
     versionTest.currentVersion = @"1.0";
     XCTAssertFalse([versionTest isUpgrade]);
+    // Make sure getMajorVersion works with multiple digit major version.
+    Version *versionTest2 = [[Version alloc] initWithVersion:@"14.0" previousVersion:@"3.0"];
+    versionTest2.doUnitTest = YES;
+    XCTAssertEqualObjects([Version getMajorVersion:[versionTest2 getAppVersion]], @"14");
 }
 
 - (void)testCalipersView {

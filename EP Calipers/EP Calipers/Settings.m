@@ -11,14 +11,13 @@
 #import "EPSLogging.h"
 #import "Defs.h"
 
-
 @implementation Settings
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.caliperColor = [UIColor blueColor];
-        self.highlightColor = [UIColor redColor];
+        self.caliperColor = BLUE_COLOR;
+        self.highlightColor = RED_COLOR;
         self.lineWidth = 2;
         self.defaultCalibration = L(@"1000 msec");
         self.defaultVerticalCalibration = L(@"10 mm");
@@ -27,14 +26,13 @@
         self.autoPositionText = YES;
         self.timeTextPosition = CenterAbove;
         self.amplitudeTextPosition = RightAbove;
-        self.darkTheme = YES;
     }
     return self;
 }
 
 - (void)loadPreferences {
     NSArray *colorKeys = [NSArray arrayWithObjects:@"Black", @"Magenta", @"Light Gray", @"Blue", @"Green", @"White", @"Red", @"Yellow", @"Orange", nil];
-    NSArray *colorValues = [NSArray arrayWithObjects:[UIColor blackColor], [UIColor magentaColor], [UIColor lightGrayColor], [UIColor blueColor], [UIColor greenColor], [UIColor whiteColor], [UIColor redColor], [UIColor yellowColor], [UIColor orangeColor], nil];
+    NSArray *colorValues = [NSArray arrayWithObjects:BLACK_COLOR, MAGENTA_COLOR, GRAY_COLOR, BLUE_COLOR, GREEN_COLOR, WHITE_COLOR, RED_COLOR, YELLOW_COLOR, ORANGE_COLOR, nil];
     NSDictionary *colorMap = [NSDictionary dictionaryWithObjects:colorValues forKeys:colorKeys];
     
     NSArray *qtcFormulaKeys = [NSArray arrayWithObjects:@"Bazett", @"Framingham", @"Hodges", @"Fridericia", @"All", nil];
@@ -65,7 +63,6 @@
     self.timeTextPosition = [timeTextPositionValue integerValue];
     NSString *amplitudeTextPositionValue = [defaults objectForKey:@"amplitudeTextPositionPreference"];
     self.amplitudeTextPosition = [amplitudeTextPositionValue integerValue];
-    self.darkTheme = [defaults boolForKey:@"darkThemePreference"];
 }
 
 @end

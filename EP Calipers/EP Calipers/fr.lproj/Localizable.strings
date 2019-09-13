@@ -163,6 +163,7 @@
 "Double_tap_caliper_label" = "Taper deux fois pour le supprimer";
 "Zoom_ecg_label" = "Pincer pour zoomer, glisser pour déplacer l'image";
 "Longpress_label" = "Appuyer pendant quelques secondes pour plus d'options";
+"Skip_label" = "Sauter";
 
 /* Brugada functionality not implemented yet.  There is no harm if these strings aren't translated */
 //"Brugada_ipad" = "";

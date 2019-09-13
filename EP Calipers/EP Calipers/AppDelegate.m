@@ -28,6 +28,10 @@
     Version *version = [[Version alloc] init];
     mainViewController.isUpgrade = [version isUpgrade];
     mainViewController.isNewInstallation = [version isNewInstallation];
+    mainViewController.priorVersion = [version getPreviousAppVersion];
+    mainViewController.currentVersion = [version getAppVersion];
+    mainViewController.priorMajorVersion = [Version getMajorVersion:[version getPreviousAppVersion]];
+
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotated) name:NSNotificationCenter.UIDeviceOrientationDidChangeNotification object:nil];
 //    NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
 
@@ -78,7 +82,6 @@
                                         [NSNumber numberWithBool:YES], @"autopositionPreference",
                                         @"0", @"timeTextPositionPreference",
                                         @"3", @"amplitudeTextPositionPreference",
-                                        [NSNumber numberWithBool:YES], @"darkThemePreference",
                                         nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
     

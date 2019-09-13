@@ -39,9 +39,15 @@
     [self didMoveToParentViewController:self];
 
     UIPageControl *pageControl = [UIPageControl appearance];
-    pageControl.pageIndicatorTintColor = [UIColor lightGrayColor];
-    pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
-    pageControl.backgroundColor = [UIColor whiteColor];
+    pageControl.pageIndicatorTintColor = GRAY_COLOR;
+    if (@available(iOS 13.0, *)) {
+        pageControl.backgroundColor = [UIColor systemBackgroundColor];
+        pageControl.currentPageIndicatorTintColor = [UIColor labelColor];
+    } else {
+        pageControl.backgroundColor = WHITE_COLOR;
+        pageControl.currentPageIndicatorTintColor = BLACK_COLOR;
+
+    }
 
     [self.navigationController setNavigationBarHidden:YES];
     self.title = @"";
@@ -61,8 +67,15 @@
         helpImageViewController.skipButtonText = L(@"Done");
     }
     else {
-        helpImageViewController.hideSkipButton = YES;
-        helpImageViewController.skipButtonText = L(@"Skip");
+        // We are hiding the Skip button in Russian for the stupid reason we don't have
+        // good translation of "skip" for Russian!
+        if ([L(@"lang") isEqualToString:@"ru"]) {
+            helpImageViewController.hideSkipButton = YES;
+        }
+        else {
+            helpImageViewController.hideSkipButton = NO;
+            helpImageViewController.skipButtonText = L(@"Skip_label");
+        }
     }
     helpImageViewController.pageIndex = index;
     return helpImageViewController;

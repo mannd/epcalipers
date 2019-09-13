@@ -51,6 +51,7 @@
     else {
         link = [NSString stringWithFormat:self.fullLink, LANG];
     }
+    EPSLog(@"Link ==================== %@", link);
     NSURL *url = [NSURL URLWithString:link];
 
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
@@ -68,7 +69,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self.navigationController setToolbarHidden:YES];
-
 }
 
 - (void)didReceiveMemoryWarning {

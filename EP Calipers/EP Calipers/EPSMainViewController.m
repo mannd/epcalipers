@@ -20,6 +20,7 @@
 #import "HelpViewController.h"
 #import "Defs.h"
 
+
 // These can't be yes for release version
 #ifdef DEBUG
 // Set to yes to always show startup screen, for testing
@@ -30,6 +31,7 @@
 // Set to YES to show PDF menu regardless of their being a PDF
 #define SHOW_PDF_MENU NO
 #else
+// These settings are for the release version.  Don't change them!!
 #define TEST_QUICK_START NO
 // We are using the quick help images now rather than the intro tooltips,
 // so skip them.
@@ -43,13 +45,13 @@
 // Minimum press duration for long presses (default = 0.5)
 #define MINIMUM_PRESS_DURATION 0.8
 #define ANIMATION_DURATION 0.5
+#define MIN_ZOOM 1.0
 #define MAX_ZOOM 10.0
 #define MOVEMENT 1.0f
 #define MICRO_MOVEMENT 0.1f
 #define MAX_BLACKVIEW_ALPHA 0.4f
 
 #define CALIBRATE L(@"Calibrate")
-// TODO: Do we need short forms for any language for below?
 #define CALIBRATE_IPAD L(@"Calibrate")
 #define CALIBRATE_IPHONE L(@"Calibrate")
 #define TOGGLE_INT_RATE_IPAD L(@"Interval_rate_ipad")
@@ -159,9 +161,6 @@
 #define CAMERA_NOT_AVAILABLE_TITLE L(@"Camera_not_available_title")
 #define CAMERA_NOT_AVAILABLE_MESSAGE L(@"Camera_not_available_message")
 
-#define WHITE [UIColor whiteColor]
-#define GRAY [UIColor lightGrayColor]
-
 #define VERY_SMALL_FONT 10
 #define SMALL_FONT 12
 #define INTERMEDIATE_FONT 14
@@ -267,7 +266,7 @@
     [self.imageView setContentMode:UIViewContentModeCenter];
 
     self.scrollView.delegate = self;
-    self.scrollView.minimumZoomScale = 1.0;
+    self.scrollView.minimumZoomScale = MIN_ZOOM;
     self.scrollView.maximumZoomScale = MAX_ZOOM;
 
     // init calibration
@@ -287,7 +286,12 @@
     self.inRRForQTc = NO;
 
     // After experimentation, white background color seems best.
-    self.imageView.backgroundColor = WHITE;
+    // BUT, maybe not so much for dark mode...
+    if (@available(iOS 13.0, *)) {
+        self.imageView.backgroundColor = [UIColor tertiarySystemBackgroundColor];
+    } else {
+        self.imageView.backgroundColor = WHITE_COLOR;
+    }
     [self.imageView setHidden:YES];  // hide view until it is rescaled
 
     // hide hamburger menu
@@ -346,26 +350,48 @@
     [self recenterImage];
 }
 
-- (void)setupTheme {
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.toolbar.translucent = NO;
-    if (self.settings.darkTheme) {
-        // Note that toolbar background colors don't work.  See
-        // https://stackoverflow.com/questions/4996906/uitoolbar-with-reduced-alpha-want-uibarbuttonitem-to-have-alpha-1/26642590#26642590
+// FIXME: original code for dark theme is below
+//-    self.navigationController.navigationBar.translucent = NO;
+//-    self.navigationController.toolbar.translucent = NO;
+//-    if (self.settings.darkTheme) {
+//    -        // Note that toolbar background colors don't work.  See
+//    -        // https://stackoverflow.com/questions/4996906/uitoolbar-with-reduced-alpha-want-uibarbuttonitem-to-have-alpha-1/26642590#26642590
+//    -
+//    -        // Below uses a white on black color
+//    -        [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
+//    -        self.navigationController.toolbar.tintColor = WHITE;
+//    -        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+//    -        self.navigationController.navigationBar.tintColor = WHITE;
+//    -        // Use this if you want tinted bars.
+//    -        // [self.navigationController.toolbar setBackgroundImage:[self onePixelImageWithColor:[barColor colorWithAlphaComponent:0.2]] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
+//    -    }
+//-    else {
+//    -        [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
+//    -        [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
+//    -        self.navigationController.toolbar.tintColor = nil;
+//    -        self.navigationController.navigationBar.tintColor = nil;
 
-        // Below uses a white on black color
-        [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
-        self.navigationController.toolbar.tintColor = WHITE;
-        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-        self.navigationController.navigationBar.tintColor = WHITE;
-        // Use this if you want tinted bars.
-        // [self.navigationController.toolbar setBackgroundImage:[self onePixelImageWithColor:[barColor colorWithAlphaComponent:0.2]] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
-    }
-    else {
-        [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-        [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
-        self.navigationController.toolbar.tintColor = nil;
-        self.navigationController.navigationBar.tintColor = nil;
+- (void)setupTheme {
+    self.navigationController.navigationBar.translucent = YES;
+
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
+    [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
+    // FIXME: Need to decide on white or blue toolbar/navigation buttons.  Or make a setting for this.
+    // Note: code commented out below uses a white text on black background during dark mode, which looks nice and is similar to faked dark mode before, but looks different from all other EP Studios apps.  So, for the sake of uniformity...
+//    if (@available(iOS 11.0, *)) {
+//        self.navigationController.navigationBar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
+//        self.navigationController.toolbar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
+//        self.navigationController.navigationBar.tintColor = [UIColor colorNamed:@"customTintColor"];
+//        self.navigationController.toolbar.tintColor = [UIColor colorNamed:@"customTintColor"];
+
+//    } else {
+//        // Use default colors
+//    }
+    if (@available(iOS 13.0, *)) {
+        self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
+        self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
+    } else {
+        // Use default colors
     }
 }
 
@@ -485,7 +511,17 @@
 // wouldn't necessarily want to see the tooltips again post upgrade.  However anyone upgrading from
 // version 2.X.Y. would want to see them.  For version 3.0, everyone gets to see the tooltips.
 - (BOOL)shouldShowTooltipsAtStart {
-    return self.isNewInstallation || self.isUpgrade;
+    EPSLog(@"Previous app version = %@", self.priorVersion);
+    EPSLog(@"Current app version = %@", self.currentVersion);
+    EPSLog(@"Previous app major version = %@", self.priorMajorVersion);
+    if (self.isNewInstallation) {
+        return YES;
+    }
+    // Only show tooltips if upgrade from version 1 or 2
+    if (self.isUpgrade && (self.priorMajorVersion == nil || [self.priorMajorVersion  isEqual: @"1"] || [self.priorMajorVersion  isEqual: @"2"])) {
+        return YES;
+    }
+    return NO;
 }
 
 - (void)setToolTipState:(BOOL)value {
@@ -930,7 +966,7 @@
     UILabel *label = [[UILabel alloc] init];
     [label setText:NUM_RRS];
     [label sizeToFit];
-    label.textColor = GRAY;
+    label.textColor = GRAY_COLOR;
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     self.qtcMeasureRateButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
@@ -945,7 +981,7 @@
     UILabel *label = [[UILabel alloc] init];
     [label setText:QT];
     [label sizeToFit];
-    label.textColor = GRAY;
+    label.textColor = GRAY_COLOR;
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     self.qtcMeasureQTcButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
@@ -2010,6 +2046,21 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     EPSLog(@"traitCollectionDidChange");
+    // FIXME: Dark theme detection, not used thus far.
+//    if (@available(iOS 12.0, *)) {
+//        // Detect mode: .unspecified, .light, or .dark.
+//        UIUserInterfaceStyle userInterfaceStyle = self.traitCollection.userInterfaceStyle;
+//        EPSLog(@"userInterfaceStyle = %ld", (long)userInterfaceStyle);
+//        // Update UI depending on mode...
+//        if (@available(iOS 13.0, *)) {
+//            // Detect mode change.
+//            Boolean userInterfaceStyleHasChanged = [previousTraitCollection hasDifferentColorAppearanceComparedToTraitCollection:self.traitCollection];
+//            EPSLog(@"userInterfaceStyleHasChanged = %hhu", userInterfaceStyleHasChanged);
+//            // React to mode change...
+//        } else {
+//            // Ignore
+//        }
+//    }
     if ((self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass)
         || (self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass)) {
         // note that this fixes menus for future use after rotation, but it doesn't immediately change font
@@ -2043,7 +2094,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 // from https://github.com/fcanas/ios-color-picker
 - (void)chooseColor:(Caliper *)caliper {
     FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
-    colorPicker.backgroundColor = [UIColor whiteColor];
+    if (@available(iOS 13.0, *)) {
+        colorPicker.backgroundColor = [UIColor systemBackgroundColor];
+    } else {
+        colorPicker.backgroundColor = [UIColor whiteColor];
+    }
     self.chosenCaliper = caliper;
     colorPicker.color = caliper.unselectedColor;
     colorPicker.delegate = self;

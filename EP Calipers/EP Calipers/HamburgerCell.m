@@ -13,10 +13,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    UIView *bgColorView = [[UIView alloc] init];
-    bgColorView.backgroundColor = [UIColor colorWithRed:0.9607843137 green:(CGFloat)0.9647058824 blue:0.9725490196 alpha:1];
-    self.selectedBackgroundView = bgColorView;
-
+    if (@available(iOS 11.0, *)) {
+        self.icon.tintColor = [UIColor systemBlueColor];
+    } else {
+        // Fallback on earlier versions
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

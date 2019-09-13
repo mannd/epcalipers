@@ -165,6 +165,7 @@
 "Double_tap_caliper_label" = "Double-tap to delete";
 "Zoom_ecg_label" = "Pinch to zoom, drag to move image";
 "Longpress_label" = "Long press caliper or image for more options";
+"Skip_label" = "Skip";
 
 /* Brugada (defined but unused in active code.  No harm if not translated) */
 "Brugada_ipad" = "Brugada";
