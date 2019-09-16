@@ -144,6 +144,7 @@
                                             <rect key="frame" x="8" y="11.5" width="24" height="21"/>
                                         </imageView>
                                     </subviews>
+                                    <color key="tintColor" systemColor="systemBlueColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <constraints>
                                         <constraint firstItem="yC0-ut-9Ft" firstAttribute="centerY" secondItem="Az1-Ox-Gcr" secondAttribute="centerY" id="1jW-u2-zxU"/>
                                         <constraint firstItem="sAB-Gp-MiX" firstAttribute="centerY" secondItem="Az1-Ox-Gcr" secondAttribute="centerY" id="ixt-5p-pdo"/>
