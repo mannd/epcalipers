@@ -84,7 +84,6 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     EPSLog(@"webViewDidFailLoad");
-    EPSLog(@"error is %lu", error.code);
     [self.activityView stopAnimating];
     UIAlertController *aboutAlertController = [UIAlertController alertControllerWithTitle:L(@"Error") message:L(@"Internet_connection_failed") preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:L(@"OK") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){[self.navigationController popViewControllerAnimated:YES];}];

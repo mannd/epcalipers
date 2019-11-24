@@ -12,12 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
-    if (@available(iOS 11.0, *)) {
-        self.icon.tintColor = [UIColor systemBlueColor];
-    } else {
-        // Fallback on earlier versions
-    }
+    self.icon.tintColor = [UIColor systemBlueColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
