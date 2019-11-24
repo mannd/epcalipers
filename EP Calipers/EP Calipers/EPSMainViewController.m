@@ -285,13 +285,7 @@
     self.inQtc = NO;
     self.inRRForQTc = NO;
 
-    // After experimentation, white background color seems best.
-    // BUT, maybe not so much for dark mode...
-    if (@available(iOS 13.0, *)) {
-        self.imageView.backgroundColor = [UIColor tertiarySystemBackgroundColor];
-    } else {
-        self.imageView.backgroundColor = WHITE_COLOR;
-    }
+    self.imageView.backgroundColor = [self getImageViewBackgroundColor];
     [self.imageView setHidden:YES];  // hide view until it is rescaled
 
     // hide hamburger menu
@@ -348,6 +342,17 @@
 - (void) orientationChanged:(NSNotification *)notification {
     // To avoid zoomed images from getting off-center, we recenter with rotation.
     [self recenterImage];
+}
+
+- (UIColor *)getImageViewBackgroundColor {
+    // After experimentation, white background color seems best.
+    // BUT, maybe not so much for dark mode...
+    // However, can't use this for PDFs!
+    if (@available(iOS 13.0, *)) {
+        return [UIColor tertiarySystemBackgroundColor];
+    } else {
+        return  WHITE_COLOR;
+    }
 }
 
 // FIXME: original code for dark theme is below
@@ -1751,6 +1756,9 @@
     CGFloat scaleFactor = 5.0;
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, scaleFactor);
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
+    // Ensure transparent PDFs have white background in dark mode.
+    CGContextSetFillColorWithColor(currentContext, [UIColor whiteColor].CGColor);
+    CGContextFillRect(currentContext, sourceRect);
     CGContextTranslateCTM(currentContext, 0.0, sourceRect.size.height);
     CGContextScaleCTM(currentContext, 1.0, -1.0);
     CGContextDrawPDFPage(currentContext, page);
