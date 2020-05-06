@@ -56,7 +56,7 @@
 "Lock-iPhone" = "Immob";
 "March" = "March";
 "Mean_interval_rate_label" = "Intervalle moyen et fréquence cardiaque moyenne";
-"Mean_interval_rate_result" = "Intervalle moyen = %.4g %@\nFréquence cardiaque moyenne = %.4g bp";
+"Mean_interval_rate_result" = "Intervalle moyen = %.4g %@\nFréquence cardiaque moyenne = %.4g bpm";
 "Mean_rate_ipad" = "FCM";
 "Mean_rate_iphone" = "FCM";
 "Mean_rate_iphone_shortest" = "FCM";
