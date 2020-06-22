@@ -82,7 +82,7 @@
                                         [NSNumber numberWithBool:YES], @"autopositionPreference",
                                         @"0", @"timeTextPositionPreference",
                                         @"3", @"amplitudeTextPositionPreference",
-                                        nil];
+                                        [NSNumber numberWithBool:YES], @"showWarningDialogsPreference", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
     
     return YES;

@@ -7,6 +7,7 @@
 //
 
 #import "Calibration.h"
+#import "EP_Calipers-Swift.h"
 #import "EPSLogging.h"
 #import "Translation.h"
 #import "Defs.h"
@@ -72,37 +73,31 @@
     return self.unitsAreMsec || self.unitsAreSeconds;
 }
 
-- (BOOL)isMatch:(NSString *)regex string:(NSString *)string {
-    NSRegularExpression *r = [NSRegularExpression regularExpressionWithPattern:regex options:NSRegularExpressionCaseInsensitive error:nil];
-    return [r numberOfMatchesInString:string options:0 range:NSMakeRange(0, [string length])] > 0;
-}
-
 - (BOOL)unitsAreSeconds {
+    // Note that _units.length < 1 is true when _units == nil, so need this.
     if (_units.length < 1 || self.direction == Vertical) {
         return NO;
     }
-    NSString *secondRegex = @"(?:^sec|^сек|^s$|^с$)";
-    return [self isMatch:secondRegex string:self.rawUnits];
+    return [CalibrationProcessor matchesSec:self.rawUnits];
 }
 
 - (BOOL)unitsAreMsec {
+    // Note that _units.length < 1 is true when _units == nil, so need this.
     if (_units.length < 1 || self.direction == Vertical) {
         return NO;
     }
-    NSString *msRegex = @"(?:^msec|^millis|^мсек|^миллис|^ms$|^мс$)";
-    return [self isMatch:msRegex string:self.rawUnits];
+    return [CalibrationProcessor matchesMsec:self.rawUnits];
+}
+
+- (BOOL)unitsAreMM {
+    if (_units.length < 1 || self.direction != Vertical) {
+        return NO;
+    }
+    return [CalibrationProcessor matchesMM:self.rawUnits];
 }
 
 - (CGFloat)currentCalFactor {
     return (self.originalZoom * self.originalCalFactor) / self.currentZoom;
-}
-
-- (BOOL)unitsAreMM {
-    if (self.units.length < 1 || self.direction != Vertical) {
-        return NO;
-    }
-    NSString *mmRegex = @"(?:^millim|^миллим|^mm$|^мм$)";
-    return [self isMatch:mmRegex string:self.rawUnits];
 }
 
 - (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key {
@@ -129,7 +124,5 @@
     self.currentZoom = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CurrentZoom"]];
     self.originalCalFactor = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"OriginalCalFactor"]];
 }
-
-
 
 @end

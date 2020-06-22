@@ -26,6 +26,7 @@
         self.autoPositionText = YES;
         self.timeTextPosition = CenterAbove;
         self.amplitudeTextPosition = RightAbove;
+        self.showWarningDialogs = YES;
     }
     return self;
 }
@@ -63,6 +64,7 @@
     self.timeTextPosition = [timeTextPositionValue integerValue];
     NSString *amplitudeTextPositionValue = [defaults objectForKey:@"amplitudeTextPositionPreference"];
     self.amplitudeTextPosition = [amplitudeTextPositionValue integerValue];
+    self.showWarningDialogs = [defaults boolForKey:@"showWarningDialogsPreference"];
 }
 
 @end

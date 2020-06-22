@@ -37,7 +37,6 @@
 "Done" = "OK";
 "Empty_bad_input" = "Saisie de données vides, ou d'un chiffre négatif, ou d’une autre mauvaise entrée de données.";
 "Enter_measurement" = "Saisir la mesure (p.e. %@)";
-"Five_hundred_msec" = "500 msec";
 "Flip" = "Inverser";
 "Framingham" = "Framingham";
 "Fridericia" = "Fridericia";
@@ -164,6 +163,14 @@
 "Zoom_ecg_label" = "Pincer pour zoomer, glisser pour déplacer l'image";
 "Longpress_label" = "Appuyer pendant quelques secondes pour plus d'options";
 "Skip_label" = "Sauter";
+
+/* New for version 3.4 */
+"Amplitude_cal_example" = "10 mm ou 1 mV";
+"Bad_units" = "Avertissement d'étalonnage";
+"Bad_units_warning" = "Les unités ne sont pas compatibles avec des mesures telles que la fréquence cardiaque ou le QTc. Utiliser des unités comme msec ou sec.";
+"No_units_warning" = "L'étalonnage n'a pas d'unités.";
+"Calibrate_anyway" = "Étalonner quand même";
+"Time_cal_example" = "1000 msec ou 1 sec";
 
 /* Brugada functionality not implemented yet.  There is no harm if these strings aren't translated */
 //"Brugada_ipad" = "";

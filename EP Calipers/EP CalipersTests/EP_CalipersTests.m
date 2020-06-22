@@ -628,12 +628,55 @@
     [cv drawRect:rect];
     cv.lockImageScreen = NO;
     [cv drawRect:rect];
-
-
-
-
-
-
-
 }
+
+- (void)testCalibrationProcessor {
+    Calibration *cal = [[Calibration alloc] init];
+    cal.units = @"msec";
+    XCTAssertEqual(true, [cal unitsAreMsec]);
+    // Current unitsAreMsec is false if caliper is vertical.
+    cal.direction = Vertical;
+    XCTAssertEqual(false, [cal unitsAreMsec]);
+    cal.units = @"";
+    cal.direction = Horizontal;
+    XCTAssertEqual(false, [cal unitsAreMsec]);
+    cal.units = nil;
+    XCTAssertEqual(false, [cal unitsAreMsec]);
+    cal.units = @"sec";
+    XCTAssertEqual(true, [cal unitsAreSeconds]);
+    cal.units = @"S";
+    XCTAssertEqual(true, [cal unitsAreSeconds]);
+    cal.units = @"Seconds";
+    XCTAssertEqual(true, [cal unitsAreSeconds]);
+    cal.units = @"сек";
+    XCTAssertEqual(true, [cal unitsAreSeconds]);
+    cal.direction = Vertical;
+    XCTAssertEqual(false, [cal unitsAreSeconds]);
+    cal.units = @"S";
+    XCTAssertEqual(false, [cal unitsAreSeconds]);
+    cal.units = @"Seconds";
+    XCTAssertEqual(false, [cal unitsAreSeconds]);
+    cal.units = @"сек";
+    XCTAssertEqual(false, [cal unitsAreSeconds]);
+    cal.direction = Horizontal;
+    cal.units = @"";
+    XCTAssertEqual(false, [cal unitsAreSeconds]);
+    cal.units = nil;
+    XCTAssertEqual(false, [cal unitsAreSeconds]);
+    // unitsAreMM currently requires direction == VERTICAL
+    cal.direction = Vertical;
+    cal.units = @"MM";
+    XCTAssertEqual(true, [cal unitsAreMM]);
+    cal.units = @"mm";
+    XCTAssertEqual(true, [cal unitsAreMM]);
+    cal.units = @"MV";
+    XCTAssertEqual(false, [cal unitsAreMM]);
+    cal.units = @"миллим";
+    XCTAssertEqual(true, [cal unitsAreMM]);
+    // Calibration doesn't have unitsAreMV method, so not tested here.
+}
+
+
+
+
 @end

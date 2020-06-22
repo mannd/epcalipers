@@ -13,7 +13,7 @@ EP Calipers for iOS is open source, and licensed under the
 [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).  When used with Apple devices via the iTunes App Store, it is subject to the [standard Apple iOS license agreement](http://images.apple.com/legal/sla/docs/AppleStoreApp.pdf).
 
 ## Copyright
-Copyright © 2015-2018 [EP Studios, Inc.](http://www.epstudiossoftware.com)
+Copyright © 2015-2020 [EP Studios, Inc.](http://www.epstudiossoftware.com)
 
 ## Acknowledgments
 Thanks to Dr. Michael Katz for the concept.
