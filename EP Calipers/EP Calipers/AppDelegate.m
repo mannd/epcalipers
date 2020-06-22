@@ -82,7 +82,7 @@
                                         [NSNumber numberWithBool:YES], @"autopositionPreference",
                                         @"0", @"timeTextPositionPreference",
                                         @"3", @"amplitudeTextPositionPreference",
-                                        nil];
+                                        [NSNumber numberWithBool:YES], @"showWarningDialogsPreference", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:defaultPreferences];
     
     return YES;
@@ -128,6 +128,7 @@
     return YES;
 }
 
+// Do not change to shouldSaveSecureApplicationState or shouldRestoreSecureApplicationState, as this crashes the app when restoring state.  Unclear why??
 - (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
 {
     return YES;

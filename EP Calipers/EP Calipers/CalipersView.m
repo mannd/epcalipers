@@ -245,6 +245,7 @@
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
         if ([(Caliper *)self.calipers[i] selected]) {
             noneSelected = NO;
+            break;
         }
     }
     return noneSelected;

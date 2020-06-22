@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, QTcFormulaPreference) {
 @property (nonatomic) BOOL autoPositionText;
 @property (nonatomic) TextPosition timeTextPosition;
 @property (nonatomic) TextPosition amplitudeTextPosition;
+@property (nonatomic) BOOL showWarningDialogs;
 
 - (instancetype)init;
 - (void)loadPreferences;

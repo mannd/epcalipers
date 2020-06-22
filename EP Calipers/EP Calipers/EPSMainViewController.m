@@ -18,7 +18,9 @@
 #import "Version.h"
 #import "Translation.h"
 #import "HelpViewController.h"
+#import "EP_Calipers-Swift.h"
 #import "Defs.h"
+#import <os/log.h>
 
 
 // These can't be yes for release version
@@ -127,6 +129,10 @@
 #define ADD_SOME_CALIPERS L(@"Add_some_calipers")
 #define BAD_INPUT L(@"Bad_input")
 #define EMPTY_BAD_INPUT L(@"Empty_bad_input")
+#define BAD_UNITS L(@"Bad_units")
+#define BAD_UNITS_WARNING L(@"Bad_units_warning")
+#define NO_UNITS_WARNING L(@"No_units_warning")
+#define CALIBRATE_ANYWAY L(@"Calibrate_anyway")
 #define SELECT_ANGLE_CALIPER L(@"Select_angle_caliper")
 #define NO_ANGLE_CALIPER_SELECTED L(@"No_angle_caliper_selected")
 #define MULTIPAGE_PDF L(@"Multipage_pdf")
@@ -156,8 +162,8 @@
 #define CALCULATE L(@"Calculate")
 #define THREE L(@"Three")
 #define ONE L(@"One")
-#define ONE_MV L(@"One_mv")
-#define FIVE_HUNDRED_MSEC L(@"Five_hundred_msec")
+#define AMPLITUDE_CAL_EXAMPLE L(@"Amplitude_cal_example")
+#define TIME_CAL_EXAMPLE L(@"Time_cal_example")
 #define CAMERA_NOT_AVAILABLE_TITLE L(@"Camera_not_available_title")
 #define CAMERA_NOT_AVAILABLE_MESSAGE L(@"Camera_not_available_message")
 
@@ -512,9 +518,6 @@
     }
 }
 
-// TODO: You might change this with future releases.  For example, someone upgrading from 3.0 to 3.1
-// wouldn't necessarily want to see the tooltips again post upgrade.  However anyone upgrading from
-// version 2.X.Y. would want to see them.  For version 3.0, everyone gets to see the tooltips.
 - (BOOL)shouldShowTooltipsAtStart {
     EPSLog(@"Previous app version = %@", self.priorVersion);
     EPSLog(@"Current app version = %@", self.currentVersion);
@@ -1421,6 +1424,11 @@
         return;
     }
     Caliper* c = self.calipersView.activeCaliper;
+    // c should not be nil by this point, but let's just back off if it is here to avoid future nil checks.
+    if (c == nil) {
+        return;
+    }
+    assert(c != nil);
     // Angle calipers don't require calibration
     if (![c requiresCalibration]) {
       [Alert showSimpleAlertWithTitle:ANGLE_CALIPER message:DO_NOT_CALIBRATE_ANGLE_CALIPERS viewController:self];
@@ -1431,11 +1439,11 @@
         return;
     }
     NSString *example = @"";
-    if (c!= nil && c.direction == Vertical) {
-        example = ONE_MV;
+    if (c.direction == Vertical) {
+        example = AMPLITUDE_CAL_EXAMPLE;
     }
     else {
-        example = FIVE_HUNDRED_MSEC;
+        example = TIME_CAL_EXAMPLE;
     }
     NSString *message = [NSString stringWithFormat:ENTER_MEASUREMENT, example];
     // see https://stackoverflow.com/questions/33996443/how-to-add-text-input-in-alertview-of-ios-8 for using text fields with UIAlertController.
@@ -1451,14 +1459,12 @@
         if ([self.verticalCalibration.calibrationString length] < 1 || self.defaultVerticalCalChanged) {
             self.verticalCalibration.calibrationString = self.settings.defaultVerticalCalibration;
         }
-        if (c != nil) {
-            CaliperDirection direction = c.direction;
-            if (direction == Horizontal) {
-                calibrationString = self.horizontalCalibration.calibrationString;
-            }
-            else {
-                calibrationString = self.verticalCalibration.calibrationString;
-            }
+        CaliperDirection direction = c.direction;
+        if (direction == Horizontal) {
+            calibrationString = self.horizontalCalibration.calibrationString;
+        }
+        else {
+            calibrationString = self.verticalCalibration.calibrationString;
         }
         textField.text = calibrationString;
     }];
@@ -1467,11 +1473,27 @@
         NSArray *textFields = calibrationAlertController.textFields;
         UITextField *rawTextField = textFields[0];
         NSString *rawText = rawTextField.text;
-        if (rawText.length > 0) {
-            [self calibrateWithText:rawText];
+        Validation *validation = [CalibrationProcessor validate:rawText direction:c.direction];
+        os_log(OS_LOG_DEFAULT, "showWarningDialogs = %d", self->_settings.showWarningDialogs);
+        if ([validation isValid]) {
+            [self calibrateWithValidation:validation];
+        }
+        else if ([validation evilInput]) {
+            [self showBadValueDialog];
+        }
+        else if (self.settings.showWarningDialogs && (validation.noUnits || (validation.invalidUnits && c.direction == Horizontal))) {
+            NSString *message = validation.noUnits ? NO_UNITS_WARNING : BAD_UNITS_WARNING;
+            UIAlertController *calibrateWithBadUnitsAlert = [UIAlertController alertControllerWithTitle:BAD_UNITS message:message preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelCalibrationAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:nil];
+            UIAlertAction *calibrateAnywayAction = [UIAlertAction actionWithTitle:CALIBRATE_ANYWAY style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                [self calibrateWithValidation:validation];
+            }];
+            [calibrateWithBadUnitsAlert addAction:cancelCalibrationAction];
+            [calibrateWithBadUnitsAlert addAction:calibrateAnywayAction];
+            [self presentViewController:calibrateWithBadUnitsAlert animated:YES completion:nil];
         }
         else {
-            [self showBadValueDialog];
+            [self calibrateWithValidation:validation];
         }
     }];
     [calibrationAlertController addAction:cancelAction];
@@ -1587,7 +1609,7 @@
 }
 
 - (void)openSettings {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
 }
 
 - (void)takePhoto {
@@ -1950,52 +1972,45 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
 }
 
-#pragma mark - Delegate Methods
 
-- (void)calibrateWithText:(NSString *)rawText {
-    if (rawText.length > 0) {
-        float value = 0.0;
-        NSString *trimmedUnits = @"";
-        // commented lines can be used to test different locale behavior
-        //NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:@"FR"];
-        NSScanner *scanner = [NSScanner localizedScannerWithString:rawText];
-        //scanner.locale = locale;
-        [scanner scanFloat:&value];
-        trimmedUnits = [[[scanner string] substringFromIndex:[scanner scanLocation]] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        // reject negative values (showBadValueDialog}
-        // value = fabsf(value);
-        if (value > 0.0) {
-            Caliper *c = self.calipersView.activeCaliper;
-            if (c == nil || c.valueInPoints <= 0) {
-                return;
+- (void)calibrateWithValidation:(Validation *)validation {
+    [self processCalibration:validation.calibrationString trimmedUnits:validation.units value:validation.number];
+}
+
+- (void)processCalibration:(NSString *)rawText trimmedUnits:(NSString *)trimmedUnits value:(float)value {
+    if (value > 0.0) {
+        Caliper *c = self.calipersView.activeCaliper;
+        if (c == nil || c.valueInPoints <= 0) {
+            return;
+        }
+        if (c.direction == Horizontal) {
+            self.horizontalCalibration.calibrationString = rawText;
+            self.horizontalCalibration.units = trimmedUnits;
+            if (!self.horizontalCalibration.canDisplayRate) {
+                self.horizontalCalibration.displayRate = NO;
             }
-            if (c.direction == Horizontal) {
-                self.horizontalCalibration.calibrationString = rawText;
-                self.horizontalCalibration.units = trimmedUnits;
-                if (!self.horizontalCalibration.canDisplayRate) {
-                    self.horizontalCalibration.displayRate = NO;
-                }
-                self.horizontalCalibration.originalZoom = self.scrollView.zoomScale;
-                self.horizontalCalibration.originalCalFactor = value / c.valueInPoints;
-                self.horizontalCalibration.currentZoom = self.horizontalCalibration.originalZoom;
-                self.horizontalCalibration.calibrated = YES;
-            }
-            else {
-                self.verticalCalibration.calibrationString = rawText;
-                self.verticalCalibration.units = trimmedUnits;
-                self.verticalCalibration.originalZoom = self.scrollView.zoomScale;
-                self.verticalCalibration.originalCalFactor = value / c.valueInPoints;
-                self.verticalCalibration.currentZoom = self.verticalCalibration.originalZoom;
-                self.verticalCalibration.calibrated = YES;
-            }
-            [self.calipersView setNeedsDisplay];
-            [self selectMainToolbar];
+            self.horizontalCalibration.originalZoom = self.scrollView.zoomScale;
+            self.horizontalCalibration.originalCalFactor = value / c.valueInPoints;
+            self.horizontalCalibration.currentZoom = self.horizontalCalibration.originalZoom;
+            self.horizontalCalibration.calibrated = YES;
         }
         else {
-            [self showBadValueDialog];
+            self.verticalCalibration.calibrationString = rawText;
+            self.verticalCalibration.units = trimmedUnits;
+            self.verticalCalibration.originalZoom = self.scrollView.zoomScale;
+            self.verticalCalibration.originalCalFactor = value / c.valueInPoints;
+            self.verticalCalibration.currentZoom = self.verticalCalibration.originalZoom;
+            self.verticalCalibration.calibrated = YES;
         }
+        [self.calipersView setNeedsDisplay];
+        [self selectMainToolbar];
+    }
+    else {
+        [self showBadValueDialog];
     }
 }
+
+#pragma mark - Delegate Methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = nil;

@@ -78,7 +78,6 @@
 "Number_of_intervals" = "Enter Number of Intervals";
 "OK" = "OK";
 "One" = "1";
-"One_mv" = "1 mV";
 "PDF" = "PDF";
 "points" = "points";
 "QT" = "QT interval?";
@@ -177,6 +176,14 @@
 "Brugada_beta_angle" = "Beta angle = %.1f°%@%@";
 "Brugada_results_title" = "Brugada Syndrome Results"; 		   
 "Brugada_increased_risk" = "Increased risk of Brugada syndrome";
+
+/* New for version 3.4 */
+"Amplitude_cal_example" = "10 mm or 1 mV";
+"Bad_units" = "Calibration Warning";
+"Bad_units_warning" = "Units are not compatible with making measurements like heart rate or QTc.  Use units like msec or sec.";
+"No_units_warning" = "Calibration has no units.";
+"Calibrate_anyway" = "Calibrate Anyway";
+"Time_cal_example" = "1000 msec or 1 sec";
 
 /* To be provided by developer */
 "lang" = "en";
