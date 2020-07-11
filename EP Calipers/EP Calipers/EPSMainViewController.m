@@ -1639,11 +1639,17 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     // Editing doesn't seem to work, so disable it.
-    picker.allowsEditing = NO;
+    picker.allowsEditing = YES;
     if (self.isIpad) {
         // Need to present as popover on iPad
         picker.modalPresentationStyle = UIModalPresentationPopover;
         picker.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
+        // allowsEditing doesn't do anything on iPad.
+        picker.allowsEditing = NO;
+    }
+    else {
+        // MUST allow editing for iPhone or the image is blank.
+        picker.allowsEditing = YES;
     }
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:picker animated:YES completion:NULL];
