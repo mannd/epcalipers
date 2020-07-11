@@ -1635,14 +1635,15 @@
 
 // see http://stackoverflow.com/questions/37925583/uiimagepickercontroller-crashes-app-swift3-xcode8
 - (void)selectPhoto {
+    // FIXME: Need to check if photoLibary available.
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
+    // Editing doesn't seem to work, so disable it.
+    picker.allowsEditing = NO;
     if (self.isIpad) {
-        picker.allowsEditing = NO;
-    }
-    else{
-        picker.allowsEditing = YES;
+        // Need to present as popover on iPad
+        picker.modalPresentationStyle = UIModalPresentationPopover;
+        picker.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
     }
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:picker animated:YES completion:NULL];
