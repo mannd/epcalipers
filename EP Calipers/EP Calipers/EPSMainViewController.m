@@ -1644,12 +1644,6 @@
         // Need to present as popover on iPad
         picker.modalPresentationStyle = UIModalPresentationPopover;
         picker.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
-        // allowsEditing doesn't do anything on iPad.
-        picker.allowsEditing = NO;
-    }
-    else {
-        // MUST allow editing for iPhone or the image is blank.
-        picker.allowsEditing = YES;
     }
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:picker animated:YES completion:NULL];
@@ -2021,13 +2015,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = nil;
-    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
-    if (self.isIpad) {
-        chosenImage = info[UIImagePickerControllerOriginalImage];
-    }
-    else {
-        chosenImage = info[UIImagePickerControllerEditedImage];
-        }
+    chosenImage = info[UIImagePickerControllerEditedImage];
     [self resetImage:self];
     self.imageView.image = [self scaleImageForImageView:chosenImage];
     // reset zoom for new image
