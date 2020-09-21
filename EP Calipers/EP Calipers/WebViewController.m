@@ -22,7 +22,7 @@
 #ifdef USE_LOCAL_MANUAL_URL
 // MARK: To developers, this absolute path will need to be changed to your
 // file scheme.
-#define MANUAL_URL @"file://localhost/Users/manndxxx/dev/epcalipers-ghpages/%@.lproj/EPCalipers-help/newhelp.html#%@"
+#define MANUAL_URL @"file://localhost/Users/mannd/dev/epcalipers-ghpages/%@.lproj/EPCalipers-help/newhelp.html#%@"
 #else
 #define MANUAL_URL @"https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/newhelp.html#%@"
 #endif
