@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
+#import <WebKit/WKNavigationDelegate.h>
 
-@interface WebViewController : UIViewController <UIWebViewDelegate>
-@property (strong, nonatomic) IBOutlet UIWebView * _Nonnull webView;
+@interface WebViewController : UIViewController <WKNavigationDelegate>
+@property (strong, nonatomic) IBOutlet WKWebView * _Nonnull webView;
 @property (nullable, strong, nonatomic) NSString *anchor;
 @property (nullable, strong, nonatomic) NSString *fullLink;
 

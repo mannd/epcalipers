@@ -22,6 +22,14 @@
     NSInteger tmpLineWidth; // for "shaking" caliper
 }
 
+@synthesize bar1Position = _bar1Position;
+@synthesize bar2Position = _bar2Position;
+@synthesize crossBarPosition = _crossBarPosition;
+
+//- (void)setBar1Position:(CGFloat)position {
+//  _bar1Position = Position.translateToAbsolutePositionX(position, direction == .Horizontal ? calibration.offset.x: calibraiton.offset.y, calibraiton.getCurrentZoom());
+//}
+
 - (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position
                  crossBarPosition:(float)crossBarPosition {
     self = [super init];
@@ -73,7 +81,7 @@
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect {
     CGContextSetStrokeColorWithColor(context, [self.color CGColor]);
     CGContextSetLineWidth(context, self.lineWidth);
-    
+
     if (self.direction == Horizontal) {
         self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - DELTA);
         self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
@@ -85,7 +93,7 @@
         CGContextAddLineToPoint(context, self.bar2Position, rect.size.height);
         CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
         CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
-        
+
     } else {    // vertical caliper
         self.crossBarPosition = fminf(self.crossBarPosition, rect.size.width - DELTA);
         self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);

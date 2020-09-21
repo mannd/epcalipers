@@ -22,7 +22,7 @@
 #ifdef USE_LOCAL_MANUAL_URL
 // MARK: To developers, this absolute path will need to be changed to your
 // file scheme.
-#define MANUAL_URL @"file://localhost/Users/mannd/dev/epcalipers-ghpages/%@.lproj/EPCalipers-help/newhelp.html#%@"
+#define MANUAL_URL @"file://localhost/Users/manndxxx/dev/epcalipers-ghpages/%@.lproj/EPCalipers-help/newhelp.html#%@"
 #else
 #define MANUAL_URL @"https://mannd.github.io/epcalipers/%@.lproj/EPCalipers-help/newhelp.html#%@"
 #endif
@@ -56,7 +56,7 @@
 
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:requestObj];
-    self.webView.delegate = self;
+    self.webView.navigationDelegate = self;
 
     NSString *title = L(@"Help");
     [self.navigationItem setTitle:title];
@@ -77,12 +77,12 @@
 }
 
 // MARK: - Web view delegate
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     EPSLog(@"webViewDidFinishLoad");
     [self.activityView stopAnimating];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     EPSLog(@"webViewDidFailLoad");
     [self.activityView stopAnimating];
     UIAlertController *aboutAlertController = [UIAlertController alertControllerWithTitle:L(@"Error") message:L(@"Internet_connection_failed") preferredStyle:UIAlertControllerStyleAlert];
