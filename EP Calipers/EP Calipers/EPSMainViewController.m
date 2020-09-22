@@ -2042,8 +2042,17 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // don't move calipers, but do adjust calibration
     self.horizontalCalibration.currentZoom = scale;
     self.verticalCalibration.currentZoom = scale;
+    self.horizontalCalibration.offset = scrollView.contentOffset;
+    self.verticalCalibration.offset = scrollView.contentOffset;
     [self.calipersView setNeedsDisplay];
-    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    self.horizontalCalibration.currentZoom = scrollView.zoomScale;
+    self.verticalCalibration.currentZoom = scrollView.zoomScale;
+    self.horizontalCalibration.offset = scrollView.contentOffset;
+    self.verticalCalibration.offset = scrollView.contentOffset;
+    [self.calipersView setNeedsDisplay];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

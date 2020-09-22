@@ -9,6 +9,7 @@
 #import "Caliper.h"
 #import "EPSLogging.h"
 #import "Translation.h"
+#import "Position.h"
 #import <math.h>
 #import "Defs.h"
 
@@ -26,9 +27,37 @@
 @synthesize bar2Position = _bar2Position;
 @synthesize crossBarPosition = _crossBarPosition;
 
-//- (void)setBar1Position:(CGFloat)position {
-//  _bar1Position = Position.translateToAbsolutePositionX(position, direction == .Horizontal ? calibration.offset.x: calibraiton.offset.y, calibraiton.getCurrentZoom());
-//}
+- (float)correctedOffsetBar {
+    return self.direction == Horizontal ? self.calibration.offset.x : self.calibration.offset.y;
+}
+
+- (float)correctedOffsetCrossBar {
+    return self.direction == Horizontal ? self.calibration.offset.y : self.calibration.offset.x;
+}
+
+- (void)setBar1Position:(float)position {
+    _bar1Position = [Position translateToAbsolutePositionX:position offsetX:[self correctedOffsetBar] scale:[self.calibration currentZoom]];
+}
+
+- (float)bar1Position {
+    return [Position translateToScaledPositionX:_bar1Position offsetX:[self correctedOffsetBar] scale:[self.calibration currentZoom]];
+}
+
+- (void)setBar2Position:(float)position {
+    _bar2Position = [Position translateToAbsolutePositionX:position offsetX:[self correctedOffsetBar] scale:[self.calibration currentZoom]];
+}
+
+- (float)bar2Position {
+    return [Position translateToScaledPositionX:_bar2Position offsetX:[self correctedOffsetBar] scale:[self.calibration currentZoom]];
+}
+
+- (void)setCrossBarPosition:(float)position {
+    _crossBarPosition = [Position translateToAbsolutePositionX:position offsetX:[self correctedOffsetCrossBar] scale:[self.calibration currentZoom]];
+}
+
+- (float)crossBarPosition {
+    return [Position translateToScaledPositionX:_crossBarPosition offsetX:[self correctedOffsetCrossBar] scale:[self.calibration currentZoom]];
+}
 
 - (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position
                  crossBarPosition:(float)crossBarPosition {
