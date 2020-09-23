@@ -116,8 +116,9 @@
     CGContextSetLineWidth(context, self.lineWidth);
 
     if (self.direction == Horizontal) {
-//        self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - DELTA);
-//        self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
+        // We won't let crossbars go off the screen.
+        self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - DELTA);
+        self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
 //        self.bar1Position = fminf(self.bar1Position, rect.size.width - DELTA);
 //        self.bar2Position = fmaxf(self.bar2Position, DELTA);
         CGContextMoveToPoint(context, self.bar1Position, 0);
@@ -128,8 +129,9 @@
         CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
 
     } else {    // vertical caliper
-//        self.crossBarPosition = fminf(self.crossBarPosition, rect.size.width - DELTA);
-//        self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
+        // We won't let crossbars go off the screen.
+        self.crossBarPosition = fminf(self.crossBarPosition, rect.size.width - DELTA);
+        self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
 //        self.bar1Position = fminf(self.bar1Position, rect.size.height - DELTA);
 //        self.bar2Position = fmaxf(self.bar2Position, DELTA);
         CGContextMoveToPoint(context, 0, self.bar1Position);

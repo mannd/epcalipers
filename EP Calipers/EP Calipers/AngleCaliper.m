@@ -66,7 +66,9 @@
     
     // This ensures caliper always extends past the screen edges
     CGFloat length = MAX(rect.size.height, rect.size.width) * 2;
-    
+
+    // Unlike regular calipers, we should let angle calipers go off the screen with
+    // scrolling, because the whole caliper needs to be fixed in place.
     // Make sure focal point never too close to screen edges
     // self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - DELTA);
     // self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
