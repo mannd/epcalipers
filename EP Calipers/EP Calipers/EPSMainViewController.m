@@ -401,6 +401,7 @@
 }
 
 - (void)recenterImage {
+    return;
     CGFloat newContentOffsetX = (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2;
     CGFloat newContentOffsetY = (self.scrollView.contentSize.height - self.scrollView.frame.size.height) / 2;
     self.scrollView.contentOffset = CGPointMake(newContentOffsetX, newContentOffsetY);
