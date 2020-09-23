@@ -36,30 +36,17 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx" customClass="EcgScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blB-p5-m1c" userLabel="containerView">
-                                        <rect key="frame" x="0.0" y="44" width="375" height="579"/>
-                                        <subviews>
-                                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="ImageViewID" image="sampleECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="579"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                            </imageView>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="H9Q-uG-yq7" secondAttribute="bottom" id="2xV-pm-486"/>
-                                            <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" id="Hr7-Uj-Un9"/>
-                                            <constraint firstItem="H9Q-uG-yq7" firstAttribute="top" secondItem="blB-p5-m1c" secondAttribute="top" id="RdC-uQ-27Z"/>
-                                            <constraint firstItem="H9Q-uG-yq7" firstAttribute="leading" secondItem="blB-p5-m1c" secondAttribute="leading" id="o5l-yi-fn0"/>
-                                        </constraints>
-                                    </view>
+                                    <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="ImageViewID" image="sampleECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
+                                        <rect key="frame" x="20" y="20" width="705.5" height="338"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="blB-p5-m1c" firstAttribute="topMargin" secondItem="X5X-Yr-OYx" secondAttribute="topMargin" id="DHj-WM-deL"/>
-                                    <constraint firstAttribute="bottomMargin" secondItem="blB-p5-m1c" secondAttribute="bottomMargin" id="MTN-Ls-Xwe"/>
-                                    <constraint firstItem="blB-p5-m1c" firstAttribute="leadingMargin" secondItem="X5X-Yr-OYx" secondAttribute="leadingMargin" id="Qnl-B3-iKU"/>
-                                    <constraint firstAttribute="centerY" secondItem="blB-p5-m1c" secondAttribute="centerYWithinMargins" id="Wdz-hx-8QF"/>
-                                    <constraint firstAttribute="trailing" secondItem="blB-p5-m1c" secondAttribute="trailingMargin" id="iP2-kK-xc9"/>
-                                    <constraint firstAttribute="centerX" secondItem="blB-p5-m1c" secondAttribute="centerXWithinMargins" id="lqn-u9-9le"/>
+                                    <constraint firstItem="H9Q-uG-yq7" firstAttribute="leading" secondItem="X5X-Yr-OYx" secondAttribute="leading" constant="20" symbolic="YES" id="HZX-Uf-66d"/>
+                                    <constraint firstAttribute="bottom" secondItem="H9Q-uG-yq7" secondAttribute="bottom" constant="20" symbolic="YES" id="MkF-bS-FwD"/>
+                                    <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" constant="20" symbolic="YES" id="Puj-pH-Vi5"/>
+                                    <constraint firstItem="H9Q-uG-yq7" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="top" constant="20" symbolic="YES" id="x1X-zO-gDZ"/>
                                 </constraints>
                             </scrollView>
                             <view opaque="NO" contentMode="scaleToFill" restorationIdentifier="CalipersViewID" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView">
@@ -107,7 +94,6 @@
                         <outlet property="calipersView" destination="D98-VW-HwH" id="EQE-il-SPF"/>
                         <outlet property="constraintHamburgerLeft" destination="eia-zO-IKX" id="Qke-OW-uGD"/>
                         <outlet property="constraintHamburgerWidth" destination="aVl-LS-2Pq" id="Bcu-46-7LJ"/>
-                        <outlet property="imageContainerView" destination="blB-p5-m1c" id="pps-DN-j7O"/>
                         <outlet property="imageView" destination="H9Q-uG-yq7" id="P5j-pJ-mkb"/>
                         <outlet property="scrollView" destination="X5X-Yr-OYx" id="H47-qu-pna"/>
                         <segue destination="SZ4-BW-uWX" kind="show" identifier="showHelpSegue" id="pDP-yM-8Rj"/>
@@ -142,7 +128,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" verticalHuggingPriority="251" image="camera" translatesAutoresizingMaskIntoConstraints="NO" id="yC0-ut-9Ft">
-                                            <rect key="frame" x="8" y="11.5" width="24" height="21"/>
+                                            <rect key="frame" x="12" y="16" width="16" height="12"/>
                                         </imageView>
                                     </subviews>
                                     <color key="tintColor" systemColor="systemBlueColor"/>
@@ -324,7 +310,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="camera" width="24" height="21"/>
+        <image name="camera" width="16" height="12"/>
         <image name="sampleECG.jpg" width="677.280029296875" height="324.48001098632812"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

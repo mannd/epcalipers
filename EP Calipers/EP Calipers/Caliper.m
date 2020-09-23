@@ -112,10 +112,10 @@
     CGContextSetLineWidth(context, self.lineWidth);
 
     if (self.direction == Horizontal) {
-        self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - DELTA);
-        self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
-        self.bar1Position = fminf(self.bar1Position, rect.size.width - DELTA);
-        self.bar2Position = fmaxf(self.bar2Position, DELTA);
+//        self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - DELTA);
+//        self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
+//        self.bar1Position = fminf(self.bar1Position, rect.size.width - DELTA);
+//        self.bar2Position = fmaxf(self.bar2Position, DELTA);
         CGContextMoveToPoint(context, self.bar1Position, 0);
         CGContextAddLineToPoint(context, self.bar1Position, rect.size.height);
         CGContextMoveToPoint(context, self.bar2Position, 0);
@@ -124,10 +124,10 @@
         CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
 
     } else {    // vertical caliper
-        self.crossBarPosition = fminf(self.crossBarPosition, rect.size.width - DELTA);
-        self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
-        self.bar1Position = fminf(self.bar1Position, rect.size.height - DELTA);
-        self.bar2Position = fmaxf(self.bar2Position, DELTA);
+//        self.crossBarPosition = fminf(self.crossBarPosition, rect.size.width - DELTA);
+//        self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
+//        self.bar1Position = fminf(self.bar1Position, rect.size.height - DELTA);
+//        self.bar2Position = fmaxf(self.bar2Position, DELTA);
         CGContextMoveToPoint(context, 0, self.bar1Position);
         CGContextAddLineToPoint(context, rect.size.width, self.bar1Position);
         CGContextMoveToPoint(context, 0, self.bar2Position);
@@ -623,9 +623,9 @@
 - (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
     [coder encodeBool:[self isAngleCaliper] forKey:[self getPrefixedKey:prefix key:@"IsAngleCaliper"]];
     [coder encodeInteger:self.direction forKey:[self getPrefixedKey:prefix key:@"Direction"]];
-    [coder encodeDouble:self.bar1Position forKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
-    [coder encodeDouble:self.bar2Position forKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
-    [coder encodeDouble:self.crossBarPosition forKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
+    [coder encodeDouble:_bar1Position forKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
+    [coder encodeDouble:_bar2Position forKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
+    [coder encodeDouble:_crossBarPosition forKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
     [coder encodeObject:self.unselectedColor forKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
     [coder encodeBool:self.selected forKey:[self getPrefixedKey:prefix key:@"Selected"]];
     [coder encodeInteger:self.lineWidth forKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
@@ -640,9 +640,9 @@
 - (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
     self.isAngleCaliper = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"IsAngleCaliper"]];
     self.direction = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"Direction"]];
-    self.bar1Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
-    self.bar2Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
-    self.crossBarPosition = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
+    _bar1Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
+    _bar2Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
+    _crossBarPosition = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
     self.unselectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
     self.selected = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Selected"]];
     self.lineWidth = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
