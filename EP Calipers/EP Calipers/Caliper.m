@@ -59,6 +59,10 @@
     return [Position translateToScaledPositionX:_crossBarPosition offsetX:[self correctedOffsetCrossBar] scale:[self.calibration currentZoom]];
 }
 
+- (float)debugBar1Position {
+    return _bar1Position;
+}
+
 - (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position
                  crossBarPosition:(float)crossBarPosition {
     self = [super init];

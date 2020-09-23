@@ -37,16 +37,16 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="ImageViewID" image="sampleECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
-                                        <rect key="frame" x="20" y="20" width="705.5" height="338"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="705.5" height="338"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="H9Q-uG-yq7" firstAttribute="leading" secondItem="X5X-Yr-OYx" secondAttribute="leading" constant="20" symbolic="YES" id="HZX-Uf-66d"/>
-                                    <constraint firstAttribute="bottom" secondItem="H9Q-uG-yq7" secondAttribute="bottom" constant="20" symbolic="YES" id="MkF-bS-FwD"/>
-                                    <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" constant="20" symbolic="YES" id="Puj-pH-Vi5"/>
-                                    <constraint firstItem="H9Q-uG-yq7" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="top" constant="20" symbolic="YES" id="x1X-zO-gDZ"/>
+                                    <constraint firstItem="H9Q-uG-yq7" firstAttribute="leading" secondItem="X5X-Yr-OYx" secondAttribute="leading" id="HZX-Uf-66d"/>
+                                    <constraint firstAttribute="bottom" secondItem="H9Q-uG-yq7" secondAttribute="bottom" id="MkF-bS-FwD"/>
+                                    <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" id="Puj-pH-Vi5"/>
+                                    <constraint firstItem="H9Q-uG-yq7" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="top" id="x1X-zO-gDZ"/>
                                 </constraints>
                             </scrollView>
                             <view opaque="NO" contentMode="scaleToFill" restorationIdentifier="CalipersViewID" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView">

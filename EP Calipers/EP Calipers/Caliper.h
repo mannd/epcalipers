@@ -64,5 +64,7 @@
 - (BOOL)isTimeCaliper;
 - (CGPoint)getCaliperMidPoint;
 
+- (float)debugBar1Position;
+
 
 @end

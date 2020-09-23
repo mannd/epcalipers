@@ -2024,6 +2024,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.verticalCalibration.currentZoom = scale;
     self.horizontalCalibration.offset = scrollView.contentOffset;
     self.verticalCalibration.offset = scrollView.contentOffset;
+    [self vitalStats];
     [self.calipersView setNeedsDisplay];
 }
 
@@ -2059,6 +2060,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     EPSLog(@"scrollView offsetY = %f", self.scrollView.contentOffset.y);
     EPSLog(@"scrollView contentSizeWidth = %f", self.scrollView.contentSize.width);
     EPSLog(@"scrollView contentSizeHeight = %f", self.scrollView.contentSize.height);
+    EPSLog(@"calipersView frame.size.widht = %f", self.calipersView.frame.size.width);
+    EPSLog(@"calipersView frame.size.height = %f", self.calipersView.frame.size.height);
+    EPSLog(@"scrollView frame.size.widht = %f", self.scrollView.frame.size.width);
+    EPSLog(@"scrollView frame.size.height = %f", self.scrollView.frame.size.height);
 }
 
 - (BOOL)isCompactSizeClass {
@@ -2293,4 +2298,5 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 @end
+
 

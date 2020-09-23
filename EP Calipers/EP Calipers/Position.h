@@ -16,10 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (float)translateToScaledPositionX:(float)absolutePositionX offsetX:(float)offsetX scale:(float)scale;
 
-+ (float)translateToAbsolutePositionY:(float)scaledPositionY offsetY:(float)offsetY scale:(float)scale;
-
-+ (float)translateToScaledPositionY:(float)absolutePositionY offsetY:(float)offsetY scale:(float)scale;
-
 @end
 
 NS_ASSUME_NONNULL_END

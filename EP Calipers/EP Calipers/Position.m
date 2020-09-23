@@ -10,26 +10,14 @@
 
 @implementation Position
 
-
-
-
 + (float)translateToAbsolutePositionX:(float)scaledPositionX offsetX:(float)offsetX scale:(float)scale {
-    return (scaledPositionX + offsetX)
-    / scale;
+    return (scaledPositionX + offsetX) / scale;
 }
 
 + (float)translateToScaledPositionX:(float)absolutePositionX offsetX:(float)offsetX scale:(float)scale {
     return scale * absolutePositionX - offsetX;
 }
 
-+ (float)translateToAbsolutePositionY:(float)scaledPositionY offsetY:(float)offsetY scale:(float)scale {
-    return (scaledPositionY - offsetY)
-    / scale;
-}
-
-+ (float)translateToScaledPositionY:(float)absolutePositionY offsetY:(float)offsetY scale:(float)scale {
-    return scale * absolutePositionY + offsetY;
-}
 
 
 @end
