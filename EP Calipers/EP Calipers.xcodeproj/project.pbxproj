@@ -21,6 +21,7 @@
 		8E3BBC551EA0340200ECB992 /* CaliperFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3BBC541EA0340200ECB992 /* CaliperFactory.m */; };
 		8E3F384C21C737AE003A944E /* HamburgerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F384B21C737AE003A944E /* HamburgerViewModel.m */; };
 		8E3F384F21C73819003A944E /* HamburgerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E3F384E21C73819003A944E /* HamburgerLayer.m */; };
+		8E4004FF251D45E300508CA3 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E4004FE251D45E300508CA3 /* AudioToolbox.framework */; };
 		8E40183D249BD80C001F8AFB /* CalibrationProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40183C249BD80C001F8AFB /* CalibrationProcessor.swift */; };
 		8E401840249BE978001F8AFB /* CalibrationProcessorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E40183F249BE978001F8AFB /* CalibrationProcessorTests.swift */; };
 		8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E559EA81ACD9262004A6F91 /* Launch Screen.xib */; };
@@ -105,6 +106,7 @@
 		8E3F384B21C737AE003A944E /* HamburgerViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerViewModel.m; sourceTree = "<group>"; };
 		8E3F384D21C73819003A944E /* HamburgerLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HamburgerLayer.h; sourceTree = "<group>"; };
 		8E3F384E21C73819003A944E /* HamburgerLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HamburgerLayer.m; sourceTree = "<group>"; };
+		8E4004FE251D45E300508CA3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8E40183C249BD80C001F8AFB /* CalibrationProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationProcessor.swift; sourceTree = "<group>"; };
 		8E40183E249BD9C7001F8AFB /* EP Calipers-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EP Calipers-Bridging-Header.h"; sourceTree = "<group>"; };
 		8E40183F249BE978001F8AFB /* CalibrationProcessorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationProcessorTests.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			files = (
 				8EC0346B251947E400A1AC3D /* WebKit.framework in Frameworks */,
 				C447064F47438C8FE4FFBCF6 /* libPods-EP Calipers.a in Frameworks */,
+				8E4004FF251D45E300508CA3 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +374,7 @@
 		8E172D7E1F9C04F200CD50D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8E4004FE251D45E300508CA3 /* AudioToolbox.framework */,
 				8EC0346A251947E400A1AC3D /* WebKit.framework */,
 				8E7E432521CD85CF00A0C828 /* CMPopTipView.framework */,
 				B7E780D594419161D7CC562F /* libPods-EP Calipers.a */,
