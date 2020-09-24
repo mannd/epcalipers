@@ -67,14 +67,11 @@
     // This ensures caliper always extends past the screen edges
     CGFloat length = MAX(rect.size.height, rect.size.width) * 2;
 
-    // Unlike regular calipers, we should let angle calipers go off the screen with
+    // Unlike regular calipers, we let angle calipers go off the screen with
     // scrolling, because the whole caliper needs to be fixed in place.
-    // Make sure focal point never too close to screen edges
+    // So we don't do what we used to do, below:
     // self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - DELTA);
     // self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
-    // self.bar1Position = fminf(self.bar1Position, rect.size.width - DELTA);
-    // self.bar1Position = fmaxf (self.bar1Position, DELTA);
-    // self.bar2Position = self.bar1Position;
 
     CGPoint endPointBar1 = [self endPointForPosition:CGPointMake(self.bar1Position, self.crossBarPosition) forAngle:self.angleBar1 andLength:length];
     CGContextMoveToPoint(context, self.bar1Position, self.crossBarPosition);

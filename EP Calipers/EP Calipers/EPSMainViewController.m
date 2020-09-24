@@ -267,7 +267,6 @@
     self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
     [self createToolbars];
 
-    //self.imageView.delegate = self;
     self.blackView.delegate = self;
     [self.imageView setContentMode:UIViewContentModeCenter];
 
@@ -291,8 +290,8 @@
     self.inQtc = NO;
     self.inRRForQTc = NO;
 
+    // ImageView must have a non-clear background color, or PDFs don't work.
     self.imageView.backgroundColor = [self getImageViewBackgroundColor];
-    [self.imageView setHidden:YES];  // hide view until it is rescaled
 
     // hide hamburger menu
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
@@ -309,7 +308,8 @@
     [self setupTheme];
 
     self.isCalipersView = YES;
-    
+
+    // TODO: Not sure this makes a difference anymore.
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
     self.firstRun = YES;
     
@@ -352,9 +352,6 @@
     [self recenterImage];
     EPSLog(@"image centered");
     [self vitalStats];
-//    self.horizontalCalibration.offset = self.scrollView.contentOffset;
-//    self.verticalCalibration.offset = self.scrollView.contentOffset;
-//    [self.calipersView setNeedsDisplay];
 }
 
 - (UIColor *)getImageViewBackgroundColor {
@@ -401,10 +398,8 @@
 }
 
 - (void)recenterImage {
+    // No longer recenter image, just return.
     return;
-    CGFloat newContentOffsetX = (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2;
-    CGFloat newContentOffsetY = (self.scrollView.contentSize.height - self.scrollView.frame.size.height) / 2;
-    self.scrollView.contentOffset = CGPointMake(newContentOffsetX, newContentOffsetY);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -471,7 +466,6 @@
             [[NSUserDefaults standardUserDefaults] setObject:[Version getAppVersion] forKey:@"AppVersion"];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
-        [self.imageView setHidden:NO];
 
         // When starting add a caliper if one isn't there already
         if ([self.calipersView count] == 0) {
@@ -756,20 +750,8 @@
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
     EPSLog(@"scaleImageForImageView");
+    // No longer do any scaling, just give back image.
     return image;
-    CGFloat ratio;
-    // determine best fit for image
-    if (image.size.width > image.size.height) {
-        ratio = self.portraitWidth / image.size.width;
-    }
-    else {
-        ratio = self.landscapeHeight / image.size.height;
-    }
-    // use scaling rather than resizing to get sharper image
-    CGImageRef imageRef = image.CGImage;
-    UIImage *scaledImage = [UIImage imageWithCGImage:(CGImageRef)imageRef scale:1/ratio orientation:UIImageOrientationUp];
-
-    return scaledImage;
 }
 
 - (void)didReceiveMemoryWarning {

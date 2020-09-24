@@ -41,7 +41,7 @@
 - (NSString *)measurement;
 - (double)intervalInSecs:(double)interval;
 - (double)intervalInMsec:(double)interval;
-- (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position crossBarPosition:(float)crossBarPosition;
+- (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position crossBarPosition:(float)crossBarPosition calibration:(Calibration *)calibration;
 - (instancetype)init;
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect;
 - (void)setInitialPositionInRect:(CGRect)rect;

@@ -64,10 +64,11 @@
 }
 
 - (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position
-                 crossBarPosition:(float)crossBarPosition {
+                 crossBarPosition:(float)crossBarPosition calibration:(Calibration *)calibration {
     self = [super init];
     if (self) {
         self.direction = direction;
+        self.calibration = calibration;
         self.bar1Position = bar1Position;
         self.bar2Position = bar2Position;
         self.crossBarPosition = crossBarPosition;
@@ -90,7 +91,7 @@
 }
 
 - (instancetype)init {
-    return [self initWithDirection:Horizontal bar1Position:0 bar2Position:0 crossBarPosition:100];
+    return [self initWithDirection:Horizontal bar1Position:0 bar2Position:0 crossBarPosition:100 calibration:[[Calibration alloc] init]];
 }
 
 // set slightly different positions for each new caliper
@@ -116,11 +117,10 @@
     CGContextSetLineWidth(context, self.lineWidth);
 
     if (self.direction == Horizontal) {
-        // We won't let crossbars go off the screen.
+        // We won't let crossbars go off the screen.  We do let regular bars go off the screen.
         self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - DELTA);
         self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
-//        self.bar1Position = fminf(self.bar1Position, rect.size.width - DELTA);
-//        self.bar2Position = fmaxf(self.bar2Position, DELTA);
+
         CGContextMoveToPoint(context, self.bar1Position, 0);
         CGContextAddLineToPoint(context, self.bar1Position, rect.size.height);
         CGContextMoveToPoint(context, self.bar2Position, 0);
@@ -129,11 +129,10 @@
         CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
 
     } else {    // vertical caliper
-        // We won't let crossbars go off the screen.
+        // We won't let crossbars go off the screen.  We do let regular bars go off the screen.
         self.crossBarPosition = fminf(self.crossBarPosition, rect.size.width - DELTA);
         self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
-//        self.bar1Position = fminf(self.bar1Position, rect.size.height - DELTA);
-//        self.bar2Position = fmaxf(self.bar2Position, DELTA);
+
         CGContextMoveToPoint(context, 0, self.bar1Position);
         CGContextAddLineToPoint(context, rect.size.width, self.bar1Position);
         CGContextMoveToPoint(context, 0, self.bar2Position);
@@ -165,7 +164,6 @@
     CGContextSetStrokeColorWithColor(context, [chosenComponentColor CGColor]);
     switch (self.chosenComponent) {
         case Bar1:
-            EPSLog(@"draw bar1");
             if (self.direction == Horizontal) {
                 CGContextMoveToPoint(context, self.bar1Position, 0);
                 CGContextAddLineToPoint(context, self.bar1Position, rect.size.height);
@@ -176,7 +174,6 @@
             }
             break;
         case Bar2:
-            EPSLog(@"draw bar2");
             if (self.direction == Horizontal) {
                 CGContextMoveToPoint(context, self.bar2Position, 0);
                 CGContextAddLineToPoint(context, self.bar2Position, rect.size.height);
@@ -187,7 +184,6 @@
             }
             break;
         case Crossbar:
-            EPSLog(@"draw crossbar");
             if (self.direction == Horizontal) {
                 CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
                 CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
