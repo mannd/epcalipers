@@ -2112,6 +2112,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
     [self.scrollView setUserInteractionEnabled:!self.calipersView.lockImageScreen];
     [self.calipersView setNeedsDisplay];
+    // Note that unlock sound (1101, unlock.caf) doesn't do anything anymore,
+    // so use the lock sound for both locking and unlocking.
+    AudioServicesPlaySystemSound(1100);
 }
 
 - (BOOL)imageIsLocked {
