@@ -15,6 +15,7 @@
 #import "MiniQTcResult.h"
 #import "Translation.h"
 #import "Version.h"
+#import "EPSLogging.h"
 
 @interface EP_CalipersTests : XCTestCase
 
@@ -50,9 +51,6 @@
 
 - (void)testBarCoord {
     Caliper *c = [[Caliper alloc] init];
-    XCTAssert(c.bar1Position == 0);
-    XCTAssert(c.bar2Position == 0);
-    XCTAssert(c.crossBarPosition == 100.0);
     CGPoint p = CGPointMake(100, 50);
     XCTAssert([c barCoord:p] == 100);
     c.direction = Vertical;
@@ -60,10 +58,14 @@
 }
 
 - (void)testCaliperInitialPosition {
+    Calibration *hCal = [[Calibration alloc] init];
+    Calibration *vCal = [[Calibration alloc] init];
     Caliper *c = [[Caliper alloc] init];
+    c.calibration = hCal;
     CGRect rect = CGRectMake(0, 0, 200, 200);
     [c setInitialPositionInRect:rect];
     Caliper *d = [[Caliper alloc] init];
+    d.calibration = hCal;
     [d setInitialPositionInRect:rect];
     XCTAssertFalse(c.bar1Position == d.bar1Position);
     XCTAssertFalse(c.bar2Position == d.bar2Position);
@@ -82,11 +84,12 @@
         XCTAssertFalse(c.bar2Position == d.bar2Position);
         XCTAssertFalse(c.crossBarPosition == d.crossBarPosition);
     }
-    Caliper *e = [[Caliper alloc] initWithDirection:Vertical bar1Position:0 bar2Position:10 crossBarPosition:30];
-    Caliper *f = [[Caliper alloc] initWithDirection:Vertical bar1Position:0 bar2Position:10 crossBarPosition:30];
-    XCTAssertTrue(e.bar1Position == f.bar1Position);
-    XCTAssertTrue(e.bar2Position == f.bar2Position);
-    XCTAssertTrue(e.crossBarPosition == f.crossBarPosition);
+    Caliper *e = [[Caliper alloc] initWithDirection:Vertical bar1Position:0 bar2Position:10 crossBarPosition:30 calibration:vCal];
+    Caliper *f = [[Caliper alloc] initWithDirection:Vertical bar1Position:0 bar2Position:10 crossBarPosition:30 calibration:vCal];
+    EPSLog(@"e.bar1Position = %f, f.bar1Position = %f", e.bar1Position, f.bar1Position);
+    XCTAssertEqual(e.bar1Position, f.bar1Position);
+    XCTAssertEqual(e.bar2Position, f.bar2Position);
+    XCTAssertEqual(e.crossBarPosition, f.crossBarPosition);
     [e setInitialPositionInRect:rect];
     [f setInitialPositionInRect:rect];
     XCTAssertFalse(e.bar1Position == f.bar1Position);
@@ -275,17 +278,17 @@
 }
 
 - (void)testCaliperMidpoint {
-    Caliper *c1 = [[Caliper alloc] initWithDirection:Horizontal bar1Position:200 bar2Position:100 crossBarPosition:100];
+    Calibration *cal = [[Calibration alloc] init];
+    Caliper *c1 = [[Caliper alloc] initWithDirection:Horizontal bar1Position:200 bar2Position:100 crossBarPosition:100 calibration:cal];
+    c1.calibration.offset = CGPointZero;
     CGPoint midPoint = CGPointMake(150, 100);
     XCTAssertEqual(c1.getCaliperMidPoint.x, midPoint.x);
     XCTAssertEqual(c1.getCaliperMidPoint.y, midPoint.y);
-    Caliper *c2 = [[Caliper alloc] initWithDirection:Vertical bar1Position:200 bar2Position:100 crossBarPosition:100];
+    Caliper *c2 = [[Caliper alloc] initWithDirection:Vertical bar1Position:200 bar2Position:100 crossBarPosition:100 calibration:cal];
+    c2.calibration.offset = CGPointZero;
     midPoint = CGPointMake(100, 150);
     XCTAssertEqual(c2.getCaliperMidPoint.x, midPoint.x);
     XCTAssertEqual(c2.getCaliperMidPoint.y, midPoint.y);
-    Caliper *c3;
-    XCTAssertEqual(c3.getCaliperMidPoint.x, 0);
-    XCTAssertEqual(c3.getCaliperMidPoint.y, 0);
 }
 
 - (void)testVersion {
@@ -311,7 +314,7 @@
     // Note: some of these tests just "exercise" the code for coverage and don't really test anything.
     CGRect rect = CGRectMake(0, 0, 300, 300);
     CalipersView *view = [[CalipersView alloc] initWithFrame:rect];
-    Caliper *c = [[Caliper alloc] initWithDirection:Vertical bar1Position:0 bar2Position:10 crossBarPosition:200];
+    Caliper *c = [[Caliper alloc] initWithDirection:Vertical bar1Position:0 bar2Position:10 crossBarPosition:200 calibration:[[Calibration alloc] init]];
     Caliper *d = [[Caliper alloc] init];
     view.calipers = [[NSMutableArray alloc] init];
     [view.calipers addObject:c];
@@ -358,13 +361,14 @@
     cal.originalZoom = 1;
     cal.currentZoom = 1;
     cal.originalCalFactor = 1;
+    // Now with sticky calipers zoom does not affect measurement.
     XCTAssertEqualObjects([d measurement], @"100 msec");
     cal.currentZoom = 2;
-    XCTAssertEqualObjects([d measurement], @"50 msec");
+    XCTAssertEqualObjects([d measurement], @"100 msec");
     cal.currentZoom = 0.5;
-    XCTAssertEqualObjects([d measurement], @"200 msec");
+    XCTAssertEqualObjects([d measurement], @"100 msec");
     cal.displayRate = YES;
-    XCTAssertEqualObjects([d measurement], @"300 bpm");
+    XCTAssertEqualObjects([d measurement], @"600 bpm");
     XCTAssert(cal.canDisplayRate);
     cal.displayRate = NO;
     cal.units = @"sec";
@@ -518,6 +522,8 @@
 
 - (void)testMiscCaliperTests {
     Caliper *c = [[Caliper alloc] init];
+    Calibration *cal = [[Calibration alloc] init];
+    c.calibration = cal;
     c.bar1Position = 100;
     c.bar2Position = 50;
     c.crossBarPosition = 120;
@@ -536,7 +542,7 @@
     XCTAssertTrue([c pointNearCaliper:closePoint2]);
     XCTAssertEqual([c intervalInMsec:0.100], 100);
     XCTAssertEqual([c intervalInSecs:200], 0.2);
-    Calibration *cal = [[Calibration alloc] init];
+    cal = [[Calibration alloc] init];
     cal.units = @"msec";
     c.calibration = cal;
     XCTAssertEqual([c intervalInMsec:100], 100);
@@ -593,8 +599,10 @@
 - (void)testMiscCalipersView {
     CalipersView *cv = [[CalipersView alloc] init];
     XCTAssertEqualObjects([cv activeCaliper], nil);
+    Calibration *cal = [[Calibration alloc] init];
     Caliper *c = [[Caliper alloc] init];
     Caliper *d = [[Caliper alloc] init];
+    c.calibration = d.calibration = cal;
     cv.calipers = [[NSMutableArray alloc] init];
     [cv.calipers addObject:c];
     [cv.calipers addObject:d];

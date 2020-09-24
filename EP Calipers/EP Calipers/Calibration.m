@@ -100,6 +100,7 @@
     return (self.originalZoom * self.originalCalFactor) / self.currentZoom;
 }
 
+
 - (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key {
     return [NSString stringWithFormat:@"%@%@", prefix, key];
 }

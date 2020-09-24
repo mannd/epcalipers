@@ -9,6 +9,7 @@
 #import "Caliper.h"
 #import "EPSLogging.h"
 #import "Translation.h"
+#import "Position.h"
 #import <math.h>
 #import "Defs.h"
 
@@ -22,11 +23,52 @@
     NSInteger tmpLineWidth; // for "shaking" caliper
 }
 
+@synthesize bar1Position = _bar1Position;
+@synthesize bar2Position = _bar2Position;
+@synthesize crossBarPosition = _crossBarPosition;
+
+- (float)correctedOffsetBar {
+    return self.direction == Horizontal ? self.calibration.offset.x : self.calibration.offset.y;
+}
+
+- (float)correctedOffsetCrossBar {
+    return self.direction == Horizontal ? self.calibration.offset.y : self.calibration.offset.x;
+}
+
+- (void)setBar1Position:(float)position {
+    _bar1Position = [Position translateToAbsolutePositionX:position offsetX:[self correctedOffsetBar] scale:[self.calibration currentZoom]];
+}
+
+- (float)bar1Position {
+    return [Position translateToScaledPositionX:_bar1Position offsetX:[self correctedOffsetBar] scale:[self.calibration currentZoom]];
+}
+
+- (void)setBar2Position:(float)position {
+    _bar2Position = [Position translateToAbsolutePositionX:position offsetX:[self correctedOffsetBar] scale:[self.calibration currentZoom]];
+}
+
+- (float)bar2Position {
+    return [Position translateToScaledPositionX:_bar2Position offsetX:[self correctedOffsetBar] scale:[self.calibration currentZoom]];
+}
+
+- (void)setCrossBarPosition:(float)position {
+    _crossBarPosition = [Position translateToAbsolutePositionX:position offsetX:[self correctedOffsetCrossBar] scale:[self.calibration currentZoom]];
+}
+
+- (float)crossBarPosition {
+    return [Position translateToScaledPositionX:_crossBarPosition offsetX:[self correctedOffsetCrossBar] scale:[self.calibration currentZoom]];
+}
+
+- (float)debugBar1Position {
+    return _bar1Position;
+}
+
 - (instancetype)initWithDirection:(CaliperDirection)direction bar1Position:(float)bar1Position bar2Position:(float)bar2Position
-                 crossBarPosition:(float)crossBarPosition {
+                 crossBarPosition:(float)crossBarPosition calibration:(Calibration *)calibration {
     self = [super init];
     if (self) {
         self.direction = direction;
+        self.calibration = calibration;
         self.bar1Position = bar1Position;
         self.bar2Position = bar2Position;
         self.crossBarPosition = crossBarPosition;
@@ -49,7 +91,7 @@
 }
 
 - (instancetype)init {
-    return [self initWithDirection:Horizontal bar1Position:0 bar2Position:0 crossBarPosition:100];
+    return [self initWithDirection:Horizontal bar1Position:0 bar2Position:0 crossBarPosition:100 calibration:[[Calibration alloc] init]];
 }
 
 // set slightly different positions for each new caliper
@@ -73,24 +115,24 @@
 - (void)drawWithContext:(CGContextRef)context inRect:(CGRect)rect {
     CGContextSetStrokeColorWithColor(context, [self.color CGColor]);
     CGContextSetLineWidth(context, self.lineWidth);
-    
+
     if (self.direction == Horizontal) {
+        // We won't let crossbars go off the screen.  We do let regular bars go off the screen.
         self.crossBarPosition = fminf(self.crossBarPosition, rect.size.height - DELTA);
         self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
-        self.bar1Position = fminf(self.bar1Position, rect.size.width - DELTA);
-        self.bar2Position = fmaxf(self.bar2Position, DELTA);
+
         CGContextMoveToPoint(context, self.bar1Position, 0);
         CGContextAddLineToPoint(context, self.bar1Position, rect.size.height);
         CGContextMoveToPoint(context, self.bar2Position, 0);
         CGContextAddLineToPoint(context, self.bar2Position, rect.size.height);
         CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
         CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
-        
+
     } else {    // vertical caliper
+        // We won't let crossbars go off the screen.  We do let regular bars go off the screen.
         self.crossBarPosition = fminf(self.crossBarPosition, rect.size.width - DELTA);
         self.crossBarPosition = fmaxf(self.crossBarPosition, DELTA);
-        self.bar1Position = fminf(self.bar1Position, rect.size.height - DELTA);
-        self.bar2Position = fmaxf(self.bar2Position, DELTA);
+
         CGContextMoveToPoint(context, 0, self.bar1Position);
         CGContextAddLineToPoint(context, rect.size.width, self.bar1Position);
         CGContextMoveToPoint(context, 0, self.bar2Position);
@@ -122,7 +164,6 @@
     CGContextSetStrokeColorWithColor(context, [chosenComponentColor CGColor]);
     switch (self.chosenComponent) {
         case Bar1:
-            EPSLog(@"draw bar1");
             if (self.direction == Horizontal) {
                 CGContextMoveToPoint(context, self.bar1Position, 0);
                 CGContextAddLineToPoint(context, self.bar1Position, rect.size.height);
@@ -133,7 +174,6 @@
             }
             break;
         case Bar2:
-            EPSLog(@"draw bar2");
             if (self.direction == Horizontal) {
                 CGContextMoveToPoint(context, self.bar2Position, 0);
                 CGContextAddLineToPoint(context, self.bar2Position, rect.size.height);
@@ -144,7 +184,6 @@
             }
             break;
         case Crossbar:
-            EPSLog(@"draw crossbar");
             if (self.direction == Horizontal) {
                 CGContextMoveToPoint(context, self.bar2Position, self.crossBarPosition);
                 CGContextAddLineToPoint(context, self.bar1Position, self.crossBarPosition);
@@ -586,9 +625,9 @@
 - (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
     [coder encodeBool:[self isAngleCaliper] forKey:[self getPrefixedKey:prefix key:@"IsAngleCaliper"]];
     [coder encodeInteger:self.direction forKey:[self getPrefixedKey:prefix key:@"Direction"]];
-    [coder encodeDouble:self.bar1Position forKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
-    [coder encodeDouble:self.bar2Position forKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
-    [coder encodeDouble:self.crossBarPosition forKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
+    [coder encodeDouble:_bar1Position forKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
+    [coder encodeDouble:_bar2Position forKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
+    [coder encodeDouble:_crossBarPosition forKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
     [coder encodeObject:self.unselectedColor forKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
     [coder encodeBool:self.selected forKey:[self getPrefixedKey:prefix key:@"Selected"]];
     [coder encodeInteger:self.lineWidth forKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
@@ -603,9 +642,9 @@
 - (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
     self.isAngleCaliper = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"IsAngleCaliper"]];
     self.direction = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"Direction"]];
-    self.bar1Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
-    self.bar2Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
-    self.crossBarPosition = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
+    _bar1Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
+    _bar2Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
+    _crossBarPosition = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
     self.unselectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
     self.selected = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Selected"]];
     self.lineWidth = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"LineWidth"]];

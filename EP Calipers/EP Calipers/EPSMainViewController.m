@@ -47,7 +47,7 @@
 // Minimum press duration for long presses (default = 0.5)
 #define MINIMUM_PRESS_DURATION 0.8
 #define ANIMATION_DURATION 0.5
-#define MIN_ZOOM 1.0
+#define MIN_ZOOM 0.25
 #define MAX_ZOOM 10.0
 #define MOVEMENT 1.0f
 #define MICRO_MOVEMENT 0.1f
@@ -267,7 +267,6 @@
     self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
     [self createToolbars];
 
-    //self.imageView.delegate = self;
     self.blackView.delegate = self;
     [self.imageView setContentMode:UIViewContentModeCenter];
 
@@ -291,8 +290,8 @@
     self.inQtc = NO;
     self.inRRForQTc = NO;
 
+    // ImageView must have a non-clear background color, or PDFs don't work.
     self.imageView.backgroundColor = [self getImageViewBackgroundColor];
-    [self.imageView setHidden:YES];  // hide view until it is rescaled
 
     // hide hamburger menu
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
@@ -309,7 +308,8 @@
     [self setupTheme];
 
     self.isCalipersView = YES;
-    
+
+    // TODO: Not sure this makes a difference anymore.
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
     self.firstRun = YES;
     
@@ -347,7 +347,11 @@
 
 - (void) orientationChanged:(NSNotification *)notification {
     // To avoid zoomed images from getting off-center, we recenter with rotation.
+    EPSLog(@"orientationChanged");
+    [self vitalStats];
     [self recenterImage];
+    EPSLog(@"image centered");
+    [self vitalStats];
 }
 
 - (UIColor *)getImageViewBackgroundColor {
@@ -361,43 +365,12 @@
     }
 }
 
-// FIXME: original code for dark theme is below
-//-    self.navigationController.navigationBar.translucent = NO;
-//-    self.navigationController.toolbar.translucent = NO;
-//-    if (self.settings.darkTheme) {
-//    -        // Note that toolbar background colors don't work.  See
-//    -        // https://stackoverflow.com/questions/4996906/uitoolbar-with-reduced-alpha-want-uibarbuttonitem-to-have-alpha-1/26642590#26642590
-//    -
-//    -        // Below uses a white on black color
-//    -        [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
-//    -        self.navigationController.toolbar.tintColor = WHITE;
-//    -        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-//    -        self.navigationController.navigationBar.tintColor = WHITE;
-//    -        // Use this if you want tinted bars.
-//    -        // [self.navigationController.toolbar setBackgroundImage:[self onePixelImageWithColor:[barColor colorWithAlphaComponent:0.2]] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
-//    -    }
-//-    else {
-//    -        [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-//    -        [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
-//    -        self.navigationController.toolbar.tintColor = nil;
-//    -        self.navigationController.navigationBar.tintColor = nil;
-
 - (void)setupTheme {
     self.navigationController.navigationBar.translucent = YES;
 
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
-    // FIXME: Need to decide on white or blue toolbar/navigation buttons.  Or make a setting for this.
-    // Note: code commented out below uses a white text on black background during dark mode, which looks nice and is similar to faked dark mode before, but looks different from all other EP Studios apps.  So, for the sake of uniformity...
-//    if (@available(iOS 11.0, *)) {
-//        self.navigationController.navigationBar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
-//        self.navigationController.toolbar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
-//        self.navigationController.navigationBar.tintColor = [UIColor colorNamed:@"customTintColor"];
-//        self.navigationController.toolbar.tintColor = [UIColor colorNamed:@"customTintColor"];
 
-//    } else {
-//        // Use default colors
-//    }
     if (@available(iOS 13.0, *)) {
         self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
         self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
@@ -425,9 +398,8 @@
 }
 
 - (void)recenterImage {
-    CGFloat newContentOffsetX = (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2;
-    CGFloat newContentOffsetY = (self.scrollView.contentSize.height - self.scrollView.frame.size.height) / 2;
-    self.scrollView.contentOffset = CGPointMake(newContentOffsetX, newContentOffsetY);
+    // No longer recenter image, just return.
+    return;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -494,7 +466,7 @@
             [[NSUserDefaults standardUserDefaults] setObject:[Version getAppVersion] forKey:@"AppVersion"];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
-        [self.imageView setHidden:NO];
+
         // When starting add a caliper if one isn't there already
         if ([self.calipersView count] == 0) {
             [self addHorizontalCaliper];
@@ -777,19 +749,9 @@
 }
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
-    CGFloat ratio;
-    // determine best fit for image
-    if (image.size.width > image.size.height) {
-        ratio = self.portraitWidth / image.size.width;
-    }
-    else {
-        ratio = self.landscapeHeight / image.size.height;
-    }
-    // use scaling rather than resizing to get sharper image
-    CGImageRef imageRef = image.CGImage;
-    UIImage *scaledImage = [UIImage imageWithCGImage:(CGImageRef)imageRef scale:1/ratio orientation:UIImageOrientationUp];
-
-    return scaledImage;
+    EPSLog(@"scaleImageForImageView");
+    // No longer do any scaling, just give back image.
+    return image;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -2034,22 +1996,71 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void)centerContent {
+    CGFloat top = 0, left = 0;
+    if (self.scrollView.contentSize.width < self.scrollView.bounds.size.width) {
+        left = (self.scrollView.bounds.size.width-self.scrollView.contentSize.width) * 0.5f;
+    }
+    if (self.scrollView.contentSize.height < self.scrollView.bounds.size.height) {
+        top = (self.scrollView.bounds.size.height-self.scrollView.contentSize.height) * 0.5f;
+    }
+    self.scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
+}
+
+- (void)scrollViewDidZoom:(__unused UIScrollView *)scrollView {
+    [self centerContent];
+}
+
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-    return self.imageContainerView;
+    return self.imageView;
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     // don't move calipers, but do adjust calibration
     self.horizontalCalibration.currentZoom = scale;
     self.verticalCalibration.currentZoom = scale;
+    self.horizontalCalibration.offset = scrollView.contentOffset;
+    self.verticalCalibration.offset = scrollView.contentOffset;
+    [self vitalStats];
     [self.calipersView setNeedsDisplay];
-    
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    self.horizontalCalibration.currentZoom = scrollView.zoomScale;
+    self.verticalCalibration.currentZoom = scrollView.zoomScale;
+    self.horizontalCalibration.offset = scrollView.contentOffset;
+    self.verticalCalibration.offset = scrollView.contentOffset;
+    [self.calipersView setNeedsDisplay];
+}
+
+- (void)adjustCalibrationZoomOffset {
+    self.horizontalCalibration.currentZoom = self.scrollView.zoomScale;
+    self.verticalCalibration.currentZoom = self.scrollView.zoomScale;
+    self.horizontalCalibration.offset = self.scrollView.contentOffset;
+    self.verticalCalibration.offset = self.scrollView.contentOffset;
+    [self.calipersView setNeedsDisplay];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     EPSLog(@"viewWillTransitionToSize");
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self vitalStats];
+
+    // FIXME: Below redundant?
     [self.calipersView setNeedsDisplay];
+}
+
+// for debugging
+- (void)vitalStats {
+    EPSLog(@"scrollView zoom = %f", self.scrollView.zoomScale);
+    EPSLog(@"scrollView offsetX = %f", self.scrollView.contentOffset.x);
+    EPSLog(@"scrollView offsetY = %f", self.scrollView.contentOffset.y);
+    EPSLog(@"scrollView contentSizeWidth = %f", self.scrollView.contentSize.width);
+    EPSLog(@"scrollView contentSizeHeight = %f", self.scrollView.contentSize.height);
+    EPSLog(@"calipersView frame.size.widht = %f", self.calipersView.frame.size.width);
+    EPSLog(@"calipersView frame.size.height = %f", self.calipersView.frame.size.height);
+    EPSLog(@"scrollView frame.size.widht = %f", self.scrollView.frame.size.width);
+    EPSLog(@"scrollView frame.size.height = %f", self.scrollView.frame.size.height);
 }
 
 - (BOOL)isCompactSizeClass {
@@ -2253,6 +2264,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // calibration
     [self.horizontalCalibration decodeCalibrationState:coder withPrefix:@"Horizontal"];
     [self.verticalCalibration decodeCalibrationState:coder withPrefix:@"Vertical"];
+    self.horizontalCalibration.offset = self.scrollView.contentOffset;
+    self.verticalCalibration.offset = self.scrollView.contentOffset;
     
     // calipers
     NSInteger calipersCount = [coder decodeIntegerForKey:@"CalipersCount"];
@@ -2282,4 +2295,5 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 @end
+
 
