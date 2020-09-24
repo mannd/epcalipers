@@ -1996,6 +1996,21 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void)centerContent {
+    CGFloat top = 0, left = 0;
+    if (self.scrollView.contentSize.width < self.scrollView.bounds.size.width) {
+        left = (self.scrollView.bounds.size.width-self.scrollView.contentSize.width) * 0.5f;
+    }
+    if (self.scrollView.contentSize.height < self.scrollView.bounds.size.height) {
+        top = (self.scrollView.bounds.size.height-self.scrollView.contentSize.height) * 0.5f;
+    }
+    self.scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
+}
+
+- (void)scrollViewDidZoom:(__unused UIScrollView *)scrollView {
+    [self centerContent];
+}
+
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;
 }
