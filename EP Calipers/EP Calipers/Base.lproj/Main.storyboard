@@ -36,17 +36,29 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx" customClass="EcgScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="ImageViewID" image="sampleECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UrG-6e-uii">
                                         <rect key="frame" x="0.0" y="0.0" width="705.5" height="338"/>
+                                        <subviews>
+                                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="ImageViewID" image="sampleECG.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="H9Q-uG-yq7" userLabel="imageView">
+                                                <rect key="frame" x="0.0" y="0.0" width="705.5" height="338"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </imageView>
+                                        </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                    </imageView>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="H9Q-uG-yq7" secondAttribute="bottom" id="0vm-sr-a8f"/>
+                                            <constraint firstItem="H9Q-uG-yq7" firstAttribute="top" secondItem="UrG-6e-uii" secondAttribute="top" id="CKm-Bt-nax"/>
+                                            <constraint firstItem="H9Q-uG-yq7" firstAttribute="leading" secondItem="UrG-6e-uii" secondAttribute="leading" id="paL-OT-r5p"/>
+                                            <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" id="wxG-ql-ffX"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="H9Q-uG-yq7" firstAttribute="leading" secondItem="X5X-Yr-OYx" secondAttribute="leading" id="HZX-Uf-66d"/>
-                                    <constraint firstAttribute="bottom" secondItem="H9Q-uG-yq7" secondAttribute="bottom" id="MkF-bS-FwD"/>
-                                    <constraint firstAttribute="trailing" secondItem="H9Q-uG-yq7" secondAttribute="trailing" id="Puj-pH-Vi5"/>
-                                    <constraint firstItem="H9Q-uG-yq7" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="top" id="x1X-zO-gDZ"/>
+                                    <constraint firstItem="UrG-6e-uii" firstAttribute="leading" secondItem="X5X-Yr-OYx" secondAttribute="leading" id="5Ac-8D-tgJ"/>
+                                    <constraint firstItem="UrG-6e-uii" firstAttribute="top" secondItem="X5X-Yr-OYx" secondAttribute="top" id="A7z-R3-Dda"/>
+                                    <constraint firstAttribute="trailing" secondItem="UrG-6e-uii" secondAttribute="trailing" id="F1K-vg-sAO"/>
+                                    <constraint firstAttribute="bottom" secondItem="UrG-6e-uii" secondAttribute="bottom" id="fvu-o6-Sh6"/>
                                 </constraints>
                             </scrollView>
                             <view opaque="NO" contentMode="scaleToFill" restorationIdentifier="CalipersViewID" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView">
@@ -94,6 +106,7 @@
                         <outlet property="calipersView" destination="D98-VW-HwH" id="EQE-il-SPF"/>
                         <outlet property="constraintHamburgerLeft" destination="eia-zO-IKX" id="Qke-OW-uGD"/>
                         <outlet property="constraintHamburgerWidth" destination="aVl-LS-2Pq" id="Bcu-46-7LJ"/>
+                        <outlet property="imageContainerView" destination="UrG-6e-uii" id="lOa-L5-P1Z"/>
                         <outlet property="imageView" destination="H9Q-uG-yq7" id="P5j-pJ-mkb"/>
                         <outlet property="scrollView" destination="X5X-Yr-OYx" id="H47-qu-pna"/>
                         <segue destination="SZ4-BW-uWX" kind="show" identifier="showHelpSegue" id="pDP-yM-8Rj"/>

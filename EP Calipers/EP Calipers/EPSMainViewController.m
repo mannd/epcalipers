@@ -225,6 +225,9 @@
 @property (nonatomic) BOOL showCalculateQTcToolTip;
 @property (nonatomic) BOOL showQtcStep1ToolTip;
 @property (nonatomic) BOOL showQtcStep2ToolTip;
+
+@property (nonatomic) CGAffineTransform imageTransform;
+
 @end
 
 @implementation EPSMainViewController
@@ -1862,12 +1865,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)rotateImage:(double)degrees {
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
+//        self.imageContainerView.transform = CGAffineTransformRotate(self.imageContainerView.transform, radians(degrees));
+//        self.scrollView.transform = CGAffineTransformRotate(self.scrollView.transform, radians(degrees));
         self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(degrees));
     }];
 }
 
 - (IBAction)resetImage:(id)sender {
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
+//        self.imageContainerView.transform = CGAffineTransformIdentity;
+//        self.scrollView.transform = CGAffineTransformIdentity;
         self.imageView.transform = CGAffineTransformIdentity;
     }];
 }
@@ -2010,12 +2017,18 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self centerContent];
 }
 
+
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-    return self.imageView;
+    return self.imageContainerView;
+}
+
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+//    self.imageTransform = self.imageView.transform;
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
     EPSLog(@"scrollViewDidEndZooming");
+//    self.imageView.transform = self.imageTransform;
     self.horizontalCalibration.currentZoom = scale;
     self.verticalCalibration.currentZoom = scale;
     self.horizontalCalibration.offset = scrollView.contentOffset;
