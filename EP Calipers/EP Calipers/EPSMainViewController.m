@@ -21,7 +21,7 @@
 #import "EP_Calipers-Swift.h"
 #import "Defs.h"
 #import <os/log.h>
-
+#import <AudioToolbox/AudioToolbox.h>
 
 // These can't be yes for release version
 #ifdef DEBUG
@@ -348,10 +348,8 @@
 - (void) orientationChanged:(NSNotification *)notification {
     // To avoid zoomed images from getting off-center, we recenter with rotation.
     EPSLog(@"orientationChanged");
-    [self vitalStats];
     [self recenterImage];
     EPSLog(@"image centered");
-    [self vitalStats];
 }
 
 - (UIColor *)getImageViewBackgroundColor {
@@ -398,8 +396,8 @@
 }
 
 - (void)recenterImage {
-    // No longer recenter image, just return.
-    return;
+    EPSLog(@"recenter image");
+    [self centerContent];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -2008,6 +2006,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)scrollViewDidZoom:(__unused UIScrollView *)scrollView {
+    EPSLog(@"scrollViewDidZoom");
     [self centerContent];
 }
 
@@ -2016,28 +2015,22 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
-    // don't move calipers, but do adjust calibration
+    EPSLog(@"scrollViewDidEndZooming");
     self.horizontalCalibration.currentZoom = scale;
     self.verticalCalibration.currentZoom = scale;
     self.horizontalCalibration.offset = scrollView.contentOffset;
     self.verticalCalibration.offset = scrollView.contentOffset;
-    [self vitalStats];
     [self.calipersView setNeedsDisplay];
 }
 
+// This is also called during zooming, so that calipers adjust to zoom and scrolling.
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    EPSLog(@"scrollViewDidScroll");
+    EPSLog(@"scrollView zoomScale = %f", scrollView.zoomScale);
     self.horizontalCalibration.currentZoom = scrollView.zoomScale;
     self.verticalCalibration.currentZoom = scrollView.zoomScale;
     self.horizontalCalibration.offset = scrollView.contentOffset;
     self.verticalCalibration.offset = scrollView.contentOffset;
-    [self.calipersView setNeedsDisplay];
-}
-
-- (void)adjustCalibrationZoomOffset {
-    self.horizontalCalibration.currentZoom = self.scrollView.zoomScale;
-    self.verticalCalibration.currentZoom = self.scrollView.zoomScale;
-    self.horizontalCalibration.offset = self.scrollView.contentOffset;
-    self.verticalCalibration.offset = self.scrollView.contentOffset;
     [self.calipersView setNeedsDisplay];
 }
 
@@ -2052,15 +2045,15 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 // for debugging
 - (void)vitalStats {
-    EPSLog(@"scrollView zoom = %f", self.scrollView.zoomScale);
-    EPSLog(@"scrollView offsetX = %f", self.scrollView.contentOffset.x);
-    EPSLog(@"scrollView offsetY = %f", self.scrollView.contentOffset.y);
-    EPSLog(@"scrollView contentSizeWidth = %f", self.scrollView.contentSize.width);
-    EPSLog(@"scrollView contentSizeHeight = %f", self.scrollView.contentSize.height);
-    EPSLog(@"calipersView frame.size.widht = %f", self.calipersView.frame.size.width);
-    EPSLog(@"calipersView frame.size.height = %f", self.calipersView.frame.size.height);
-    EPSLog(@"scrollView frame.size.widht = %f", self.scrollView.frame.size.width);
-    EPSLog(@"scrollView frame.size.height = %f", self.scrollView.frame.size.height);
+//    EPSLog(@"scrollView zoom = %f", self.scrollView.zoomScale);
+//    EPSLog(@"scrollView offsetX = %f", self.scrollView.contentOffset.x);
+//    EPSLog(@"scrollView offsetY = %f", self.scrollView.contentOffset.y);
+//    EPSLog(@"scrollView contentSizeWidth = %f", self.scrollView.contentSize.width);
+//    EPSLog(@"scrollView contentSizeHeight = %f", self.scrollView.contentSize.height);
+//    EPSLog(@"calipersView frame.size.widht = %f", self.calipersView.frame.size.width);
+//    EPSLog(@"calipersView frame.size.height = %f", self.calipersView.frame.size.height);
+//    EPSLog(@"scrollView frame.size.widht = %f", self.scrollView.frame.size.width);
+//    EPSLog(@"scrollView frame.size.height = %f", self.scrollView.frame.size.height);
 }
 
 - (BOOL)isCompactSizeClass {
@@ -2075,21 +2068,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     EPSLog(@"traitCollectionDidChange");
-    // FIXME: Dark theme detection, not used thus far.
-//    if (@available(iOS 12.0, *)) {
-//        // Detect mode: .unspecified, .light, or .dark.
-//        UIUserInterfaceStyle userInterfaceStyle = self.traitCollection.userInterfaceStyle;
-//        EPSLog(@"userInterfaceStyle = %ld", (long)userInterfaceStyle);
-//        // Update UI depending on mode...
-//        if (@available(iOS 13.0, *)) {
-//            // Detect mode change.
-//            Boolean userInterfaceStyleHasChanged = [previousTraitCollection hasDifferentColorAppearanceComparedToTraitCollection:self.traitCollection];
-//            EPSLog(@"userInterfaceStyleHasChanged = %hhu", userInterfaceStyleHasChanged);
-//            // React to mode change...
-//        } else {
-//            // Ignore
-//        }
-//    }
     if ((self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass)
         || (self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass)) {
         // note that this fixes menus for future use after rotation, but it doesn't immediately change font
@@ -2114,7 +2092,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self.calipersView setNeedsDisplay];
     // Note that unlock sound (1101, unlock.caf) doesn't do anything anymore,
     // so use the lock sound for both locking and unlocking.
-    AudioServicesPlaySystemSound(1100);
+    AudioServicesPlaySystemSoundWithCompletion(1100, nil);
 }
 
 - (BOOL)imageIsLocked {
