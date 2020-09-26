@@ -402,6 +402,7 @@
 }
 
 - (void)recenterImage {
+    EPSLog(@"Recenter image");
     [self centerContent];
 }
 
@@ -455,7 +456,11 @@
         }
 
         // Recenter image after app restored.
-        [self recenterImage];
+        //[self recenterImage];
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self recenterImage];
+        });
 
         self.firstRun = NO;
         self.firstStart = NO;
@@ -755,7 +760,6 @@
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
     EPSLog(@"scaleImageForImageView");
-    // No longer do any scaling, just give back image.
     // Downscale upscaled images.
     if (self.imageIsUpscaled) {
         EPSLog(@">>>>>>Downscaling image");
@@ -763,24 +767,6 @@
         return [UIImage imageWithCGImage:(CGImageRef)imageRef scale:PDF_UPSCALE_FACTOR orientation:UIImageOrientationUp];
     }
     return image;
-
-
-//    UIImage *scaledImage = [self resizerImage:self.view.frame.size image:image];
-
-
-//    CGFloat ratio;
-//     // determine best fit for image
-//     if (image.size.width > image.size.height) {
-//         ratio = self.portraitWidth / image.size.width;
-//     }
-//     else {
-//         ratio = self.landscapeHeight / image.size.height;
-//     }
-//     // use scaling rather than resizing to get sharper image
-//     CGImageRef imageRef = image.CGImage;
-//     UIImage *scaledImage = [UIImage imageWithCGImage:(CGImageRef)imageRef scale:1/ratio orientation:UIImageOrientationUp];
-
-//     return scaledImage;
 }
 
 - (UIImage *)resizerImage:(CGSize)size image:(UIImage *)image {
@@ -2034,6 +2020,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self clearPDF];
     self.imageIsUpscaled = NO;
     self.launchURL = nil;
+    [self recenterImage];
     [self selectMainToolbar];
 }
 
@@ -2055,7 +2042,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)scrollViewDidZoom:(__unused UIScrollView *)scrollView {
     [self centerContent];
 }
-
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageContainerView;
