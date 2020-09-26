@@ -177,6 +177,8 @@
 
 #define FLEX_SPACE [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]
 
+#define PDF_UPSCALE_FACTOR 5.0
+
 @interface EPSMainViewController ()
 
 @property (strong, nonatomic) UIFont *verySmallFont;
@@ -227,6 +229,7 @@
 @property (nonatomic) BOOL showQtcStep2ToolTip;
 
 @property (nonatomic) CGAffineTransform imageTransform;
+@property (nonatomic) BOOL imageIsUpscaled;
 
 @end
 
@@ -257,6 +260,7 @@
     EPSLog(@"viewDidLoad");
 
     pdfRef = NULL;
+    self.imageIsUpscaled = NO;
     self.maxBlackAlpha = MAX_BLACKVIEW_ALPHA;
 
     self.pressLocation = CGPointMake(0, 0);
@@ -271,7 +275,8 @@
     [self createToolbars];
 
     self.blackView.delegate = self;
-    [self.imageView setContentMode:UIViewContentModeCenter];
+//    [self.imageView setContentMode:UIViewContentModeCenter];
+    [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
 
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = MIN_ZOOM;
@@ -350,9 +355,7 @@
 
 - (void) orientationChanged:(NSNotification *)notification {
     // To avoid zoomed images from getting off-center, we recenter with rotation.
-    EPSLog(@"orientationChanged");
     [self recenterImage];
-    EPSLog(@"image centered");
 }
 
 - (UIColor *)getImageViewBackgroundColor {
@@ -399,7 +402,6 @@
 }
 
 - (void)recenterImage {
-    EPSLog(@"recenter image");
     [self centerContent];
 }
 
@@ -444,7 +446,9 @@
         }
         
         if (self.wasLaunchedFromUrl) {
-            [Alert showSimpleAlertWithTitle:MULTIPAGE_PDF message:MULTIPAGE_PDF_WARNING viewController:self];
+            if (self.numberOfPages > 1) {
+                [Alert showSimpleAlertWithTitle:MULTIPAGE_PDF message:MULTIPAGE_PDF_WARNING viewController:self];
+            }
             self.launchURL = nil;
             self.numberOfPages = 0;
             self.wasLaunchedFromUrl = NO;
@@ -752,7 +756,39 @@
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
     EPSLog(@"scaleImageForImageView");
     // No longer do any scaling, just give back image.
+    // Downscale upscaled images.
+    if (self.imageIsUpscaled) {
+        EPSLog(@">>>>>>Downscaling image");
+        CGImageRef imageRef = image.CGImage;
+        return [UIImage imageWithCGImage:(CGImageRef)imageRef scale:PDF_UPSCALE_FACTOR orientation:UIImageOrientationUp];
+    }
     return image;
+
+
+//    UIImage *scaledImage = [self resizerImage:self.view.frame.size image:image];
+
+
+//    CGFloat ratio;
+//     // determine best fit for image
+//     if (image.size.width > image.size.height) {
+//         ratio = self.portraitWidth / image.size.width;
+//     }
+//     else {
+//         ratio = self.landscapeHeight / image.size.height;
+//     }
+//     // use scaling rather than resizing to get sharper image
+//     CGImageRef imageRef = image.CGImage;
+//     UIImage *scaledImage = [UIImage imageWithCGImage:(CGImageRef)imageRef scale:1/ratio orientation:UIImageOrientationUp];
+
+//     return scaledImage;
+}
+
+- (UIImage *)resizerImage:(CGSize)size image:(UIImage *)image {
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:size];
+    UIImage *scaledImage = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+        [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    }];
+    return scaledImage;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -1627,6 +1663,7 @@
     NSString *extension = [url.pathExtension uppercaseString];
     if (![extension isEqualToString:@"PDF"]) {
         [self enablePageButtons:NO];
+        self.imageIsUpscaled = NO;
         self.imageView.image = [self scaleImageForImageView:[UIImage imageWithContentsOfFile:url.path]];
     }
     else {
@@ -1649,6 +1686,7 @@
         }
         [self openPDFPage:pdfRef atPage:self.pageNumber];
     }
+
     [self.imageView setHidden:NO];
     [self.scrollView setZoomScale:1.0f];
     [self clearCalibration];
@@ -1729,6 +1767,7 @@
 }
 
 - (void)openPDFPage:(CGPDFDocumentRef) documentRef atPage:(int) pageNum {
+    EPSLog(@"openPDFPage");
     if (documentRef == NULL) {
         return;
     }
@@ -1739,7 +1778,7 @@
     CGPDFPageRetain(page);
     CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
     // higher scale factor below makes for clearer image
-    CGFloat scaleFactor = 5.0;
+    CGFloat scaleFactor = PDF_UPSCALE_FACTOR;
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, scaleFactor);
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     // Ensure transparent PDFs have white background in dark mode.
@@ -1752,9 +1791,9 @@
     // first scale as usual, but image still too large since scaled up when created for better quality
     image = [self scaleImageForImageView:image];
     // now correct for scale factor when creating image
-    image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:scaleFactor * image.scale orientation:UIImageOrientationUp];
-    
+    image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:scaleFactor orientation:UIImageOrientationUp];
     self.imageView.image = image;
+    self.imageIsUpscaled = YES;
     UIGraphicsEndImageContext();
     CGPDFPageRelease(page);
 }
@@ -1993,6 +2032,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self enablePageButtons:NO];
     // remove any prior PDF from memory
     [self clearPDF];
+    self.imageIsUpscaled = NO;
     self.launchURL = nil;
     [self selectMainToolbar];
 }
@@ -2013,7 +2053,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)scrollViewDidZoom:(__unused UIScrollView *)scrollView {
-    EPSLog(@"scrollViewDidZoom");
     [self centerContent];
 }
 
@@ -2027,8 +2066,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
-    EPSLog(@"scrollViewDidEndZooming");
-//    self.imageView.transform = self.imageTransform;
     self.horizontalCalibration.currentZoom = scale;
     self.verticalCalibration.currentZoom = scale;
     self.horizontalCalibration.offset = scrollView.contentOffset;
@@ -2038,8 +2075,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 // This is also called during zooming, so that calipers adjust to zoom and scrolling.
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    EPSLog(@"scrollViewDidScroll");
-    EPSLog(@"scrollView zoomScale = %f", scrollView.zoomScale);
     self.horizontalCalibration.currentZoom = scrollView.zoomScale;
     self.verticalCalibration.currentZoom = scrollView.zoomScale;
     self.horizontalCalibration.offset = scrollView.contentOffset;
@@ -2218,9 +2253,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // possibly enable restart from URL
     [coder encodeObject:self.launchURL forKey:@"LaunchURL"];
     [coder encodeInteger:self.numberOfPages forKey:@"NumberOfPages"];
+    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
     [coder encodeObject:UIImagePNGRepresentation(self.imageView.image)
                  forKey:@"SavedImageKey"];
-    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
+    [coder encodeBool:self.imageIsUpscaled forKey:@"ImageIsUpscaledKey"];
 
     // Note that image lock is intentionally not preserved when app goes to background.
     // The reason is that image restoration moves the image location, so the process
@@ -2248,12 +2284,15 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     //self.firstRun = NO;
     self.launchURL = [coder decodeObjectForKey:@"LaunchURL"];
     self.numberOfPages = (int)[coder decodeIntegerForKey:@"NumberOfPages"];
-    if (self.launchURL != nil && self.numberOfPages > 0) {
-        EPSLog(@"Multipage PDF");
+
+    UIImage *image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
+    if (self.launchURL != nil) {
         self.wasLaunchedFromUrl = YES;
+//        image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:PDF_UPSCALE_FACTOR orientation:UIImageOrientationUp];
     }
-    self.imageView.image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
+    self.imageView.image = image;
     self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomScaleKey"];
+    self.imageIsUpscaled = [coder decodeBoolForKey:@"ImageIsUpscaledKey"];
 
     // calibration
     [self.horizontalCalibration decodeCalibrationState:coder withPrefix:@"Horizontal"];
