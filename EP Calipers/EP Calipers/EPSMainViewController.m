@@ -2147,7 +2147,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     colorPicker.color = caliper.unselectedColor;
     colorPicker.delegate = self;
     
-    [colorPicker setModalPresentationStyle:UIModalPresentationFormSheet];
+    [colorPicker setModalPresentationStyle:UIModalPresentationFullScreen];
     [self presentViewController:colorPicker animated:YES completion:nil];
 }
 
