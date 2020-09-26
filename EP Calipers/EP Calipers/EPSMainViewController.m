@@ -479,7 +479,9 @@
 
         // When starting add a caliper if one isn't there already
         if ([self.calipersView count] == 0) {
-            [self addHorizontalCaliper];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [self addHorizontalCaliper];
+            });
         }
         [self selectMainToolbar];
     }
