@@ -20,6 +20,8 @@
     self = [super init];
     if (self) {
         [self reset];
+        self.originalZoom = 1.0;
+        self.currentZoom = 1.0;
         self.direction = direction;
     }
     return self;
@@ -59,8 +61,7 @@
     self.units = L(@"points");
     self.displayRate = NO;
     // We don't want to change zoom just because we clear calibration
-//    self.originalZoom = 1.0;
-//    self.currentZoom = 1.0;
+ 
     self.calibrated = NO;
 }
 
