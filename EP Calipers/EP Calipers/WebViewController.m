@@ -56,7 +56,7 @@
 
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:requestObj];
-    self.webView.delegate = self;
+    self.webView.navigationDelegate = self;
 
     NSString *title = L(@"Help");
     [self.navigationItem setTitle:title];
@@ -77,12 +77,12 @@
 }
 
 // MARK: - Web view delegate
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     EPSLog(@"webViewDidFinishLoad");
     [self.activityView stopAnimating];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     EPSLog(@"webViewDidFailLoad");
     [self.activityView stopAnimating];
     UIAlertController *aboutAlertController = [UIAlertController alertControllerWithTitle:L(@"Error") message:L(@"Internet_connection_failed") preferredStyle:UIAlertControllerStyleAlert];

@@ -21,7 +21,7 @@
 #import "EP_Calipers-Swift.h"
 #import "Defs.h"
 #import <os/log.h>
-
+#import <AudioToolbox/AudioToolbox.h>
 
 // These can't be yes for release version
 #ifdef DEBUG
@@ -47,7 +47,7 @@
 // Minimum press duration for long presses (default = 0.5)
 #define MINIMUM_PRESS_DURATION 0.8
 #define ANIMATION_DURATION 0.5
-#define MIN_ZOOM 1.0
+#define MIN_ZOOM 0.25
 #define MAX_ZOOM 10.0
 #define MOVEMENT 1.0f
 #define MICRO_MOVEMENT 0.1f
@@ -177,6 +177,8 @@
 
 #define FLEX_SPACE [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]
 
+#define PDF_UPSCALE_FACTOR 5.0
+
 @interface EPSMainViewController ()
 
 @property (strong, nonatomic) UIFont *verySmallFont;
@@ -225,6 +227,10 @@
 @property (nonatomic) BOOL showCalculateQTcToolTip;
 @property (nonatomic) BOOL showQtcStep1ToolTip;
 @property (nonatomic) BOOL showQtcStep2ToolTip;
+
+@property (nonatomic) CGAffineTransform imageTransform;
+@property (nonatomic) BOOL imageIsUpscaled;
+
 @end
 
 @implementation EPSMainViewController
@@ -254,6 +260,7 @@
     EPSLog(@"viewDidLoad");
 
     pdfRef = NULL;
+    self.imageIsUpscaled = NO;
     self.maxBlackAlpha = MAX_BLACKVIEW_ALPHA;
 
     self.pressLocation = CGPointMake(0, 0);
@@ -267,9 +274,9 @@
     self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
     [self createToolbars];
 
-    //self.imageView.delegate = self;
     self.blackView.delegate = self;
-    [self.imageView setContentMode:UIViewContentModeCenter];
+//    [self.imageView setContentMode:UIViewContentModeCenter];
+    [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
 
     self.scrollView.delegate = self;
     self.scrollView.minimumZoomScale = MIN_ZOOM;
@@ -291,8 +298,8 @@
     self.inQtc = NO;
     self.inRRForQTc = NO;
 
+    // ImageView must have a non-clear background color, or PDFs don't work.
     self.imageView.backgroundColor = [self getImageViewBackgroundColor];
-    [self.imageView setHidden:YES];  // hide view until it is rescaled
 
     // hide hamburger menu
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
@@ -309,7 +316,8 @@
     [self setupTheme];
 
     self.isCalipersView = YES;
-    
+
+    // TODO: Not sure this makes a difference anymore.
     self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
     self.firstRun = YES;
     
@@ -361,43 +369,12 @@
     }
 }
 
-// FIXME: original code for dark theme is below
-//-    self.navigationController.navigationBar.translucent = NO;
-//-    self.navigationController.toolbar.translucent = NO;
-//-    if (self.settings.darkTheme) {
-//    -        // Note that toolbar background colors don't work.  See
-//    -        // https://stackoverflow.com/questions/4996906/uitoolbar-with-reduced-alpha-want-uibarbuttonitem-to-have-alpha-1/26642590#26642590
-//    -
-//    -        // Below uses a white on black color
-//    -        [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
-//    -        self.navigationController.toolbar.tintColor = WHITE;
-//    -        [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-//    -        self.navigationController.navigationBar.tintColor = WHITE;
-//    -        // Use this if you want tinted bars.
-//    -        // [self.navigationController.toolbar setBackgroundImage:[self onePixelImageWithColor:[barColor colorWithAlphaComponent:0.2]] forToolbarPosition:UIBarPositionBottom barMetrics:UIBarMetricsDefault];
-//    -    }
-//-    else {
-//    -        [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-//    -        [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
-//    -        self.navigationController.toolbar.tintColor = nil;
-//    -        self.navigationController.navigationBar.tintColor = nil;
-
 - (void)setupTheme {
     self.navigationController.navigationBar.translucent = YES;
 
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
-    // FIXME: Need to decide on white or blue toolbar/navigation buttons.  Or make a setting for this.
-    // Note: code commented out below uses a white text on black background during dark mode, which looks nice and is similar to faked dark mode before, but looks different from all other EP Studios apps.  So, for the sake of uniformity...
-//    if (@available(iOS 11.0, *)) {
-//        self.navigationController.navigationBar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
-//        self.navigationController.toolbar.barTintColor = [UIColor colorNamed:@"customToolbarColor"];
-//        self.navigationController.navigationBar.tintColor = [UIColor colorNamed:@"customTintColor"];
-//        self.navigationController.toolbar.tintColor = [UIColor colorNamed:@"customTintColor"];
 
-//    } else {
-//        // Use default colors
-//    }
     if (@available(iOS 13.0, *)) {
         self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
         self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
@@ -425,9 +402,8 @@
 }
 
 - (void)recenterImage {
-    CGFloat newContentOffsetX = (self.scrollView.contentSize.width - self.scrollView.frame.size.width) / 2;
-    CGFloat newContentOffsetY = (self.scrollView.contentSize.height - self.scrollView.frame.size.height) / 2;
-    self.scrollView.contentOffset = CGPointMake(newContentOffsetX, newContentOffsetY);
+    EPSLog(@"Recenter image");
+    [self centerContent];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -471,14 +447,20 @@
         }
         
         if (self.wasLaunchedFromUrl) {
-            [Alert showSimpleAlertWithTitle:MULTIPAGE_PDF message:MULTIPAGE_PDF_WARNING viewController:self];
+            if (self.numberOfPages > 1) {
+                [Alert showSimpleAlertWithTitle:MULTIPAGE_PDF message:MULTIPAGE_PDF_WARNING viewController:self];
+            }
             self.launchURL = nil;
             self.numberOfPages = 0;
             self.wasLaunchedFromUrl = NO;
         }
 
         // Recenter image after app restored.
-        [self recenterImage];
+        //[self recenterImage];
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+            [self recenterImage];
+        });
 
         self.firstRun = NO;
         self.firstStart = NO;
@@ -494,10 +476,12 @@
             [[NSUserDefaults standardUserDefaults] setObject:[Version getAppVersion] forKey:@"AppVersion"];
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
-        [self.imageView setHidden:NO];
+
         // When starting add a caliper if one isn't there already
         if ([self.calipersView count] == 0) {
-            [self addHorizontalCaliper];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [self addHorizontalCaliper];
+            });
         }
         [self selectMainToolbar];
     }
@@ -777,18 +761,21 @@
 }
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
-    CGFloat ratio;
-    // determine best fit for image
-    if (image.size.width > image.size.height) {
-        ratio = self.portraitWidth / image.size.width;
+    EPSLog(@"scaleImageForImageView");
+    // Downscale upscaled images.
+    if (self.imageIsUpscaled) {
+        EPSLog(@">>>>>>Downscaling image");
+        CGImageRef imageRef = image.CGImage;
+        return [UIImage imageWithCGImage:(CGImageRef)imageRef scale:PDF_UPSCALE_FACTOR orientation:UIImageOrientationUp];
     }
-    else {
-        ratio = self.landscapeHeight / image.size.height;
-    }
-    // use scaling rather than resizing to get sharper image
-    CGImageRef imageRef = image.CGImage;
-    UIImage *scaledImage = [UIImage imageWithCGImage:(CGImageRef)imageRef scale:1/ratio orientation:UIImageOrientationUp];
+    return image;
+}
 
+- (UIImage *)resizerImage:(CGSize)size image:(UIImage *)image {
+    UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:size];
+    UIImage *scaledImage = [renderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull rendererContext) {
+        [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    }];
     return scaledImage;
 }
 
@@ -1635,14 +1622,15 @@
 
 // see http://stackoverflow.com/questions/37925583/uiimagepickercontroller-crashes-app-swift3-xcode8
 - (void)selectPhoto {
+    // FIXME: Need to check if photoLibary available.
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
+    // Editing doesn't seem to work, so disable it.
+    picker.allowsEditing = YES;
     if (self.isIpad) {
-        picker.allowsEditing = NO;
-    }
-    else{
-        picker.allowsEditing = YES;
+        // Need to present as popover on iPad
+        picker.modalPresentationStyle = UIModalPresentationPopover;
+        picker.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
     }
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:picker animated:YES completion:NULL];
@@ -1663,6 +1651,7 @@
     NSString *extension = [url.pathExtension uppercaseString];
     if (![extension isEqualToString:@"PDF"]) {
         [self enablePageButtons:NO];
+        self.imageIsUpscaled = NO;
         self.imageView.image = [self scaleImageForImageView:[UIImage imageWithContentsOfFile:url.path]];
     }
     else {
@@ -1685,6 +1674,7 @@
         }
         [self openPDFPage:pdfRef atPage:self.pageNumber];
     }
+
     [self.imageView setHidden:NO];
     [self.scrollView setZoomScale:1.0f];
     [self clearCalibration];
@@ -1765,6 +1755,7 @@
 }
 
 - (void)openPDFPage:(CGPDFDocumentRef) documentRef atPage:(int) pageNum {
+    EPSLog(@"openPDFPage");
     if (documentRef == NULL) {
         return;
     }
@@ -1775,7 +1766,7 @@
     CGPDFPageRetain(page);
     CGRect sourceRect = CGPDFPageGetBoxRect(page, kCGPDFMediaBox);
     // higher scale factor below makes for clearer image
-    CGFloat scaleFactor = 5.0;
+    CGFloat scaleFactor = PDF_UPSCALE_FACTOR;
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(sourceRect.size.width, sourceRect.size.height), false, scaleFactor);
     CGContextRef currentContext = UIGraphicsGetCurrentContext();
     // Ensure transparent PDFs have white background in dark mode.
@@ -1788,9 +1779,9 @@
     // first scale as usual, but image still too large since scaled up when created for better quality
     image = [self scaleImageForImageView:image];
     // now correct for scale factor when creating image
-    image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:scaleFactor * image.scale orientation:UIImageOrientationUp];
-    
+    image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:scaleFactor orientation:UIImageOrientationUp];
     self.imageView.image = image;
+    self.imageIsUpscaled = YES;
     UIGraphicsEndImageContext();
     CGPDFPageRelease(page);
 }
@@ -1901,12 +1892,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)rotateImage:(double)degrees {
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
+//        self.imageContainerView.transform = CGAffineTransformRotate(self.imageContainerView.transform, radians(degrees));
+//        self.scrollView.transform = CGAffineTransformRotate(self.scrollView.transform, radians(degrees));
         self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(degrees));
     }];
 }
 
 - (IBAction)resetImage:(id)sender {
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
+//        self.imageContainerView.transform = CGAffineTransformIdentity;
+//        self.scrollView.transform = CGAffineTransformIdentity;
         self.imageView.transform = CGAffineTransformIdentity;
     }];
 }
@@ -2014,13 +2009,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = nil;
-    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
-    if (self.isIpad) {
-        chosenImage = info[UIImagePickerControllerOriginalImage];
-    }
-    else {
-        chosenImage = info[UIImagePickerControllerEditedImage];
-        }
+    chosenImage = info[UIImagePickerControllerEditedImage];
     [self resetImage:self];
     self.imageView.image = [self scaleImageForImageView:chosenImage];
     // reset zoom for new image
@@ -2031,7 +2020,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self enablePageButtons:NO];
     // remove any prior PDF from memory
     [self clearPDF];
+    self.imageIsUpscaled = NO;
     self.launchURL = nil;
+    [self recenterImage];
     [self selectMainToolbar];
 }
 
@@ -2039,22 +2030,66 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void)centerContent {
+    CGFloat top = 0, left = 0;
+    if (self.scrollView.contentSize.width < self.scrollView.bounds.size.width) {
+        left = (self.scrollView.bounds.size.width-self.scrollView.contentSize.width) * 0.5f;
+    }
+    if (self.scrollView.contentSize.height < self.scrollView.bounds.size.height) {
+        top = (self.scrollView.bounds.size.height-self.scrollView.contentSize.height) * 0.5f;
+    }
+    self.scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
+}
+
+- (void)scrollViewDidZoom:(__unused UIScrollView *)scrollView {
+    [self centerContent];
+}
+
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageContainerView;
 }
 
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+//    self.imageTransform = self.imageView.transform;
+}
+
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
-    // don't move calipers, but do adjust calibration
     self.horizontalCalibration.currentZoom = scale;
     self.verticalCalibration.currentZoom = scale;
+    self.horizontalCalibration.offset = scrollView.contentOffset;
+    self.verticalCalibration.offset = scrollView.contentOffset;
     [self.calipersView setNeedsDisplay];
-    
+}
+
+// This is also called during zooming, so that calipers adjust to zoom and scrolling.
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    self.horizontalCalibration.currentZoom = scrollView.zoomScale;
+    self.verticalCalibration.currentZoom = scrollView.zoomScale;
+    self.horizontalCalibration.offset = scrollView.contentOffset;
+    self.verticalCalibration.offset = scrollView.contentOffset;
+    [self.calipersView setNeedsDisplay];
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     EPSLog(@"viewWillTransitionToSize");
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self vitalStats];
+
+    // FIXME: Below redundant?
     [self.calipersView setNeedsDisplay];
+}
+
+// for debugging
+- (void)vitalStats {
+//    EPSLog(@"scrollView zoom = %f", self.scrollView.zoomScale);
+//    EPSLog(@"scrollView offsetX = %f", self.scrollView.contentOffset.x);
+//    EPSLog(@"scrollView offsetY = %f", self.scrollView.contentOffset.y);
+//    EPSLog(@"scrollView contentSizeWidth = %f", self.scrollView.contentSize.width);
+//    EPSLog(@"scrollView contentSizeHeight = %f", self.scrollView.contentSize.height);
+//    EPSLog(@"calipersView frame.size.widht = %f", self.calipersView.frame.size.width);
+//    EPSLog(@"calipersView frame.size.height = %f", self.calipersView.frame.size.height);
+//    EPSLog(@"scrollView frame.size.widht = %f", self.scrollView.frame.size.width);
+//    EPSLog(@"scrollView frame.size.height = %f", self.scrollView.frame.size.height);
 }
 
 - (BOOL)isCompactSizeClass {
@@ -2069,21 +2104,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
     [super traitCollectionDidChange:previousTraitCollection];
     EPSLog(@"traitCollectionDidChange");
-    // FIXME: Dark theme detection, not used thus far.
-//    if (@available(iOS 12.0, *)) {
-//        // Detect mode: .unspecified, .light, or .dark.
-//        UIUserInterfaceStyle userInterfaceStyle = self.traitCollection.userInterfaceStyle;
-//        EPSLog(@"userInterfaceStyle = %ld", (long)userInterfaceStyle);
-//        // Update UI depending on mode...
-//        if (@available(iOS 13.0, *)) {
-//            // Detect mode change.
-//            Boolean userInterfaceStyleHasChanged = [previousTraitCollection hasDifferentColorAppearanceComparedToTraitCollection:self.traitCollection];
-//            EPSLog(@"userInterfaceStyleHasChanged = %hhu", userInterfaceStyleHasChanged);
-//            // React to mode change...
-//        } else {
-//            // Ignore
-//        }
-//    }
     if ((self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass)
         || (self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass)) {
         // note that this fixes menus for future use after rotation, but it doesn't immediately change font
@@ -2106,6 +2126,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
     [self.scrollView setUserInteractionEnabled:!self.calipersView.lockImageScreen];
     [self.calipersView setNeedsDisplay];
+    // Note that unlock sound (1101, unlock.caf) doesn't do anything anymore,
+    // so use the lock sound for both locking and unlocking.
+    AudioServicesPlaySystemSoundWithCompletion(1100, nil);
 }
 
 - (BOOL)imageIsLocked {
@@ -2126,7 +2149,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     colorPicker.color = caliper.unselectedColor;
     colorPicker.delegate = self;
     
-    [colorPicker setModalPresentationStyle:UIModalPresentationFormSheet];
+    [colorPicker setModalPresentationStyle:UIModalPresentationFullScreen];
     [self presentViewController:colorPicker animated:YES completion:nil];
 }
 
@@ -2218,9 +2241,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // possibly enable restart from URL
     [coder encodeObject:self.launchURL forKey:@"LaunchURL"];
     [coder encodeInteger:self.numberOfPages forKey:@"NumberOfPages"];
+    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
     [coder encodeObject:UIImagePNGRepresentation(self.imageView.image)
                  forKey:@"SavedImageKey"];
-    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
+    [coder encodeBool:self.imageIsUpscaled forKey:@"ImageIsUpscaledKey"];
 
     // Note that image lock is intentionally not preserved when app goes to background.
     // The reason is that image restoration moves the image location, so the process
@@ -2248,16 +2272,21 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     //self.firstRun = NO;
     self.launchURL = [coder decodeObjectForKey:@"LaunchURL"];
     self.numberOfPages = (int)[coder decodeIntegerForKey:@"NumberOfPages"];
-    if (self.launchURL != nil && self.numberOfPages > 0) {
-        EPSLog(@"Multipage PDF");
+
+    UIImage *image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
+    if (self.launchURL != nil) {
         self.wasLaunchedFromUrl = YES;
+//        image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:PDF_UPSCALE_FACTOR orientation:UIImageOrientationUp];
     }
-    self.imageView.image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
+    self.imageView.image = image;
     self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomScaleKey"];
+    self.imageIsUpscaled = [coder decodeBoolForKey:@"ImageIsUpscaledKey"];
 
     // calibration
     [self.horizontalCalibration decodeCalibrationState:coder withPrefix:@"Horizontal"];
     [self.verticalCalibration decodeCalibrationState:coder withPrefix:@"Vertical"];
+    self.horizontalCalibration.offset = self.scrollView.contentOffset;
+    self.verticalCalibration.offset = self.scrollView.contentOffset;
     
     // calipers
     NSInteger calipersCount = [coder decodeIntegerForKey:@"CalipersCount"];
@@ -2287,4 +2316,5 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 @end
+
 

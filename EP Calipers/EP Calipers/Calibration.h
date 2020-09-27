@@ -31,6 +31,7 @@
 @property (nonatomic) CGFloat currentZoom;
 @property (nonatomic) CGFloat originalCalFactor;
 @property (nonatomic) BOOL calibrated;
+@property (nonatomic) CGPoint offset;
 
 - (CGFloat)currentCalFactor;
 

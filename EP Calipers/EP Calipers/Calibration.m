@@ -20,6 +20,8 @@
     self = [super init];
     if (self) {
         [self reset];
+        self.originalZoom = 1.0;
+        self.currentZoom = 1.0;
         self.direction = direction;
     }
     return self;
@@ -58,8 +60,8 @@
 - (void)reset {
     self.units = L(@"points");
     self.displayRate = NO;
-    self.originalZoom = 1.0;
-    self.currentZoom = 1.0;
+    // We don't want to change zoom just because we clear calibration
+ 
     self.calibrated = NO;
 }
 
@@ -99,6 +101,7 @@
 - (CGFloat)currentCalFactor {
     return (self.originalZoom * self.originalCalFactor) / self.currentZoom;
 }
+
 
 - (NSString *)getPrefixedKey:(NSString *)prefix key:(NSString *)key {
     return [NSString stringWithFormat:@"%@%@", prefix, key];
