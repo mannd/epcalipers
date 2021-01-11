@@ -22,6 +22,7 @@
 #import "Defs.h"
 #import <os/log.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
 // These can't be yes for release version
 #ifdef DEBUG
@@ -1603,25 +1604,25 @@
     EPSLog(@"Take photo");
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
-    if (self.isIpad) {
-        picker.allowsEditing = NO;
-    }
-    else {
-        picker.allowsEditing = YES;
-    }
+    picker.allowsEditing = YES;
+//    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
+//    if (self.isIpad) {
+//        picker.allowsEditing = NO;
+//    }
+//    else {
+//        picker.allowsEditing = YES;
+//    }
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         [Alert showSimpleAlertWithTitle:CAMERA_NOT_AVAILABLE_TITLE message:CAMERA_NOT_AVAILABLE_MESSAGE viewController:self];
         return;
     }
-
 
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
 // see http://stackoverflow.com/questions/37925583/uiimagepickercontroller-crashes-app-swift3-xcode8
-- (void)selectPhoto {
+- (void)selectImage {
     // FIXME: Need to check if photoLibary available.
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
@@ -1634,6 +1635,42 @@
     }
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void)selectFile {
+    if (@available(iOS 14.0, *)) {
+        NSArray<UTType *> *contentTypes = @[[UTType typeWithIdentifier:UTTypeImage.identifier], [UTType typeWithIdentifier:UTTypePDF.identifier]];
+        UIDocumentPickerViewController *picker = [[UIDocumentPickerViewController alloc] initForOpeningContentTypes:contentTypes asCopy:YES];
+        picker.delegate = self;
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPath = paths[0];
+        NSURL *url = [NSURL fileURLWithPath:documentsPath];
+        picker.directoryURL = url;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+}
+
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls {
+    [self openURL:urls[0]];
+}
+
+- (void)selectImageSource {
+    if (@available(iOS 14, *)) {
+        UIAlertController *chooser = [UIAlertController alertControllerWithTitle:@"Image Source" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+        chooser.modalPresentationStyle = UIModalPresentationPopover;
+        chooser.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
+        UIAlertAction *photosAction = [UIAlertAction actionWithTitle:@"Photos" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self selectImage];
+        }];
+        UIAlertAction *filesAction = [UIAlertAction actionWithTitle:@"Files" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self selectFile];
+        }];
+        [chooser addAction:photosAction];
+        [chooser addAction:filesAction];
+        [self presentViewController:chooser animated:YES completion:nil];
+    } else {
+        [self selectImage];
+    }
 }
 
 - (void)clearPDF {
