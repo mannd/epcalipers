@@ -23,6 +23,7 @@
 #import <os/log.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
+#import <AVFoundation/AVFoundation.h>
 
 // These can't be yes for release version
 #ifdef DEBUG
@@ -167,6 +168,14 @@
 #define TIME_CAL_EXAMPLE L(@"Time_cal_example")
 #define CAMERA_NOT_AVAILABLE_TITLE L(@"Camera_not_available_title")
 #define CAMERA_NOT_AVAILABLE_MESSAGE L(@"Camera_not_available_message")
+// FIXME: new translations
+#define PHOTO_LIBRARY_NOT_AVAILABLE_TITLE L(@"Photo_library_not_available_title")
+#define PHOTO_LIBRARY_NOT_AVAILABLE_MESSAGE L(@"Photo_library_not_available_message")
+#define IMAGE_SOURCE L(@"Image_source")
+#define PHOTOS_SOURCE L(@"Photos_source")
+#define FILES_SOURCE L(@"Files_source")
+#define CAMERA_PERMISSION_DENIED_TITLE L(@"Camera_permission_denied_title")
+#define CAMERA_PERMISSION_DENIED_MESSAGE L(@"Camera_permission_denied_message")
 
 #define VERY_SMALL_FONT 10
 #define SMALL_FONT 12
@@ -1600,33 +1609,69 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
 }
 
+- (void)checkCameraPermissions {
+    switch ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo]) {
+            // Note this case must be enclosed in a block to avoid compiler error.  Compiler bug?
+            // See https://stackoverflow.com/questions/33550588/defining-a-block-in-a-switch-statement-results-in-a-compiler-error
+        case AVAuthorizationStatusNotDetermined: {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                if(granted) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self handleTakePhoto];
+                    });
+                }
+            }];
+            return;
+        }
+        case AVAuthorizationStatusRestricted: {
+            EPSLog(@"camera permission restricted");
+            return;
+        }
+        case AVAuthorizationStatusDenied: {
+            EPSLog(@"camera permission denied");
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:CAMERA_PERMISSION_DENIED_TITLE message:CAMERA_PERMISSION_DENIED_MESSAGE preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:OK style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [alert dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        }
+        case AVAuthorizationStatusAuthorized: {
+            EPSLog(@"camera authorized");
+            [self handleTakePhoto];
+            return;
+        }
+    }
+}
+
 - (void)takePhoto {
     EPSLog(@"Take photo");
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    picker.allowsEditing = YES;
-//    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
-//    if (self.isIpad) {
-//        picker.allowsEditing = NO;
-//    }
-//    else {
-//        picker.allowsEditing = YES;
-//    }
+    [self checkCameraPermissions];
+}
+
+- (void)handleTakePhoto {
+    EPSLog(@"Handle take photo");
+
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         [Alert showSimpleAlertWithTitle:CAMERA_NOT_AVAILABLE_TITLE message:CAMERA_NOT_AVAILABLE_MESSAGE viewController:self];
         return;
     }
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
 
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
-// see http://stackoverflow.com/questions/37925583/uiimagepickercontroller-crashes-app-swift3-xcode8
 - (void)selectImage {
-    // FIXME: Need to check if photoLibary available.
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        [Alert showSimpleAlertWithTitle:PHOTO_LIBRARY_NOT_AVAILABLE_TITLE message:PHOTO_LIBRARY_NOT_AVAILABLE_MESSAGE viewController:self];
+        return;
+    }
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    // Editing doesn't seem to work, so disable it.
     picker.allowsEditing = YES;
     if (self.isIpad) {
         // Need to present as popover on iPad
@@ -1642,6 +1687,10 @@
         NSArray<UTType *> *contentTypes = @[[UTType typeWithIdentifier:UTTypeImage.identifier], [UTType typeWithIdentifier:UTTypePDF.identifier]];
         UIDocumentPickerViewController *picker = [[UIDocumentPickerViewController alloc] initForOpeningContentTypes:contentTypes asCopy:YES];
         picker.delegate = self;
+        if (self.isIpad) {
+            picker.modalPresentationStyle = UIModalPresentationPopover;
+            picker.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
+        }
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsPath = paths[0];
         NSURL *url = [NSURL fileURLWithPath:documentsPath];
@@ -1656,13 +1705,13 @@
 
 - (void)selectImageSource {
     if (@available(iOS 14, *)) {
-        UIAlertController *chooser = [UIAlertController alertControllerWithTitle:@"Image Source" message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertController *chooser = [UIAlertController alertControllerWithTitle:IMAGE_SOURCE message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
         chooser.modalPresentationStyle = UIModalPresentationPopover;
         chooser.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
-        UIAlertAction *photosAction = [UIAlertAction actionWithTitle:@"Photos" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *photosAction = [UIAlertAction actionWithTitle:PHOTOS_SOURCE style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self selectImage];
         }];
-        UIAlertAction *filesAction = [UIAlertAction actionWithTitle:@"Files" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertAction *filesAction = [UIAlertAction actionWithTitle:FILES_SOURCE style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self selectFile];
         }];
         [chooser addAction:photosAction];

@@ -191,6 +191,16 @@
 "Help_image_2" = "epcalipershelp-2-en";
 "Help_image_3" = "epcalipershelp-3-en";
 
+/* New for version 3.6 */
+"Photo_library_not_available_title" = "Photo library not available";
+"Photo_library_not_availalbe_message" = "Photo library not available.";
+"Image_source" = "Image Source";
+"Photos_source" = "Photos";
+"Files_source" = "Files";
+"Camera_permission_denied_title" = "Camera Permission Denied By User";
+"Camera_permission_denied_message" = "Camera cannot be used.  Change camera permissions in Settings app to allow camera use.";
+
+
 /* Unused at present (incomplete list here, see FR or RU Localizable.strings for full list */
 //"Add calipers" = "Add calipers";
 //"Calibrate_short_alt_ru" = "Cal";
