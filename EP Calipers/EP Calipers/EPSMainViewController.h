@@ -99,6 +99,7 @@
 - (void)takePhoto;
 - (void)selectImage;
 - (void)selectImageSource;
+- (void)snapshotScreen;
 - (void)showHelp;
 - (void)showManual;
 - (void)loadDefaultImage;

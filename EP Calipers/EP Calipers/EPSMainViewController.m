@@ -24,6 +24,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #import <AVFoundation/AVFoundation.h>
+#import <Photos/Photos.h>
 
 // These can't be yes for release version
 #ifdef DEBUG
@@ -43,9 +44,6 @@
 #define SHOW_PDF_MENU NO
 #endif
 
-// Language for localization
-#define LANG L(@"lang")
-
 // Minimum press duration for long presses (default = 0.5)
 #define MINIMUM_PRESS_DURATION 0.8
 #define ANIMATION_DURATION 0.5
@@ -54,7 +52,25 @@
 #define MOVEMENT 1.0f
 #define MICRO_MOVEMENT 0.1f
 #define MAX_BLACKVIEW_ALPHA 0.4f
+#define PDF_UPSCALE_FACTOR 5.0
 
+#define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
+
+// Arrows
+#define LEFT_ARROW @"⇦"
+#define RIGHT_ARROW @"⇨"
+#define MICRO_LEFT_ARROW @"←"
+#define MICRO_RIGHT_ARROW @"→"
+#define UP_ARROW @"⇧"
+#define DOWN_ARROW @"⇩"
+#define MICRO_UP_ARROW @"↑"
+#define MICRO_DOWN_ARROW @"↓"
+
+// Language for localization
+#define LANG L(@"lang")
+
+// Translated strings
+#define CALIPERS_VIEW_TITLE L(@"EP Calipers")
 #define CALIBRATE L(@"Calibrate")
 #define CALIBRATE_IPAD L(@"Calibrate")
 #define CALIBRATE_IPHONE L(@"Calibrate")
@@ -92,15 +108,6 @@
 #define BRUGADA_BETA_ANGLE L(@"Brugada_beta_angle")
 #define BRUGADA_RESULTS_TITLE L(@"Brugada_results_title")
 #define BRUGADA_INCREASED_RISK L(@"Brugada_increased_risk")
-
-#define LEFT_ARROW @"⇦"
-#define RIGHT_ARROW @"⇨"
-#define MICRO_LEFT_ARROW @"←"
-#define MICRO_RIGHT_ARROW @"→"
-#define UP_ARROW @"⇧"
-#define DOWN_ARROW @"⇩"
-#define MICRO_UP_ARROW @"↑"
-#define MICRO_DOWN_ARROW @"↓"
 
 // Tooltips
 #define ADD_TOOLTIP L(@"Add_tooltip")
@@ -177,17 +184,12 @@
 #define CAMERA_PERMISSION_DENIED_TITLE L(@"Camera_permission_denied_title")
 #define CAMERA_PERMISSION_DENIED_MESSAGE L(@"Camera_permission_denied_message")
 
+// Font sizes
 #define VERY_SMALL_FONT 10
 #define SMALL_FONT 12
 #define INTERMEDIATE_FONT 14
 
-#define CALIPERS_VIEW_TITLE L(@"EP Calipers")
-
-#define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
-
 #define FLEX_SPACE [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]
-
-#define PDF_UPSCALE_FACTOR 5.0
 
 @interface EPSMainViewController ()
 
@@ -2215,6 +2217,77 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // Note that unlock sound (1101, unlock.caf) doesn't do anything anymore,
     // so use the lock sound for both locking and unlocking.
     AudioServicesPlaySystemSoundWithCompletion(1100, nil);
+}
+
+- (void)snapshotScreen {
+    [self checkPhotoLibraryStatus];
+}
+
+- (void)handleSnapshotScreen {
+    EPSLog(@"snapshot image");
+    UIGraphicsImageRenderer *bottomRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.scrollView.bounds.size];
+    CGFloat originX = CGRectGetMinX(self.scrollView.bounds) - self.scrollView.contentOffset.x;
+    CGFloat originY = CGRectGetMinY(self.scrollView.bounds) - self.scrollView.contentOffset.y;
+    CGRect bounds = CGRectMake(originX, originY, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    UIImage *bottomImage = [bottomRenderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
+        [self.scrollView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
+      }];
+    UIGraphicsImageRenderer *topRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.calipersView.bounds.size];
+    UIImage *topImage = [topRenderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
+        [self.calipersView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
+      }];
+
+    UIGraphicsBeginImageContext(self.calipersView.bounds.size);
+    CGRect bottomRect = CGRectMake(0, 0, self.calipersView.bounds.size.width, self.calipersView.bounds.size.height);
+    [bottomImage drawInRect:bottomRect];
+    CGRect topRect = CGRectMake(0, 0, self.calipersView.bounds.size.width, self.calipersView.bounds.size.height);
+    [topImage drawInRect:topRect];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    if (image != nil) {
+        ImageSaver *imageSaver = [[ImageSaver alloc] init];
+        [imageSaver writeToPhotoAlbumWithImage:image viewController:self];
+    }
+}
+
+// TODO: Flesh this out.  Add warning if photo authorization denied.  Not sure what notDetermined does, since if user allows use the image gets saved without doing anything else.  Also do we need Photos Framework linked?  Look into this.
+- (void)checkPhotoLibraryStatus {
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    switch (status) {
+        case PHAuthorizationStatusAuthorized: {
+            EPSLog(@"Photo library status authorized.");
+            [self handleSnapshotScreen];
+            break;
+        }
+        case PHAuthorizationStatusDenied: {
+            EPSLog(@"Photo library status denied.");
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Photo Library Not Authorized By User" message:@"write this message" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:OK style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [alert dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        }
+        case PHAuthorizationStatusRestricted: {
+            EPSLog(@"Photo library status restricted.");
+            break;
+        }
+        case PHAuthorizationStatusNotDetermined: {
+            EPSLog(@"Photo library status not determined.");
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                if (status == PHAuthorizationStatusAuthorized) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self handleSnapshotScreen];
+                    });
+                }
+            }];
+            return;
+        }
+        case PHAuthorizationStatusLimited:
+            EPSLog(@"Photo library status limited.");
+            break;
+    }
 }
 
 - (BOOL)imageIsLocked {

@@ -56,14 +56,13 @@
 
     if ((row.layer == Lock && self.imageIsLocked) || (row.layer == ToolTips && self.showingToolTips)) {
         cell.label.text = row.altName;
-        cell.label.adjustsFontSizeToFitWidth = YES;
-        cell.icon.image = [UIImage imageNamed:row.altIconName];
+        cell.icon.image = row.altIcon;
     }
     else {
         cell.label.text = row.name;
-        cell.label.adjustsFontSizeToFitWidth = YES;
-        cell.icon.image = [UIImage imageNamed:row.iconName];
+        cell.icon.image = row.icon;
     }
+    cell.label.adjustsFontSizeToFitWidth = YES;
     return cell;
 }
 
@@ -89,6 +88,9 @@
             break;
         case Lock:
             [self.mainViewController lockImage];
+            break;
+        case SnapshotScreen:
+            [self.mainViewController snapshotScreen];
             break;
         case Preferences:
             [self.mainViewController openSettings];
