@@ -82,7 +82,7 @@
             [self.mainViewController takePhoto];
             break;
         case PhotoGallery:
-            [self.mainViewController selectPhoto];
+            [self.mainViewController selectImageSource];
             break;
         case SampleEcg:
             [self.mainViewController loadDefaultImage];

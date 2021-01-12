@@ -38,6 +38,7 @@
 		8EB3DE391AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
 		8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE3D1AC616C0009376AD /* Settings.m */; };
 		8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB3DE401AC9A488009376AD /* Settings.bundle */; };
+		8EB45BE825AE048C001A848B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB45BE725AE048C001A848B /* AVFoundation.framework */; };
 		8EB65805251AA41B00D779E0 /* Position.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB65804251AA41B00D779E0 /* Position.m */; };
 		8EBD6D3221DAAFD200FF7748 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */; };
 		8EC0346B251947E400A1AC3D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC0346A251947E400A1AC3D /* WebKit.framework */; };
@@ -145,6 +146,7 @@
 		8EB3DE3C1AC616C0009376AD /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		8EB3DE3D1AC616C0009376AD /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 		8EB3DE401AC9A488009376AD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		8EB45BE725AE048C001A848B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EB65803251AA41B00D779E0 /* Position.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Position.h; sourceTree = "<group>"; };
 		8EB65804251AA41B00D779E0 /* Position.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Position.m; sourceTree = "<group>"; };
 		8EBD6D3021DAAFD200FF7748 /* HelpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB45BE825AE048C001A848B /* AVFoundation.framework in Frameworks */,
 				8EC0346B251947E400A1AC3D /* WebKit.framework in Frameworks */,
 				C447064F47438C8FE4FFBCF6 /* libPods-EP Calipers.a in Frameworks */,
 				8E4004FF251D45E300508CA3 /* AudioToolbox.framework in Frameworks */,
@@ -374,6 +377,7 @@
 		8E172D7E1F9C04F200CD50D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8EB45BE725AE048C001A848B /* AVFoundation.framework */,
 				8E4004FE251D45E300508CA3 /* AudioToolbox.framework */,
 				8EC0346A251947E400A1AC3D /* WebKit.framework */,
 				8E7E432521CD85CF00A0C828 /* CMPopTipView.framework */,
