@@ -10,8 +10,6 @@
 #import "Translation.h"
 #import "Defs.h"
 
-// TODO: define strings with new keys
-
 @implementation HamburgerViewModel
 
 // NOTE: These must be added in same order as HamburgerLayer enum.
@@ -25,6 +23,8 @@
     [array addObject:lockLayer];
     HamburgerLayer *sampleEcgLayer = [[HamburgerLayer alloc] initWithName:L(@"Sample_ecg") iconName:@"ecg" layer:SampleEcg];
     [array addObject:sampleEcgLayer];
+    HamburgerLayer *snapshotImageLayer = [[HamburgerLayer alloc] initWithName:L(@"Snapshot_screen") iconName:@"snapshot" layer:SnapshotScreen];
+    [array addObject:snapshotImageLayer];
     HamburgerLayer *preferencesLayer = [[HamburgerLayer alloc] initWithName:L(@"Preferences") iconName:@"settings" layer:Preferences];
     [array addObject:preferencesLayer];
     HamburgerLayer *tooltipLayer = [[HamburgerLayer alloc] initWithName:L(@"Show_tooltips") iconName:@"hammer" layer:ToolTips altName:L(@"Hide_tooltips") altIconName:@"hammer"];

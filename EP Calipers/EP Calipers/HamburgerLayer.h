@@ -6,7 +6,7 @@
 //  Copyright © 2018 EP Studios. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, Layer) {
     PhotoGallery,
     Lock,
     SampleEcg,
+    SnapshotScreen,
     Preferences,
     ToolTips,
     Manual,
@@ -25,13 +26,14 @@ typedef NS_ENUM(NSInteger, Layer) {
 @interface HamburgerLayer : NSObject
 
 @property (strong, nonatomic) NSString *name;
-@property (strong, nonatomic) NSString *iconName;
+//@property (strong, nonatomic) NSString *iconName;
 @property (nonatomic) Layer layer;
 @property (nullable, strong, nonatomic)  NSString *altName;
-@property (nullable, strong, nonatomic) NSString *altIconName;
+//@property (nullable, strong, nonatomic) NSString *altIconName;
+@property (nullable, strong, nonatomic) UIImage *icon;
+@property (nullable, strong, nonatomic) UIImage *altIcon;
 
 - (instancetype)initWithName:(NSString *)name iconName:(NSString *)iconName layer:(Layer)layer;
-
 - (instancetype)initWithName:(NSString *)name iconName:(NSString *)iconName layer:(Layer)layer altName:(NSString *)altName altIconName:(NSString *)altIconName;
 
 @end

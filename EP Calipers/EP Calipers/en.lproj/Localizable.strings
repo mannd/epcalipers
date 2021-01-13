@@ -6,7 +6,7 @@
   Copyright © 2017 EP Studios. All rights reserved.
 */
 
-"Copyright_message" = "Copyright © 2015-2020 EP Studios, Inc.\nAll rights reserved.\nVersion %@";
+"Copyright_message" = "Copyright © 2015-2021 EP Studios, Inc.\nAll rights reserved.\nVersion %@";
 "EP Calipers" = "EP Calipers";
 
 /* Sorted dialog titles, messages, button labels */
@@ -190,6 +190,20 @@
 "Help_image_1" = "epcalipershelp-1-en";
 "Help_image_2" = "epcalipershelp-2-en";
 "Help_image_3" = "epcalipershelp-3-en";
+
+/* New for version 3.6 */
+"Photo_library_not_available_title" = "Photo library not available";
+"Photo_library_not_available_message" = "Photo library not available.";
+"Image_source" = "Image Source";
+"Photos_source" = "Photos";
+"Files_source" = "Files";
+"Camera_permission_denied_title" = "Camera Permission Denied By User";
+"Camera_permission_denied_message" = "Camera cannot be used.  Change camera permissions in Settings app to allow camera use.";
+"Snapshot_screen" = "Snapshot screen";
+"Save_snapshot_error_title" = "Error Saving Snapshot";
+"Save_snapshot_error_message" = "Photo Library not accessible.  Change Photo Library permissions in Settings app to allow access to all photos.";
+"Snapshot_saved_title" = "Snapshot Saved";
+"Snapshot_saved_message" = "Snapshot saved to Photo Library";
 
 /* Unused at present (incomplete list here, see FR or RU Localizable.strings for full list */
 //"Add calipers" = "Add calipers";

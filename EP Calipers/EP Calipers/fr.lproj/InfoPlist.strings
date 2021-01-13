@@ -7,3 +7,7 @@
 */
 "CFBundleDisplayName" = "Compas EP";
 "CFBundleName" = "Compas EP";
+"NSCameraUsageDescription" = "Une autorisation est nécessaire pour prendre des photos d'électrocardiogrammes.";
+"NSPhotoLibraryUsageDescription" = "Une autorisation est nécessaire pour importer et exporter des images d'électrocardiogrammes.";
+"NSAppleMusicUsageDescription" = "Une autorisation est nécessaire pour importer et exporter des images d'électrocardiogrammes.";
+

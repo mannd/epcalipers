@@ -28,6 +28,7 @@
 		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
 		8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */; };
 		8E600E9021D3FCF500C97425 /* HelpImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */; };
+		8E787AA325AE7BD1009C44F9 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E787AA225AE7BD1009C44F9 /* ImageSaver.swift */; };
 		8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DDE381FF96D13007247DA /* MiniQTcResult.m */; };
 		8E9A333A1AC09DE90037E694 /* CalipersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9A33391AC09DE90037E694 /* CalipersView.m */; };
 		8E9BA12E1EF47D1C00FC8DD2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8E9BA1301EF47D1C00FC8DD2 /* Localizable.strings */; };
@@ -38,6 +39,7 @@
 		8EB3DE391AC603A3009376AD /* Calibration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE381AC603A3009376AD /* Calibration.m */; };
 		8EB3DE3E1AC616C0009376AD /* Settings.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB3DE3D1AC616C0009376AD /* Settings.m */; };
 		8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8EB3DE401AC9A488009376AD /* Settings.bundle */; };
+		8EB45BE825AE048C001A848B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EB45BE725AE048C001A848B /* AVFoundation.framework */; };
 		8EB65805251AA41B00D779E0 /* Position.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB65804251AA41B00D779E0 /* Position.m */; };
 		8EBD6D3221DAAFD200FF7748 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */; };
 		8EC0346B251947E400A1AC3D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC0346A251947E400A1AC3D /* WebKit.framework */; };
@@ -122,6 +124,7 @@
 		8E7340F71FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		8E7340F91FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8E7340FA1FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		8E787AA225AE7BD1009C44F9 /* ImageSaver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSaver.swift; sourceTree = "<group>"; };
 		8E7E432521CD85CF00A0C828 /* CMPopTipView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CMPopTipView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E8DDE371FF96D13007247DA /* MiniQTcResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MiniQTcResult.h; sourceTree = "<group>"; };
 		8E8DDE381FF96D13007247DA /* MiniQTcResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MiniQTcResult.m; sourceTree = "<group>"; };
@@ -145,6 +148,7 @@
 		8EB3DE3C1AC616C0009376AD /* Settings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Settings.h; sourceTree = "<group>"; };
 		8EB3DE3D1AC616C0009376AD /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 		8EB3DE401AC9A488009376AD /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		8EB45BE725AE048C001A848B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8EB65803251AA41B00D779E0 /* Position.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Position.h; sourceTree = "<group>"; };
 		8EB65804251AA41B00D779E0 /* Position.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Position.m; sourceTree = "<group>"; };
 		8EBD6D3021DAAFD200FF7748 /* HelpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
@@ -184,6 +188,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EB45BE825AE048C001A848B /* AVFoundation.framework in Frameworks */,
 				8EC0346B251947E400A1AC3D /* WebKit.framework in Frameworks */,
 				C447064F47438C8FE4FFBCF6 /* libPods-EP Calipers.a in Frameworks */,
 				8E4004FF251D45E300508CA3 /* AudioToolbox.framework in Frameworks */,
@@ -367,6 +372,7 @@
 				8EEB386421E26B8A00568B6F /* Translation.m */,
 				8EB65803251AA41B00D779E0 /* Position.h */,
 				8EB65804251AA41B00D779E0 /* Position.m */,
+				8E787AA225AE7BD1009C44F9 /* ImageSaver.swift */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -374,6 +380,7 @@
 		8E172D7E1F9C04F200CD50D6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8EB45BE725AE048C001A848B /* AVFoundation.framework */,
 				8E4004FE251D45E300508CA3 /* AudioToolbox.framework */,
 				8EC0346A251947E400A1AC3D /* WebKit.framework */,
 				8E7E432521CD85CF00A0C828 /* CMPopTipView.framework */,
@@ -636,6 +643,7 @@
 				8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */,
 				8E0D4AAE21C8BA9D0061158D /* EcgScrollView.m in Sources */,
 				8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */,
+				8E787AA325AE7BD1009C44F9 /* ImageSaver.swift in Sources */,
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
 				8E365C1D21C5B7E300CD11B3 /* Alert.m in Sources */,
 				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
@@ -853,12 +861,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = W74NPJXYEG;
 				INFOPLIST_FILE = "EP Calipers/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.5;
+				MARKETING_VERSION = 3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "EP Calipers/EP Calipers-Bridging-Header.h";
@@ -874,12 +882,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = W74NPJXYEG;
 				INFOPLIST_FILE = "EP Calipers/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 3.5;
+				MARKETING_VERSION = 3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "EP Calipers/EP Calipers-Bridging-Header.h";

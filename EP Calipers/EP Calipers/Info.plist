@@ -52,11 +52,11 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<false/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Used to import images of ECGs</string>
+	<string>Used to import and export images of ECGs</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Used to take pictures of ECGs</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Used to import photos of ECGs</string>
+	<string>Used to import and export images of ECGs</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile</key>

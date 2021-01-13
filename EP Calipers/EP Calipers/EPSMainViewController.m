@@ -22,6 +22,9 @@
 #import "Defs.h"
 #import <os/log.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
+#import <AVFoundation/AVFoundation.h>
+#import <Photos/Photos.h>
 
 // These can't be yes for release version
 #ifdef DEBUG
@@ -41,9 +44,6 @@
 #define SHOW_PDF_MENU NO
 #endif
 
-// Language for localization
-#define LANG L(@"lang")
-
 // Minimum press duration for long presses (default = 0.5)
 #define MINIMUM_PRESS_DURATION 0.8
 #define ANIMATION_DURATION 0.5
@@ -52,7 +52,25 @@
 #define MOVEMENT 1.0f
 #define MICRO_MOVEMENT 0.1f
 #define MAX_BLACKVIEW_ALPHA 0.4f
+#define PDF_UPSCALE_FACTOR 5.0
 
+#define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
+
+// Arrows
+#define LEFT_ARROW @"⇦"
+#define RIGHT_ARROW @"⇨"
+#define MICRO_LEFT_ARROW @"←"
+#define MICRO_RIGHT_ARROW @"→"
+#define UP_ARROW @"⇧"
+#define DOWN_ARROW @"⇩"
+#define MICRO_UP_ARROW @"↑"
+#define MICRO_DOWN_ARROW @"↓"
+
+// Language for localization
+#define LANG L(@"lang")
+
+// Translated strings
+#define CALIPERS_VIEW_TITLE L(@"EP Calipers")
 #define CALIBRATE L(@"Calibrate")
 #define CALIBRATE_IPAD L(@"Calibrate")
 #define CALIBRATE_IPHONE L(@"Calibrate")
@@ -90,15 +108,6 @@
 #define BRUGADA_BETA_ANGLE L(@"Brugada_beta_angle")
 #define BRUGADA_RESULTS_TITLE L(@"Brugada_results_title")
 #define BRUGADA_INCREASED_RISK L(@"Brugada_increased_risk")
-
-#define LEFT_ARROW @"⇦"
-#define RIGHT_ARROW @"⇨"
-#define MICRO_LEFT_ARROW @"←"
-#define MICRO_RIGHT_ARROW @"→"
-#define UP_ARROW @"⇧"
-#define DOWN_ARROW @"⇩"
-#define MICRO_UP_ARROW @"↑"
-#define MICRO_DOWN_ARROW @"↓"
 
 // Tooltips
 #define ADD_TOOLTIP L(@"Add_tooltip")
@@ -166,18 +175,20 @@
 #define TIME_CAL_EXAMPLE L(@"Time_cal_example")
 #define CAMERA_NOT_AVAILABLE_TITLE L(@"Camera_not_available_title")
 #define CAMERA_NOT_AVAILABLE_MESSAGE L(@"Camera_not_available_message")
+#define PHOTO_LIBRARY_NOT_AVAILABLE_TITLE L(@"Photo_library_not_available_title")
+#define PHOTO_LIBRARY_NOT_AVAILABLE_MESSAGE L(@"Photo_library_not_available_message")
+#define IMAGE_SOURCE L(@"Image_source")
+#define PHOTOS_SOURCE L(@"Photos_source")
+#define FILES_SOURCE L(@"Files_source")
+#define CAMERA_PERMISSION_DENIED_TITLE L(@"Camera_permission_denied_title")
+#define CAMERA_PERMISSION_DENIED_MESSAGE L(@"Camera_permission_denied_message")
 
+// Font sizes
 #define VERY_SMALL_FONT 10
 #define SMALL_FONT 12
 #define INTERMEDIATE_FONT 14
 
-#define CALIPERS_VIEW_TITLE L(@"EP Calipers")
-
-#define IMAGE_TINT [UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0]
-
 #define FLEX_SPACE [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]
-
-#define PDF_UPSCALE_FACTOR 5.0
 
 @interface EPSMainViewController ()
 
@@ -1599,33 +1610,69 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
 }
 
+- (void)checkCameraPermissions {
+    switch ([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo]) {
+            // Note this case must be enclosed in a block to avoid compiler error.  Compiler bug?
+            // See https://stackoverflow.com/questions/33550588/defining-a-block-in-a-switch-statement-results-in-a-compiler-error
+        case AVAuthorizationStatusNotDetermined: {
+            [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted) {
+                if(granted) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self handleTakePhoto];
+                    });
+                }
+            }];
+            return;
+        }
+        case AVAuthorizationStatusRestricted: {
+            EPSLog(@"camera permission restricted");
+            return;
+        }
+        case AVAuthorizationStatusDenied: {
+            EPSLog(@"camera permission denied");
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:CAMERA_PERMISSION_DENIED_TITLE message:CAMERA_PERMISSION_DENIED_MESSAGE preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:OK style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [alert dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        }
+        case AVAuthorizationStatusAuthorized: {
+            EPSLog(@"camera authorized");
+            [self handleTakePhoto];
+            return;
+        }
+    }
+}
+
 - (void)takePhoto {
     EPSLog(@"Take photo");
-    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
-    picker.delegate = self;
-    // UIImagePickerController broken on iOS 9, iPad only http://openradar.appspot.com/radar?id=5032957332946944
-    if (self.isIpad) {
-        picker.allowsEditing = NO;
-    }
-    else {
-        picker.allowsEditing = YES;
-    }
+    [self checkCameraPermissions];
+}
+
+- (void)handleTakePhoto {
+    EPSLog(@"Handle take photo");
+
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
         [Alert showSimpleAlertWithTitle:CAMERA_NOT_AVAILABLE_TITLE message:CAMERA_NOT_AVAILABLE_MESSAGE viewController:self];
         return;
     }
-
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.delegate = self;
+    picker.allowsEditing = YES;
 
     picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     [self presentViewController:picker animated:YES completion:NULL];
 }
 
-// see http://stackoverflow.com/questions/37925583/uiimagepickercontroller-crashes-app-swift3-xcode8
-- (void)selectPhoto {
-    // FIXME: Need to check if photoLibary available.
+- (void)selectImage {
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
+        [Alert showSimpleAlertWithTitle:PHOTO_LIBRARY_NOT_AVAILABLE_TITLE message:PHOTO_LIBRARY_NOT_AVAILABLE_MESSAGE viewController:self];
+        return;
+    }
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
-    // Editing doesn't seem to work, so disable it.
     picker.allowsEditing = YES;
     if (self.isIpad) {
         // Need to present as popover on iPad
@@ -1634,6 +1681,46 @@
     }
     picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:picker animated:YES completion:NULL];
+}
+
+- (void)selectFile {
+    if (@available(iOS 14.0, *)) {
+        NSArray<UTType *> *contentTypes = @[[UTType typeWithIdentifier:UTTypeImage.identifier], [UTType typeWithIdentifier:UTTypePDF.identifier]];
+        UIDocumentPickerViewController *picker = [[UIDocumentPickerViewController alloc] initForOpeningContentTypes:contentTypes asCopy:YES];
+        picker.delegate = self;
+        if (self.isIpad) {
+            picker.modalPresentationStyle = UIModalPresentationPopover;
+            picker.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
+        }
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *documentsPath = paths[0];
+        NSURL *url = [NSURL fileURLWithPath:documentsPath];
+        picker.directoryURL = url;
+        [self presentViewController:picker animated:YES completion:nil];
+    }
+}
+
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls {
+    [self openURL:urls[0]];
+}
+
+- (void)selectImageSource {
+    if (@available(iOS 14, *)) {
+        UIAlertController *chooser = [UIAlertController alertControllerWithTitle:IMAGE_SOURCE message:@"" preferredStyle:UIAlertControllerStyleActionSheet];
+        chooser.modalPresentationStyle = UIModalPresentationPopover;
+        chooser.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
+        UIAlertAction *photosAction = [UIAlertAction actionWithTitle:PHOTOS_SOURCE style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self selectImage];
+        }];
+        UIAlertAction *filesAction = [UIAlertAction actionWithTitle:FILES_SOURCE style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [self selectFile];
+        }];
+        [chooser addAction:photosAction];
+        [chooser addAction:filesAction];
+        [self presentViewController:chooser animated:YES completion:nil];
+    } else {
+        [self selectImage];
+    }
 }
 
 - (void)clearPDF {
@@ -2129,6 +2216,76 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // Note that unlock sound (1101, unlock.caf) doesn't do anything anymore,
     // so use the lock sound for both locking and unlocking.
     AudioServicesPlaySystemSoundWithCompletion(1100, nil);
+}
+
+- (void)snapshotScreen {
+    [self checkPhotoLibraryStatus];
+}
+
+- (void)handleSnapshotScreen {
+    EPSLog(@"snapshot image");
+    UIGraphicsImageRenderer *bottomRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.scrollView.bounds.size];
+    CGFloat originX = CGRectGetMinX(self.scrollView.bounds) - self.scrollView.contentOffset.x;
+    CGFloat originY = CGRectGetMinY(self.scrollView.bounds) - self.scrollView.contentOffset.y;
+    CGRect bounds = CGRectMake(originX, originY, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    UIImage *bottomImage = [bottomRenderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
+        [self.scrollView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
+      }];
+    UIGraphicsImageRenderer *topRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.calipersView.bounds.size];
+    UIImage *topImage = [topRenderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
+        [self.calipersView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
+      }];
+
+    UIGraphicsBeginImageContext(self.calipersView.bounds.size);
+    CGRect bottomRect = CGRectMake(0, 0, self.calipersView.bounds.size.width, self.calipersView.bounds.size.height);
+    [bottomImage drawInRect:bottomRect];
+    CGRect topRect = CGRectMake(0, 0, self.calipersView.bounds.size.width, self.calipersView.bounds.size.height);
+    [topImage drawInRect:topRect];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    if (image != nil) {
+        ImageSaver *imageSaver = [[ImageSaver alloc] init];
+        [imageSaver writeToPhotoAlbumWithImage:image viewController:self];
+    }
+}
+
+- (void)checkPhotoLibraryStatus {
+    PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
+    switch (status) {
+        case PHAuthorizationStatusAuthorized: {
+            EPSLog(@"Photo library status authorized.");
+            [self handleSnapshotScreen];
+            break;
+        }
+        case PHAuthorizationStatusDenied: {
+            EPSLog(@"Photo library status denied.");
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Photo Library Not Authorized By User" message:@"write this message" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:OK style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                [alert dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [alert addAction:okAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            return;
+        }
+        case PHAuthorizationStatusRestricted: {
+            EPSLog(@"Photo library status restricted.");
+            break;
+        }
+        case PHAuthorizationStatusNotDetermined: {
+            EPSLog(@"Photo library status not determined.");
+            [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+                if (status == PHAuthorizationStatusAuthorized) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self handleSnapshotScreen];
+                    });
+                }
+            }];
+            return;
+        }
+        case PHAuthorizationStatusLimited:
+            EPSLog(@"Photo library status limited.");
+            break;
+    }
 }
 
 - (BOOL)imageIsLocked {

@@ -10,5 +10,6 @@
 #define EP_Calipers_Bridging_Header_h
 
 #import "Caliper.h"
+#import "Translation.h"
 
 #endif /* EP_Calipers_Bridging_Header_h */

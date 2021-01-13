@@ -38,39 +38,6 @@
     return YES;
 }
 
-// TODO: use this strategy to determine first use vs upgrade.
-//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-//{
-//    // ...
-//
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//
-//    NSString *currentAppVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-//    NSString *previousVersion = [defaults objectForKey:@"appVersion"];
-//    if (!previousVersion) {
-//        // first launch
-//
-//        // ...
-//
-//        [defaults setObject:currentAppVersion forKey:@"appVersion"];
-//        [defaults synchronize];
-//    } else if ([previousVersion isEqualToString:currentAppVersion]) {
-//        // same version
-//    } else {
-//        // other version
-//
-//        // ...
-//
-//        [defaults setObject:currentAppVersion forKey:@"appVersion"];
-//        [defaults synchronize];
-//    }
-//
-//
-//
-//    return YES;
-//}
-
-
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSDictionary *defaultPreferences = [NSDictionary dictionaryWithObjectsAndKeys:
                                         [NSNumber numberWithBool:YES], @"roundMsecRatePreference",
