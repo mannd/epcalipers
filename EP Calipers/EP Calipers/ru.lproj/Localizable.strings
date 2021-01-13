@@ -8,7 +8,7 @@
 
 /* Strings needing translation */
 "EP Calipers" = "ЭФИ калипер";
-"Copyright_message" = "Авторские права © 2015-2020 EP Studios, Inc.\nВсе права защищены. \nВерсия %@";
+"Copyright_message" = "Авторские права © 2015-2021 EP Studios, Inc.\nВсе права защищены. \nВерсия %@";
 
 /* Simple dialog button labels */
 "10 mm" = "10 мм";
