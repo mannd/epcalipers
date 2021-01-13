@@ -1,5 +1,6 @@
 c OS X
 *.DS_Store
+Thumbs.db
 
 # Xcode
 *.pbxuser
