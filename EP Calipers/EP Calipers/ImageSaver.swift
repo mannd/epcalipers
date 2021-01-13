@@ -8,7 +8,7 @@
 
 import UIKit
 import AudioToolbox
-import OSLog
+import os.log
 
 // Helper class to allow saving images to Photo Album.
 @objc class ImageSaver: NSObject {
