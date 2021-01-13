@@ -172,6 +172,20 @@
 "Calibrate_anyway" = "Étalonner quand même";
 "Time_cal_example" = "1000 msec ou 1 sec";
 
+/* New for version 3.6 */
+"Photo_library_not_available_title" = "Phototèque non disponible";
+"Photo_library_not_available_message" = "Phototèque non disponible.";
+"Image_source" = "Source d'image";
+"Photos_source" = "Photos";
+"Files_source" = "Fichiers";
+"Camera_permission_denied_title" = "Autorisation de caméra refusée par l’utilisateur";
+"Camera_permission_denied_message" = "Modifiez les autorisations de caméra dans l’application Paramètres pour permettre l’utilisation de la caméra.";
+"Snapshot_screen" = "Capture d'écran";
+"Save_snapshot_error_title" = "Erreur d’enregistrement de capture d'écran";
+"Save_snapshot_error_message" = "Modifiez les autorisations de la photothèque dans l’application Paramètres pour permettre l’accès à toutes les photos.";
+"Snapshot_saved_title" = "Capture d’écran enregistrée";
+"Snapshot_saved_message" = "Capture d’écran enregistrée dans la photothèque.";
+
 /* Brugada functionality not implemented yet.  There is no harm if these strings aren't translated */
 //"Brugada_ipad" = "";
 //"Brugada_iphone" = "";

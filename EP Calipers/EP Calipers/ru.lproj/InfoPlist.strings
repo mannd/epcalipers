@@ -7,3 +7,6 @@
 */
 "CFBundleDisplayName" = "ЭФИ калипер";
 "CFBundleName" = "ЭФИ калипер";
+"NSCameraUsageDescription" = "Требуется разрешение на съемку электрокардиограммы.";
+"NSPhotoLibraryUsageDescription" = "Разрешение необходимо для импорта и экспорта изображений электрокардиограмм.";
+"NSAppleMusicUsageDescription" = "Разрешение необходимо для импорта и экспорта изображений электрокардиограмм.";

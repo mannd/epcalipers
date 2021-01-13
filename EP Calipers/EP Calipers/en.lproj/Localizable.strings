@@ -193,7 +193,7 @@
 
 /* New for version 3.6 */
 "Photo_library_not_available_title" = "Photo library not available";
-"Photo_library_not_availalbe_message" = "Photo library not available.";
+"Photo_library_not_available_message" = "Photo library not available.";
 "Image_source" = "Image Source";
 "Photos_source" = "Photos";
 "Files_source" = "Files";

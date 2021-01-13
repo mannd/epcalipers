@@ -175,7 +175,6 @@
 #define TIME_CAL_EXAMPLE L(@"Time_cal_example")
 #define CAMERA_NOT_AVAILABLE_TITLE L(@"Camera_not_available_title")
 #define CAMERA_NOT_AVAILABLE_MESSAGE L(@"Camera_not_available_message")
-// FIXME: new translations
 #define PHOTO_LIBRARY_NOT_AVAILABLE_TITLE L(@"Photo_library_not_available_title")
 #define PHOTO_LIBRARY_NOT_AVAILABLE_MESSAGE L(@"Photo_library_not_available_message")
 #define IMAGE_SOURCE L(@"Image_source")
@@ -2250,7 +2249,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
 }
 
-// TODO: Flesh this out.  Add warning if photo authorization denied.  Not sure what notDetermined does, since if user allows use the image gets saved without doing anything else.  Also do we need Photos Framework linked?  Look into this.
 - (void)checkPhotoLibraryStatus {
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     switch (status) {
