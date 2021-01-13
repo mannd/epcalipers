@@ -852,7 +852,8 @@
     [self.hamburgerViewController reloadData];
     self.constraintHamburgerLeft.constant = 0;
     self.hamburgerMenuIsOpen = YES;
-    [self.navigationController setToolbarHidden:YES animated:YES];
+    // Don't animate to avoid shifting calipers down and ruining screenshots.
+    [self.navigationController setToolbarHidden:YES animated:NO];
     [self.calipersView setUserInteractionEnabled:NO];
     self.navigationItem.rightBarButtonItem.enabled = NO;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
@@ -865,7 +866,7 @@
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
     [self.calipersView setUserInteractionEnabled:YES];
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    [self.navigationController setToolbarHidden:NO animated:NO];
     self.navigationItem.rightBarButtonItem.enabled = YES;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
