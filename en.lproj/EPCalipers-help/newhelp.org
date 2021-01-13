@@ -30,6 +30,7 @@ your finger to choose a place to measure.  Calibrate a caliper to make measureme
 There are several ways to load an ECG image.
 - Take a photo of an ECG
 - Select a photo from your photos collection
+- Select an image or PDF from your files (iOS)
 - Select a photo or PDF using the *Share* menu from other apps
 ** /AliveCor/
 To view ECGs in the /AliveCor Kardia/ app, select *Journal*, then *Share* for the specific saved ECG you want to view.  After selecting the *Share* button, select *PDF* from the options that appear.  Then select *Share* and open the PDF with *EP Calipers*.  

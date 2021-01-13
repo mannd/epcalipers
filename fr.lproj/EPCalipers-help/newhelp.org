@@ -27,6 +27,7 @@ Quand le *Compas EP* commence, un échantillon d'ECG et un compas de temps sont 
 Il y a plusieurs manières de charger une image d'un ECG.
 - Prendre une photo d'un ECG
 - Choisir une photo de votre collection de photos
+- Choisir une image ou un PDF dans vos fichiers (iOS)
 - Choisir une photo ou un PDF avec l'icône de partage d'autres applications
 ** /AliveCor Kardia/
 Pour regarder des ECGs dans l'application /AliveCor Kardia/, choisir *Journal*, puis *Partage* pour l'ECG que vous voulez regarder. Après la sélection du bouton *Partage*, choisir *PDF* de la liste d'options qui apparaît.  Ensuite taper le bouton *Partage* et choisir *Compas EP*. 
