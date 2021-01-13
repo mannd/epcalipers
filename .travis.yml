@@ -3,7 +3,7 @@ language: objective-c
 osx_image: xcode12
 xcode_workspace: ./EP Calipers/EP Calipers.xcworkspace
 xcode_scheme: EP Calipers
-xcode_destination: platform=iOS Simulator,OS=14.0,name=iPhone 12
+xcode_destination: platform=iOS Simulator,OS=14.0,name=iPhone 11
 branches:
   except:
     - gh-pages
