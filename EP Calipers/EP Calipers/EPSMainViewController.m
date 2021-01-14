@@ -2099,6 +2099,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     UIImage *chosenImage = nil;
     chosenImage = info[UIImagePickerControllerEditedImage];
     [self resetImage:self];
+    // Images are never upscaled
+    self.imageIsUpscaled = NO;
     self.imageView.image = [self scaleImageForImageView:chosenImage];
     // reset zoom for new image
     self.scrollView.zoomScale = 1.0;
@@ -2108,7 +2110,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self enablePageButtons:NO];
     // remove any prior PDF from memory
     [self clearPDF];
-    self.imageIsUpscaled = NO;
     self.launchURL = nil;
     [self recenterImage];
     [self selectMainToolbar];
