@@ -2096,9 +2096,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 #pragma mark - Delegate Methods
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    UIImage *chosenImage = nil;
-    self.imageIsUpscaled = NO;
-    chosenImage = info[UIImagePickerControllerEditedImage];
+    UIImage *chosenImage = info[UIImagePickerControllerEditedImage];
     [self resetImage:self];
     // Images are never upscaled
     self.imageIsUpscaled = NO;
