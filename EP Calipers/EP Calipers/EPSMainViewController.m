@@ -2097,6 +2097,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
     UIImage *chosenImage = nil;
+    self.imageIsUpscaled = NO;
     chosenImage = info[UIImagePickerControllerEditedImage];
     [self resetImage:self];
     self.imageView.image = [self scaleImageForImageView:chosenImage];
@@ -2108,7 +2109,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self enablePageButtons:NO];
     // remove any prior PDF from memory
     [self clearPDF];
-    self.imageIsUpscaled = NO;
     self.launchURL = nil;
     [self recenterImage];
     [self selectMainToolbar];
