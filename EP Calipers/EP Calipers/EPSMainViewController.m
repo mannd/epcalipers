@@ -2100,6 +2100,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.imageIsUpscaled = NO;
     chosenImage = info[UIImagePickerControllerEditedImage];
     [self resetImage:self];
+    // Images are never upscaled
+    self.imageIsUpscaled = NO;
     self.imageView.image = [self scaleImageForImageView:chosenImage];
     // reset zoom for new image
     self.scrollView.zoomScale = 1.0;
