@@ -16,7 +16,6 @@ typedef NS_ENUM(NSInteger, Layer) {
     PhotoGallery,
     Lock,
     SampleEcg,
-    SnapshotScreen,
     Preferences,
     ToolTips,
     Manual,

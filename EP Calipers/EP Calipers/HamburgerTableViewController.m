@@ -89,9 +89,6 @@
         case Lock:
             [self.mainViewController lockImage];
             break;
-        case SnapshotScreen:
-            [self.mainViewController snapshotScreen];
-            break;
         case Preferences:
             [self.mainViewController openSettings];
             break;

@@ -23,14 +23,10 @@
     [array addObject:lockLayer];
     HamburgerLayer *sampleEcgLayer = [[HamburgerLayer alloc] initWithName:L(@"Sample_ecg") iconName:@"ecg" layer:SampleEcg];
     [array addObject:sampleEcgLayer];
-    HamburgerLayer *snapshotImageLayer = [[HamburgerLayer alloc] initWithName:L(@"Snapshot_screen") iconName:@"snapshot" layer:SnapshotScreen];
-    [array addObject:snapshotImageLayer];
     HamburgerLayer *preferencesLayer = [[HamburgerLayer alloc] initWithName:L(@"Preferences") iconName:@"settings" layer:Preferences];
     [array addObject:preferencesLayer];
     HamburgerLayer *tooltipLayer = [[HamburgerLayer alloc] initWithName:L(@"Show_tooltips") iconName:@"hammer" layer:ToolTips altName:L(@"Hide_tooltips") altIconName:@"hammer"];
     [array addObject:tooltipLayer];
-//    HamburgerLayer *helpLayer = [[HamburgerLayer alloc] initWithName:L(@"Quick_help") iconName:@"help" layer:Help];
-//    [array addObject:helpLayer];
     HamburgerLayer *manualLayer = [[HamburgerLayer alloc] initWithName:L(@"Help") iconName:@"help" layer:Manual];
     [array addObject:manualLayer];
     HamburgerLayer *aboutLayer = [[HamburgerLayer alloc] initWithName:L(@"About_ep_calipers") iconName:@"about" layer:About];

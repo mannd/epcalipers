@@ -124,6 +124,7 @@
 #define QTC_TOOLTIP L(@"QTc_tooltip")
 #define QTC_STEP_1_TOOLTIP L(@"QTc_step_1_tooltip")
 #define QTC_STEP_2_TOOLTIP L(@"QTc_step_2_tooltip")
+#define SNAPSHOT_TOOLTIP L(@"Snapshot_screen")
 
 // Dialog titles and messages
 #define ADD_CALIPER L(@"Add_caliper")
@@ -204,14 +205,15 @@
 
 // tooltips
 // tooltips shown at start
-@property (strong, nonatomic) CMPopTipView *navBarLeftButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *navBarRightButtonPopTipView;
+//@property (strong, nonatomic) CMPopTipView *navBarLeftButtonPopTipView;
+//@property (strong, nonatomic) CMPopTipView *navBarRightButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *measurementToolbarPopTipView;
 @property (strong, nonatomic) CMPopTipView *caliperPopTipView;
 @property (strong, nonatomic) CMPopTipView *imagePopTipView;
 @property (strong, nonatomic) CMPopTipView *longPressPopTipView;
 // button tooltips
 @property (strong, nonatomic) CMPopTipView *addCaliperButtonPopTipView;
+@property (strong, nonatomic) CMPopTipView *snapshotButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *sideMenuButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *setupCalibrationButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *setCalibrationButtonPopTipView;
@@ -229,6 +231,7 @@
 @property (nonatomic) BOOL showingInitialTooltips;
 
 @property (nonatomic) BOOL showAddCaliperButtonToolTip;
+@property (nonatomic) BOOL showSnapshotButtonToolTip;
 @property (nonatomic) BOOL showSideMenuButtonToolTip;
 @property (nonatomic) BOOL showSetupCalibrationToolTip;
 @property (nonatomic) BOOL showSetCalibrationToolTip;
@@ -319,7 +322,10 @@
     self.blackView.alpha = 0;
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
-    self.navigationItem.rightBarButtonItem = addCaliperButton;
+    UIBarButtonItem *screenshotItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"snapshot"] style:UIBarButtonItemStylePlain target:self action:@selector(snapshotScreen)];
+
+//                                       initWithBarButtonSystemItem:UIBarButtonSystemItemCamera target:self action:@selector(snapshotScreen)];
+    self.navigationItem.rightBarButtonItems = @[addCaliperButton, screenshotItem];
     // icon from https://icons8.com/icon/set/hamburger/ios
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
@@ -529,6 +535,7 @@
 
 - (void)setToolTipState:(BOOL)value {
     self.showAddCaliperButtonToolTip = value;
+    self.showSnapshotButtonToolTip = value;
     self.showSideMenuButtonToolTip = value;
     self.showSetupCalibrationToolTip = value;
     self.showSetCalibrationToolTip = value;
@@ -538,7 +545,6 @@
     self.showCalculateQTcToolTip = value;
     self.showQtcStep1ToolTip = value;
     self.showQtcStep2ToolTip = value;
-
 }
 
 - (void)initToolTips {
@@ -579,8 +585,10 @@
 }
 
 - (void)stillShowingToolTips {
-    BOOL toolTipsRemain = self.showSetupCalibrationToolTip || self.showSetCalibrationToolTip || self.showIntRateToolTip || self.showMeanRateToolTip || self.showClearCalibrationToolTip || self.showQtcStep1ToolTip || self.showQtcStep2ToolTip;
+    BOOL toolTipsRemain = self.showSetupCalibrationToolTip || self.showSetCalibrationToolTip || self.showIntRateToolTip || self.showMeanRateToolTip || self.showClearCalibrationToolTip || self.showQtcStep1ToolTip || self.showQtcStep2ToolTip ||
+    self.showAddCaliperButtonToolTip || self.showSnapshotButtonToolTip;
     self.showingToolTips = toolTipsRemain;
+    EPSLog(@"*****showingToolTips = %d", self.showingToolTips);
     self.hamburgerViewController.showingToolTips = self.showingToolTips;
 }
 
@@ -623,6 +631,10 @@
 
     if ([popTipView isEqual:self.addCaliperButtonPopTipView]) {
         self.showAddCaliperButtonToolTip = NO;
+        [self stillShowingToolTips];
+    }
+    if ([popTipView isEqual:self.snapshotButtonPopTipView]) {
+        self.showSnapshotButtonToolTip = NO;
         [self stillShowingToolTips];
     }
     if ([popTipView isEqual:self.sideMenuButtonPopTipView]) {
@@ -802,7 +814,7 @@
     if (nil == self.addCaliperButtonPopTipView && self.showAddCaliperButtonToolTip) {
         self.addCaliperButtonPopTipView = [[CMPopTipView alloc] initWithMessage:ADD_TOOLTIP];
         [self setupToolTip:self.addCaliperButtonPopTipView];
-        [self.addCaliperButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItem  animated:YES];
+        [self.addCaliperButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItems[0]  animated:YES];
         return;
     }
     else {
@@ -855,7 +867,8 @@
     // Don't animate to avoid shifting calipers down and ruining screenshots.
     [self.navigationController setToolbarHidden:YES animated:NO];
     [self.calipersView setUserInteractionEnabled:NO];
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+    self.navigationItem.rightBarButtonItems[0].enabled = NO;
+    self.navigationItem.rightBarButtonItems[1].enabled = NO;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
         self.blackView.alpha = self.maxBlackAlpha;
@@ -867,7 +880,8 @@
     self.hamburgerMenuIsOpen = NO;
     [self.calipersView setUserInteractionEnabled:YES];
     [self.navigationController setToolbarHidden:NO animated:NO];
-    self.navigationItem.rightBarButtonItem.enabled = YES;
+    self.navigationItem.rightBarButtonItems[0].enabled = YES;
+    self.navigationItem.rightBarButtonItems[1].enabled = YES;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
         self.blackView.alpha = 0;
@@ -876,8 +890,6 @@
 
 - (void)showHelp {
     [self performSegueWithIdentifier:@"showHelpSegue" sender:self];
-//    [self performSegueWithIdentifier:@"showHelpImageSegue" sender:self];
-//    [self performSegueWithIdentifier:@"WebViewSegue" sender:self];
 }
 
 - (void)showManual {
@@ -2222,19 +2234,35 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)snapshotScreen {
+    if (self.showingInitialTooltips) {
+        return;
+    }
+    if (nil == self.snapshotButtonPopTipView && self.showSnapshotButtonToolTip) {
+        self.snapshotButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SNAPSHOT_TOOLTIP];
+        [self setupToolTip:self.snapshotButtonPopTipView];
+        [self.snapshotButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItems[1]  animated:YES];
+        return;
+    }
+    else {
+        // Dismiss
+        [self.snapshotButtonPopTipView dismissAnimated:YES];
+        self.snapshotButtonPopTipView = nil;
+        self.showSnapshotButtonToolTip = NO;
+    }
     [self checkPhotoLibraryStatus];
 }
 
 - (void)handleSnapshotScreen {
     EPSLog(@"snapshot image");
-    UIGraphicsImageRenderer *bottomRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.scrollView.bounds.size];
+    UIGraphicsImageRendererFormat *format = [UIGraphicsImageRendererFormat preferredFormat];
+    UIGraphicsImageRenderer *bottomRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.scrollView.bounds.size format:format];
     CGFloat originX = CGRectGetMinX(self.scrollView.bounds) - self.scrollView.contentOffset.x;
     CGFloat originY = CGRectGetMinY(self.scrollView.bounds) - self.scrollView.contentOffset.y;
     CGRect bounds = CGRectMake(originX, originY, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
     UIImage *bottomImage = [bottomRenderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
         [self.scrollView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
       }];
-    UIGraphicsImageRenderer *topRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.calipersView.bounds.size];
+    UIGraphicsImageRenderer *topRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.calipersView.bounds.size format: format];
     UIImage *topImage = [topRenderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
         [self.calipersView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
       }];
