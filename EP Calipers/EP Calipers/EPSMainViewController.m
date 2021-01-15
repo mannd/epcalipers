@@ -1716,8 +1716,10 @@
         UIAlertAction *filesAction = [UIAlertAction actionWithTitle:FILES_SOURCE style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             [self selectFile];
         }];
+        UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:CANCEL style:UIAlertActionStyleCancel handler:nil];
         [chooser addAction:photosAction];
         [chooser addAction:filesAction];
+        [chooser addAction:cancelAction];
         [self presentViewController:chooser animated:YES completion:nil];
     } else {
         [self selectImage];
