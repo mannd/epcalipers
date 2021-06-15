@@ -1941,7 +1941,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
 }
 
-
 - (void)calibrateWithValidation:(Validation *)validation {
     [self processCalibration:validation.calibrationString trimmedUnits:validation.units value:validation.number];
 }

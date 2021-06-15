@@ -5,12 +5,12 @@ DEPENDENCIES:
   - CMPopTipView (~> 2.3)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - CMPopTipView
 
 SPEC CHECKSUMS:
   CMPopTipView: 2d56ef53e8e739c4e63ad97a5a88b97712b46c7b
 
-PODFILE CHECKSUM: 28d35ea9c9fd7a7722fe36d77a9666ea8bd43212
+PODFILE CHECKSUM: ef76a6530c82825c70dbc5c97cec15b4f8066e43
 
-COCOAPODS: 1.6.0.beta.2
+COCOAPODS: 1.8.0.beta.1

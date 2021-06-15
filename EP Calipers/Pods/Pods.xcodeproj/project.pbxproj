@@ -7,68 +7,68 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0AA25E3F789A314B818B6B32C818D48F /* CMPopTipView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 924E57F8565DCE293BE1518BB3C80451 /* CMPopTipView-dummy.m */; };
-		2058373784B91418946D4EC55D8C9BDD /* CMPopTipView.h in Headers */ = {isa = PBXBuildFile; fileRef = B738103C8F1F45CFD4EBD0BCC815F68D /* CMPopTipView.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		3F663B6D662CAB380E99FE32A5310661 /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C74D614F438EFE754FFE9A2C904AE84 /* CMPopTipView.m */; };
-		536EC2F677D9D23A84DCC4BC787A1FAB /* Pods-EP Calipers-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3482BB5010B666F689B5BC718C75087A /* Pods-EP Calipers-dummy.m */; };
-		E44C1D9CE29C558ABC9530BA1463C2EE /* Pods-EP CalipersTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F5FD8FF0AE31BC5DAE9B4C030389B5F /* Pods-EP CalipersTests-dummy.m */; };
+		0A6587D23F7AE62EEF75FDA95DCB68A9 /* CMPopTipView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3782EA5C5EA72053CEC36D63B52AB3A6 /* CMPopTipView.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		5E2D097EE9B086250375E18BF19E6146 /* Pods-EP CalipersTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 8564F30EEAC58887E8AC0B3479C28B72 /* Pods-EP CalipersTests-dummy.m */; };
+		B56509160408458E026BDF5E5C79B123 /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7562959A230699E19DCA62B105FE78B6 /* CMPopTipView.m */; };
+		B8186B6BECC513CF22C9219618806090 /* CMPopTipView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 07584F61C9EB8984612D78EC788C53F4 /* CMPopTipView-dummy.m */; };
+		CBEEFB2A9CD004CE1C9913841BAE5B6A /* Pods-EP Calipers-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C65FFEE7DDFFDD6318A635344CE5A2 /* Pods-EP Calipers-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		65853C5B7F74C0A97838AF04460A5F12 /* PBXContainerItemProxy */ = {
+		106E414FAFFB5FC59EFDFCCA0C97A2CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = A5BDA0021C1F1F38C8E3BDB672305CF4;
-			remoteInfo = "Pods-EP Calipers";
-		};
-		BC6A876E09C3C7D75B2E7E43DA466A55 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6D87F9D2C304DCD7701211503BE17832;
+			remoteGlobalIDString = 9BBD78E178D7E6D4F10B606592EC7E4C;
 			remoteInfo = CMPopTipView;
+		};
+		FF8D5B7D870AD07696A6B7C3DAC9D671 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AAC81FC5C052D4D75C2BA0EFE5EF7FB2;
+			remoteInfo = "Pods-EP Calipers";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0408BE0101F47CC79182A7484AD24B27 /* Pods-EP Calipers-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EP Calipers-acknowledgements.plist"; sourceTree = "<group>"; };
-		2C74D614F438EFE754FFE9A2C904AE84 /* CMPopTipView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CMPopTipView.m; path = CMPopTipView/CMPopTipView.m; sourceTree = "<group>"; };
-		33999C13494B2847D2741712BF9CED2F /* Pods-EP Calipers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EP Calipers.release.xcconfig"; sourceTree = "<group>"; };
-		3482BB5010B666F689B5BC718C75087A /* Pods-EP Calipers-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-EP Calipers-dummy.m"; sourceTree = "<group>"; };
-		3E9734CECC1F1D63855B75261BDAE819 /* Pods-EP CalipersTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EP CalipersTests.release.xcconfig"; sourceTree = "<group>"; };
-		3F072CA81892478812285818E9724500 /* libPods-EP CalipersTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EP CalipersTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5718DA3EA67592F54F3C15AE8ABCAA43 /* CMPopTipView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CMPopTipView.xcconfig; sourceTree = "<group>"; };
-		65EE30C7FDAC8107A8D00607F00A5959 /* Pods-EP CalipersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EP CalipersTests.debug.xcconfig"; sourceTree = "<group>"; };
-		76AFC3A0D0528EFBA4075049049A7BF4 /* Pods-EP Calipers-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-EP Calipers-acknowledgements.markdown"; sourceTree = "<group>"; };
-		7F5FD8FF0AE31BC5DAE9B4C030389B5F /* Pods-EP CalipersTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-EP CalipersTests-dummy.m"; sourceTree = "<group>"; };
-		924E57F8565DCE293BE1518BB3C80451 /* CMPopTipView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CMPopTipView-dummy.m"; sourceTree = "<group>"; };
-		946B7437F3CB48044B608F8FF0F7A24C /* Pods-EP CalipersTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-EP CalipersTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		A4EE13F3B890BA453D309B651521589D /* Pods-EP Calipers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EP Calipers.debug.xcconfig"; sourceTree = "<group>"; };
-		B36AB396275697EEE1A5B13BA8A38FE3 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		B738103C8F1F45CFD4EBD0BCC815F68D /* CMPopTipView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CMPopTipView.h; path = CMPopTipView/CMPopTipView.h; sourceTree = "<group>"; };
-		B7B55C5BFFD0A56E46D503B6131D3D61 /* CMPopTipView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CMPopTipView-prefix.pch"; sourceTree = "<group>"; };
-		BA6ECFFAC9C847EA7DC63746B3C8C9A0 /* libPods-EP Calipers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EP Calipers.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		EF18BE79882127C4BC44E75CBAD39FA4 /* Pods-EP CalipersTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EP CalipersTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		F946A49D36C0FBEB13E90E68275B0575 /* libCMPopTipView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCMPopTipView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		02A50BCE8C31A43863BB31A41ADAD4F2 /* Pods-EP CalipersTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EP CalipersTests.release.xcconfig"; sourceTree = "<group>"; };
+		037FC64D58CD0B5D1567E71FD0DFAFF2 /* Pods-EP CalipersTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EP CalipersTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		07584F61C9EB8984612D78EC788C53F4 /* CMPopTipView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CMPopTipView-dummy.m"; sourceTree = "<group>"; };
+		08D402C8E74BDBF0CFD391C34D526999 /* libCMPopTipView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCMPopTipView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		165AF59BA67D108547D28BADB2945678 /* Pods-EP CalipersTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EP CalipersTests.debug.xcconfig"; sourceTree = "<group>"; };
+		1A4C81C84523FE5CEA34C00F80E01FF7 /* Pods-EP Calipers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EP Calipers.debug.xcconfig"; sourceTree = "<group>"; };
+		1F6061F71CEC6CFEA2B0260A40C348C9 /* libPods-EP CalipersTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EP CalipersTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FC7DA80660D3DFE3E3358AE60528A11 /* CMPopTipView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CMPopTipView.xcconfig; sourceTree = "<group>"; };
+		3782EA5C5EA72053CEC36D63B52AB3A6 /* CMPopTipView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CMPopTipView.h; path = CMPopTipView/CMPopTipView.h; sourceTree = "<group>"; };
+		3B0347EFE2AFBDDAA4512D311BF0276B /* Pods-EP CalipersTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-EP CalipersTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		463F52EEB4BDD790A35C40E84D38C73B /* libPods-EP Calipers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-EP Calipers.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CCF3801EB37BD055E7942A3B3C9C590 /* Pods-EP Calipers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-EP Calipers.release.xcconfig"; sourceTree = "<group>"; };
+		55C65FFEE7DDFFDD6318A635344CE5A2 /* Pods-EP Calipers-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-EP Calipers-dummy.m"; sourceTree = "<group>"; };
+		71E34E8DCEC9C23428E480FAEDC5651F /* Pods-EP Calipers-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-EP Calipers-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7562959A230699E19DCA62B105FE78B6 /* CMPopTipView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CMPopTipView.m; path = CMPopTipView/CMPopTipView.m; sourceTree = "<group>"; };
+		8564F30EEAC58887E8AC0B3479C28B72 /* Pods-EP CalipersTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-EP CalipersTests-dummy.m"; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		D488F0D1C97708E676C48E07FD63F428 /* Pods-EP Calipers-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-EP Calipers-acknowledgements.plist"; sourceTree = "<group>"; };
+		F59191123F58C7E1AEF2087DC235185C /* CMPopTipView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CMPopTipView-prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9B5D1844162F476F48BC69F5E40281F5 /* Frameworks */ = {
+		0A99CDAF999C8E26400500EC230B977F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AE24F1BDF62551D98E969D04ADD5C629 /* Frameworks */ = {
+		37A8C67E872FFF611A5D990A71B31E86 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		FF98A1328A56637E5E4739AC2FBE5F12 /* Frameworks */ = {
+		771EDBA296B9F0CA60E040E0579C91B3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -78,133 +78,133 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0F8D2E47FE03D3B91B51069F7C273AF4 /* Frameworks */ = {
+		07078BE097DB5589FE5EEBB69706A309 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				08D402C8E74BDBF0CFD391C34D526999 /* libCMPopTipView.a */,
+				463F52EEB4BDD790A35C40E84D38C73B /* libPods-EP Calipers.a */,
+				1F6061F71CEC6CFEA2B0260A40C348C9 /* libPods-EP CalipersTests.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		15F638B0DD7C08B4ABFDE4863D7C92B5 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				2FC7DA80660D3DFE3E3358AE60528A11 /* CMPopTipView.xcconfig */,
+				07584F61C9EB8984612D78EC788C53F4 /* CMPopTipView-dummy.m */,
+				F59191123F58C7E1AEF2087DC235185C /* CMPopTipView-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/CMPopTipView";
+			sourceTree = "<group>";
+		};
+		16BB7529AC627B3F9BC8DC8094C6B1E2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B2D87A04F77D1FAAA182076EC73365A1 /* CMPopTipView */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		854810C304DA2CA0904099F8CACB29A5 /* Pods-EP CalipersTests */ = {
+			isa = PBXGroup;
+			children = (
+				3B0347EFE2AFBDDAA4512D311BF0276B /* Pods-EP CalipersTests-acknowledgements.markdown */,
+				037FC64D58CD0B5D1567E71FD0DFAFF2 /* Pods-EP CalipersTests-acknowledgements.plist */,
+				8564F30EEAC58887E8AC0B3479C28B72 /* Pods-EP CalipersTests-dummy.m */,
+				165AF59BA67D108547D28BADB2945678 /* Pods-EP CalipersTests.debug.xcconfig */,
+				02A50BCE8C31A43863BB31A41ADAD4F2 /* Pods-EP CalipersTests.release.xcconfig */,
+			);
+			name = "Pods-EP CalipersTests";
+			path = "Target Support Files/Pods-EP CalipersTests";
+			sourceTree = "<group>";
+		};
+		B2D87A04F77D1FAAA182076EC73365A1 /* CMPopTipView */ = {
+			isa = PBXGroup;
+			children = (
+				3782EA5C5EA72053CEC36D63B52AB3A6 /* CMPopTipView.h */,
+				7562959A230699E19DCA62B105FE78B6 /* CMPopTipView.m */,
+				15F638B0DD7C08B4ABFDE4863D7C92B5 /* Support Files */,
+			);
+			path = CMPopTipView;
+			sourceTree = "<group>";
+		};
+		B5094BD29A076E7D12AA04913D435515 /* Pods-EP Calipers */ = {
+			isa = PBXGroup;
+			children = (
+				71E34E8DCEC9C23428E480FAEDC5651F /* Pods-EP Calipers-acknowledgements.markdown */,
+				D488F0D1C97708E676C48E07FD63F428 /* Pods-EP Calipers-acknowledgements.plist */,
+				55C65FFEE7DDFFDD6318A635344CE5A2 /* Pods-EP Calipers-dummy.m */,
+				1A4C81C84523FE5CEA34C00F80E01FF7 /* Pods-EP Calipers.debug.xcconfig */,
+				4CCF3801EB37BD055E7942A3B3C9C590 /* Pods-EP Calipers.release.xcconfig */,
+			);
+			name = "Pods-EP Calipers";
+			path = "Target Support Files/Pods-EP Calipers";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				D89477F20FB1DE18A04690586D7808C4 /* Frameworks */,
+				16BB7529AC627B3F9BC8DC8094C6B1E2 /* Pods */,
+				07078BE097DB5589FE5EEBB69706A309 /* Products */,
+				E4257972940B8D3C8A938B8C646933EA /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D89477F20FB1DE18A04690586D7808C4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		2601F4FB8A0C680ED0CE266326C7E9C0 /* Products */ = {
+		E4257972940B8D3C8A938B8C646933EA /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				F946A49D36C0FBEB13E90E68275B0575 /* libCMPopTipView.a */,
-				BA6ECFFAC9C847EA7DC63746B3C8C9A0 /* libPods-EP Calipers.a */,
-				3F072CA81892478812285818E9724500 /* libPods-EP CalipersTests.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		29C6D7F7E642BD93B84350162F328C3D /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				A7990381DDC370B3932F85D9FC41674C /* Pods-EP Calipers */,
-				E4D4E9F8D75B3E7A00530E286FD405CC /* Pods-EP CalipersTests */,
+				B5094BD29A076E7D12AA04913D435515 /* Pods-EP Calipers */,
+				854810C304DA2CA0904099F8CACB29A5 /* Pods-EP CalipersTests */,
 			);
 			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		4FAC6768FA58207C7224D685924A2D5B /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				5718DA3EA67592F54F3C15AE8ABCAA43 /* CMPopTipView.xcconfig */,
-				924E57F8565DCE293BE1518BB3C80451 /* CMPopTipView-dummy.m */,
-				B7B55C5BFFD0A56E46D503B6131D3D61 /* CMPopTipView-prefix.pch */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/CMPopTipView";
-			sourceTree = "<group>";
-		};
-		5BB14D111CE2D328CD7CAD8392A6981C /* CMPopTipView */ = {
-			isa = PBXGroup;
-			children = (
-				B738103C8F1F45CFD4EBD0BCC815F68D /* CMPopTipView.h */,
-				2C74D614F438EFE754FFE9A2C904AE84 /* CMPopTipView.m */,
-				4FAC6768FA58207C7224D685924A2D5B /* Support Files */,
-			);
-			path = CMPopTipView;
-			sourceTree = "<group>";
-		};
-		7DB346D0F39D3F0E887471402A8071AB = {
-			isa = PBXGroup;
-			children = (
-				B36AB396275697EEE1A5B13BA8A38FE3 /* Podfile */,
-				0F8D2E47FE03D3B91B51069F7C273AF4 /* Frameworks */,
-				FF52D0B782BD7E1FFF6F96E25D43C732 /* Pods */,
-				2601F4FB8A0C680ED0CE266326C7E9C0 /* Products */,
-				29C6D7F7E642BD93B84350162F328C3D /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
-		A7990381DDC370B3932F85D9FC41674C /* Pods-EP Calipers */ = {
-			isa = PBXGroup;
-			children = (
-				76AFC3A0D0528EFBA4075049049A7BF4 /* Pods-EP Calipers-acknowledgements.markdown */,
-				0408BE0101F47CC79182A7484AD24B27 /* Pods-EP Calipers-acknowledgements.plist */,
-				3482BB5010B666F689B5BC718C75087A /* Pods-EP Calipers-dummy.m */,
-				A4EE13F3B890BA453D309B651521589D /* Pods-EP Calipers.debug.xcconfig */,
-				33999C13494B2847D2741712BF9CED2F /* Pods-EP Calipers.release.xcconfig */,
-			);
-			name = "Pods-EP Calipers";
-			path = "Target Support Files/Pods-EP Calipers";
-			sourceTree = "<group>";
-		};
-		E4D4E9F8D75B3E7A00530E286FD405CC /* Pods-EP CalipersTests */ = {
-			isa = PBXGroup;
-			children = (
-				946B7437F3CB48044B608F8FF0F7A24C /* Pods-EP CalipersTests-acknowledgements.markdown */,
-				EF18BE79882127C4BC44E75CBAD39FA4 /* Pods-EP CalipersTests-acknowledgements.plist */,
-				7F5FD8FF0AE31BC5DAE9B4C030389B5F /* Pods-EP CalipersTests-dummy.m */,
-				65EE30C7FDAC8107A8D00607F00A5959 /* Pods-EP CalipersTests.debug.xcconfig */,
-				3E9734CECC1F1D63855B75261BDAE819 /* Pods-EP CalipersTests.release.xcconfig */,
-			);
-			name = "Pods-EP CalipersTests";
-			path = "Target Support Files/Pods-EP CalipersTests";
-			sourceTree = "<group>";
-		};
-		FF52D0B782BD7E1FFF6F96E25D43C732 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5BB14D111CE2D328CD7CAD8392A6981C /* CMPopTipView */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		05E7E741955E1C63AE4C428FB52C6D3D /* Headers */ = {
+		510794DB361944ADAF6D5F4F272A0195 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		254AFF9C16B9F7EB07ADF7FF942E118F /* Headers */ = {
+		B18599A624D2A1FD2202BC2AD9F228A9 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A6587D23F7AE62EEF75FDA95DCB68A9 /* CMPopTipView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		381750365DA7CA442D5372A140901E18 /* Headers */ = {
+		D6B9309F2F194AF37351255493B832F0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2058373784B91418946D4EC55D8C9BDD /* CMPopTipView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		6D87F9D2C304DCD7701211503BE17832 /* CMPopTipView */ = {
+		9BBD78E178D7E6D4F10B606592EC7E4C /* CMPopTipView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CC6DCD4F534AEE72FFC308A7C406BA1A /* Build configuration list for PBXNativeTarget "CMPopTipView" */;
+			buildConfigurationList = 3011422F8E6DAB72786B4462E48BD643 /* Build configuration list for PBXNativeTarget "CMPopTipView" */;
 			buildPhases = (
-				381750365DA7CA442D5372A140901E18 /* Headers */,
-				4540493EE4133393AF77CDBF01DB1A04 /* Sources */,
-				9B5D1844162F476F48BC69F5E40281F5 /* Frameworks */,
+				B18599A624D2A1FD2202BC2AD9F228A9 /* Headers */,
+				FDF2CFCC29DCE73990EE75455D07457E /* Sources */,
+				771EDBA296B9F0CA60E040E0579C91B3 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -212,55 +212,55 @@
 			);
 			name = CMPopTipView;
 			productName = CMPopTipView;
-			productReference = F946A49D36C0FBEB13E90E68275B0575 /* libCMPopTipView.a */;
+			productReference = 08D402C8E74BDBF0CFD391C34D526999 /* libCMPopTipView.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		A5BDA0021C1F1F38C8E3BDB672305CF4 /* Pods-EP Calipers */ = {
+		AAC81FC5C052D4D75C2BA0EFE5EF7FB2 /* Pods-EP Calipers */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 10670A69617E9D73C4EBBF18A14005AD /* Build configuration list for PBXNativeTarget "Pods-EP Calipers" */;
+			buildConfigurationList = 2A540F56DC0432B0F8B2DFDB048E3D0B /* Build configuration list for PBXNativeTarget "Pods-EP Calipers" */;
 			buildPhases = (
-				05E7E741955E1C63AE4C428FB52C6D3D /* Headers */,
-				ACC769F07AE529A1562554788CB15BB7 /* Sources */,
-				AE24F1BDF62551D98E969D04ADD5C629 /* Frameworks */,
+				510794DB361944ADAF6D5F4F272A0195 /* Headers */,
+				55B3F107173008272CF1B424C1B30138 /* Sources */,
+				0A99CDAF999C8E26400500EC230B977F /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				ADFB9F08F5A68C189CA784A6FE6694C2 /* PBXTargetDependency */,
+				2E7FABFD912F06043140CF639890FE9A /* PBXTargetDependency */,
 			);
 			name = "Pods-EP Calipers";
 			productName = "Pods-EP Calipers";
-			productReference = BA6ECFFAC9C847EA7DC63746B3C8C9A0 /* libPods-EP Calipers.a */;
+			productReference = 463F52EEB4BDD790A35C40E84D38C73B /* libPods-EP Calipers.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		FD95C8BB78CD7D8D3CA4D8EA43D50FC0 /* Pods-EP CalipersTests */ = {
+		F193B4AEF266D6EFA3EFE9E040E53C45 /* Pods-EP CalipersTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A99BFD87910D8B4568CB9C6C6387683C /* Build configuration list for PBXNativeTarget "Pods-EP CalipersTests" */;
+			buildConfigurationList = 8337E5BABCE447EFFAA5453EB8021776 /* Build configuration list for PBXNativeTarget "Pods-EP CalipersTests" */;
 			buildPhases = (
-				254AFF9C16B9F7EB07ADF7FF942E118F /* Headers */,
-				234D740CDC14BF425DF0039C11CD5090 /* Sources */,
-				FF98A1328A56637E5E4739AC2FBE5F12 /* Frameworks */,
+				D6B9309F2F194AF37351255493B832F0 /* Headers */,
+				177AABFCAC8223AC416E572DD7B013C1 /* Sources */,
+				37A8C67E872FFF611A5D990A71B31E86 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				6B925D34870B940266A33318EF067443 /* PBXTargetDependency */,
+				8ADBE59500F360467C34437DCC3BBB4F /* PBXTargetDependency */,
 			);
 			name = "Pods-EP CalipersTests";
 			productName = "Pods-EP CalipersTests";
-			productReference = 3F072CA81892478812285818E9724500 /* libPods-EP CalipersTests.a */;
+			productReference = 1F6061F71CEC6CFEA2B0260A40C348C9 /* libPods-EP CalipersTests.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0930;
-				LastUpgradeCheck = 1200;
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1250;
 			};
-			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -268,177 +268,66 @@
 				en,
 				Base,
 			);
-			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = 2601F4FB8A0C680ED0CE266326C7E9C0 /* Products */;
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 07078BE097DB5589FE5EEBB69706A309 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				6D87F9D2C304DCD7701211503BE17832 /* CMPopTipView */,
-				A5BDA0021C1F1F38C8E3BDB672305CF4 /* Pods-EP Calipers */,
-				FD95C8BB78CD7D8D3CA4D8EA43D50FC0 /* Pods-EP CalipersTests */,
+				9BBD78E178D7E6D4F10B606592EC7E4C /* CMPopTipView */,
+				AAC81FC5C052D4D75C2BA0EFE5EF7FB2 /* Pods-EP Calipers */,
+				F193B4AEF266D6EFA3EFE9E040E53C45 /* Pods-EP CalipersTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		234D740CDC14BF425DF0039C11CD5090 /* Sources */ = {
+		177AABFCAC8223AC416E572DD7B013C1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E44C1D9CE29C558ABC9530BA1463C2EE /* Pods-EP CalipersTests-dummy.m in Sources */,
+				5E2D097EE9B086250375E18BF19E6146 /* Pods-EP CalipersTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		4540493EE4133393AF77CDBF01DB1A04 /* Sources */ = {
+		55B3F107173008272CF1B424C1B30138 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0AA25E3F789A314B818B6B32C818D48F /* CMPopTipView-dummy.m in Sources */,
-				3F663B6D662CAB380E99FE32A5310661 /* CMPopTipView.m in Sources */,
+				CBEEFB2A9CD004CE1C9913841BAE5B6A /* Pods-EP Calipers-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		ACC769F07AE529A1562554788CB15BB7 /* Sources */ = {
+		FDF2CFCC29DCE73990EE75455D07457E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				536EC2F677D9D23A84DCC4BC787A1FAB /* Pods-EP Calipers-dummy.m in Sources */,
+				B8186B6BECC513CF22C9219618806090 /* CMPopTipView-dummy.m in Sources */,
+				B56509160408458E026BDF5E5C79B123 /* CMPopTipView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		6B925D34870B940266A33318EF067443 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Pods-EP Calipers";
-			target = A5BDA0021C1F1F38C8E3BDB672305CF4 /* Pods-EP Calipers */;
-			targetProxy = 65853C5B7F74C0A97838AF04460A5F12 /* PBXContainerItemProxy */;
-		};
-		ADFB9F08F5A68C189CA784A6FE6694C2 /* PBXTargetDependency */ = {
+		2E7FABFD912F06043140CF639890FE9A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CMPopTipView;
-			target = 6D87F9D2C304DCD7701211503BE17832 /* CMPopTipView */;
-			targetProxy = BC6A876E09C3C7D75B2E7E43DA466A55 /* PBXContainerItemProxy */;
+			target = 9BBD78E178D7E6D4F10B606592EC7E4C /* CMPopTipView */;
+			targetProxy = 106E414FAFFB5FC59EFDFCCA0C97A2CC /* PBXContainerItemProxy */;
+		};
+		8ADBE59500F360467C34437DCC3BBB4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-EP Calipers";
+			target = AAC81FC5C052D4D75C2BA0EFE5EF7FB2 /* Pods-EP Calipers */;
+			targetProxy = FF8D5B7D870AD07696A6B7C3DAC9D671 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0C25C55BCF2FE9D0823018B4158AD192 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33999C13494B2847D2741712BF9CED2F /* Pods-EP Calipers.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		5259A8AC165C9E917FA4F5984E410CE8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A4EE13F3B890BA453D309B651521589D /* Pods-EP Calipers.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		62268C49AEA0FDB74AC44107AD1489D2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5718DA3EA67592F54F3C15AE8ABCAA43 /* CMPopTipView.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				GCC_PREFIX_HEADER = "Target Support Files/CMPopTipView/CMPopTipView-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_MODULE_NAME = CMPopTipView;
-				PRODUCT_NAME = CMPopTipView;
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		7162E75996618A0C26DEC4E52A43A96A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3E9734CECC1F1D63855B75261BDAE819 /* Pods-EP CalipersTests.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		8C0E0911E9979D93DBF75776DBDE7D22 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 65EE30C7FDAC8107A8D00607F00A5959 /* Pods-EP CalipersTests.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				MACH_O_TYPE = staticlib;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		BE01AF5D395AE305A54D518A9B774D2A /* Release */ = {
+		4BE66A09A74FD25164AAB3C2645B9B93 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -490,16 +379,58 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Release;
 		};
-		CFC8DEA7B5326676BA33093221AAE4F4 /* Debug */ = {
+		658921F622DB756A870AB1045F4353A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4CCF3801EB37BD055E7942A3B3C9C590 /* Pods-EP Calipers.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		707AA643D372BD5A33016D567D924F6A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1A4C81C84523FE5CEA34C00F80E01FF7 /* Pods-EP Calipers.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7EF7227D9B20A1D549000096ACCB23D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -556,14 +487,14 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
 		};
-		D2C31BF303FD9415831DA99139EAE7DA /* Release */ = {
+		9C66E3B37EAB5AD1E3554CAE900934EE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5718DA3EA67592F54F3C15AE8ABCAA43 /* CMPopTipView.xcconfig */;
+			baseConfigurationReference = 2FC7DA80660D3DFE3E3358AE60528A11 /* CMPopTipView.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -580,7 +511,74 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A6CDAA7ECAC4717A90E3B6D5CCD3F0C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2FC7DA80660D3DFE3E3358AE60528A11 /* CMPopTipView.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				GCC_PREFIX_HEADER = "Target Support Files/CMPopTipView/CMPopTipView-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_MODULE_NAME = CMPopTipView;
+				PRODUCT_NAME = CMPopTipView;
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ECD1705921C602BDD586727A889EEC03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 165AF59BA67D108547D28BADB2945678 /* Pods-EP CalipersTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EF155BBDCEFE7BB638242E5AD68CF2B9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 02A50BCE8C31A43863BB31A41ADAD4F2 /* Pods-EP CalipersTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MACH_O_TYPE = staticlib;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -589,43 +587,43 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		10670A69617E9D73C4EBBF18A14005AD /* Build configuration list for PBXNativeTarget "Pods-EP Calipers" */ = {
+		2A540F56DC0432B0F8B2DFDB048E3D0B /* Build configuration list for PBXNativeTarget "Pods-EP Calipers" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5259A8AC165C9E917FA4F5984E410CE8 /* Debug */,
-				0C25C55BCF2FE9D0823018B4158AD192 /* Release */,
+				707AA643D372BD5A33016D567D924F6A /* Debug */,
+				658921F622DB756A870AB1045F4353A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+		3011422F8E6DAB72786B4462E48BD643 /* Build configuration list for PBXNativeTarget "CMPopTipView" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				CFC8DEA7B5326676BA33093221AAE4F4 /* Debug */,
-				BE01AF5D395AE305A54D518A9B774D2A /* Release */,
+				A6CDAA7ECAC4717A90E3B6D5CCD3F0C1 /* Debug */,
+				9C66E3B37EAB5AD1E3554CAE900934EE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A99BFD87910D8B4568CB9C6C6387683C /* Build configuration list for PBXNativeTarget "Pods-EP CalipersTests" */ = {
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8C0E0911E9979D93DBF75776DBDE7D22 /* Debug */,
-				7162E75996618A0C26DEC4E52A43A96A /* Release */,
+				7EF7227D9B20A1D549000096ACCB23D7 /* Debug */,
+				4BE66A09A74FD25164AAB3C2645B9B93 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CC6DCD4F534AEE72FFC308A7C406BA1A /* Build configuration list for PBXNativeTarget "CMPopTipView" */ = {
+		8337E5BABCE447EFFAA5453EB8021776 /* Build configuration list for PBXNativeTarget "Pods-EP CalipersTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				62268C49AEA0FDB74AC44107AD1489D2 /* Debug */,
-				D2C31BF303FD9415831DA99139EAE7DA /* Release */,
+				ECD1705921C602BDD586727A889EEC03 /* Debug */,
+				EF155BBDCEFE7BB638242E5AD68CF2B9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 }
