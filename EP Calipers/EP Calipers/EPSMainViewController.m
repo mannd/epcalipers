@@ -356,6 +356,7 @@
 
 - (void)setupTheme {
     self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.toolbar.translucent = NO;
 
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
@@ -371,7 +372,7 @@
         self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
         self.navigationController.toolbar.standardAppearance = toolbarAppearance;
         if (@available(iOS 15.0, *)) {
-            self.navigationController.toolbar.scrollEdgeAppearance = nil;
+            self.navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance;
         } else {
             // Fallback on earlier versions
         }
