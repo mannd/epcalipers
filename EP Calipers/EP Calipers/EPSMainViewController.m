@@ -355,12 +355,26 @@
 }
 
 - (void)setupTheme {
-    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.navigationBar.translucent = NO;
 
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
 
     if (@available(iOS 13.0, *)) {
+        UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
+        UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
+        [navigationBarAppearance configureWithOpaqueBackground];
+        [toolbarAppearance configureWithOpaqueBackground];
+        navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor];
+        toolbarAppearance.backgroundColor = [UIColor systemBackgroundColor];
+        self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
+        self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
+        self.navigationController.toolbar.standardAppearance = toolbarAppearance;
+        if (@available(iOS 15.0, *)) {
+            self.navigationController.toolbar.scrollEdgeAppearance = nil;
+        } else {
+            // Fallback on earlier versions
+        }
         self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
         self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
     } else {
