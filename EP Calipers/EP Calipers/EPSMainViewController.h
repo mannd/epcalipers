@@ -14,6 +14,7 @@
 #import "FCColorPickerViewController.h"
 #import "HamburgerTableViewController.h"
 #import <CMPopTipView/CMPopTipView.h>
+#import <PencilKit/PencilKit.h>
 
 @protocol QTcResultProtocol
 - (NSString *)calculateFromQtInSec: (double)qtInSec rrInSec: (double)rrInSec formula: (QTcFormulaPreference)formula convertToMsec: (BOOL)convertToMsec units:(NSString *)units;
@@ -133,6 +134,9 @@
 @property (strong, nonatomic) NSString* priorMajorVersion;
 @property (strong, nonatomic) NSString* priorVersion;
 @property (strong, nonatomic) NSString* currentVersion;
+
+@property (strong, nonatomic) PKCanvasView *canvasView;
+@property (strong, nonatomic) PKToolPicker *toolPicker;
 
 @end
 
