@@ -265,8 +265,9 @@
     [self.settings loadPreferences];
 
     [self loadFonts];
-    
-    self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+
+    UIDevice *device = [UIDevice currentDevice];
+    self.isIpad = ([device userInterfaceIdiom] == UIUserInterfaceIdiomPad);
     [self createToolbars];
 
     self.blackView.delegate = self;
@@ -304,8 +305,9 @@
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
     UIBarButtonItem *screenshotItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"snapshot"] style:UIBarButtonItemStylePlain target:self action:@selector(snapshotScreen)];
+    UIBarButtonItem *scribbleItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"scribble"] style:UIBarButtonItemStylePlain target:self action:@selector(showCanvasView)];
     // Buttons are added from right to left
-    self.navigationItem.rightBarButtonItems = @[addCaliperButton, screenshotItem];
+    self.navigationItem.rightBarButtonItems = @[addCaliperButton, screenshotItem, scribbleItem];
     // icon from https://icons8.com/icon/set/hamburger/ios
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
@@ -426,7 +428,11 @@
             CGFloat screenWidth = screenRect.size.width;
             CGFloat screenHeight = screenRect.size.height;
 
-            CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+            UIStatusBarManager *statusBarManager = [self.view.window windowScene].statusBarManager;
+            CGFloat statusBarHeight = 0;
+            if (statusBarManager != nil) {
+                statusBarHeight = statusBarManager.statusBarFrame.size.height;
+            }
             CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
             CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
             CGFloat verticalSpace = statusBarHeight + navigationBarHeight + toolbarHeight;
@@ -486,26 +492,41 @@
             }
             [self selectMainToolbar];
 
-            self.canvasView = [[PKCanvasView alloc] initWithFrame:CGRectZero];
-            self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
-            self.canvasView.backgroundColor = [UIColor clearColor];
-            [self.view addSubview:self.canvasView];
-            [self.view bringSubviewToFront:self.canvasView];
-            [NSLayoutConstraint activateConstraints:@[
-                [self.canvasView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-                [self.canvasView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-                [self.canvasView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-                [self.canvasView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor]]];
-
-            self.toolPicker = [[PKToolPicker alloc] init];
-            [self.toolPicker setVisible:YES forFirstResponder:self.canvasView];
-            [self.toolPicker addObserver:self.canvasView];
-            [self.canvasView becomeFirstResponder];
-            EPSLog(@"canvasView is first responder %d", self.canvasView.isFirstResponder);
-            EPSLog(@"toolPicker is visible %d", self.toolPicker.isVisible);
-
-        }
     }
+
+}
+
+- (void)showCanvasView {
+    if (self.canvasView == nil) {
+        [self.navigationController setToolbarHidden:YES animated:NO];
+        self.navigationItem.rightBarButtonItems[0].enabled = NO;
+        self.navigationItem.leftBarButtonItems[0].enabled = NO;
+        self.canvasView = [[PKCanvasView alloc] initWithFrame:CGRectZero];
+        self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
+        self.canvasView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:self.canvasView];
+        [self.view bringSubviewToFront:self.canvasView];
+        [NSLayoutConstraint activateConstraints:@[
+            [self.canvasView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+            [self.canvasView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+            [self.canvasView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+            [self.canvasView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor]]];
+
+        self.toolPicker = [[PKToolPicker alloc] init];
+        [self.toolPicker setVisible:YES forFirstResponder:self.canvasView];
+        [self.toolPicker addObserver:self.canvasView];
+        [self.canvasView becomeFirstResponder];
+    } else {
+        [self.canvasView resignFirstResponder];
+        [self.toolPicker removeObserver:self.canvasView];
+        self.toolPicker = nil;
+        [self.canvasView removeFromSuperview];
+        self.canvasView = nil;
+        [self.navigationController setToolbarHidden:NO animated:NO];
+        self.navigationItem.leftBarButtonItems[0].enabled = YES;
+        self.navigationItem.rightBarButtonItems[0].enabled = YES;
+    }
+}
 
 - (void)showToolTips {
         // This method is a toggle.  Turn off tool tips if showing them.
@@ -651,8 +672,9 @@
         }
         CGRect rect = CGRectMake(location.x, location.y, 0, 0);
         UIView *superView = sender.view.superview;
-        [menu setTargetRect:rect inView:superView];
-        [menu setMenuVisible:YES animated:YES];
+//        [menu setTargetRect:rect inView:superView];
+        [menu showMenuFromView:superView rect:rect];
+//        [menu setMenuVisible:YES animated:YES];
     }
 
     - (void)doScrollViewLongPress:(UILongPressGestureRecognizer *) sender {
@@ -680,8 +702,9 @@
         CGPoint offset = self.scrollView.contentOffset;
         CGRect rect = CGRectMake(location.x - offset.x, location.y - offset.y, 0, 0);
         UIView *superView = sender.view.superview;
-        [menu setTargetRect:rect inView:superView];
-        [menu setMenuVisible:YES animated:YES];
+//        [menu setTargetRect:rect inView:superView];
+        [menu showMenuFromView:superView rect:rect];
+//        [menu setMenuVisible:YES animated:YES];
     }
 
     - (void)rotateAction {
@@ -2171,13 +2194,28 @@
             [self.calipersView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
         }];
 
+        UIImage *canvasImage = nil;
+        if (self.canvasView != nil) {
+            UIGraphicsImageRenderer *canvasRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.canvasView.bounds.size format: format];
+            canvasImage = [canvasRenderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
+                [self.canvasView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
+            }];
+        }
+
         UIGraphicsBeginImageContext(self.calipersView.bounds.size);
         CGRect bottomRect = CGRectMake(0, 0, self.calipersView.bounds.size.width, self.calipersView.bounds.size.height);
         [bottomImage drawInRect:bottomRect];
         CGRect topRect = CGRectMake(0, 0, self.calipersView.bounds.size.width, self.calipersView.bounds.size.height);
         [topImage drawInRect:topRect];
+
+        if (self.canvasView != nil && canvasImage != nil) {
+            CGRect canvasRect = CGRectMake(0, 0, self.canvasView.bounds.size.width, self.canvasView.bounds.size.height);
+            [canvasImage drawInRect:canvasRect];
+        }
+
         UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
+
         if (image != nil) {
             ImageSaver *imageSaver = [[ImageSaver alloc] init];
             [imageSaver writeToPhotoAlbumWithImage:image viewController:self];
