@@ -229,7 +229,7 @@
 
 @end
 
-@implementation EPSMainViewController
+@implementation EPSMainViewController 
 {
     CGPDFDocumentRef pdfRef;
     // Direction of writing in primary language.
@@ -305,7 +305,7 @@
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
     UIBarButtonItem *screenshotItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"snapshot"] style:UIBarButtonItemStylePlain target:self action:@selector(snapshotScreen)];
-    UIBarButtonItem *scribbleItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"scribble"] style:UIBarButtonItemStylePlain target:self action:@selector(showCanvasView)];
+    UIBarButtonItem *scribbleItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"scribble"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleCanvasView)];
     // Buttons are added from right to left
     self.navigationItem.rightBarButtonItems = @[addCaliperButton, screenshotItem, scribbleItem];
     // icon from https://icons8.com/icon/set/hamburger/ios
@@ -339,6 +339,8 @@
     UILongPressGestureRecognizer *longPressCalipersView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doCalipersViewLongPress:)];
     [longPressCalipersView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
     [self.calipersView addGestureRecognizer:longPressCalipersView];
+
+    [self createCanvasView];
 
 }
 
@@ -496,6 +498,57 @@
 
 }
 
+- (void)createCanvasView {
+    self.canvasView = [[PKCanvasView alloc] initWithFrame:CGRectZero];
+    self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.canvasView setOpaque:NO];
+    self.canvasView.backgroundColor = [UIColor clearColor];
+    self.canvasView.contentSize = self.scrollView.contentSize;
+    self.canvasView.contentInset = self.scrollView.contentInset;
+    self.canvasView.contentOffset = self.scrollView.contentOffset;
+    self.canvasView.zoomScale = self.scrollView.zoomScale;
+    self.canvasView.maximumZoomScale = MAX_ZOOM;
+    self.canvasView.minimumZoomScale = MIN_ZOOM;
+    self.canvasView.delegate = self;
+    self.canvasView.tag = 9999;
+    [self.view addSubview:self.canvasView];
+    [self.view bringSubviewToFront:self.canvasView];
+    self.canvasView.hidden = YES;
+    [NSLayoutConstraint activateConstraints:@[
+        [self.canvasView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+        [self.canvasView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+        [self.canvasView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [self.canvasView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor]]];
+    self.toolPicker = [[PKToolPicker alloc] init];
+    [self.toolPicker setVisible:YES forFirstResponder:self.canvasView];
+    [self.toolPicker addObserver:self.canvasView];
+    [self.canvasView resignFirstResponder];
+    [self.canvasView setUserInteractionEnabled:NO];
+}
+
+- (void)toggleCanvasView {
+    self.canvasView.hidden = !self.canvasView.hidden;
+    if (self.canvasView.hidden) {
+        [self.canvasView resignFirstResponder];
+        [self.canvasView setUserInteractionEnabled:NO];
+        //TODO: may need to remove tool here
+//        [self.navigationController setToolbarHidden:NO animated:NO];
+        self.navigationItem.leftBarButtonItems[0].enabled = YES;
+        self.navigationItem.rightBarButtonItems[0].enabled = YES;
+    } else {
+//        [self.navigationController setToolbarHidden:YES animated:NO];
+        self.navigationItem.rightBarButtonItems[0].enabled = NO;
+        self.navigationItem.leftBarButtonItems[0].enabled = NO;
+        self.canvasView.contentSize = self.scrollView.contentSize;
+        self.canvasView.contentInset = self.scrollView.contentInset;
+        self.canvasView.contentOffset = self.scrollView.contentOffset;
+        self.canvasView.zoomScale = self.scrollView.zoomScale;
+        [self.canvasView becomeFirstResponder];
+        [self.canvasView setUserInteractionEnabled:YES];
+    }
+
+}
+
 - (void)showCanvasView {
     if (self.canvasView == nil) {
         [self.navigationController setToolbarHidden:YES animated:NO];
@@ -504,6 +557,8 @@
         self.canvasView = [[PKCanvasView alloc] initWithFrame:CGRectZero];
         self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
         self.canvasView.backgroundColor = [UIColor clearColor];
+        self.canvasView.contentSize = self.scrollView.contentSize;
+        self.canvasView.maximumZoomScale = 5.0;
         [self.view addSubview:self.canvasView];
         [self.view bringSubviewToFront:self.canvasView];
         [NSLayoutConstraint activateConstraints:@[
@@ -2071,14 +2126,32 @@
             top = (self.scrollView.bounds.size.height-self.scrollView.contentSize.height) * 0.5f;
         }
         self.scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
+        self.canvasView.contentInset = self.scrollView.contentInset;
     }
 
-    - (void)scrollViewDidZoom:(__unused UIScrollView *)scrollView {
-        [self centerContent];
+- (void)centerContent:(UIScrollView *)scrollView {
+        CGFloat top = 0, left = 0;
+        if (scrollView.contentSize.width < scrollView.bounds.size.width) {
+            left = (scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5f;
+        }
+        if (scrollView.contentSize.height < scrollView.bounds.size.height) {
+            top = (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5f;
+        }
+        scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
+    }
+
+    - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+        if (scrollView == self.scrollView) {
+            [self centerContent];
+        }
     }
 
     - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-        return self.imageContainerView;
+        if (scrollView == self.scrollView) {
+            return self.imageContainerView;
+        } else {
+            return nil;
+        }
     }
 
     - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
@@ -2088,18 +2161,27 @@
     - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
         self.horizontalCalibration.currentZoom = scale;
         self.verticalCalibration.currentZoom = scale;
-        self.horizontalCalibration.offset = scrollView.contentOffset;
-        self.verticalCalibration.offset = scrollView.contentOffset;
+        self.horizontalCalibration.offset = self.scrollView.contentOffset;
+        self.verticalCalibration.offset = self.scrollView.contentOffset;
         [self.calipersView setNeedsDisplay];
+        if (!self.canvasView.isHidden) {
+            self.scrollView.zoomScale = self.canvasView.zoomScale;
+            self.scrollView.contentOffset = self.canvasView.contentOffset;
+        }
     }
 
+// TODO: maybe need a switch when canvasview is active
     // This is also called during zooming, so that calipers adjust to zoom and scrolling.
     - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-        self.horizontalCalibration.currentZoom = scrollView.zoomScale;
-        self.verticalCalibration.currentZoom = scrollView.zoomScale;
-        self.horizontalCalibration.offset = scrollView.contentOffset;
-        self.verticalCalibration.offset = scrollView.contentOffset;
+        self.horizontalCalibration.currentZoom = self.scrollView.zoomScale;
+        self.verticalCalibration.currentZoom = self.scrollView.zoomScale;
+        self.horizontalCalibration.offset = self.scrollView.contentOffset;
+        self.verticalCalibration.offset = self.scrollView.contentOffset;
         [self.calipersView setNeedsDisplay];
+        if (!self.canvasView.isHidden) {
+            self.scrollView.zoomScale = self.canvasView.zoomScale;
+            self.scrollView.contentOffset = self.canvasView.contentOffset;
+        }
     }
 
     - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
