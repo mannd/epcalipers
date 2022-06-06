@@ -503,14 +503,10 @@
     self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.canvasView setOpaque:NO];
     self.canvasView.backgroundColor = [UIColor clearColor];
-    self.canvasView.contentSize = self.scrollView.contentSize;
-    self.canvasView.contentInset = self.scrollView.contentInset;
-    self.canvasView.contentOffset = self.scrollView.contentOffset;
-    self.canvasView.zoomScale = self.scrollView.zoomScale;
     self.canvasView.maximumZoomScale = MAX_ZOOM;
     self.canvasView.minimumZoomScale = MIN_ZOOM;
+    [self scaleCanvasView];
     self.canvasView.delegate = self;
-    self.canvasView.tag = 9999;
     [self.view addSubview:self.canvasView];
     [self.view bringSubviewToFront:self.canvasView];
     self.canvasView.hidden = YES;
@@ -526,27 +522,34 @@
     [self.canvasView setUserInteractionEnabled:NO];
 }
 
+// FIXME: Sometimes toolpicker doesn't go away after toggling canvas view.
 - (void)toggleCanvasView {
     self.canvasView.hidden = !self.canvasView.hidden;
     if (self.canvasView.hidden) {
         [self.canvasView resignFirstResponder];
         [self.canvasView setUserInteractionEnabled:NO];
-        //TODO: may need to remove tool here
-//        [self.navigationController setToolbarHidden:NO animated:NO];
+        [self scaleCanvasView];
+        [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationItem.leftBarButtonItems[0].enabled = YES;
         self.navigationItem.rightBarButtonItems[0].enabled = YES;
     } else {
-//        [self.navigationController setToolbarHidden:YES animated:NO];
+        [self.navigationController setToolbarHidden:YES animated:YES];
         self.navigationItem.rightBarButtonItems[0].enabled = NO;
         self.navigationItem.leftBarButtonItems[0].enabled = NO;
-        self.canvasView.contentSize = self.scrollView.contentSize;
-        self.canvasView.contentInset = self.scrollView.contentInset;
-        self.canvasView.contentOffset = self.scrollView.contentOffset;
-        self.canvasView.zoomScale = self.scrollView.zoomScale;
+        [self scaleCanvasView];
         [self.canvasView becomeFirstResponder];
         [self.canvasView setUserInteractionEnabled:YES];
     }
+}
 
+// FIXME: With first appearance of canvas view, zoom goes to 1.0.
+- (void)scaleCanvasView {
+    self.canvasView.contentSize = self.scrollView.contentSize;
+    self.canvasView.contentInset = self.scrollView.contentInset;
+    self.canvasView.contentOffset = self.scrollView.contentOffset;
+    EPSLog(@"original zoom = %f", self.canvasView.zoomScale);
+    self.canvasView.zoomScale = self.scrollView.zoomScale;
+    EPSLog(@"after zoom = %f", self.canvasView.zoomScale);
 }
 
 - (void)showCanvasView {
@@ -2141,9 +2144,12 @@
     }
 
     - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-        if (scrollView == self.scrollView) {
+//        if (scrollView == self.scrollView) {
+//            [self centerContent];
+        dispatch_async(dispatch_get_main_queue(), ^{
             [self centerContent];
-        }
+        });
+//        }
     }
 
     - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
@@ -2167,6 +2173,9 @@
         if (!self.canvasView.isHidden) {
             self.scrollView.zoomScale = self.canvasView.zoomScale;
             self.scrollView.contentOffset = self.canvasView.contentOffset;
+        } else {
+            self.canvasView.zoomScale = self.scrollView.zoomScale;
+            self.canvasView.contentOffset = self.scrollView.contentOffset;
         }
     }
 
@@ -2188,10 +2197,16 @@
         EPSLog(@"viewWillTransitionToSize");
         [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
         [self vitalStats];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self centerContent];
+            [self.calipersView setNeedsDisplay];
+            [self.imageView setNeedsDisplay];
+            [self centerContent];
+        });
 
-        // FIXME: Below redundant?
-        [self.calipersView setNeedsDisplay];
+//        [self.calipersView setNeedsDisplay];
     }
+
 
     // for debugging
     - (void)vitalStats {
