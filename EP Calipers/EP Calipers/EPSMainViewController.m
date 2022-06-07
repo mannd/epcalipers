@@ -580,6 +580,8 @@
         // directly.
         EPSLog(@"Hiding canvas view");
         self.canvasView.hidden = YES;
+        [self.toolPicker setVisible:YES forFirstResponder:self.canvasView];
+        [self.toolPicker addObserver:self.canvasView];
         [self.canvasView resignFirstResponder];
         [self.canvasView setUserInteractionEnabled:NO];
         [self scaleCanvasView];
@@ -593,6 +595,8 @@
         self.navigationItem.rightBarButtonItems[0].enabled = NO;
         self.navigationItem.leftBarButtonItems[0].enabled = NO;
         [self scaleCanvasView];
+        [self.toolPicker setVisible:YES forFirstResponder:self.canvasView];
+        [self.toolPicker addObserver:self.canvasView];
         [self.canvasView becomeFirstResponder];
         [self.canvasView setUserInteractionEnabled:YES];
     }
@@ -2143,9 +2147,9 @@
         [self enablePageButtons:NO];
         // remove any prior PDF from memory
         [self clearPDF];
+        [self clearCanvasView];
         self.launchURL = nil;
         [self recenterImage];
-        [self clearCanvasView];
         [self selectMainToolbar];
     }
 
