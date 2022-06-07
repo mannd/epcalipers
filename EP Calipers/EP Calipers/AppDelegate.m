@@ -95,7 +95,7 @@
     return YES;
 }
 
-// Do not change to shouldSaveSecureApplicationState or shouldRestoreSecureApplicationState, as this crashes the app when restoring state.  Unclear why??
+// FIXME: these methods deprecated, but changing to secure methods causes crash when leaving app and restarting it.
 - (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
 {
     return YES;

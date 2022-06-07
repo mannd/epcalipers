@@ -78,16 +78,15 @@ class CalibrationProcessor: NSObject {
         // Use below to test localization
         //let locale = Locale(identifier: "FR")
         //scanner.locale = locale
-        var value: Float = 0
-        if scanner.scanFloat(&value) {
-            if value <= 0 {
-                validation.invalidNumber = true
-            }
-        }
-        else {
+        guard let value = scanner.scanFloat(representation: .decimal) else {
             validation.noNumber = true
+            validation.invalidUnits = true
+            return validation
         }
-        let index = scanner.string.index(scanner.string.startIndex, offsetBy: scanner.scanLocation)
+        if value <= 0 {
+            validation.invalidNumber = true
+        }
+        let index = scanner.currentIndex
         var units = String(scanner.string[index...])
         units = units.trimmingCharacters(in: .whitespacesAndNewlines)
         let unitsArray = units.components(separatedBy: .whitespacesAndNewlines)
