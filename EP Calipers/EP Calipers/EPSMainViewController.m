@@ -513,6 +513,7 @@
 }
 
 - (void)clearCanvasView {
+    EPSLog(@"Clear CanvasView");
     [self createCanvasView];
 }
 
@@ -568,7 +569,17 @@
 // FIXME: Sometimes toolpicker doesn't go away after toggling canvas view.
 - (void)performToggleCanvasView {
     self.canvasView.hidden = !self.canvasView.hidden;
-    if (self.canvasView.hidden) {
+    [self hideCanvasView:self.canvasView.hidden];
+}
+
+- (void)hideCanvasView:(BOOL)hide {
+    if (hide) {
+        // setting hidden here again may seem redundant, as it is already
+        // set in performToggleCanvasView; however, hideCanvasView is also
+        // called during state restoration, which does not set canvasView.hidden
+        // directly.
+        EPSLog(@"Hiding canvas view");
+        self.canvasView.hidden = YES;
         [self.canvasView resignFirstResponder];
         [self.canvasView setUserInteractionEnabled:NO];
         [self scaleCanvasView];
@@ -576,6 +587,8 @@
         self.navigationItem.leftBarButtonItems[0].enabled = YES;
         self.navigationItem.rightBarButtonItems[0].enabled = YES;
     } else {
+        EPSLog(@"Showing canvas view");
+        self.canvasView.hidden = NO;
         [self.navigationController setToolbarHidden:YES animated:YES];
         self.navigationItem.rightBarButtonItems[0].enabled = NO;
         self.navigationItem.leftBarButtonItems[0].enabled = NO;
@@ -583,6 +596,7 @@
         [self.canvasView becomeFirstResponder];
         [self.canvasView setUserInteractionEnabled:YES];
     }
+
 }
 
 - (void)scaleCanvasView {
@@ -2131,6 +2145,7 @@
         [self clearPDF];
         self.launchURL = nil;
         [self recenterImage];
+        [self clearCanvasView];
         [self selectMainToolbar];
     }
 
@@ -2503,7 +2518,13 @@
         }
 
         // Canvas view
-        // Note that we don't bother saving the Canvas view.  It's not clear how to do it anyway.
+        // Note that if canvas view is active when app is removed from memory,
+        // the app returns with the canvas view toggled off, but the image is
+        // still there.
+        if ([self canHaveCanvasView] && self.canvasView != nil) {
+            PKDrawing *drawing = self.canvasView.drawing;
+            [coder encodeObject:drawing forKey:@"CanvasViewDrawing"];
+        }
 
         [super encodeRestorableStateWithCoder:coder];
     }
@@ -2552,11 +2573,19 @@
             }
             [self.calipersView.calipers addObject:newCaliper];
         }
+        [self.calipersView setNeedsDisplay];
 
         // Canvas view
-        // Note that we don't bother restoring the Canvas view.  It's not clear how to do it anyway.
+        // Note that if canvas view is active when app is removed from memory,
+        // the app returns with the canvas view toggled off, but the image is
+        // still there.
+        if ([self canHaveCanvasView]) {
+            PKDrawing *drawing = [coder decodeObjectForKey:@"CanvasViewDrawing"];
+            if (drawing != nil) {
+                self.canvasView.drawing = drawing;
+            }
+        }
 
-        [self.calipersView setNeedsDisplay];
         [super decodeRestorableStateWithCoder:coder];
     }
 
