@@ -120,6 +120,7 @@
 #define QTC_STEP_1_TOOLTIP L(@"QTc_step_1_tooltip")
 #define QTC_STEP_2_TOOLTIP L(@"QTc_step_2_tooltip")
 #define SNAPSHOT_TOOLTIP L(@"Snapshot_screen")
+#define SCRIBBLE_TOOLTIP L(@"Scribble_tooltip")
 
 // Dialog titles and messages
 #define ADD_CALIPER L(@"Add_caliper")
@@ -201,6 +202,7 @@
 // Tooltips
 @property (strong, nonatomic) CMPopTipView *addCaliperButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *snapshotButtonPopTipView;
+@property (strong, nonatomic) CMPopTipView *scribbleButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *sideMenuButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *setupCalibrationButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *setCalibrationButtonPopTipView;
@@ -214,6 +216,7 @@
 // Toggles for individual tooltips
 @property (nonatomic) BOOL showAddCaliperButtonToolTip;
 @property (nonatomic) BOOL showSnapshotButtonToolTip;
+@property (nonatomic) BOOL showScribbleButtonToolTip;
 @property (nonatomic) BOOL showSideMenuButtonToolTip;
 @property (nonatomic) BOOL showSetupCalibrationToolTip;
 @property (nonatomic) BOOL showSetCalibrationToolTip;
@@ -307,7 +310,12 @@
     UIBarButtonItem *screenshotItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"snapshot"] style:UIBarButtonItemStylePlain target:self action:@selector(snapshotScreen)];
     UIBarButtonItem *scribbleItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"scribble"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleCanvasView)];
     // Buttons are added from right to left
-    self.navigationItem.rightBarButtonItems = @[addCaliperButton, screenshotItem, scribbleItem];
+    if ([self canHaveCanvasView]) {
+        self.navigationItem.rightBarButtonItems = @[addCaliperButton, screenshotItem, scribbleItem];
+    }
+    else {
+        self.navigationItem.rightBarButtonItems = @[addCaliperButton, screenshotItem];
+    }
     // icon from https://icons8.com/icon/set/hamburger/ios
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
@@ -498,7 +506,22 @@
 
 }
 
+- (BOOL)canHaveCanvasView {
+    // Maybe we will allow something else besides iPad to have a canvas
+    // view in the future, but for now, it's just on iPads.
+    return self.isIpad;
+}
+
+- (void)clearCanvasView {
+    [self createCanvasView];
+}
+
+// Sets canvasView to nil if canvasView not supported.
 - (void)createCanvasView {
+    if (![self canHaveCanvasView]) {
+        self.canvasView = nil;
+        return;
+    }
     self.canvasView = [[PKCanvasView alloc] initWithFrame:CGRectZero];
     self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.canvasView setOpaque:NO];
@@ -522,8 +545,28 @@
     [self.canvasView setUserInteractionEnabled:NO];
 }
 
-// FIXME: Sometimes toolpicker doesn't go away after toggling canvas view.
 - (void)toggleCanvasView {
+    if (![self canHaveCanvasView]) {
+        return;
+    }
+    if (nil == self.scribbleButtonPopTipView && self.showScribbleButtonToolTip) {
+        self.scribbleButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SCRIBBLE_TOOLTIP];
+        [self setupToolTip:self.scribbleButtonPopTipView];
+        [self.scribbleButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItems[2]  animated:YES];
+        return;
+    }
+    else {
+        // Dismiss
+        [self.scribbleButtonPopTipView dismissAnimated:YES];
+        self.scribbleButtonPopTipView = nil;
+        self.showScribbleButtonToolTip = NO;
+    }
+
+    [self performToggleCanvasView];
+}
+
+// FIXME: Sometimes toolpicker doesn't go away after toggling canvas view.
+- (void)performToggleCanvasView {
     self.canvasView.hidden = !self.canvasView.hidden;
     if (self.canvasView.hidden) {
         [self.canvasView resignFirstResponder];
@@ -542,48 +585,16 @@
     }
 }
 
-// FIXME: With first appearance of canvas view, zoom goes to 1.0.
 - (void)scaleCanvasView {
+    if (![self canHaveCanvasView]) {
+        return;
+    }
     self.canvasView.contentSize = self.scrollView.contentSize;
     self.canvasView.contentInset = self.scrollView.contentInset;
     self.canvasView.contentOffset = self.scrollView.contentOffset;
     EPSLog(@"original zoom = %f", self.canvasView.zoomScale);
     self.canvasView.zoomScale = self.scrollView.zoomScale;
     EPSLog(@"after zoom = %f", self.canvasView.zoomScale);
-}
-
-- (void)showCanvasView {
-    if (self.canvasView == nil) {
-        [self.navigationController setToolbarHidden:YES animated:NO];
-        self.navigationItem.rightBarButtonItems[0].enabled = NO;
-        self.navigationItem.leftBarButtonItems[0].enabled = NO;
-        self.canvasView = [[PKCanvasView alloc] initWithFrame:CGRectZero];
-        self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
-        self.canvasView.backgroundColor = [UIColor clearColor];
-        self.canvasView.contentSize = self.scrollView.contentSize;
-        self.canvasView.maximumZoomScale = 5.0;
-        [self.view addSubview:self.canvasView];
-        [self.view bringSubviewToFront:self.canvasView];
-        [NSLayoutConstraint activateConstraints:@[
-            [self.canvasView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-            [self.canvasView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-            [self.canvasView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-            [self.canvasView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor]]];
-
-        self.toolPicker = [[PKToolPicker alloc] init];
-        [self.toolPicker setVisible:YES forFirstResponder:self.canvasView];
-        [self.toolPicker addObserver:self.canvasView];
-        [self.canvasView becomeFirstResponder];
-    } else {
-        [self.canvasView resignFirstResponder];
-        [self.toolPicker removeObserver:self.canvasView];
-        self.toolPicker = nil;
-        [self.canvasView removeFromSuperview];
-        self.canvasView = nil;
-        [self.navigationController setToolbarHidden:NO animated:NO];
-        self.navigationItem.leftBarButtonItems[0].enabled = YES;
-        self.navigationItem.rightBarButtonItems[0].enabled = YES;
-    }
 }
 
 - (void)showToolTips {
@@ -612,6 +623,7 @@
     - (void)setToolTipState:(BOOL)value {
         self.showAddCaliperButtonToolTip = value;
         self.showSnapshotButtonToolTip = value;
+        self.showScribbleButtonToolTip = value;
         self.showSideMenuButtonToolTip = value;
         self.showSetupCalibrationToolTip = value;
         self.showSetCalibrationToolTip = value;
@@ -635,7 +647,8 @@
 
     - (void)stillShowingToolTips {
         BOOL toolTipsRemain = self.showSetupCalibrationToolTip || self.showSetCalibrationToolTip || self.showIntRateToolTip || self.showMeanRateToolTip || self.showClearCalibrationToolTip || self.showQtcStep1ToolTip || self.showQtcStep2ToolTip ||
-        self.showAddCaliperButtonToolTip || self.showSnapshotButtonToolTip;
+            self.showAddCaliperButtonToolTip || self.showSnapshotButtonToolTip ||
+            (self.showScribbleButtonToolTip && [self canHaveCanvasView]);
         self.showingToolTips = toolTipsRemain;
         self.hamburgerViewController.showingToolTips = self.showingToolTips;
     }
@@ -654,6 +667,10 @@
         }
         if ([popTipView isEqual:self.snapshotButtonPopTipView]) {
             self.showSnapshotButtonToolTip = NO;
+            [self stillShowingToolTips];
+        }
+        if ([popTipView isEqual:self.scribbleButtonPopTipView]) {
+            self.showScribbleButtonToolTip = NO;
             [self stillShowingToolTips];
         }
         if ([popTipView isEqual:self.sideMenuButtonPopTipView]) {
@@ -1769,6 +1786,7 @@
         [self.imageView setHidden:NO];
         [self.scrollView setZoomScale:1.0f];
         [self clearCalibration];
+        [self clearCanvasView];
         [self selectMainToolbar];
     }
 
@@ -2129,27 +2147,15 @@
             top = (self.scrollView.bounds.size.height-self.scrollView.contentSize.height) * 0.5f;
         }
         self.scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
-        self.canvasView.contentInset = self.scrollView.contentInset;
-    }
-
-- (void)centerContent:(UIScrollView *)scrollView {
-        CGFloat top = 0, left = 0;
-        if (scrollView.contentSize.width < scrollView.bounds.size.width) {
-            left = (scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5f;
+        if ([self canHaveCanvasView]) {
+            self.canvasView.contentInset = self.scrollView.contentInset;
         }
-        if (scrollView.contentSize.height < scrollView.bounds.size.height) {
-            top = (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5f;
-        }
-        scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
     }
 
     - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-//        if (scrollView == self.scrollView) {
-//            [self centerContent];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self centerContent];
         });
-//        }
     }
 
     - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
@@ -2170,16 +2176,19 @@
         self.horizontalCalibration.offset = self.scrollView.contentOffset;
         self.verticalCalibration.offset = self.scrollView.contentOffset;
         [self.calipersView setNeedsDisplay];
+        if (![self canHaveCanvasView]) {
+            return;
+        }
         if (!self.canvasView.isHidden) {
-            self.scrollView.zoomScale = self.canvasView.zoomScale;
+            self.scrollView.zoomScale = scale;
             self.scrollView.contentOffset = self.canvasView.contentOffset;
-        } else {
-            self.canvasView.zoomScale = self.scrollView.zoomScale;
+        }
+        else {
+            self.canvasView.zoomScale = scale;
             self.canvasView.contentOffset = self.scrollView.contentOffset;
         }
     }
 
-// TODO: maybe need a switch when canvasview is active
     // This is also called during zooming, so that calipers adjust to zoom and scrolling.
     - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
         self.horizontalCalibration.currentZoom = self.scrollView.zoomScale;
@@ -2187,6 +2196,9 @@
         self.horizontalCalibration.offset = self.scrollView.contentOffset;
         self.verticalCalibration.offset = self.scrollView.contentOffset;
         [self.calipersView setNeedsDisplay];
+        if (![self canHaveCanvasView]) {
+            return;
+        }
         if (!self.canvasView.isHidden) {
             self.scrollView.zoomScale = self.canvasView.zoomScale;
             self.scrollView.contentOffset = self.canvasView.contentOffset;
@@ -2490,6 +2502,9 @@
             EPSLog(@"calipers is Angle %d", [self.calipersView.calipers[i] isAngleCaliper]);
         }
 
+        // Canvas view
+        // Note that we don't bother saving the Canvas view.  It's not clear how to do it anyway.
+
         [super encodeRestorableStateWithCoder:coder];
     }
 
@@ -2537,6 +2552,9 @@
             }
             [self.calipersView.calipers addObject:newCaliper];
         }
+
+        // Canvas view
+        // Note that we don't bother restoring the Canvas view.  It's not clear how to do it anyway.
 
         [self.calipersView setNeedsDisplay];
         [super decodeRestorableStateWithCoder:coder];

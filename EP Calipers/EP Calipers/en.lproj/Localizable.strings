@@ -157,6 +157,7 @@
 "Set_calibration_tooltip" = "Measure a known interval with selected caliper.";
 "Setup_calibration_tooltip" = "Select a caliper by tapping it. Use it to measure a known interval (e.g. 1000 msec).";
 "Side_menu_tooltip" = "Load a new image, change preferences, get help";
+"Scribble_tooltip" = "Annotate with Apple Pencil";
 
 /* Onboard labels */
 "Move_caliper_label" = "Drag crossbar, drag sidebars";
