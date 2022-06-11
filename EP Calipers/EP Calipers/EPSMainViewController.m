@@ -185,6 +185,20 @@
 #define SMALL_FONT 12
 #define INTERMEDIATE_FONT 14
 
+// State restoration keys
+#define LAUNCH_URL_KEY @"LaunchURL"
+#define NUMBER_OF_PAGES_KEY @"NumberOfPages"
+#define SAVED_IMAGE_STRING_KEY @"SavedImageStringKey"
+#define ZOOM_SCALE_KEY @"ZoomScaleKey"
+#define IMAGE_IS_UPSCALED_KEY @"ImageIsUpscaledKey"
+#define HORIZONATAL_PREFIX_KEY @"Horizontal"
+#define VERTICAL_PREFIX_KEY @"Verical"
+#define CALIPERS_COUNT_KEY @"CalipersCount"
+#define A_CALIPER_IS_MARCHING_KEY @"ACaliperIsMarching"
+#define IS_ANGLE_CALIPER_FORMAT_KEY @"%dIsAngleCaliper"
+#define CANVAS_VIEW_DRAWING_KEY @"CanvasViewDrawing"
+
+
 #define FLEX_SPACE [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]
 
 @interface EPSMainViewController ()
@@ -2497,11 +2511,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 {
     EPSLog(@"encodeRestorableStateWithCoder");
     // possibly enable restart from URL
-    [coder encodeObject:self.launchURL forKey:@"LaunchURL"];
-    [coder encodeInteger:self.numberOfPages forKey:@"NumberOfPages"];
-    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
-    [self encodeImage:self.imageView.image withKey:@"SavedImageStringKey" toCoder:coder];
-    [coder encodeBool:self.imageIsUpscaled forKey:@"ImageIsUpscaledKey"];
+    [coder encodeObject:self.launchURL forKey:LAUNCH_URL_KEY];
+    [coder encodeInteger:self.numberOfPages forKey:NUMBER_OF_PAGES_KEY];
+    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:ZOOM_SCALE_KEY];
+    [self encodeImage:self.imageView.image withKey:SAVED_IMAGE_STRING_KEY toCoder:coder];
+    [coder encodeBool:self.imageIsUpscaled forKey:IMAGE_IS_UPSCALED_KEY];
 
     // Note that image lock is intentionally not preserved when app goes to background.
     // The reason is that image restoration moves the image location, so the process
@@ -2509,12 +2523,12 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // place.
 
     // calibration
-    [self.horizontalCalibration encodeCalibrationState:coder withPrefix:@"Horizontal"];
-    [self.verticalCalibration encodeCalibrationState:coder withPrefix:@"Vertical"];
+    [self.horizontalCalibration encodeCalibrationState:coder withPrefix:HORIZONATAL_PREFIX_KEY];
+    [self.verticalCalibration encodeCalibrationState:coder withPrefix:VERTICAL_PREFIX_KEY];
 
     // calipers
-    [coder encodeInteger:[self.calipersView count] forKey:@"CalipersCount"];
-    [coder encodeBool:self.calipersView.aCaliperIsMarching forKey:@"ACaliperIsMarching"];
+    [coder encodeInteger:[self.calipersView count] forKey:CALIPERS_COUNT_KEY];
+    [coder encodeBool:self.calipersView.aCaliperIsMarching forKey:A_CALIPER_IS_MARCHING_KEY];
     for (int i = 0; i < [self.calipersView count]; i++) {
         [self.calipersView.calipers[i] encodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
         EPSLog(@"calipers is Angle %d", [self.calipersView.calipers[i] isAngleCaliper]);
@@ -2527,11 +2541,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if ([self canHaveCanvasView] && self.canvasView != nil) {
         PKDrawing *drawing = self.canvasView.drawing;
         if (drawing != nil) {
-            [self encodeDrawing:drawing withKey:@"CanvasViewDrawing" toCoder:coder];
+            [self encodeDrawing:drawing withKey:CANVAS_VIEW_DRAWING_KEY toCoder:coder];
         }
-//        [coder encodeObject:drawing forKey:@"CanvasViewDrawing"];
     }
-
     [super encodeRestorableStateWithCoder:coder];
 }
 
@@ -2539,28 +2551,28 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 {
     EPSLog(@"decodeRestorableStateWithCoder");
     //self.firstRun = NO;
-    self.launchURL = [coder decodeObjectForKey:@"LaunchURL"];
-    self.numberOfPages = (int)[coder decodeIntegerForKey:@"NumberOfPages"];
-    UIImage *image = [self decodeImageForKey:@"SavedImageStringKey" fromCoder:coder];
+    self.launchURL = [coder decodeObjectForKey:LAUNCH_URL_KEY];
+    self.numberOfPages = (int)[coder decodeIntegerForKey:NUMBER_OF_PAGES_KEY];
+    UIImage *image = [self decodeImageForKey:SAVED_IMAGE_STRING_KEY fromCoder:coder];
     if (self.launchURL != nil) {
         self.wasLaunchedFromUrl = YES;
         //        image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:PDF_UPSCALE_FACTOR orientation:UIImageOrientationUp];
     }
     self.imageView.image = image;
-    self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomScaleKey"];
-    self.imageIsUpscaled = [coder decodeBoolForKey:@"ImageIsUpscaledKey"];
+    self.scrollView.zoomScale = [coder decodeDoubleForKey:ZOOM_SCALE_KEY];
+    self.imageIsUpscaled = [coder decodeBoolForKey:IMAGE_IS_UPSCALED_KEY];
 
     // calibration
-    [self.horizontalCalibration decodeCalibrationState:coder withPrefix:@"Horizontal"];
-    [self.verticalCalibration decodeCalibrationState:coder withPrefix:@"Vertical"];
+    [self.horizontalCalibration decodeCalibrationState:coder withPrefix:HORIZONATAL_PREFIX_KEY];
+    [self.verticalCalibration decodeCalibrationState:coder withPrefix:VERTICAL_PREFIX_KEY];
     self.horizontalCalibration.offset = self.scrollView.contentOffset;
     self.verticalCalibration.offset = self.scrollView.contentOffset;
 
     // calipers
-    NSInteger calipersCount = [coder decodeIntegerForKey:@"CalipersCount"];
-    self.calipersView.aCaliperIsMarching = [coder decodeBoolForKey:@"ACaliperIsMarching"];
+    NSInteger calipersCount = [coder decodeIntegerForKey:CALIPERS_COUNT_KEY];
+    self.calipersView.aCaliperIsMarching = [coder decodeBoolForKey:A_CALIPER_IS_MARCHING_KEY];
     for (int i = 0; i < calipersCount; i++) {
-        BOOL isAngleCaliper = [coder decodeBoolForKey:[NSString stringWithFormat:@"%dIsAngleCaliper", i]];
+        BOOL isAngleCaliper = [coder decodeBoolForKey:[NSString stringWithFormat:IS_ANGLE_CALIPER_FORMAT_KEY, i]];
         CaliperType type = isAngleCaliper ? Angle : Interval;
         Caliper *newCaliper = [CaliperFactory createCaliper:type];
         [newCaliper decodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
@@ -2585,13 +2597,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // the app returns with the canvas view toggled off, but the image is
     // still there.
     if ([self canHaveCanvasView]) {
-        PKDrawing *drawing = [self decodeDrawingForKey:@"CanvasViewDrawing" fromCoder:coder];
-//        PKDrawing *drawing = [coder decodeObjectForKey:@"CanvasViewDrawing"];
+        PKDrawing *drawing = [self decodeDrawingForKey:CANVAS_VIEW_DRAWING_KEY fromCoder:coder];
         if (drawing != nil) {
             self.canvasView.drawing = drawing;
         }
     }
-
     [super decodeRestorableStateWithCoder:coder];
 }
 
