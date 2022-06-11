@@ -44,6 +44,7 @@
 		8EB65805251AA41B00D779E0 /* Position.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EB65804251AA41B00D779E0 /* Position.m */; };
 		8EBD6D3221DAAFD200FF7748 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */; };
 		8EC0346B251947E400A1AC3D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EC0346A251947E400A1AC3D /* WebKit.framework */; };
+		8ECC1CFF28519E7D007D9A93 /* ColorConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECC1CFE28519E7D007D9A93 /* ColorConversion.swift */; };
 		8ECEDF5A1E89F54600288EDE /* FCColorPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF581E89F54600288EDE /* FCColorPickerViewController.m */; };
 		8ECEDF5D1E89F62000288EDE /* colormap.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ECEDF5C1E89F62000288EDE /* colormap.png */; };
 		8ECEDF641E89F83700288EDE /* FCBrightDarkGradView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECEDF611E89F83700288EDE /* FCBrightDarkGradView.m */; };
@@ -157,6 +158,7 @@
 		8EBD6D3121DAAFD200FF7748 /* HelpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		8EBD6D3321DAF75E00FF7748 /* HelpProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpProtocol.h; sourceTree = "<group>"; };
 		8EC0346A251947E400A1AC3D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		8ECC1CFE28519E7D007D9A93 /* ColorConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorConversion.swift; sourceTree = "<group>"; };
 		8ECEDF571E89F54600288EDE /* FCColorPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FCColorPickerViewController.h; sourceTree = "<group>"; };
 		8ECEDF581E89F54600288EDE /* FCColorPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FCColorPickerViewController.m; sourceTree = "<group>"; };
 		8ECEDF5C1E89F62000288EDE /* colormap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colormap.png; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				8EB65803251AA41B00D779E0 /* Position.h */,
 				8EB65804251AA41B00D779E0 /* Position.m */,
 				8E787AA225AE7BD1009C44F9 /* ImageSaver.swift */,
+				8ECC1CFE28519E7D007D9A93 /* ColorConversion.swift */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -651,6 +654,7 @@
 				8E1423611AB5F16A00CC15BC /* AppDelegate.m in Sources */,
 				8E365C1D21C5B7E300CD11B3 /* Alert.m in Sources */,
 				8E0208A71AC2A8B300FE7EC5 /* Caliper.m in Sources */,
+				8ECC1CFF28519E7D007D9A93 /* ColorConversion.swift in Sources */,
 				8EEB386521E26B8A00568B6F /* Translation.m in Sources */,
 				8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */,
 				8EA170D121C6CDEF0082783D /* HamburgerTableViewController.m in Sources */,

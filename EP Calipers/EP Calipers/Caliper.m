@@ -12,6 +12,7 @@
 #import "Position.h"
 #import <math.h>
 #import "Defs.h"
+#import <EP_Calipers-Swift.h>
 
 
 #define DELTA 20.0
@@ -628,13 +629,17 @@
     [coder encodeDouble:_bar1Position forKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
     [coder encodeDouble:_bar2Position forKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
     [coder encodeDouble:_crossBarPosition forKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
-    [coder encodeObject:self.unselectedColor forKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
     [coder encodeBool:self.selected forKey:[self getPrefixedKey:prefix key:@"Selected"]];
     [coder encodeInteger:self.lineWidth forKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
-    [coder encodeObject:self.color forKey:[self getPrefixedKey:prefix key:@"Color"]];
-    [coder encodeObject:self.selectedColor forKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
     [coder encodeBool:self.roundMsecRate forKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
     [coder encodeBool:self.marching forKey:[self getPrefixedKey:prefix key:@"Marching"]];
+
+    NSString *unselectedColorString = self.unselectedColor.toString;
+    [coder encodeObject:unselectedColorString forKey:[self getPrefixedKey:prefix key:@"UnselectedColorString"]];
+    NSString *colorString = self.color.toString;
+    [coder encodeObject:colorString forKey:[self getPrefixedKey:prefix key:@"ColorString"]];
+    NSString *selectedColorString = self.selectedColor.toString;
+    [coder encodeObject:selectedColorString forKey:[self getPrefixedKey:prefix key:@"SelectedColorString"]];
 }
 
 // need to deal with two types of objects: angle and regular calipers
@@ -645,13 +650,27 @@
     _bar1Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
     _bar2Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
     _crossBarPosition = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
-    self.unselectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
     self.selected = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Selected"]];
     self.lineWidth = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
-    self.color = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"Color"]];
-    self.selectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
     self.roundMsecRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
     self.marching = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Marching"]];
+
+    [self decodeColorKey:[self getPrefixedKey:prefix key:@"UnselectedColorString"] forCaliperColor:self.unselectedColor coder:coder];
+    [self decodeColorKey:[self getPrefixedKey:prefix key:@"ColorString"] forCaliperColor:self.color coder:coder];
+    [self decodeColorKey:[self getPrefixedKey:prefix key:@"SelectedColorString"] forCaliperColor:self.selectedColor coder:coder];
+}
+
+- (void)decodeColorKey:(NSString *)key forCaliperColor:(UIColor *)caliperColor coder:(NSCoder *) coder {
+    NSString *colorString = [coder decodeObjectForKey:key];
+    assert(colorString != nil);
+    if (colorString != nil) {
+        UIColor *color = [UIColor convertColorName:colorString];
+        assert(color != nil);
+        if (color != nil) {
+            caliperColor = color;
+        }
+    }
+    EPSLog(@"colorString = %@", colorString);
 }
 
 - (CGPoint)getCaliperMidPoint {

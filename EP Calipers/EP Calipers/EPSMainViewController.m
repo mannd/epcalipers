@@ -2500,7 +2500,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [coder encodeObject:self.launchURL forKey:@"LaunchURL"];
     [coder encodeInteger:self.numberOfPages forKey:@"NumberOfPages"];
     [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
-    [self encodeImage:self.imageView.image withKey:@"SavedImageKey" toCoder:coder];
+    [self encodeImage:self.imageView.image withKey:@"SavedImageStringKey" toCoder:coder];
     [coder encodeBool:self.imageIsUpscaled forKey:@"ImageIsUpscaledKey"];
 
     // Note that image lock is intentionally not preserved when app goes to background.
@@ -2526,7 +2526,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // still there.
     if ([self canHaveCanvasView] && self.canvasView != nil) {
         PKDrawing *drawing = self.canvasView.drawing;
-        [coder encodeObject:drawing forKey:@"CanvasViewDrawing"];
+        if (drawing != nil) {
+            [self encodeDrawing:drawing withKey:@"CanvasViewDrawing" toCoder:coder];
+        }
+//        [coder encodeObject:drawing forKey:@"CanvasViewDrawing"];
     }
 
     [super encodeRestorableStateWithCoder:coder];
@@ -2538,7 +2541,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     //self.firstRun = NO;
     self.launchURL = [coder decodeObjectForKey:@"LaunchURL"];
     self.numberOfPages = (int)[coder decodeIntegerForKey:@"NumberOfPages"];
-    UIImage *image = [self decodeImageForKey:@"SavedImageKey" fromCoder:coder];
+    UIImage *image = [self decodeImageForKey:@"SavedImageStringKey" fromCoder:coder];
     if (self.launchURL != nil) {
         self.wasLaunchedFromUrl = YES;
         //        image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:PDF_UPSCALE_FACTOR orientation:UIImageOrientationUp];
@@ -2582,7 +2585,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // the app returns with the canvas view toggled off, but the image is
     // still there.
     if ([self canHaveCanvasView]) {
-        PKDrawing *drawing = [coder decodeObjectForKey:@"CanvasViewDrawing"];
+        PKDrawing *drawing = [self decodeDrawingForKey:@"CanvasViewDrawing" fromCoder:coder];
+//        PKDrawing *drawing = [coder decodeObjectForKey:@"CanvasViewDrawing"];
         if (drawing != nil) {
             self.canvasView.drawing = drawing;
         }
@@ -2602,10 +2606,27 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     return nil;
 }
 
+- (PKDrawing *)decodeDrawingForKey:(NSString *)key fromCoder:(NSCoder *)coder {
+    NSString *drawingString = (NSString *)[coder decodeObjectForKey:key];
+    if (drawingString != nil) {
+        NSData *drawingData = [[NSData alloc] initWithBase64EncodedString:drawingString options:0];
+        if (drawingData != nil) {
+            return [[PKDrawing alloc] initWithData:drawingData error:nil];
+        }
+    }
+    return nil;
+}
+
 - (void)encodeImage:(UIImage *)image withKey:(NSString *)key toCoder:(NSCoder *)coder {
     NSData *imageData = UIImagePNGRepresentation(image);
     NSString *imageString = [imageData base64EncodedStringWithOptions:0];
     [coder encodeObject:imageString forKey:key];
+}
+
+- (void)encodeDrawing:(PKDrawing *)drawing withKey:(NSString *)key toCoder:(NSCoder *)coder {
+    NSData *drawingData = [drawing dataRepresentation];
+    NSString *drawingString = [drawingData base64EncodedStringWithOptions:0];
+    [coder encodeObject:drawingString forKey: key];
 }
 
 @end
