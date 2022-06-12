@@ -337,13 +337,13 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
 
-    UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
-    [appearance configureWithTransparentBackground];
-    [UINavigationBar.appearance setStandardAppearance:appearance];
-
-    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
-    [toolbarAppearance configureWithTransparentBackground];
-    [UIToolbar.appearance setStandardAppearance:toolbarAppearance];
+//    UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
+//    [appearance configureWithTransparentBackground];
+//    [UINavigationBar.appearance setStandardAppearance:appearance];
+//
+//    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
+//    [toolbarAppearance configureWithTransparentBackground];
+//    [UIToolbar.appearance setStandardAppearance:toolbarAppearance];
 
     //    [self.navigationController.toolbar setStandardAppearance:toolbarAppearance];
 //    if (@available(iOS 15.0, *)) {
@@ -358,13 +358,12 @@
 //
 //    UINavigationBar.appearance().standardAppearance = appearance
 
-    // SetTheme is making calipers move when toolbar disappears.
-    //    [self setupTheme];
+    [self setupTheme];
 
     self.isCalipersView = YES;
 
     // Not sure this makes a difference anymore.
-//    self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
+    self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
 
     self.firstRun = YES;
     self.wasLaunchedFromUrl = NO;
@@ -446,7 +445,7 @@
     NSString *priorHorizontalDefaultCal = [NSString stringWithString:self.settings.defaultCalibration];
     NSString *priorVerticalDefaultCal = [NSString stringWithString:self.settings.defaultVerticalCalibration];
     [self.settings loadPreferences];
-//    [self setupTheme];
+    [self setupTheme];
     self.defaultHorizontalCalChanged = ![priorHorizontalDefaultCal isEqualToString:self.settings.defaultCalibration];
     self.defaultVerticalCalChanged = ![priorVerticalDefaultCal isEqualToString:self.settings.defaultVerticalCalibration];
     [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate autoPositionText:self.settings.autoPositionText timeTextPosition:self.settings.timeTextPosition amplitudeTextPosition:self.settings.amplitudeTextPosition];
@@ -607,7 +606,6 @@
     [self performToggleCanvasView];
 }
 
-// FIXME: Sometimes toolpicker doesn't go away after toggling canvas view.
 - (void)performToggleCanvasView {
     self.canvasView.hidden = !self.canvasView.hidden;
     [self hideCanvasView:self.canvasView.hidden];
@@ -626,13 +624,15 @@
         [self.canvasView resignFirstResponder];
         [self.canvasView setUserInteractionEnabled:NO];
 //        [self scaleCanvasView];
-        [self.navigationController setToolbarHidden:NO animated:YES];
+        // Do not animate hiding toolbar, as it will cause an animation to
+        // appear in the calipers.
+        [self.navigationController setToolbarHidden:NO animated:NO];
         self.navigationItem.leftBarButtonItems[0].enabled = YES;
         self.navigationItem.rightBarButtonItems[0].enabled = YES;
     } else {
         EPSLog(@"Showing canvas view");
         self.canvasView.hidden = NO;
-        [self.navigationController setToolbarHidden:YES animated:YES];
+        [self.navigationController setToolbarHidden:YES animated:NO];
         self.navigationItem.rightBarButtonItems[0].enabled = NO;
         self.navigationItem.leftBarButtonItems[0].enabled = NO;
         [self scaleCanvasView];
@@ -641,17 +641,9 @@
         [self.canvasView becomeFirstResponder];
         [self.canvasView setUserInteractionEnabled:YES];
     }
+    // This is mandatory, otherwise calipers jump to wrong position after
+    // hiding toolbar.
     [self.calipersView setNeedsDisplay];
-    EPSLog(@"calipers view height = %f", self.calipersView.frame.size.height);
-    EPSLog(@"scrollView height = %f", self.scrollView.frame.size.height);
-    EPSLog(@"calipers view origin y = %f", self.calipersView.frame.origin.y);
-    EPSLog(@"calipers view bounds y = %f", self.calipersView.bounds.origin.y);
-    EPSLog(@"scrollView origin y = %f", self.scrollView.frame.origin.y);
-    EPSLog(@"scrollView bounds y = %f", self.scrollView.bounds.origin.y);
-    EPSLog(@"scrollView contentOffset y = %f", self.scrollView.contentOffset.y);
-    EPSLog(@"scrollView contentInsets top %f", self.scrollView.contentInset.top);
-
-
 }
 
 - (void)scaleCanvasView {
@@ -960,6 +952,7 @@
     else {
         [self showHamburgerMenu];
     }
+    // Crucial to avoid caliper "jumping" vertically.
     [self.calipersView setNeedsDisplay];
 
 }
@@ -968,12 +961,11 @@
     self.constraintHamburgerLeft.constant = 0;
     self.hamburgerMenuIsOpen = YES;
     [self.calipersView setUserInteractionEnabled:NO];
-    self.navigationItem.rightBarButtonItems[0].enabled = NO;
-    self.navigationItem.rightBarButtonItems[1].enabled = NO;
+    [self enableRightBarButtonItems:NO];
+    [self.navigationController setToolbarHidden:YES animated:NO];
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
         self.blackView.alpha = self.maxBlackAlpha;
-        [self.navigationController setToolbarHidden:YES animated:NO];
     }];
 }
 
@@ -981,13 +973,20 @@
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
     [self.calipersView setUserInteractionEnabled:YES];
-    self.navigationItem.rightBarButtonItems[0].enabled = YES;
-    self.navigationItem.rightBarButtonItems[1].enabled = YES;
+    [self enableRightBarButtonItems:YES];
+    [self.navigationController setToolbarHidden:NO animated:NO];
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
         self.blackView.alpha = 0;
-        [self.navigationController setToolbarHidden:NO animated:NO];
     }];
+}
+
+- (void)enableRightBarButtonItems:(BOOL)enable {
+    self.navigationItem.rightBarButtonItems[0].enabled = enable;
+    self.navigationItem.rightBarButtonItems[1].enabled = enable;
+    if (self.navigationItem.rightBarButtonItems.count > 2) {
+        self.navigationItem.rightBarButtonItems[2].enabled = enable;
+    }
 }
 
 - (void)showHelp {
@@ -2293,8 +2292,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         [self.imageView setNeedsDisplay];
         [self centerContent];
     });
-
-    //        [self.calipersView setNeedsDisplay];
 }
 
 

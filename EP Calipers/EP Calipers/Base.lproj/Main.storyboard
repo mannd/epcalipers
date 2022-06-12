@@ -34,7 +34,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X5X-Yr-OYx" customClass="EcgScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                                <rect key="frame" x="0.0" y="74" width="834" height="1100"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UrG-6e-uii">
                                         <rect key="frame" x="0.0" y="0.0" width="705.5" height="338"/>
@@ -62,7 +62,7 @@
                                 </constraints>
                             </scrollView>
                             <view opaque="NO" contentMode="scaleToFill" restorationIdentifier="CalipersViewID" translatesAutoresizingMaskIntoConstraints="NO" id="D98-VW-HwH" customClass="CalipersView">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1174"/>
+                                <rect key="frame" x="0.0" y="74" width="834" height="1100"/>
                                 <gestureRecognizers/>
                             </view>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Day-lu-Opi" customClass="BlackView">
@@ -85,13 +85,13 @@
                             <constraint firstItem="bjk-CB-7Bp" firstAttribute="bottom" secondItem="D98-VW-HwH" secondAttribute="bottom" id="10L-uH-NeD"/>
                             <constraint firstAttribute="trailing" secondItem="Day-lu-Opi" secondAttribute="trailing" id="611-Eo-GwK"/>
                             <constraint firstItem="Day-lu-Opi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6Dh-d6-woF"/>
-                            <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="7mg-co-GHU"/>
-                            <constraint firstAttribute="bottom" secondItem="X5X-Yr-OYx" secondAttribute="bottom" id="Afo-Q6-Sib"/>
+                            <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="bjk-CB-7Bp" secondAttribute="top" id="7mg-co-GHU"/>
+                            <constraint firstItem="bjk-CB-7Bp" firstAttribute="bottom" secondItem="X5X-Yr-OYx" secondAttribute="bottom" id="Afo-Q6-Sib"/>
                             <constraint firstAttribute="bottom" secondItem="Day-lu-Opi" secondAttribute="bottom" id="BXI-tN-0AC"/>
                             <constraint firstItem="bjk-CB-7Bp" firstAttribute="bottom" secondItem="MbT-x5-FOE" secondAttribute="bottom" id="HFz-lT-ISS"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="leading" secondItem="bjk-CB-7Bp" secondAttribute="leading" id="Rln-Xy-rlQ"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailing" secondItem="bjk-CB-7Bp" secondAttribute="trailing" id="W4Y-nF-S1C"/>
-                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="XQA-gU-Hse"/>
+                            <constraint firstItem="X5X-Yr-OYx" firstAttribute="top" secondItem="bjk-CB-7Bp" secondAttribute="top" id="XQA-gU-Hse"/>
                             <constraint firstItem="MbT-x5-FOE" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" symbolic="YES" id="eia-zO-IKX"/>
                             <constraint firstItem="MbT-x5-FOE" firstAttribute="top" secondItem="bjk-CB-7Bp" secondAttribute="top" id="nw0-Go-CFa"/>
                             <constraint firstItem="D98-VW-HwH" firstAttribute="leading" secondItem="bjk-CB-7Bp" secondAttribute="leading" id="qp0-qs-gBY"/>
