@@ -305,6 +305,9 @@
     
     [self.calipersView setUserInteractionEnabled:YES];
     self.calipersView.delegate = self;
+    // for debugging
+    //self.calipersView.alpha = 0.5;
+    //self.calipersView.backgroundColor = [UIColor redColor];
 
     // init QTc variables
     self.rrIntervalForQTc = 0.0;
@@ -334,12 +337,34 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
 
-    [self setupTheme];
+    UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
+    [appearance configureWithTransparentBackground];
+    [UINavigationBar.appearance setStandardAppearance:appearance];
+
+    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
+    [toolbarAppearance configureWithTransparentBackground];
+    [UIToolbar.appearance setStandardAppearance:toolbarAppearance];
+
+    //    [self.navigationController.toolbar setStandardAppearance:toolbarAppearance];
+//    if (@available(iOS 15.0, *)) {
+//        [self.navigationController.toolbar setScrollEdgeAppearance:toolbarAppearance];
+//    } else {
+//        // Fallback on earlier versions
+//    }
+//    [UIToolbar.appearance setStandardAppearance:toolbarAppearance];
+    //    [self.navigationController.navigationBar setStandardAppearance:appearance];
+//    let appearance = UINavigationBarAppearance()
+//    appearance.configureWithTransparentBackground()
+//
+//    UINavigationBar.appearance().standardAppearance = appearance
+
+    // SetTheme is making calipers move when toolbar disappears.
+    //    [self setupTheme];
 
     self.isCalipersView = YES;
 
     // Not sure this makes a difference anymore.
-    self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
+//    self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
 
     self.firstRun = YES;
     self.wasLaunchedFromUrl = NO;
@@ -421,7 +446,7 @@
     NSString *priorHorizontalDefaultCal = [NSString stringWithString:self.settings.defaultCalibration];
     NSString *priorVerticalDefaultCal = [NSString stringWithString:self.settings.defaultVerticalCalibration];
     [self.settings loadPreferences];
-    [self setupTheme];
+//    [self setupTheme];
     self.defaultHorizontalCalChanged = ![priorHorizontalDefaultCal isEqualToString:self.settings.defaultCalibration];
     self.defaultVerticalCalChanged = ![priorVerticalDefaultCal isEqualToString:self.settings.defaultVerticalCalibration];
     [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate autoPositionText:self.settings.autoPositionText timeTextPosition:self.settings.timeTextPosition amplitudeTextPosition:self.settings.amplitudeTextPosition];
@@ -448,23 +473,23 @@
     if (self.firstRun) {
         // scale image for imageView;
         // autolayout not done in viewDidLoad
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGFloat screenWidth = screenRect.size.width;
-        CGFloat screenHeight = screenRect.size.height;
-
-        UIStatusBarManager *statusBarManager = [self.view.window windowScene].statusBarManager;
-        CGFloat statusBarHeight = 0;
-        if (statusBarManager != nil) {
-            statusBarHeight = statusBarManager.statusBarFrame.size.height;
-        }
-        CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
-        CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
-        CGFloat verticalSpace = statusBarHeight + navigationBarHeight + toolbarHeight;
-
-        self.portraitWidth = fminf(screenHeight, screenWidth);
-        self.landscapeWidth = fmaxf(screenHeight, screenWidth);
-        self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
-        self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
+//        CGRect screenRect = [[UIScreen mainScreen] bounds];
+//        CGFloat screenWidth = screenRect.size.width;
+//        CGFloat screenHeight = screenRect.size.height;
+//
+//        UIStatusBarManager *statusBarManager = [self.view.window windowScene].statusBarManager;
+//        CGFloat statusBarHeight = 0;
+//        if (statusBarManager != nil) {
+//            statusBarHeight = statusBarManager.statusBarFrame.size.height;
+//        }
+//        CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+//        CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
+//        CGFloat verticalSpace = statusBarHeight + navigationBarHeight + toolbarHeight;
+//
+//        self.portraitWidth = fminf(screenHeight, screenWidth);
+//        self.landscapeWidth = fmaxf(screenHeight, screenWidth);
+//        self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
+//        self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
 
         // if running first time and opening URL then overwrite old image
         if (self.launchFromURL) {
@@ -516,6 +541,8 @@
         }
         [self selectMainToolbar];
 
+        EPSLog(@"scrollView = %f, calipersView height = %f", self.scrollView.frame.size.height, self.calipersView.frame.size.height);
+//        assert(self.scrollView.contentSize.height == self.calipersView.frame.size.height);
     }
 
 }
@@ -549,10 +576,10 @@
     [self.view bringSubviewToFront:self.canvasView];
     self.canvasView.hidden = YES;
     [NSLayoutConstraint activateConstraints:@[
-        [self.canvasView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        [self.canvasView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-        [self.canvasView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [self.canvasView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor]]];
+        [self.canvasView.topAnchor constraintEqualToAnchor:self.scrollView.topAnchor],
+        [self.canvasView.bottomAnchor constraintEqualToAnchor:self.scrollView.bottomAnchor],
+        [self.canvasView.leadingAnchor constraintEqualToAnchor:self.scrollView.leadingAnchor],
+        [self.canvasView.trailingAnchor constraintEqualToAnchor:self.scrollView.trailingAnchor]]];
     self.toolPicker = [[PKToolPicker alloc] init];
     [self.toolPicker setVisible:YES forFirstResponder:self.canvasView];
     [self.toolPicker addObserver:self.canvasView];
@@ -598,7 +625,7 @@
         [self.toolPicker addObserver:self.canvasView];
         [self.canvasView resignFirstResponder];
         [self.canvasView setUserInteractionEnabled:NO];
-        [self scaleCanvasView];
+//        [self scaleCanvasView];
         [self.navigationController setToolbarHidden:NO animated:YES];
         self.navigationItem.leftBarButtonItems[0].enabled = YES;
         self.navigationItem.rightBarButtonItems[0].enabled = YES;
@@ -614,6 +641,16 @@
         [self.canvasView becomeFirstResponder];
         [self.canvasView setUserInteractionEnabled:YES];
     }
+    [self.calipersView setNeedsDisplay];
+    EPSLog(@"calipers view height = %f", self.calipersView.frame.size.height);
+    EPSLog(@"scrollView height = %f", self.scrollView.frame.size.height);
+    EPSLog(@"calipers view origin y = %f", self.calipersView.frame.origin.y);
+    EPSLog(@"calipers view bounds y = %f", self.calipersView.bounds.origin.y);
+    EPSLog(@"scrollView origin y = %f", self.scrollView.frame.origin.y);
+    EPSLog(@"scrollView bounds y = %f", self.scrollView.bounds.origin.y);
+    EPSLog(@"scrollView contentOffset y = %f", self.scrollView.contentOffset.y);
+    EPSLog(@"scrollView contentInsets top %f", self.scrollView.contentInset.top);
+
 
 }
 
@@ -923,19 +960,20 @@
     else {
         [self showHamburgerMenu];
     }
+    [self.calipersView setNeedsDisplay];
 
 }
 - (void)showHamburgerMenu {
     [self.hamburgerViewController reloadData];
     self.constraintHamburgerLeft.constant = 0;
     self.hamburgerMenuIsOpen = YES;
-    [self.navigationController setToolbarHidden:YES animated:YES];
     [self.calipersView setUserInteractionEnabled:NO];
     self.navigationItem.rightBarButtonItems[0].enabled = NO;
     self.navigationItem.rightBarButtonItems[1].enabled = NO;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
         self.blackView.alpha = self.maxBlackAlpha;
+        [self.navigationController setToolbarHidden:YES animated:NO];
     }];
 }
 
@@ -943,12 +981,12 @@
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
     [self.calipersView setUserInteractionEnabled:YES];
-    [self.navigationController setToolbarHidden:NO animated:YES];
     self.navigationItem.rightBarButtonItems[0].enabled = YES;
     self.navigationItem.rightBarButtonItems[1].enabled = YES;
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
         self.blackView.alpha = 0;
+        [self.navigationController setToolbarHidden:NO animated:NO];
     }];
 }
 
@@ -2203,7 +2241,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     //    self.imageTransform = self.imageView.transform;
 }
 
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
+// scale between minimum and maximum. called after any 'bounce' animations
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view atScale:(CGFloat)scale {
     self.horizontalCalibration.currentZoom = scale;
     self.verticalCalibration.currentZoom = scale;
     self.horizontalCalibration.offset = self.scrollView.contentOffset;
@@ -2220,6 +2259,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         self.canvasView.zoomScale = scale;
         self.canvasView.contentOffset = self.scrollView.contentOffset;
     }
+//    EPSLog(@"scrollView height = %f, calipersView height = %f", self.scrollView.frame.size.height, self.calipersView.frame.size.height);
+//    assert(self.scrollView.contentSize.height == self.calipersView.frame.size.height);
 }
 
 // This is also called during zooming, so that calipers adjust to zoom and scrolling.
@@ -2235,6 +2276,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if (!self.canvasView.isHidden) {
         self.scrollView.zoomScale = self.canvasView.zoomScale;
         self.scrollView.contentOffset = self.canvasView.contentOffset;
+    }
+    else {
+        self.canvasView.zoomScale = self.scrollView.zoomScale;
+        self.canvasView.contentOffset = self.scrollView.contentOffset;
     }
 }
 
