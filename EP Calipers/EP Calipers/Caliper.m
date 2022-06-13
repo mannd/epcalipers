@@ -669,19 +669,29 @@
     self.roundMsecRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:ROUNDING_KEY]];
     self.marching = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:MARCHING_KEY]];
 
-    [self decodeColorKey:[self getPrefixedKey:prefix key:UNSELECTED_COLOR_STRING_KEY] forCaliperColor:self.unselectedColor coder:coder];
-    [self decodeColorKey:[self getPrefixedKey:prefix key:COLOR_STRING_KEY] forCaliperColor:self.color coder:coder];
-    [self decodeColorKey:[self getPrefixedKey:prefix key:SELECTED_COLOR_STRING_KEY] forCaliperColor:self.selectedColor coder:coder];
+    [self decodeColorKey:[self getPrefixedKey:prefix key:UNSELECTED_COLOR_STRING_KEY] forCaliperColorType:CaliperColorUnselected coder:coder];
+    [self decodeColorKey:[self getPrefixedKey:prefix key:COLOR_STRING_KEY] forCaliperColorType:CaliperColorCurrent coder:coder];
+    [self decodeColorKey:[self getPrefixedKey:prefix key:SELECTED_COLOR_STRING_KEY] forCaliperColorType:CaliperColorSelected coder:coder];
 }
 
-- (void)decodeColorKey:(NSString *)key forCaliperColor:(UIColor *)caliperColor coder:(NSCoder *) coder {
-    NSString *colorString = [coder decodeObjectForKey:key];
-    assert(colorString != nil);
+- (void)decodeColorKey:(NSString *)key forCaliperColorType:(CaliperColorType)caliperColorType coder:(NSCoder *) coder {
+    NSString *colorString = [coder decodeObjectOfClass:[NSString class] forKey:key];
     if (colorString != nil) {
         UIColor *color = [UIColor convertColorName:colorString];
-        assert(color != nil);
         if (color != nil) {
-            caliperColor = color;
+            switch (caliperColorType) {
+                case CaliperColorUnselected:
+                    self.unselectedColor = color;
+                    break;
+                case CaliperColorSelected:
+                    self.selectedColor = color;
+                    break;
+                case CaliperColorCurrent:
+                    self.color = color;
+                    break;
+                default:
+                    break;
+            }
         }
     }
     EPSLog(@"colorString = %@", colorString);

@@ -192,11 +192,11 @@
 #define ZOOM_SCALE_KEY @"ZoomScaleKey"
 #define IMAGE_IS_UPSCALED_KEY @"ImageIsUpscaledKey"
 #define HORIZONATAL_PREFIX_KEY @"Horizontal"
-#define VERTICAL_PREFIX_KEY @"Verical"
+#define VERTICAL_PREFIX_KEY @"Vertical"
 #define CALIPERS_COUNT_KEY @"CalipersCount"
 #define A_CALIPER_IS_MARCHING_KEY @"ACaliperIsMarching"
 #define IS_ANGLE_CALIPER_FORMAT_KEY @"%dIsAngleCaliper"
-#define CANVAS_VIEW_DRAWING_KEY @"CanvasViewDrawing"
+#define CANVAS_VIEW_DRAWING_STRING_KEY @"CanvasViewDrawingString"
 
 
 #define FLEX_SPACE [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]
@@ -627,12 +627,12 @@
         // Do not animate hiding toolbar, as it will cause an animation to
         // appear in the calipers.
         [self.navigationController setToolbarHidden:NO animated:NO];
+        [self.calipersView setNeedsDisplay];
         self.navigationItem.leftBarButtonItems[0].enabled = YES;
         self.navigationItem.rightBarButtonItems[0].enabled = YES;
     } else {
         EPSLog(@"Showing canvas view");
         self.canvasView.hidden = NO;
-        [self.navigationController setToolbarHidden:YES animated:NO];
         self.navigationItem.rightBarButtonItems[0].enabled = NO;
         self.navigationItem.leftBarButtonItems[0].enabled = NO;
         [self scaleCanvasView];
@@ -640,10 +640,9 @@
         [self.toolPicker addObserver:self.canvasView];
         [self.canvasView becomeFirstResponder];
         [self.canvasView setUserInteractionEnabled:YES];
+        [self.navigationController setToolbarHidden:YES animated:NO];
+        [self.calipersView setNeedsDisplay];
     }
-    // This is mandatory, otherwise calipers jump to wrong position after
-    // hiding toolbar.
-    [self.calipersView setNeedsDisplay];
 }
 
 - (void)scaleCanvasView {
@@ -952,10 +951,9 @@
     else {
         [self showHamburgerMenu];
     }
-    // Crucial to avoid caliper "jumping" vertically.
     [self.calipersView setNeedsDisplay];
-
 }
+
 - (void)showHamburgerMenu {
     [self.hamburgerViewController reloadData];
     self.constraintHamburgerLeft.constant = 0;
@@ -2217,7 +2215,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         top = (self.scrollView.bounds.size.height-self.scrollView.contentSize.height) * 0.5f;
     }
     self.scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
-    if ([self canHaveCanvasView]) {
+    [self.calipersView setNeedsDisplay];
+    if ([self canHaveCanvasView] && self.canvasView != nil) {
         self.canvasView.contentInset = self.scrollView.contentInset;
     }
 }
@@ -2269,7 +2268,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     self.horizontalCalibration.offset = self.scrollView.contentOffset;
     self.verticalCalibration.offset = self.scrollView.contentOffset;
     [self.calipersView setNeedsDisplay];
-    if (![self canHaveCanvasView]) {
+    if (![self canHaveCanvasView] || self.canvasView == nil) {
         return;
     }
     if (!self.canvasView.isHidden) {
@@ -2583,7 +2582,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if ([self canHaveCanvasView] && self.canvasView != nil) {
         PKDrawing *drawing = self.canvasView.drawing;
         if (drawing != nil) {
-            [self encodeDrawing:drawing withKey:CANVAS_VIEW_DRAWING_KEY toCoder:coder];
+            [self encodeDrawing:drawing withKey:CANVAS_VIEW_DRAWING_STRING_KEY toCoder:coder];
         }
     }
     [super encodeRestorableStateWithCoder:coder];
@@ -2593,7 +2592,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 {
     EPSLog(@"decodeRestorableStateWithCoder");
     //self.firstRun = NO;
-    self.launchURL = [coder decodeObjectForKey:LAUNCH_URL_KEY];
+    self.launchURL = [coder decodeObjectOfClass:[NSString class] forKey:LAUNCH_URL_KEY];
     self.numberOfPages = (int)[coder decodeIntegerForKey:NUMBER_OF_PAGES_KEY];
     UIImage *image = [self decodeImageForKey:SAVED_IMAGE_STRING_KEY fromCoder:coder];
     if (self.launchURL != nil) {
@@ -2638,8 +2637,8 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // Note that if canvas view is active when app is removed from memory,
     // the app returns with the canvas view toggled off, but the image is
     // still there.
-    if ([self canHaveCanvasView]) {
-        PKDrawing *drawing = [self decodeDrawingForKey:CANVAS_VIEW_DRAWING_KEY fromCoder:coder];
+    if ([self canHaveCanvasView] && self.canvasView != nil) {
+        PKDrawing *drawing = [self decodeDrawingForKey:CANVAS_VIEW_DRAWING_STRING_KEY fromCoder:coder];
         if (drawing != nil) {
             self.canvasView.drawing = drawing;
         }
@@ -2648,7 +2647,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (UIImage *)decodeImageForKey:(NSString *)key fromCoder:(NSCoder *)coder {
-    NSString *imageString = (NSString *)[coder decodeObjectForKey:key];
+    NSString *imageString = [coder decodeObjectOfClass:[NSString class] forKey:key];
     if (imageString != nil) {
         NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imageString options:0];
         if (imageData != nil) {
@@ -2659,7 +2658,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (PKDrawing *)decodeDrawingForKey:(NSString *)key fromCoder:(NSCoder *)coder {
-    NSString *drawingString = (NSString *)[coder decodeObjectForKey:key];
+    NSString *drawingString = [coder decodeObjectOfClass:[NSString class] forKey:key];
     if (drawingString != nil) {
         NSData *drawingData = [[NSData alloc] initWithBase64EncodedString:drawingString options:0];
         if (drawingData != nil) {
