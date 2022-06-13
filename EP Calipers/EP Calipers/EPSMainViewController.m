@@ -557,6 +557,9 @@
     [self createCanvasView];
 }
 
+// Challenge: sync two scrollviews together during scrolling, zoom
+// See https://stackoverflow.com/questions/9418311/setting-contentoffset-programmatically-triggers-scrollviewdidscroll
+// But solution not perfect yet...
 // Sets canvasView to nil if canvasView not supported.
 - (void)createCanvasView {
     if (![self canHaveCanvasView]) {
@@ -567,8 +570,8 @@
     self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.canvasView setOpaque:NO];
     self.canvasView.backgroundColor = [UIColor clearColor];
-    self.canvasView.maximumZoomScale = MAX_ZOOM;
-    self.canvasView.minimumZoomScale = MIN_ZOOM;
+    self.canvasView.maximumZoomScale = self.scrollView.maximumZoomScale;
+    self.canvasView.minimumZoomScale = self.scrollView.minimumZoomScale;
     [self scaleCanvasView];
     self.canvasView.delegate = self;
     [self.view addSubview:self.canvasView];
@@ -2222,9 +2225,20 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self centerContent];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self centerContent];
+//    });
+    self.horizontalCalibration.currentZoom = self.scrollView.zoomScale;
+    self.verticalCalibration.currentZoom = self.scrollView.zoomScale;
+    self.horizontalCalibration.offset = self.scrollView.contentOffset;
+    self.verticalCalibration.offset = self.scrollView.contentOffset;
+    [self.calipersView setNeedsDisplay];
+    if (![self canHaveCanvasView] || self.canvasView == nil) {
+        return;
+    }
+    [self adjustScrollViews:scrollView];
+//    [self adjustScrollViews:scrollView];
+    [self centerContent];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
@@ -2239,6 +2253,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     //    self.imageTransform = self.imageView.transform;
 }
 
+
 // scale between minimum and maximum. called after any 'bounce' animations
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view atScale:(CGFloat)scale {
     self.horizontalCalibration.currentZoom = scale;
@@ -2249,14 +2264,15 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if (![self canHaveCanvasView]) {
         return;
     }
-    if (!self.canvasView.isHidden) {
-        self.scrollView.zoomScale = scale;
-        self.scrollView.contentOffset = self.canvasView.contentOffset;
-    }
-    else {
-        self.canvasView.zoomScale = scale;
-        self.canvasView.contentOffset = self.scrollView.contentOffset;
-    }
+    [self adjustScrollViews:scrollView];
+//    if (!self.canvasView.isHidden) {
+//        self.scrollView.zoomScale = scale;
+//        self.scrollView.contentOffset = self.canvasView.contentOffset;
+//    }
+//    else {
+//        self.canvasView.zoomScale = scale;
+//        self.canvasView.contentOffset = self.scrollView.contentOffset;
+//    }
 //    EPSLog(@"scrollView height = %f, calipersView height = %f", self.scrollView.frame.size.height, self.calipersView.frame.size.height);
 //    assert(self.scrollView.contentSize.height == self.calipersView.frame.size.height);
 }
@@ -2271,13 +2287,36 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if (![self canHaveCanvasView] || self.canvasView == nil) {
         return;
     }
-    if (!self.canvasView.isHidden) {
-        self.scrollView.zoomScale = self.canvasView.zoomScale;
-        self.scrollView.contentOffset = self.canvasView.contentOffset;
-    }
-    else {
-        self.canvasView.zoomScale = self.scrollView.zoomScale;
-        self.canvasView.contentOffset = self.scrollView.contentOffset;
+    [self adjustScrollViews:scrollView];
+//    if (!self.canvasView.isHidden) {
+//        self.scrollView.zoomScale = self.canvasView.zoomScale;
+//        self.scrollView.contentOffset = self.canvasView.contentOffset;
+//    }
+//    else {
+//        // FIXME: Bad access here
+//        assert(self.canvasView != nil);
+//        self.canvasView.zoomScale = self.scrollView.zoomScale;
+//        self.canvasView.contentOffset = self.scrollView.contentOffset;
+//    }
+}
+
+- (void)adjustScrollViews:(UIScrollView *)scrollView {
+    if (scrollView.isTracking || scrollView.isDragging || scrollView.isDecelerating) {
+        if (scrollView == self.scrollView) {
+            EPSLog(@"Zooming scrollview");
+            self.canvasView.zoomScale = self.scrollView.zoomScale;
+            self.canvasView.contentOffset = self.scrollView.contentOffset;
+            self.canvasView.contentInset = self.scrollView.contentInset;
+        } else if (scrollView == self.canvasView) {
+            EPSLog(@"Zooming canvasView");
+            self.scrollView.zoomScale = self.canvasView.zoomScale;
+            self.scrollView.contentOffset = self.canvasView.contentOffset;
+            self.scrollView.contentInset = self.canvasView.contentInset;
+            [self.calipersView setNeedsDisplay];
+            [self.imageView setNeedsDisplay];
+        } else {
+            EPSLog(@"Zooming Nothing");
+        }
     }
 }
 
