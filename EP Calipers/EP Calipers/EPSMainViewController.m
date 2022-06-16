@@ -337,27 +337,6 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
 
-//    UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
-//    [appearance configureWithTransparentBackground];
-//    [UINavigationBar.appearance setStandardAppearance:appearance];
-//
-//    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
-//    [toolbarAppearance configureWithTransparentBackground];
-//    [UIToolbar.appearance setStandardAppearance:toolbarAppearance];
-
-    //    [self.navigationController.toolbar setStandardAppearance:toolbarAppearance];
-//    if (@available(iOS 15.0, *)) {
-//        [self.navigationController.toolbar setScrollEdgeAppearance:toolbarAppearance];
-//    } else {
-//        // Fallback on earlier versions
-//    }
-//    [UIToolbar.appearance setStandardAppearance:toolbarAppearance];
-    //    [self.navigationController.navigationBar setStandardAppearance:appearance];
-//    let appearance = UINavigationBarAppearance()
-//    appearance.configureWithTransparentBackground()
-//
-//    UINavigationBar.appearance().standardAppearance = appearance
-
     [self setupTheme];
 
     self.isCalipersView = YES;
@@ -387,7 +366,6 @@
     [self.calipersView addGestureRecognizer:longPressCalipersView];
 
     [self createCanvasView];
-
 }
 
 - (void) orientationChanged:(NSNotification *)notification {
@@ -399,11 +377,7 @@
     // After experimentation, white background color seems best.
     // BUT, maybe not so much for dark mode...
     // However, can't use this for PDFs!
-    if (@available(iOS 13.0, *)) {
-        return [UIColor tertiarySystemBackgroundColor];
-    } else {
-        return  WHITE_COLOR;
-    }
+    return [UIColor tertiarySystemBackgroundColor];
 }
 
 - (void)setupTheme {
@@ -413,26 +387,22 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
 
-    if (@available(iOS 13.0, *)) {
-        UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
-        UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
-        [navigationBarAppearance configureWithOpaqueBackground];
-        [toolbarAppearance configureWithOpaqueBackground];
-        navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor];
-        toolbarAppearance.backgroundColor = [UIColor systemBackgroundColor];
-        self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
-        self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
-        self.navigationController.toolbar.standardAppearance = toolbarAppearance;
-        if (@available(iOS 15.0, *)) {
-            self.navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance;
-        } else {
-            // Fallback on earlier versions
-        }
-        self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
-        self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
+    UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
+    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
+    [navigationBarAppearance configureWithOpaqueBackground];
+    [toolbarAppearance configureWithOpaqueBackground];
+    navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor];
+    toolbarAppearance.backgroundColor = [UIColor systemBackgroundColor];
+    self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
+    self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
+    self.navigationController.toolbar.standardAppearance = toolbarAppearance;
+    if (@available(iOS 15.0, *)) {
+        self.navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance;
     } else {
-        // Use default colors
+        // Fallback on earlier versions
     }
+    self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
+    self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
 }
 
 - (void)dealloc {
@@ -2451,11 +2421,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 // from https://github.com/fcanas/ios-color-picker
 - (void)chooseColor:(Caliper *)caliper {
     FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
-    if (@available(iOS 13.0, *)) {
-        colorPicker.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        colorPicker.backgroundColor = [UIColor whiteColor];
-    }
+    colorPicker.backgroundColor = [UIColor systemBackgroundColor];
     self.chosenCaliper = caliper;
     colorPicker.color = caliper.unselectedColor;
     colorPicker.delegate = self;
