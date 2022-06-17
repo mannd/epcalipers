@@ -527,11 +527,9 @@
     [self createCanvasView];
 }
 
-// Challenge: sync two scrollviews together during scrolling, zoom
+// Sync two scrollviews together during scrolling, zoom
 // See https://stackoverflow.com/questions/9418311/setting-contentoffset-programmatically-triggers-scrollviewdidscroll
-// But solution not perfect yet...
 // Sets canvasView to nil if canvasView not supported.
-// TODO: Need to recreate canvas view everytime an image is loaded.
 - (void)createCanvasView {
     if (![self canHaveCanvasView]) {
         self.canvasView = nil;
@@ -605,7 +603,6 @@
         self.navigationItem.rightBarButtonItems[0].enabled = YES;
     } else {
         EPSLog(@"Showing canvas view");
-        self.canvasView.hidden = NO;
         self.navigationItem.rightBarButtonItems[0].enabled = NO;
         self.navigationItem.leftBarButtonItems[0].enabled = NO;
         [self scaleCanvasView];
@@ -614,7 +611,9 @@
         [self.canvasView becomeFirstResponder];
         [self.canvasView setUserInteractionEnabled:YES];
         [self.navigationController setToolbarHidden:YES animated:NO];
+        [self recenterImage];
         [self.calipersView setNeedsDisplay];
+        self.canvasView.hidden = NO;
     }
 }
 
