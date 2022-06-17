@@ -283,8 +283,6 @@
 
     [self loadFonts];
 
-    UIDevice *device = [UIDevice currentDevice];
-    self.isIpad = ([device userInterfaceIdiom] == UIUserInterfaceIdiomPad);
     [self createToolbars];
 
     self.blackView.delegate = self;
@@ -366,6 +364,11 @@
     [self.calipersView addGestureRecognizer:longPressCalipersView];
 
     [self createCanvasView];
+}
+
+- (BOOL)isIpad {
+    UIDevice *device = [UIDevice currentDevice];
+    return [device userInterfaceIdiom] == UIUserInterfaceIdiomPad;
 }
 
 - (void) orientationChanged:(NSNotification *)notification {
@@ -519,7 +522,7 @@
 - (BOOL)canHaveCanvasView {
     // Maybe we will allow something else besides iPad to have a canvas
     // view in the future, but for now, it's just on iPads.
-    return self.isIpad;
+    return [self isIpad];
 }
 
 - (void)clearCanvasView {
@@ -535,6 +538,7 @@
         self.canvasView = nil;
         return;
     }
+
     self.canvasView = [[PKCanvasView alloc] initWithFrame:CGRectZero];
     self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.canvasView setOpaque:NO];
@@ -555,6 +559,10 @@
     [self.toolPicker addObserver:self.canvasView];
     [self.canvasView resignFirstResponder];
     [self.canvasView setUserInteractionEnabled:NO];
+}
+
+- (void)doCanvasViewLongPress:(UILongPressGestureRecognizer *) sender {
+    EPSLog(@"Canvas View Long Press");
 }
 
 - (void)toggleCanvasView {
@@ -601,6 +609,11 @@
         [self.calipersView setNeedsDisplay];
         self.navigationItem.leftBarButtonItems[0].enabled = YES;
         self.navigationItem.rightBarButtonItems[0].enabled = YES;
+        // Can't just have canvas view resign first responder, because if
+        // there has been a long press on the canvas view, the canvas view
+        // does not resign first responder properly and the pencil tools
+        // don't go away.  Must explicity make the scrollView first responder again.
+        [self.scrollView becomeFirstResponder];
     } else {
         EPSLog(@"Showing canvas view");
         self.navigationItem.rightBarButtonItems[0].enabled = NO;
@@ -615,6 +628,7 @@
         [self.calipersView setNeedsDisplay];
         self.canvasView.hidden = NO;
     }
+    EPSLog(@"Canvas view is first responder = %d", [self.canvasView isFirstResponder]);
 }
 
 - (void)scaleCanvasView {
@@ -788,6 +802,7 @@
         return;
     }
     [sender.view becomeFirstResponder];
+    EPSLog(@"Sender = %@", sender);
     UIMenuController *menu = UIMenuController.sharedMenuController;
     menu.arrowDirection = UIMenuControllerArrowDefault;
     UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:ROTATE action:@selector(rotateAction)];
@@ -1730,7 +1745,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
-    if (self.isIpad) {
+    if ([self isIpad]) {
         // Need to present as popover on iPad
         picker.modalPresentationStyle = UIModalPresentationPopover;
         picker.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
@@ -1744,7 +1759,7 @@
         NSArray<UTType *> *contentTypes = @[[UTType typeWithIdentifier:UTTypeImage.identifier], [UTType typeWithIdentifier:UTTypePDF.identifier]];
         UIDocumentPickerViewController *picker = [[UIDocumentPickerViewController alloc] initForOpeningContentTypes:contentTypes asCopy:YES];
         picker.delegate = self;
-        if (self.isIpad) {
+        if ([self isIpad]) {
             picker.modalPresentationStyle = UIModalPresentationPopover;
             picker.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
         }

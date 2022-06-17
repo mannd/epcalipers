@@ -74,7 +74,6 @@
 @property (strong, nonatomic) Calibration *verticalCalibration;
 @property (strong, nonatomic) Settings *settings;
 
-@property (nonatomic) BOOL isIpad;
 @property (nonatomic) double rrIntervalForQTc;
 @property (nonatomic) BOOL firstRun;
 @property (nonatomic) BOOL firstStart;
@@ -109,6 +108,7 @@
 - (void)lockImage;
 - (BOOL)imageIsLocked;
 - (void)showToolTips;
+- (BOOL)isIpad;
 
 @property (nonatomic) BOOL tweakingInProgress;
 @property (nonatomic) BOOL showingToolTips;
