@@ -624,9 +624,9 @@
         [self.canvasView becomeFirstResponder];
         [self.canvasView setUserInteractionEnabled:YES];
         [self.navigationController setToolbarHidden:YES animated:NO];
-        [self recenterImage];
         [self.calipersView setNeedsDisplay];
         self.canvasView.hidden = NO;
+        [self recenterImage];
     }
     EPSLog(@"Canvas view is first responder = %d", [self.canvasView isFirstResponder]);
 }
@@ -2199,10 +2199,14 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if (self.scrollView.contentSize.height < self.scrollView.bounds.size.height) {
         top = (self.scrollView.bounds.size.height-self.scrollView.contentSize.height) * 0.5f;
     }
-    self.scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
+    UIEdgeInsets inset = UIEdgeInsetsMake(top, left, top, left);
+    self.scrollView.contentInset = inset;
     [self.calipersView setNeedsDisplay];
-    if ([self canHaveCanvasView] && self.canvasView != nil) {
-        self.canvasView.contentInset = UIEdgeInsetsMake(top, left, top, left);
+    if ([self canHaveCanvasView] && self.canvasView != nil
+        && self.canvasView.userInteractionEnabled == YES) {
+        self.canvasView.contentInset = inset;
+        self.canvasView.contentSize = self.scrollView.contentSize;
+        self.canvasView.contentOffset = self.scrollView.contentOffset;
     }
 }
 
@@ -2269,7 +2273,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [self vitalStats];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self centerContent];
+//        [self centerContent];
         [self.calipersView setNeedsDisplay];
         [self.imageView setNeedsDisplay];
         [self centerContent];
