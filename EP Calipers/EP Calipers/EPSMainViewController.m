@@ -1888,6 +1888,7 @@
         self.pageNumber = page;
         [self enablePageButtons:YES];
         [self openPDFPage:self->pdfRef atPage:self.pageNumber];
+        [self clearCanvasView];
     }];
     [gotoPageAlertController addAction:cancelAction];
     [gotoPageAlertController addAction:gotoAction];
@@ -1904,6 +1905,7 @@
     }
     [self enablePageButtons:YES];
     [self openPDFPage:pdfRef atPage:self.pageNumber];
+    [self clearCanvasView];
 }
 
 - (void)gotoNextPage {
@@ -1913,6 +1915,7 @@
     }
     [self enablePageButtons:YES];
     [self openPDFPage:pdfRef atPage:self.pageNumber];
+    [self clearCanvasView];
 }
 
 - (void)openPDFPage:(CGPDFDocumentRef) documentRef atPage:(int) pageNum {
