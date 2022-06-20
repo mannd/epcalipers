@@ -940,12 +940,12 @@
 }
 
 - (void)showHamburgerMenu {
+    [self.navigationController setToolbarHidden:YES animated:NO];
     [self.hamburgerViewController reloadData];
     self.constraintHamburgerLeft.constant = 0;
     self.hamburgerMenuIsOpen = YES;
     [self.calipersView setUserInteractionEnabled:NO];
     [self enableRightBarButtonItems:NO];
-    [self.navigationController setToolbarHidden:YES animated:NO];
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
         self.blackView.alpha = self.maxBlackAlpha;
@@ -953,11 +953,11 @@
 }
 
 - (void)hideHamburgerMenu {
+    [self.navigationController setToolbarHidden:NO animated:NO];
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
     [self.calipersView setUserInteractionEnabled:YES];
     [self enableRightBarButtonItems:YES];
-    [self.navigationController setToolbarHidden:NO animated:NO];
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
         self.blackView.alpha = 0;

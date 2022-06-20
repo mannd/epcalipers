@@ -66,7 +66,7 @@
                                 <gestureRecognizers/>
                             </view>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Day-lu-Opi" customClass="BlackView">
-                                <rect key="frame" x="0.0" y="0.0" width="834" height="1194"/>
+                                <rect key="frame" x="0.0" y="74" width="834" height="1100"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MbT-x5-FOE">
@@ -87,7 +87,7 @@
                             <constraint firstItem="Day-lu-Opi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6Dh-d6-woF"/>
                             <constraint firstItem="D98-VW-HwH" firstAttribute="top" secondItem="bjk-CB-7Bp" secondAttribute="top" id="7mg-co-GHU"/>
                             <constraint firstItem="bjk-CB-7Bp" firstAttribute="bottom" secondItem="X5X-Yr-OYx" secondAttribute="bottom" id="Afo-Q6-Sib"/>
-                            <constraint firstAttribute="bottom" secondItem="Day-lu-Opi" secondAttribute="bottom" id="BXI-tN-0AC"/>
+                            <constraint firstItem="bjk-CB-7Bp" firstAttribute="bottom" secondItem="Day-lu-Opi" secondAttribute="bottom" id="BXI-tN-0AC"/>
                             <constraint firstItem="bjk-CB-7Bp" firstAttribute="bottom" secondItem="MbT-x5-FOE" secondAttribute="bottom" id="HFz-lT-ISS"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="leading" secondItem="bjk-CB-7Bp" secondAttribute="leading" id="Rln-Xy-rlQ"/>
                             <constraint firstItem="X5X-Yr-OYx" firstAttribute="trailing" secondItem="bjk-CB-7Bp" secondAttribute="trailing" id="W4Y-nF-S1C"/>
@@ -96,7 +96,7 @@
                             <constraint firstItem="MbT-x5-FOE" firstAttribute="top" secondItem="bjk-CB-7Bp" secondAttribute="top" id="nw0-Go-CFa"/>
                             <constraint firstItem="D98-VW-HwH" firstAttribute="leading" secondItem="bjk-CB-7Bp" secondAttribute="leading" id="qp0-qs-gBY"/>
                             <constraint firstItem="bjk-CB-7Bp" firstAttribute="trailing" secondItem="D98-VW-HwH" secondAttribute="trailing" id="tYO-h2-XFY"/>
-                            <constraint firstItem="Day-lu-Opi" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="tq3-0S-e7h"/>
+                            <constraint firstItem="Day-lu-Opi" firstAttribute="top" secondItem="bjk-CB-7Bp" secondAttribute="top" id="tq3-0S-e7h"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
