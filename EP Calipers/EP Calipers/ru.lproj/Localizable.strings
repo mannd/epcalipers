@@ -8,7 +8,7 @@
 
 /* Strings needing translation */
 "EP Calipers" = "ЭФИ калипер";
-"Copyright_message" = "Авторские права © 2015-2021 EP Studios, Inc.\nВсе права защищены. \nВерсия %@";
+"Copyright_message" = "Авторские права © 2015-2022 EP Studios, Inc.\nВсе права защищены. \nВерсия %@";
 
 /* Simple dialog button labels */
 "10 mm" = "10 мм";
@@ -155,6 +155,7 @@
 "Set_calibration_tooltip" = "Измерить известный интервал выбранным калипером";
 "Setup_calibration_tooltip" = "Выбирайте калипер нажав на него. Используйте его для измерения известного интервала (например, 1000 мсек).";
 "Side_menu_tooltip" = "Загрузить новое изображение";
+"Scribble_tooltip" = "Аннотация с карандашом Apple";
 
 /* Onboard labels */
 "Move_caliper_label" = "Переместите планку, Переместите боковую панель";

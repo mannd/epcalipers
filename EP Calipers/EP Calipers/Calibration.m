@@ -12,6 +12,14 @@
 #import "Translation.h"
 #import "Defs.h"
 
+// State restoration keys
+#define UNITS_KEY @"Units"
+#define DISPLAY_RATE_KEY @"DisplayRate"
+#define CALIBRATED_KEY @"Calibrated"
+#define ORIGINAL_ZOOM_KEY @"OriginalZoom"
+#define CURRENT_ZOOM_KEY @"CurrentZoom"
+#define ORIGINAL_CAL_FACTOR_KEY @"OriginalCalFactor"
+
 @implementation Calibration
 
 @synthesize units=_units;
@@ -109,23 +117,23 @@
 
 - (void)encodeCalibrationState:(NSCoder *)coder withPrefix:(NSString *)prefix {
     // rawUnits is just _units.  However self.units returns units based on interval/rate
-    [coder encodeObject:self.rawUnits forKey:[self getPrefixedKey:prefix key:@"Units"]];
-    [coder encodeBool:self.displayRate forKey:[self getPrefixedKey:prefix key:@"DisplayRate"]];
-    [coder encodeBool:self.calibrated forKey:[self getPrefixedKey:prefix key:@"Calibrated"]];
-    [coder encodeDouble:self.originalZoom forKey:[self getPrefixedKey:prefix key:@"OriginalZoom"]];
-    [coder encodeDouble:self.currentZoom forKey:[self getPrefixedKey:prefix key:@"CurrentZoom"]];
-    [coder encodeDouble:self.originalCalFactor forKey:[self getPrefixedKey:prefix key:@"OriginalCalFactor"]];
+    [coder encodeObject:self.rawUnits forKey:[self getPrefixedKey:prefix key:UNITS_KEY]];
+    [coder encodeBool:self.displayRate forKey:[self getPrefixedKey:prefix key:DISPLAY_RATE_KEY]];
+    [coder encodeBool:self.calibrated forKey:[self getPrefixedKey:prefix key:CALIBRATED_KEY]];
+    [coder encodeDouble:self.originalZoom forKey:[self getPrefixedKey:prefix key:ORIGINAL_ZOOM_KEY]];
+    [coder encodeDouble:self.currentZoom forKey:[self getPrefixedKey:prefix key:CURRENT_ZOOM_KEY]];
+    [coder encodeDouble:self.originalCalFactor forKey:[self getPrefixedKey:prefix key:ORIGINAL_CAL_FACTOR_KEY]];
     
 }
 
 - (void)decodeCalibrationState:(NSCoder *)coder withPrefix:(NSString *)prefix {
     // this is setting _units.  self.units returns units based on interval/rate
-    self.units = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"Units"]];
-    self.displayRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"DisplayRate"]];
-    self.calibrated = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Calibrated"]];
-    self.originalZoom = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"OriginalZoom"]];
-    self.currentZoom = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CurrentZoom"]];
-    self.originalCalFactor = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"OriginalCalFactor"]];
+    self.units = [coder decodeObjectOfClass:[NSString class] forKey:[self getPrefixedKey:prefix key:UNITS_KEY]];
+    self.displayRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:DISPLAY_RATE_KEY]];
+    self.calibrated = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:CALIBRATED_KEY]];
+    self.originalZoom = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:ORIGINAL_ZOOM_KEY]];
+    self.currentZoom = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:CURRENT_ZOOM_KEY]];
+    self.originalCalFactor = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:ORIGINAL_CAL_FACTOR_KEY]];
 }
 
 @end

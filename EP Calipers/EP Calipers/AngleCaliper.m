@@ -14,6 +14,10 @@
 #define DELTA 20.0
 #define ANGLE_DELTA 0.15
 
+// State restoration keys
+#define ANGLE_BAR_1_KEY @"AngleBar1"
+#define ANGLE_BAR_2_KEY @"AngleBar2"
+
 @implementation AngleCaliper
 
 @synthesize textPosition = _textPosition;
@@ -326,15 +330,15 @@
 }
 
 - (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
-    [coder encodeDouble:self.angleBar1 forKey:[self getPrefixedKey:prefix key:@"AngleBar1"]];
-    [coder encodeDouble:self.angleBar2 forKey:[self getPrefixedKey:prefix key:@"AngleBar2"]];
+    [coder encodeDouble:self.angleBar1 forKey:[self getPrefixedKey:prefix key:ANGLE_BAR_1_KEY]];
+    [coder encodeDouble:self.angleBar2 forKey:[self getPrefixedKey:prefix key:ANGLE_BAR_2_KEY]];
     
     [super encodeCaliperState:coder withPrefix:prefix];
 }
 
 - (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
-    self.angleBar1 = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"AngleBar1"]];
-    self.angleBar2 = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"AngleBar2"]];
+    self.angleBar1 = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:ANGLE_BAR_1_KEY]];
+    self.angleBar2 = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:ANGLE_BAR_2_KEY]];
     
     [super decodeCaliperState:coder withPrefix:prefix];
 }

@@ -40,14 +40,8 @@
 
     UIPageControl *pageControl = [UIPageControl appearance];
     pageControl.pageIndicatorTintColor = GRAY_COLOR;
-    if (@available(iOS 13.0, *)) {
-        pageControl.backgroundColor = [UIColor systemBackgroundColor];
-        pageControl.currentPageIndicatorTintColor = [UIColor labelColor];
-    } else {
-        pageControl.backgroundColor = WHITE_COLOR;
-        pageControl.currentPageIndicatorTintColor = BLACK_COLOR;
-
-    }
+    pageControl.backgroundColor = [UIColor systemBackgroundColor];
+    pageControl.currentPageIndicatorTintColor = [UIColor labelColor];
 
     [self.navigationController setNavigationBarHidden:YES];
     self.title = @"";

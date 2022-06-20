@@ -7,7 +7,7 @@
 */
 
 "EP Calipers" = "Compas EP";
-"Copyright_message" = "Copyright © 2015-2021 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
+"Copyright_message" = "Copyright © 2015-2022 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
 
 /* Sorted dialog titles, messages, button labels */
 "10 mm" = "10 mm";
@@ -155,6 +155,7 @@
 "Set_calibration_tooltip" = "Mesurer un intervalle connu avec le compas choisi";
 "Setup_calibration_tooltip" = "Choisir un compas en le tapant.  Utiliser le compas pour mesurer un intervalle connu, par exemple 1 000 msec.";
 "Side_menu_tooltip" = "Choisir une nouvelle image";
+"Scribble_tooltip" = "Annoter avec Apple Pencil";
 
 /* Onboard labels */
 "Move_caliper_label" = "Glisser les barres";

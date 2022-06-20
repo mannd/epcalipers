@@ -12,11 +12,26 @@
 #import "Position.h"
 #import <math.h>
 #import "Defs.h"
+#import <EP_Calipers-Swift.h>
 
 
 #define DELTA 20.0
 #define MIN_DISTANCE_FOR_MARCH 20.0f
 #define MAX_MARCHING_CALIPERS 20
+
+// State restoration keys
+#define IS_ANGLE_CALIPER_KEY @"IsAngleCaliper"
+#define DIRECTION_KEY @"Direction"
+#define BAR_1_POSITION_KEY @"Bar1Position"
+#define BAR_2_POSITION_KEY @"Bar2Position"
+#define CROSSBAR_POSITION_KEY @"CrossBarPosition"
+#define SELECTED_KEY @"Selected"
+#define LINE_WIDTH_KEY @"LineWidth"
+#define ROUNDING_KEY @"RoundMsecRate"
+#define MARCHING_KEY @"Marching"
+#define UNSELECTED_COLOR_STRING_KEY @"UnselectedColorString"
+#define SELECTED_COLOR_STRING_KEY @"SelectedColorString"
+#define COLOR_STRING_KEY @"ColorString"
 
 @implementation Caliper
 {
@@ -623,35 +638,63 @@
 }
 
 - (void)encodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
-    [coder encodeBool:[self isAngleCaliper] forKey:[self getPrefixedKey:prefix key:@"IsAngleCaliper"]];
-    [coder encodeInteger:self.direction forKey:[self getPrefixedKey:prefix key:@"Direction"]];
-    [coder encodeDouble:_bar1Position forKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
-    [coder encodeDouble:_bar2Position forKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
-    [coder encodeDouble:_crossBarPosition forKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
-    [coder encodeObject:self.unselectedColor forKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
-    [coder encodeBool:self.selected forKey:[self getPrefixedKey:prefix key:@"Selected"]];
-    [coder encodeInteger:self.lineWidth forKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
-    [coder encodeObject:self.color forKey:[self getPrefixedKey:prefix key:@"Color"]];
-    [coder encodeObject:self.selectedColor forKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
-    [coder encodeBool:self.roundMsecRate forKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
-    [coder encodeBool:self.marching forKey:[self getPrefixedKey:prefix key:@"Marching"]];
+    [coder encodeBool:[self isAngleCaliper] forKey:[self getPrefixedKey:prefix key:IS_ANGLE_CALIPER_KEY]];
+    [coder encodeInteger:self.direction forKey:[self getPrefixedKey:prefix key:DIRECTION_KEY]];
+    [coder encodeDouble:_bar1Position forKey:[self getPrefixedKey:prefix key:BAR_1_POSITION_KEY]];
+    [coder encodeDouble:_bar2Position forKey:[self getPrefixedKey:prefix key:BAR_2_POSITION_KEY]];
+    [coder encodeDouble:_crossBarPosition forKey:[self getPrefixedKey:prefix key:CROSSBAR_POSITION_KEY]];
+    [coder encodeBool:self.selected forKey:[self getPrefixedKey:prefix key:SELECTED_KEY]];
+    [coder encodeInteger:self.lineWidth forKey:[self getPrefixedKey:prefix key:LINE_WIDTH_KEY]];
+    [coder encodeBool:self.roundMsecRate forKey:[self getPrefixedKey:prefix key:ROUNDING_KEY]];
+    [coder encodeBool:self.marching forKey:[self getPrefixedKey:prefix key:MARCHING_KEY]];
+
+    NSString *unselectedColorString = self.unselectedColor.toString;
+    [coder encodeObject:unselectedColorString forKey:[self getPrefixedKey:prefix key:UNSELECTED_COLOR_STRING_KEY]];
+    NSString *colorString = self.color.toString;
+    [coder encodeObject:colorString forKey:[self getPrefixedKey:prefix key:COLOR_STRING_KEY]];
+    NSString *selectedColorString = self.selectedColor.toString;
+    [coder encodeObject:selectedColorString forKey:[self getPrefixedKey:prefix key:SELECTED_COLOR_STRING_KEY]];
 }
 
 // need to deal with two types of objects: angle and regular calipers
 // calling function to extract whether is angle caliper or not
 - (void)decodeCaliperState:(NSCoder *)coder withPrefix:(NSString *)prefix {
-    self.isAngleCaliper = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"IsAngleCaliper"]];
-    self.direction = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"Direction"]];
-    _bar1Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar1Position"]];
-    _bar2Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"Bar2Position"]];
-    _crossBarPosition = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:@"CrossBarPosition"]];
-    self.unselectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"UnselectedColor"]];
-    self.selected = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Selected"]];
-    self.lineWidth = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:@"LineWidth"]];
-    self.color = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"Color"]];
-    self.selectedColor = [coder decodeObjectForKey:[self getPrefixedKey:prefix key:@"SelectedColor"]];
-    self.roundMsecRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"RoundMsecRate"]];
-    self.marching = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:@"Marching"]];
+    self.isAngleCaliper = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:IS_ANGLE_CALIPER_KEY]];
+    self.direction = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:DIRECTION_KEY]];
+    _bar1Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:BAR_1_POSITION_KEY]];
+    _bar2Position = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:BAR_2_POSITION_KEY]];
+    _crossBarPosition = [coder decodeDoubleForKey:[self getPrefixedKey:prefix key:CROSSBAR_POSITION_KEY]];
+    self.selected = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:SELECTED_KEY]];
+    self.lineWidth = [coder decodeIntegerForKey:[self getPrefixedKey:prefix key:LINE_WIDTH_KEY]];
+    self.roundMsecRate = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:ROUNDING_KEY]];
+    self.marching = [coder decodeBoolForKey:[self getPrefixedKey:prefix key:MARCHING_KEY]];
+
+    [self decodeColorKey:[self getPrefixedKey:prefix key:UNSELECTED_COLOR_STRING_KEY] forCaliperColorType:CaliperColorUnselected coder:coder];
+    [self decodeColorKey:[self getPrefixedKey:prefix key:COLOR_STRING_KEY] forCaliperColorType:CaliperColorCurrent coder:coder];
+    [self decodeColorKey:[self getPrefixedKey:prefix key:SELECTED_COLOR_STRING_KEY] forCaliperColorType:CaliperColorSelected coder:coder];
+}
+
+- (void)decodeColorKey:(NSString *)key forCaliperColorType:(CaliperColorType)caliperColorType coder:(NSCoder *) coder {
+    NSString *colorString = [coder decodeObjectOfClass:[NSString class] forKey:key];
+    if (colorString != nil) {
+        UIColor *color = [UIColor convertColorName:colorString];
+        if (color != nil) {
+            switch (caliperColorType) {
+                case CaliperColorUnselected:
+                    self.unselectedColor = color;
+                    break;
+                case CaliperColorSelected:
+                    self.selectedColor = color;
+                    break;
+                case CaliperColorCurrent:
+                    self.color = color;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    EPSLog(@"colorString = %@", colorString);
 }
 
 - (CGPoint)getCaliperMidPoint {

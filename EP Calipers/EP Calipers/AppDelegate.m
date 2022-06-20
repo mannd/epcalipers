@@ -95,13 +95,12 @@
     return YES;
 }
 
-// Do not change to shouldSaveSecureApplicationState or shouldRestoreSecureApplicationState, as this crashes the app when restoring state.  Unclear why??
-- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder
+- (BOOL)application:(UIApplication *)application shouldSaveSecureApplicationState:(NSCoder *)coder
 {
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder
+- (BOOL)application:(UIApplication *)application shouldRestoreSecureApplicationState:(NSCoder *)coder
 {
     return YES;
 }

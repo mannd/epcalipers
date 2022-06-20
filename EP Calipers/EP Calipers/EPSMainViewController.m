@@ -25,6 +25,7 @@
 #import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 #import <AVFoundation/AVFoundation.h>
 #import <Photos/Photos.h>
+#import <PencilKit/PencilKit.h>
 
 // These can't be yes for release version
 #ifdef DEBUG
@@ -119,6 +120,7 @@
 #define QTC_STEP_1_TOOLTIP L(@"QTc_step_1_tooltip")
 #define QTC_STEP_2_TOOLTIP L(@"QTc_step_2_tooltip")
 #define SNAPSHOT_TOOLTIP L(@"Snapshot_screen")
+#define SCRIBBLE_TOOLTIP L(@"Scribble_tooltip")
 
 // Dialog titles and messages
 #define ADD_CALIPER L(@"Add_caliper")
@@ -183,6 +185,20 @@
 #define SMALL_FONT 12
 #define INTERMEDIATE_FONT 14
 
+// State restoration keys
+#define LAUNCH_URL_KEY @"LaunchURL"
+#define NUMBER_OF_PAGES_KEY @"NumberOfPages"
+#define SAVED_IMAGE_STRING_KEY @"SavedImageStringKey"
+#define ZOOM_SCALE_KEY @"ZoomScaleKey"
+#define IMAGE_IS_UPSCALED_KEY @"ImageIsUpscaledKey"
+#define HORIZONATAL_PREFIX_KEY @"Horizontal"
+#define VERTICAL_PREFIX_KEY @"Vertical"
+#define CALIPERS_COUNT_KEY @"CalipersCount"
+#define A_CALIPER_IS_MARCHING_KEY @"ACaliperIsMarching"
+#define IS_ANGLE_CALIPER_FORMAT_KEY @"%dIsAngleCaliper"
+#define CANVAS_VIEW_DRAWING_STRING_KEY @"CanvasViewDrawingString"
+
+
 #define FLEX_SPACE [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]
 
 @interface EPSMainViewController ()
@@ -200,6 +216,7 @@
 // Tooltips
 @property (strong, nonatomic) CMPopTipView *addCaliperButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *snapshotButtonPopTipView;
+@property (strong, nonatomic) CMPopTipView *scribbleButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *sideMenuButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *setupCalibrationButtonPopTipView;
 @property (strong, nonatomic) CMPopTipView *setCalibrationButtonPopTipView;
@@ -213,6 +230,7 @@
 // Toggles for individual tooltips
 @property (nonatomic) BOOL showAddCaliperButtonToolTip;
 @property (nonatomic) BOOL showSnapshotButtonToolTip;
+@property (nonatomic) BOOL showScribbleButtonToolTip;
 @property (nonatomic) BOOL showSideMenuButtonToolTip;
 @property (nonatomic) BOOL showSetupCalibrationToolTip;
 @property (nonatomic) BOOL showSetCalibrationToolTip;
@@ -228,7 +246,7 @@
 
 @end
 
-@implementation EPSMainViewController
+@implementation EPSMainViewController 
 {
     CGPDFDocumentRef pdfRef;
     // Direction of writing in primary language.
@@ -264,8 +282,7 @@
     [self.settings loadPreferences];
 
     [self loadFonts];
-    
-    self.isIpad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+
     [self createToolbars];
 
     self.blackView.delegate = self;
@@ -286,6 +303,9 @@
     
     [self.calipersView setUserInteractionEnabled:YES];
     self.calipersView.delegate = self;
+    // for debugging
+    //self.calipersView.alpha = 0.5;
+    //self.calipersView.backgroundColor = [UIColor redColor];
 
     // init QTc variables
     self.rrIntervalForQTc = 0.0;
@@ -303,8 +323,14 @@
 
     UIBarButtonItem *addCaliperButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddCaliperMenu)];
     UIBarButtonItem *screenshotItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"snapshot"] style:UIBarButtonItemStylePlain target:self action:@selector(snapshotScreen)];
+    UIBarButtonItem *scribbleItem = [[UIBarButtonItem alloc] initWithImage:[UIImage systemImageNamed:@"scribble"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleCanvasView)];
     // Buttons are added from right to left
-    self.navigationItem.rightBarButtonItems = @[addCaliperButton, screenshotItem];
+    if ([self canHaveCanvasView]) {
+        self.navigationItem.rightBarButtonItems = @[addCaliperButton, screenshotItem, scribbleItem];
+    }
+    else {
+        self.navigationItem.rightBarButtonItems = @[addCaliperButton, screenshotItem];
+    }
     // icon from https://icons8.com/icon/set/hamburger/ios
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"hamburger"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleHamburgerMenu)];
     [self.navigationItem setTitle:CALIPERS_VIEW_TITLE];
@@ -336,6 +362,13 @@
     UILongPressGestureRecognizer *longPressCalipersView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doCalipersViewLongPress:)];
     [longPressCalipersView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
     [self.calipersView addGestureRecognizer:longPressCalipersView];
+
+    [self createCanvasView];
+}
+
+- (BOOL)isIpad {
+    UIDevice *device = [UIDevice currentDevice];
+    return [device userInterfaceIdiom] == UIUserInterfaceIdiomPad;
 }
 
 - (void) orientationChanged:(NSNotification *)notification {
@@ -347,11 +380,7 @@
     // After experimentation, white background color seems best.
     // BUT, maybe not so much for dark mode...
     // However, can't use this for PDFs!
-    if (@available(iOS 13.0, *)) {
-        return [UIColor tertiarySystemBackgroundColor];
-    } else {
-        return  WHITE_COLOR;
-    }
+    return [UIColor tertiarySystemBackgroundColor];
 }
 
 - (void)setupTheme {
@@ -361,26 +390,22 @@
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
 
-    if (@available(iOS 13.0, *)) {
-        UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
-        UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
-        [navigationBarAppearance configureWithOpaqueBackground];
-        [toolbarAppearance configureWithOpaqueBackground];
-        navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor];
-        toolbarAppearance.backgroundColor = [UIColor systemBackgroundColor];
-        self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
-        self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
-        self.navigationController.toolbar.standardAppearance = toolbarAppearance;
-        if (@available(iOS 15.0, *)) {
-            self.navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance;
-        } else {
-            // Fallback on earlier versions
-        }
-        self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
-        self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
+    UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
+    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
+    [navigationBarAppearance configureWithOpaqueBackground];
+    [toolbarAppearance configureWithOpaqueBackground];
+    navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor];
+    toolbarAppearance.backgroundColor = [UIColor systemBackgroundColor];
+    self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
+    self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
+    self.navigationController.toolbar.standardAppearance = toolbarAppearance;
+    if (@available(iOS 15.0, *)) {
+        self.navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance;
     } else {
-        // Use default colors
+        // Fallback on earlier versions
     }
+    self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
+    self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
 }
 
 - (void)dealloc {
@@ -398,7 +423,7 @@
     self.defaultVerticalCalChanged = ![priorVerticalDefaultCal isEqualToString:self.settings.defaultVerticalCalibration];
     [self.calipersView updateCaliperPreferences:self.settings.caliperColor selectedColor:self.settings.highlightColor lineWidth:self.settings.lineWidth roundMsec:self.settings.roundMsecRate autoPositionText:self.settings.autoPositionText timeTextPosition:self.settings.timeTextPosition amplitudeTextPosition:self.settings.amplitudeTextPosition];
     [self.calipersView setNeedsDisplay];
-    
+
 }
 
 - (void)recenterImage {
@@ -420,20 +445,24 @@
     if (self.firstRun) {
         // scale image for imageView;
         // autolayout not done in viewDidLoad
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGFloat screenWidth = screenRect.size.width;
-        CGFloat screenHeight = screenRect.size.height;
-        
-        CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-        CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
-        CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
-        CGFloat verticalSpace = statusBarHeight + navigationBarHeight + toolbarHeight;
-        
-        self.portraitWidth = fminf(screenHeight, screenWidth);
-        self.landscapeWidth = fmaxf(screenHeight, screenWidth);
-        self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
-        self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
-        
+//        CGRect screenRect = [[UIScreen mainScreen] bounds];
+//        CGFloat screenWidth = screenRect.size.width;
+//        CGFloat screenHeight = screenRect.size.height;
+//
+//        UIStatusBarManager *statusBarManager = [self.view.window windowScene].statusBarManager;
+//        CGFloat statusBarHeight = 0;
+//        if (statusBarManager != nil) {
+//            statusBarHeight = statusBarManager.statusBarFrame.size.height;
+//        }
+//        CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+//        CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
+//        CGFloat verticalSpace = statusBarHeight + navigationBarHeight + toolbarHeight;
+//
+//        self.portraitWidth = fminf(screenHeight, screenWidth);
+//        self.landscapeWidth = fmaxf(screenHeight, screenWidth);
+//        self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
+//        self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
+
         // if running first time and opening URL then overwrite old image
         if (self.launchFromURL) {
             self.launchFromURL = NO;
@@ -444,7 +473,7 @@
         else {
             self.imageView.image = [self scaleImageForImageView:self.imageView.image];
         }
-        
+
         if (self.wasLaunchedFromUrl) {
             if (self.numberOfPages > 1) {
                 [Alert showSimpleAlertWithTitle:MULTIPAGE_PDF message:MULTIPAGE_PDF_WARNING viewController:self];
@@ -483,7 +512,133 @@
             });
         }
         [self selectMainToolbar];
+
+        EPSLog(@"scrollView = %f, calipersView height = %f", self.scrollView.frame.size.height, self.calipersView.frame.size.height);
+//        assert(self.scrollView.contentSize.height == self.calipersView.frame.size.height);
     }
+
+}
+
+- (BOOL)canHaveCanvasView {
+    // Maybe we will allow something else besides iPad to have a canvas
+    // view in the future, but for now, it's just on iPads.
+    return [self isIpad];
+}
+
+- (void)clearCanvasView {
+    EPSLog(@"Clear CanvasView");
+    [self createCanvasView];
+}
+
+// Sync two scrollviews together during scrolling, zoom
+// See https://stackoverflow.com/questions/9418311/setting-contentoffset-programmatically-triggers-scrollviewdidscroll
+// Sets canvasView to nil if canvasView not supported.
+- (void)createCanvasView {
+    if (![self canHaveCanvasView]) {
+        self.canvasView = nil;
+        return;
+    }
+
+    self.canvasView = [[PKCanvasView alloc] initWithFrame:CGRectZero];
+    self.canvasView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.canvasView setOpaque:NO];
+    self.canvasView.backgroundColor = [UIColor clearColor];
+    self.canvasView.maximumZoomScale = self.scrollView.maximumZoomScale;
+    self.canvasView.minimumZoomScale = self.scrollView.minimumZoomScale;
+    self.canvasView.delegate = self;
+    [self.view addSubview:self.canvasView];
+    [self.view bringSubviewToFront:self.canvasView];
+    self.canvasView.hidden = YES;
+    [NSLayoutConstraint activateConstraints:@[
+        [self.canvasView.topAnchor constraintEqualToAnchor:self.scrollView.topAnchor],
+        [self.canvasView.bottomAnchor constraintEqualToAnchor:self.scrollView.bottomAnchor],
+        [self.canvasView.leadingAnchor constraintEqualToAnchor:self.scrollView.leadingAnchor],
+        [self.canvasView.trailingAnchor constraintEqualToAnchor:self.scrollView.trailingAnchor]]];
+    self.toolPicker = [[PKToolPicker alloc] init];
+    [self.toolPicker setVisible:YES forFirstResponder:self.canvasView];
+    [self.toolPicker addObserver:self.canvasView];
+    [self.canvasView resignFirstResponder];
+    [self.canvasView setUserInteractionEnabled:NO];
+}
+
+- (void)doCanvasViewLongPress:(UILongPressGestureRecognizer *) sender {
+    EPSLog(@"Canvas View Long Press");
+}
+
+- (void)toggleCanvasView {
+    if (![self canHaveCanvasView]) {
+        return;
+    }
+    if (nil == self.scribbleButtonPopTipView && self.showScribbleButtonToolTip) {
+        self.scribbleButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SCRIBBLE_TOOLTIP];
+        [self setupToolTip:self.scribbleButtonPopTipView];
+        [self.scribbleButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItems[2]  animated:YES];
+        return;
+    }
+    else {
+        // Dismiss
+        [self.scribbleButtonPopTipView dismissAnimated:YES];
+        self.scribbleButtonPopTipView = nil;
+        self.showScribbleButtonToolTip = NO;
+    }
+
+    [self performToggleCanvasView];
+}
+
+- (void)performToggleCanvasView {
+    self.canvasView.hidden = !self.canvasView.hidden;
+    [self hideCanvasView:self.canvasView.hidden];
+}
+
+- (void)hideCanvasView:(BOOL)hide {
+    if (hide) {
+        // setting hidden here again may seem redundant, as it is already
+        // set in performToggleCanvasView; however, hideCanvasView is also
+        // called during state restoration, which does not set canvasView.hidden
+        // directly.
+        EPSLog(@"Hiding canvas view");
+        self.canvasView.hidden = YES;
+        [self.toolPicker setVisible:YES forFirstResponder:self.canvasView];
+        [self.toolPicker addObserver:self.canvasView];
+        [self.canvasView resignFirstResponder];
+        [self.canvasView setUserInteractionEnabled:NO];
+        [self scaleCanvasView];
+        // Do not animate hiding toolbar, as it will cause an animation to
+        // appear in the calipers.
+        [self.navigationController setToolbarHidden:NO animated:NO];
+        [self.calipersView setNeedsDisplay];
+        self.navigationItem.leftBarButtonItems[0].enabled = YES;
+        self.navigationItem.rightBarButtonItems[0].enabled = YES;
+        // Can't just have canvas view resign first responder, because if
+        // there has been a long press on the canvas view, the canvas view
+        // does not resign first responder properly and the pencil tools
+        // don't go away.  Must explicity make the scrollView first responder again.
+        [self.scrollView becomeFirstResponder];
+    } else {
+        EPSLog(@"Showing canvas view");
+        self.navigationItem.rightBarButtonItems[0].enabled = NO;
+        self.navigationItem.leftBarButtonItems[0].enabled = NO;
+        [self scaleCanvasView];
+        [self.toolPicker setVisible:YES forFirstResponder:self.canvasView];
+        [self.toolPicker addObserver:self.canvasView];
+        [self.canvasView becomeFirstResponder];
+        [self.canvasView setUserInteractionEnabled:YES];
+        [self.navigationController setToolbarHidden:YES animated:NO];
+        [self.calipersView setNeedsDisplay];
+        self.canvasView.hidden = NO;
+        [self recenterImage];
+    }
+    EPSLog(@"Canvas view is first responder = %d", [self.canvasView isFirstResponder]);
+}
+
+- (void)scaleCanvasView {
+    if (![self canHaveCanvasView]) {
+        return;
+    }
+    self.canvasView.contentSize = self.scrollView.contentSize;
+    self.canvasView.contentInset = self.scrollView.contentInset;
+    self.canvasView.contentOffset = self.scrollView.contentOffset;
+    self.canvasView.zoomScale = self.scrollView.zoomScale;
 }
 
 - (void)showToolTips {
@@ -512,6 +667,7 @@
 - (void)setToolTipState:(BOOL)value {
     self.showAddCaliperButtonToolTip = value;
     self.showSnapshotButtonToolTip = value;
+    self.showScribbleButtonToolTip = value;
     self.showSideMenuButtonToolTip = value;
     self.showSetupCalibrationToolTip = value;
     self.showSetCalibrationToolTip = value;
@@ -535,7 +691,8 @@
 
 - (void)stillShowingToolTips {
     BOOL toolTipsRemain = self.showSetupCalibrationToolTip || self.showSetCalibrationToolTip || self.showIntRateToolTip || self.showMeanRateToolTip || self.showClearCalibrationToolTip || self.showQtcStep1ToolTip || self.showQtcStep2ToolTip ||
-    self.showAddCaliperButtonToolTip || self.showSnapshotButtonToolTip;
+    self.showAddCaliperButtonToolTip || self.showSnapshotButtonToolTip ||
+    (self.showScribbleButtonToolTip && [self canHaveCanvasView]);
     self.showingToolTips = toolTipsRemain;
     self.hamburgerViewController.showingToolTips = self.showingToolTips;
 }
@@ -554,6 +711,10 @@
     }
     if ([popTipView isEqual:self.snapshotButtonPopTipView]) {
         self.showSnapshotButtonToolTip = NO;
+        [self stillShowingToolTips];
+    }
+    if ([popTipView isEqual:self.scribbleButtonPopTipView]) {
+        self.showScribbleButtonToolTip = NO;
         [self stillShowingToolTips];
     }
     if ([popTipView isEqual:self.sideMenuButtonPopTipView]) {
@@ -630,8 +791,9 @@
     }
     CGRect rect = CGRectMake(location.x, location.y, 0, 0);
     UIView *superView = sender.view.superview;
-    [menu setTargetRect:rect inView:superView];
-    [menu setMenuVisible:YES animated:YES];
+    //        [menu setTargetRect:rect inView:superView];
+    [menu showMenuFromView:superView rect:rect];
+    //        [menu setMenuVisible:YES animated:YES];
 }
 
 - (void)doScrollViewLongPress:(UILongPressGestureRecognizer *) sender {
@@ -640,6 +802,7 @@
         return;
     }
     [sender.view becomeFirstResponder];
+    EPSLog(@"Sender = %@", sender);
     UIMenuController *menu = UIMenuController.sharedMenuController;
     menu.arrowDirection = UIMenuControllerArrowDefault;
     UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:ROTATE action:@selector(rotateAction)];
@@ -659,8 +822,9 @@
     CGPoint offset = self.scrollView.contentOffset;
     CGRect rect = CGRectMake(location.x - offset.x, location.y - offset.y, 0, 0);
     UIView *superView = sender.view.superview;
-    [menu setTargetRect:rect inView:superView];
-    [menu setMenuVisible:YES animated:YES];
+    //        [menu setTargetRect:rect inView:superView];
+    [menu showMenuFromView:superView rect:rect];
+    //        [menu setMenuVisible:YES animated:YES];
 }
 
 - (void)rotateAction {
@@ -772,16 +936,16 @@
     else {
         [self showHamburgerMenu];
     }
-    
+    [self.calipersView setNeedsDisplay];
 }
+
 - (void)showHamburgerMenu {
+    [self.navigationController setToolbarHidden:YES animated:NO];
     [self.hamburgerViewController reloadData];
     self.constraintHamburgerLeft.constant = 0;
     self.hamburgerMenuIsOpen = YES;
-    [self.navigationController setToolbarHidden:YES animated:YES];
     [self.calipersView setUserInteractionEnabled:NO];
-    self.navigationItem.rightBarButtonItems[0].enabled = NO;
-    self.navigationItem.rightBarButtonItems[1].enabled = NO;
+    [self enableRightBarButtonItems:NO];
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
         self.blackView.alpha = self.maxBlackAlpha;
@@ -789,16 +953,23 @@
 }
 
 - (void)hideHamburgerMenu {
+    [self.navigationController setToolbarHidden:NO animated:NO];
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
     [self.calipersView setUserInteractionEnabled:YES];
-    [self.navigationController setToolbarHidden:NO animated:YES];
-    self.navigationItem.rightBarButtonItems[0].enabled = YES;
-    self.navigationItem.rightBarButtonItems[1].enabled = YES;
+    [self enableRightBarButtonItems:YES];
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
         [self.view layoutIfNeeded];
         self.blackView.alpha = 0;
     }];
+}
+
+- (void)enableRightBarButtonItems:(BOOL)enable {
+    self.navigationItem.rightBarButtonItems[0].enabled = enable;
+    self.navigationItem.rightBarButtonItems[1].enabled = enable;
+    if (self.navigationItem.rightBarButtonItems.count > 2) {
+        self.navigationItem.rightBarButtonItems[2].enabled = enable;
+    }
 }
 
 - (void)showHelp {
@@ -864,21 +1035,21 @@
 }
 
 - (void)rotateImageToolbar {
-  UIBarButtonItem *rotateImageRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_R style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageRight:)];
-  UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_L style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
-  UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_R style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
-  UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_L style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
+    UIBarButtonItem *rotateImageRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_R style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageRight:)];
+    UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_L style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
+    UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_R style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
+    UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_L style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
     UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_01_R style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
     UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_01_L style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
     UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
-    
+
     NSArray *array = [NSArray arrayWithObjects:rotateImageRightButton,
-                                 rotateImageLeftButton,
-                                 tweakRightButton,
-                                 tweakLeftButton,
-                                 microTweakRightButton,
-                                 microTweakLeftButton,
-                                 backToMainMenuButton, nil];
+                      rotateImageLeftButton,
+                      tweakRightButton,
+                      tweakLeftButton,
+                      microTweakRightButton,
+                      microTweakLeftButton,
+                      backToMainMenuButton, nil];
     self.rotateImageMenuItems = [self spaceoutToolbar:array];
 }
 
@@ -889,8 +1060,8 @@
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(selectMainToolbar)];
 
     NSArray * array = [NSArray arrayWithObjects:self.setButton,
-                               self.clearButton,
-                               cancelButton, nil];
+                       self.clearButton,
+                       cancelButton, nil];
     self.calibrateMenuItems = [self spaceoutToolbar:array];
 }
 
@@ -902,10 +1073,10 @@
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     self.qtcMeasureRateButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
-    
+
     NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
-                              self.qtcMeasureRateButton,
-                              cancelButton, nil];
+                      self.qtcMeasureRateButton,
+                      cancelButton, nil];
     self.qtcStep1MenuItems = [self spaceoutToolbar:array];
 }
 
@@ -917,17 +1088,17 @@
     UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     self.qtcMeasureQTcButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
-    
+
     NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
-                              self.qtcMeasureQTcButton,
-                              cancelButton, nil];
+                      self.qtcMeasureQTcButton,
+                      cancelButton, nil];
     self.qtcStep2MenuItems = [self spaceoutToolbar:array];
 }
 
 - (void)createMovementToolbar {
     self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveLeft)];
     self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveRight)];
-    
+
     self.upButton = [[UIBarButtonItem alloc] initWithTitle:UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveUp)];
     self.downButton = [[UIBarButtonItem alloc] initWithTitle:DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveDown)];
     self.microLeftButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveLeft)];
@@ -988,12 +1159,12 @@
 }
 
 - (void)fixupMenus:(BOOL)shrink {
-  if (shrink) {
-    [self shrinkMenus];
-  }
-  else {
-    [self enlargeMenus];
-  }
+    if (shrink) {
+        [self shrinkMenus];
+    }
+    else {
+        [self enlargeMenus];
+    }
 }
 
 - (void)toggleIntervalRate {
@@ -1123,7 +1294,7 @@
         [self showNoTimeCaliperSelectedAlertView];
     }
     else {
-      UIAlertController *calculateMeanRRAlertController = [UIAlertController alertControllerWithTitle:NUMBER_OF_INTERVALS message:HOW_MANY_INTERVALS preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *calculateMeanRRAlertController = [UIAlertController alertControllerWithTitle:NUMBER_OF_INTERVALS message:HOW_MANY_INTERVALS preferredStyle:UIAlertControllerStyleAlert];
         [calculateMeanRRAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
             textField.text = ONE;
             textField.clearButtonMode = UITextFieldViewModeAlways;
@@ -1239,9 +1410,9 @@
     else {
         calibrationStatement = BRUGADA_CALIBRATION_STATEMENT;
     }
-//    if (angleInDegrees > 58.0) {
-//        riskStatement = BRUGADA_INCREASED_RISK;
-//    }
+    //    if (angleInDegrees > 58.0) {
+    //        riskStatement = BRUGADA_INCREASED_RISK;
+    //    }
     NSString *message = [NSString stringWithFormat:BRUGADA_BETA_ANGLE, angleInDegrees, calibrationStatement, riskStatement];
     [Alert showSimpleAlertWithTitle:BRUGADA_RESULTS_TITLE message:message viewController:self];
 }
@@ -1252,11 +1423,11 @@
 
 - (BOOL)noAngleCaliperSelected {
     return (self.calipersView.calipers.count < 1 || [self.calipersView noCaliperIsSelected] || ![[self.calipersView activeCaliper] isAngleCaliper]);
-    
+
 }
 
 - (void)showNoTimeCaliperSelectedAlertView {
-  [Alert showSimpleAlertWithTitle:NO_TIME_CALIPER_SELECTED_MESSAGE message:SELECT_TIME_CALIPER_MESSAGE viewController:self];
+    [Alert showSimpleAlertWithTitle:NO_TIME_CALIPER_SELECTED_MESSAGE message:SELECT_TIME_CALIPER_MESSAGE viewController:self];
 }
 
 - (void)clearCalibration {
@@ -1329,7 +1500,7 @@
     }
     // Angle calipers don't require calibration
     if (![c requiresCalibration]) {
-      [Alert showSimpleAlertWithTitle:ANGLE_CALIPER message:DO_NOT_CALIBRATE_ANGLE_CALIPERS viewController:self];
+        [Alert showSimpleAlertWithTitle:ANGLE_CALIPER message:DO_NOT_CALIBRATE_ANGLE_CALIPERS viewController:self];
         return;
     }
     if (c.valueInPoints <= 0) {
@@ -1439,7 +1610,7 @@
     else {
         return nil;
     }
-    
+
 }
 
 - (void)unselectCalipersExcept:(Caliper *)c {
@@ -1574,7 +1745,7 @@
     UIImagePickerController *picker = [[UIImagePickerController alloc] init];
     picker.delegate = self;
     picker.allowsEditing = YES;
-    if (self.isIpad) {
+    if ([self isIpad]) {
         // Need to present as popover on iPad
         picker.modalPresentationStyle = UIModalPresentationPopover;
         picker.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
@@ -1588,7 +1759,7 @@
         NSArray<UTType *> *contentTypes = @[[UTType typeWithIdentifier:UTTypeImage.identifier], [UTType typeWithIdentifier:UTTypePDF.identifier]];
         UIDocumentPickerViewController *picker = [[UIDocumentPickerViewController alloc] initForOpeningContentTypes:contentTypes asCopy:YES];
         picker.delegate = self;
-        if (self.isIpad) {
+        if ([self isIpad]) {
             picker.modalPresentationStyle = UIModalPresentationPopover;
             picker.popoverPresentationController.barButtonItem = self.navigationItem.leftBarButtonItem;
         }
@@ -1667,6 +1838,7 @@
     [self.imageView setHidden:NO];
     [self.scrollView setZoomScale:1.0f];
     [self clearCalibration];
+    [self clearCanvasView];
     [self selectMainToolbar];
 }
 
@@ -1695,8 +1867,8 @@
     [gotoPageAlertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         NSString *stringCurrentPage = [NSString stringWithFormat:@"%i", self.pageNumber];
         textField.text = stringCurrentPage;
-//        // This preselects the text, since probably user will want to change pages.
-//        [textField selectAll:nil];
+        //        // This preselects the text, since probably user will want to change pages.
+        //        [textField selectAll:nil];
         textField.clearButtonMode = UITextFieldViewModeAlways;
         textField.keyboardType = UIKeyboardTypeNumberPad;
     }];
@@ -1716,6 +1888,7 @@
         self.pageNumber = page;
         [self enablePageButtons:YES];
         [self openPDFPage:self->pdfRef atPage:self.pageNumber];
+        [self clearCanvasView];
     }];
     [gotoPageAlertController addAction:cancelAction];
     [gotoPageAlertController addAction:gotoAction];
@@ -1732,6 +1905,7 @@
     }
     [self enablePageButtons:YES];
     [self openPDFPage:pdfRef atPage:self.pageNumber];
+    [self clearCanvasView];
 }
 
 - (void)gotoNextPage {
@@ -1741,6 +1915,7 @@
     }
     [self enablePageButtons:YES];
     [self openPDFPage:pdfRef atPage:self.pageNumber];
+    [self clearCanvasView];
 }
 
 - (void)openPDFPage:(CGPDFDocumentRef) documentRef atPage:(int) pageNum {
@@ -1781,7 +1956,7 @@ CGPDFDocumentRef getPDFDocumentRef(const char *filename) {
     CFStringRef path;
     CFURLRef url;
     CGPDFDocumentRef document;
-    
+
     path = CFStringCreateWithCString(NULL, filename, kCFStringEncodingUTF8);
     url = CFURLCreateWithFileSystemPath(NULL, path, kCFURLPOSIXPathStyle, 0);
     CFRelease(path);
@@ -1838,7 +2013,7 @@ CGPDFPageRef getPDFPage(CGPDFDocumentRef document, size_t pageNumber) {
         caliper.textPosition = self.settings.amplitudeTextPosition;
     }
     [caliper setInitialPositionInRect:self.calipersView.bounds];
-    
+
     [self.calipersView.calipers addObject:caliper];
     [self.calipersView setNeedsDisplay];
 }
@@ -1881,16 +2056,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 - (void)rotateImage:(double)degrees {
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
-//        self.imageContainerView.transform = CGAffineTransformRotate(self.imageContainerView.transform, radians(degrees));
-//        self.scrollView.transform = CGAffineTransformRotate(self.scrollView.transform, radians(degrees));
+        //        self.imageContainerView.transform = CGAffineTransformRotate(self.imageContainerView.transform, radians(degrees));
+        //        self.scrollView.transform = CGAffineTransformRotate(self.scrollView.transform, radians(degrees));
         self.imageView.transform = CGAffineTransformRotate(self.imageView.transform, radians(degrees));
     }];
 }
 
 - (IBAction)resetImage:(id)sender {
     [UIView animateWithDuration:ANIMATION_DURATION animations:^ {
-//        self.imageContainerView.transform = CGAffineTransformIdentity;
-//        self.scrollView.transform = CGAffineTransformIdentity;
+        //        self.imageContainerView.transform = CGAffineTransformIdentity;
+        //        self.scrollView.transform = CGAffineTransformIdentity;
         self.imageView.transform = CGAffineTransformIdentity;
     }];
 }
@@ -2009,6 +2184,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self enablePageButtons:NO];
     // remove any prior PDF from memory
     [self clearPDF];
+    [self clearCanvasView];
     self.launchURL = nil;
     [self recenterImage];
     [self selectMainToolbar];
@@ -2026,58 +2202,98 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if (self.scrollView.contentSize.height < self.scrollView.bounds.size.height) {
         top = (self.scrollView.bounds.size.height-self.scrollView.contentSize.height) * 0.5f;
     }
-    self.scrollView.contentInset = UIEdgeInsetsMake(top, left, top, left);
+    UIEdgeInsets inset = UIEdgeInsetsMake(top, left, top, left);
+    self.scrollView.contentInset = inset;
+    [self.calipersView setNeedsDisplay];
+    if ([self canHaveCanvasView] && self.canvasView != nil
+        && self.canvasView.userInteractionEnabled == YES) {
+        self.canvasView.contentInset = inset;
+        self.canvasView.contentSize = self.scrollView.contentSize;
+        self.canvasView.contentOffset = self.scrollView.contentOffset;
+    }
 }
 
-- (void)scrollViewDidZoom:(__unused UIScrollView *)scrollView {
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    self.horizontalCalibration.currentZoom = self.scrollView.zoomScale;
+    self.verticalCalibration.currentZoom = self.scrollView.zoomScale;
+    self.horizontalCalibration.offset = self.scrollView.contentOffset;
+    self.verticalCalibration.offset = self.scrollView.contentOffset;
+    [self.calipersView setNeedsDisplay];
+    [self adjustScrollViews:scrollView];
     [self centerContent];
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
-    return self.imageContainerView;
+    if (scrollView == self.scrollView) {
+        return self.imageContainerView;
+    } else {
+        return nil;
+    }
 }
 
-- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
-//    self.imageTransform = self.imageView.transform;
-}
-
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
+// scale between minimum and maximum. called after any 'bounce' animations
+- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(nullable UIView *)view atScale:(CGFloat)scale {
     self.horizontalCalibration.currentZoom = scale;
     self.verticalCalibration.currentZoom = scale;
-    self.horizontalCalibration.offset = scrollView.contentOffset;
-    self.verticalCalibration.offset = scrollView.contentOffset;
+    self.horizontalCalibration.offset = self.scrollView.contentOffset;
+    self.verticalCalibration.offset = self.scrollView.contentOffset;
+    [self adjustScrollViews:scrollView];
     [self.calipersView setNeedsDisplay];
+    [self centerContent];
 }
 
 // This is also called during zooming, so that calipers adjust to zoom and scrolling.
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    self.horizontalCalibration.currentZoom = scrollView.zoomScale;
-    self.verticalCalibration.currentZoom = scrollView.zoomScale;
-    self.horizontalCalibration.offset = scrollView.contentOffset;
-    self.verticalCalibration.offset = scrollView.contentOffset;
+    self.horizontalCalibration.currentZoom = self.scrollView.zoomScale;
+    self.verticalCalibration.currentZoom = self.scrollView.zoomScale;
+    self.horizontalCalibration.offset = self.scrollView.contentOffset;
+    self.verticalCalibration.offset = self.scrollView.contentOffset;
+    [self adjustScrollViews:scrollView];
     [self.calipersView setNeedsDisplay];
+    [self centerContent];
+}
+
+- (void)adjustScrollViews:(UIScrollView *)scrollView {
+    if ([self drivingScrollViewIsCanvasView]) {
+        self.scrollView.zoomScale = self.canvasView.zoomScale;
+        self.scrollView.contentOffset = self.canvasView.contentOffset;
+        [self.calipersView setNeedsDisplay];
+        [self.imageView setNeedsDisplay];
+    }
+}
+
+- (BOOL)drivingScrollViewIsScrollView {
+    return ![self drivingScrollViewIsCanvasView];
+}
+
+- (BOOL)drivingScrollViewIsCanvasView {
+    return ([self canHaveCanvasView] && self.canvasView != nil
+            && self.canvasView.userInteractionEnabled == YES);
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     EPSLog(@"viewWillTransitionToSize");
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
     [self vitalStats];
-
-    // FIXME: Below redundant?
-    [self.calipersView setNeedsDisplay];
+    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self centerContent];
+        [self.calipersView setNeedsDisplay];
+        [self.imageView setNeedsDisplay];
+        [self centerContent];
+    });
 }
 
 // for debugging
 - (void)vitalStats {
-//    EPSLog(@"scrollView zoom = %f", self.scrollView.zoomScale);
-//    EPSLog(@"scrollView offsetX = %f", self.scrollView.contentOffset.x);
-//    EPSLog(@"scrollView offsetY = %f", self.scrollView.contentOffset.y);
-//    EPSLog(@"scrollView contentSizeWidth = %f", self.scrollView.contentSize.width);
-//    EPSLog(@"scrollView contentSizeHeight = %f", self.scrollView.contentSize.height);
-//    EPSLog(@"calipersView frame.size.widht = %f", self.calipersView.frame.size.width);
-//    EPSLog(@"calipersView frame.size.height = %f", self.calipersView.frame.size.height);
-//    EPSLog(@"scrollView frame.size.widht = %f", self.scrollView.frame.size.width);
-//    EPSLog(@"scrollView frame.size.height = %f", self.scrollView.frame.size.height);
+    //    EPSLog(@"scrollView zoom = %f", self.scrollView.zoomScale);
+    //    EPSLog(@"scrollView offsetX = %f", self.scrollView.contentOffset.x);
+    //    EPSLog(@"scrollView offsetY = %f", self.scrollView.contentOffset.y);
+    //    EPSLog(@"scrollView contentSizeWidth = %f", self.scrollView.contentSize.width);
+    //    EPSLog(@"scrollView contentSizeHeight = %f", self.scrollView.contentSize.height);
+    //    EPSLog(@"calipersView frame.size.widht = %f", self.calipersView.frame.size.width);
+    //    EPSLog(@"calipersView frame.size.height = %f", self.calipersView.frame.size.height);
+    //    EPSLog(@"scrollView frame.size.widht = %f", self.scrollView.frame.size.width);
+    //    EPSLog(@"scrollView frame.size.height = %f", self.scrollView.frame.size.height);
 }
 
 - (BOOL)isCompactSizeClass {
@@ -2097,7 +2313,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         // note that this fixes menus for future use after rotation, but it doesn't immediately change font
         // size on involved menus (until menu is changed).
         [self fixupMenus:[self isCompactSizeClass]];
-        
+
         [self.toggleIntervalRateButton setTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE]];
         [self.mRRButton setTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE]];
         [self.calibrateCalipersButton setTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE]];
@@ -2144,19 +2360,34 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     CGRect bounds = CGRectMake(originX, originY, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
     UIImage *bottomImage = [bottomRenderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
         [self.scrollView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
-      }];
+    }];
     UIGraphicsImageRenderer *topRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.calipersView.bounds.size format: format];
     UIImage *topImage = [topRenderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
         [self.calipersView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
-      }];
+    }];
+
+    UIImage *canvasImage = nil;
+    if (self.canvasView != nil) {
+        UIGraphicsImageRenderer *canvasRenderer = [[UIGraphicsImageRenderer alloc] initWithSize:self.canvasView.bounds.size format: format];
+        canvasImage = [canvasRenderer imageWithActions:^(UIGraphicsImageRendererContext * _Nonnull context) {
+            [self.canvasView drawViewHierarchyInRect:bounds afterScreenUpdates:YES];
+        }];
+    }
 
     UIGraphicsBeginImageContext(self.calipersView.bounds.size);
     CGRect bottomRect = CGRectMake(0, 0, self.calipersView.bounds.size.width, self.calipersView.bounds.size.height);
     [bottomImage drawInRect:bottomRect];
     CGRect topRect = CGRectMake(0, 0, self.calipersView.bounds.size.width, self.calipersView.bounds.size.height);
     [topImage drawInRect:topRect];
+
+    if (self.canvasView != nil && canvasImage != nil) {
+        CGRect canvasRect = CGRectMake(0, 0, self.canvasView.bounds.size.width, self.canvasView.bounds.size.height);
+        [canvasImage drawInRect:canvasRect];
+    }
+
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
+
     if (image != nil) {
         ImageSaver *imageSaver = [[ImageSaver alloc] init];
         [imageSaver writeToPhotoAlbumWithImage:image viewController:self];
@@ -2211,15 +2442,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 // from https://github.com/fcanas/ios-color-picker
 - (void)chooseColor:(Caliper *)caliper {
     FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
-    if (@available(iOS 13.0, *)) {
-        colorPicker.backgroundColor = [UIColor systemBackgroundColor];
-    } else {
-        colorPicker.backgroundColor = [UIColor whiteColor];
-    }
+    colorPicker.backgroundColor = [UIColor systemBackgroundColor];
     self.chosenCaliper = caliper;
     colorPicker.color = caliper.unselectedColor;
     colorPicker.delegate = self;
-    
+
     [colorPicker setModalPresentationStyle:UIModalPresentationFullScreen];
     [self presentViewController:colorPicker animated:YES completion:nil];
 }
@@ -2310,12 +2537,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 {
     EPSLog(@"encodeRestorableStateWithCoder");
     // possibly enable restart from URL
-    [coder encodeObject:self.launchURL forKey:@"LaunchURL"];
-    [coder encodeInteger:self.numberOfPages forKey:@"NumberOfPages"];
-    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:@"ZoomScaleKey"];
-    [coder encodeObject:UIImagePNGRepresentation(self.imageView.image)
-                 forKey:@"SavedImageKey"];
-    [coder encodeBool:self.imageIsUpscaled forKey:@"ImageIsUpscaledKey"];
+    [coder encodeObject:self.launchURL forKey:LAUNCH_URL_KEY];
+    [coder encodeInteger:self.numberOfPages forKey:NUMBER_OF_PAGES_KEY];
+    [coder encodeDouble:(double)self.scrollView.zoomScale forKey:ZOOM_SCALE_KEY];
+    [self encodeImage:self.imageView.image withKey:SAVED_IMAGE_STRING_KEY toCoder:coder];
+    [coder encodeBool:self.imageIsUpscaled forKey:IMAGE_IS_UPSCALED_KEY];
 
     // Note that image lock is intentionally not preserved when app goes to background.
     // The reason is that image restoration moves the image location, so the process
@@ -2323,17 +2549,27 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // place.
 
     // calibration
-    [self.horizontalCalibration encodeCalibrationState:coder withPrefix:@"Horizontal"];
-    [self.verticalCalibration encodeCalibrationState:coder withPrefix:@"Vertical"];
-    
+    [self.horizontalCalibration encodeCalibrationState:coder withPrefix:HORIZONATAL_PREFIX_KEY];
+    [self.verticalCalibration encodeCalibrationState:coder withPrefix:VERTICAL_PREFIX_KEY];
+
     // calipers
-    [coder encodeInteger:[self.calipersView count] forKey:@"CalipersCount"];
-    [coder encodeBool:self.calipersView.aCaliperIsMarching forKey:@"ACaliperIsMarching"];
+    [coder encodeInteger:[self.calipersView count] forKey:CALIPERS_COUNT_KEY];
+    [coder encodeBool:self.calipersView.aCaliperIsMarching forKey:A_CALIPER_IS_MARCHING_KEY];
     for (int i = 0; i < [self.calipersView count]; i++) {
         [self.calipersView.calipers[i] encodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
         EPSLog(@"calipers is Angle %d", [self.calipersView.calipers[i] isAngleCaliper]);
     }
-    
+
+    // Canvas view
+    // Note that if canvas view is active when app is removed from memory,
+    // the app returns with the canvas view toggled off, but the image is
+    // still there.
+    if ([self canHaveCanvasView] && self.canvasView != nil) {
+        PKDrawing *drawing = self.canvasView.drawing;
+        if (drawing != nil) {
+            [self encodeDrawing:drawing withKey:CANVAS_VIEW_DRAWING_STRING_KEY toCoder:coder];
+        }
+    }
     [super encodeRestorableStateWithCoder:coder];
 }
 
@@ -2341,29 +2577,28 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 {
     EPSLog(@"decodeRestorableStateWithCoder");
     //self.firstRun = NO;
-    self.launchURL = [coder decodeObjectForKey:@"LaunchURL"];
-    self.numberOfPages = (int)[coder decodeIntegerForKey:@"NumberOfPages"];
-
-    UIImage *image = [UIImage imageWithData:[coder decodeObjectForKey:@"SavedImageKey"]];
+    self.launchURL = [coder decodeObjectOfClass:[NSString class] forKey:LAUNCH_URL_KEY];
+    self.numberOfPages = (int)[coder decodeIntegerForKey:NUMBER_OF_PAGES_KEY];
+    UIImage *image = [self decodeImageForKey:SAVED_IMAGE_STRING_KEY fromCoder:coder];
     if (self.launchURL != nil) {
         self.wasLaunchedFromUrl = YES;
-//        image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:PDF_UPSCALE_FACTOR orientation:UIImageOrientationUp];
+        //        image = [UIImage imageWithCGImage:(CGImageRef)image.CGImage scale:PDF_UPSCALE_FACTOR orientation:UIImageOrientationUp];
     }
     self.imageView.image = image;
-    self.scrollView.zoomScale = [coder decodeDoubleForKey:@"ZoomScaleKey"];
-    self.imageIsUpscaled = [coder decodeBoolForKey:@"ImageIsUpscaledKey"];
+    self.scrollView.zoomScale = [coder decodeDoubleForKey:ZOOM_SCALE_KEY];
+    self.imageIsUpscaled = [coder decodeBoolForKey:IMAGE_IS_UPSCALED_KEY];
 
     // calibration
-    [self.horizontalCalibration decodeCalibrationState:coder withPrefix:@"Horizontal"];
-    [self.verticalCalibration decodeCalibrationState:coder withPrefix:@"Vertical"];
+    [self.horizontalCalibration decodeCalibrationState:coder withPrefix:HORIZONATAL_PREFIX_KEY];
+    [self.verticalCalibration decodeCalibrationState:coder withPrefix:VERTICAL_PREFIX_KEY];
     self.horizontalCalibration.offset = self.scrollView.contentOffset;
     self.verticalCalibration.offset = self.scrollView.contentOffset;
-    
+
     // calipers
-    NSInteger calipersCount = [coder decodeIntegerForKey:@"CalipersCount"];
-    self.calipersView.aCaliperIsMarching = [coder decodeBoolForKey:@"ACaliperIsMarching"];
+    NSInteger calipersCount = [coder decodeIntegerForKey:CALIPERS_COUNT_KEY];
+    self.calipersView.aCaliperIsMarching = [coder decodeBoolForKey:A_CALIPER_IS_MARCHING_KEY];
     for (int i = 0; i < calipersCount; i++) {
-        BOOL isAngleCaliper = [coder decodeBoolForKey:[NSString stringWithFormat:@"%dIsAngleCaliper", i]];
+        BOOL isAngleCaliper = [coder decodeBoolForKey:[NSString stringWithFormat:IS_ANGLE_CALIPER_FORMAT_KEY, i]];
         CaliperType type = isAngleCaliper ? Angle : Interval;
         Caliper *newCaliper = [CaliperFactory createCaliper:type];
         [newCaliper decodeCaliperState:coder withPrefix:[NSString stringWithFormat:@"%d", i]];
@@ -2381,11 +2616,57 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         }
         [self.calipersView.calipers addObject:newCaliper];
     }
-
     [self.calipersView setNeedsDisplay];
+
+    // Canvas view
+    // Note that if canvas view is active when app is removed from memory,
+    // the app returns with the canvas view toggled off, but the image is
+    // still there.
+    if ([self canHaveCanvasView] && self.canvasView != nil) {
+        PKDrawing *drawing = [self decodeDrawingForKey:CANVAS_VIEW_DRAWING_STRING_KEY fromCoder:coder];
+        if (drawing != nil) {
+            self.canvasView.drawing = drawing;
+            self.canvasView.contentSize = self.scrollView.contentSize;
+            self.canvasView.contentOffset = self.scrollView.contentOffset;
+            self.canvasView.contentInset = self.scrollView.contentInset;
+            self.canvasView.zoomScale = self.scrollView.zoomScale;
+        }
+    }
     [super decodeRestorableStateWithCoder:coder];
 }
 
+- (UIImage *)decodeImageForKey:(NSString *)key fromCoder:(NSCoder *)coder {
+    NSString *imageString = [coder decodeObjectOfClass:[NSString class] forKey:key];
+    if (imageString != nil) {
+        NSData *imageData = [[NSData alloc] initWithBase64EncodedString:imageString options:0];
+        if (imageData != nil) {
+            return [[UIImage alloc] initWithData:imageData];
+        }
+    }
+    return nil;
+}
+
+- (PKDrawing *)decodeDrawingForKey:(NSString *)key fromCoder:(NSCoder *)coder {
+    NSString *drawingString = [coder decodeObjectOfClass:[NSString class] forKey:key];
+    if (drawingString != nil) {
+        NSData *drawingData = [[NSData alloc] initWithBase64EncodedString:drawingString options:0];
+        if (drawingData != nil) {
+            return [[PKDrawing alloc] initWithData:drawingData error:nil];
+        }
+    }
+    return nil;
+}
+
+- (void)encodeImage:(UIImage *)image withKey:(NSString *)key toCoder:(NSCoder *)coder {
+    NSData *imageData = UIImagePNGRepresentation(image);
+    NSString *imageString = [imageData base64EncodedStringWithOptions:0];
+    [coder encodeObject:imageString forKey:key];
+}
+
+- (void)encodeDrawing:(PKDrawing *)drawing withKey:(NSString *)key toCoder:(NSCoder *)coder {
+    NSData *drawingData = [drawing dataRepresentation];
+    NSString *drawingString = [drawingData base64EncodedStringWithOptions:0];
+    [coder encodeObject:drawingString forKey: key];
+}
+
 @end
-
-

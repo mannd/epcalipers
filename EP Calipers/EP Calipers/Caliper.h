@@ -12,6 +12,11 @@
 @interface Caliper : NSObject
 #import "Defs.h"
 
+typedef NS_ENUM(NSInteger, CaliperColorType) {
+    CaliperColorUnselected,
+    CaliperColorSelected,
+    CaliperColorCurrent
+};
 
 @property (nonatomic) float bar1Position;
 @property (nonatomic) float bar2Position;
