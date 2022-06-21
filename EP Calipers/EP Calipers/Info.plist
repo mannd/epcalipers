@@ -54,11 +54,11 @@
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<false/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Used to import and export images of ECGs</string>
+	<string>EP Calipers uses access to your photos to import images into the app for analysis and to save screenshots.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Used to take pictures of ECGs</string>
+	<string>EP Calipers uses the camera to take pictures of electrocardiograms for analysis by the app.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Used to import and export images of ECGs</string>
+	<string>EP Calipers uses access to your photos to import images into the app for analysis and to save screenshots.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
 	<key>UIMainStoryboardFile</key>

@@ -7,7 +7,7 @@
 */
 "CFBundleDisplayName" = "Compas EP";
 "CFBundleName" = "Compas EP";
-"NSCameraUsageDescription" = "Une autorisation est nécessaire pour prendre des photos d'électrocardiogrammes.";
-"NSPhotoLibraryUsageDescription" = "Une autorisation est nécessaire pour importer et exporter des images d'électrocardiogrammes.";
-"NSAppleMusicUsageDescription" = "Une autorisation est nécessaire pour importer et exporter des images d'électrocardiogrammes.";
+"NSCameraUsageDescription" = "Compas EP utilise l'accès à vos photos pour importer des images dans l'application à des fins d'analyse et d'enregistrer des captures d'écran.";
+"NSPhotoLibraryUsageDescription" = "Compas EP utilise l'appareil photo pour prendre des photos d'électrocardiogrammes pour analyse par l'application.";
+"NSAppleMusicUsageDescription" = "Compas EP utilise l'accès à vos photos pour importer des images dans l'application à des fins d'analyse et d'enregistrer des captures d'écran.";
 
