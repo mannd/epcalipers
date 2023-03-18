@@ -2577,7 +2577,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 {
     EPSLog(@"decodeRestorableStateWithCoder");
     //self.firstRun = NO;
-    self.launchURL = [coder decodeObjectOfClass:[NSString class] forKey:LAUNCH_URL_KEY];
+    self.launchURL = [coder decodeObjectOfClass:[NSURL class] forKey:LAUNCH_URL_KEY]; 
     self.numberOfPages = (int)[coder decodeIntegerForKey:NUMBER_OF_PAGES_KEY];
     UIImage *image = [self decodeImageForKey:SAVED_IMAGE_STRING_KEY fromCoder:coder];
     if (self.launchURL != nil) {
