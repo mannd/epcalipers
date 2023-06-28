@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -53,6 +53,7 @@
 		8ECF3F0D21DFC93A00E4DD8B /* ManualTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F0C21DFC93A00E4DD8B /* ManualTableViewController.m */; };
 		8ECF3F1021DFC96500E4DD8B /* ManualCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F0F21DFC96500E4DD8B /* ManualCell.m */; };
 		8ECF3F1321DFD0AA00E4DD8B /* ManualLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ECF3F1221DFD0AA00E4DD8B /* ManualLink.m */; };
+		8ED510BF2A4BC9FC000DF87A /* MeasurementTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ED510BE2A4BC9FC000DF87A /* MeasurementTests.swift */; };
 		8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */; };
 		8EE36EAE21EBC5F600E39030 /* BlackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EE36EAD21EBC5F600E39030 /* BlackView.m */; };
 		8EEB386521E26B8A00568B6F /* Translation.m in Sources */ = {isa = PBXBuildFile; fileRef = 8EEB386421E26B8A00568B6F /* Translation.m */; };
@@ -174,6 +175,7 @@
 		8ECF3F0F21DFC96500E4DD8B /* ManualCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManualCell.m; sourceTree = "<group>"; };
 		8ECF3F1121DFD0AA00E4DD8B /* ManualLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManualLink.h; sourceTree = "<group>"; };
 		8ECF3F1221DFD0AA00E4DD8B /* ManualLink.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManualLink.m; sourceTree = "<group>"; };
+		8ED510BE2A4BC9FC000DF87A /* MeasurementTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasurementTests.swift; sourceTree = "<group>"; };
 		8ED8B5551E9DBB6800EB1BB8 /* sampleECG.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sampleECG.jpg; sourceTree = "<group>"; };
 		8EE36EAC21EBC5F600E39030 /* BlackView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BlackView.h; sourceTree = "<group>"; };
 		8EE36EAD21EBC5F600E39030 /* BlackView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlackView.m; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				8E1423751AB5F16A00CC15BC /* Supporting Files */,
 				8E40183F249BE978001F8AFB /* CalibrationProcessorTests.swift */,
 				8E401841249BE9FD001F8AFB /* EP CalipersTests-Bridging-Header.h */,
+				8ED510BE2A4BC9FC000DF87A /* MeasurementTests.swift */,
 			);
 			path = "EP CalipersTests";
 			sourceTree = "<group>";
@@ -514,7 +517,8 @@
 		8E1423501AB5F16A00CC15BC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1200;
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
 				ORGANIZATIONNAME = "EP Studios";
 				TargetAttributes = {
 					8E1423571AB5F16A00CC15BC = {
@@ -684,6 +688,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8ED510BF2A4BC9FC000DF87A /* MeasurementTests.swift in Sources */,
 				8E172D971F9C205200CD50D6 /* EP_CalipersTests.m in Sources */,
 				8E401840249BE978001F8AFB /* CalibrationProcessorTests.swift in Sources */,
 			);
@@ -856,7 +861,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -873,7 +879,10 @@
 				DEVELOPMENT_TEAM = W74NPJXYEG;
 				INFOPLIST_FILE = "EP Calipers/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 3.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -894,7 +903,10 @@
 				DEVELOPMENT_TEAM = W74NPJXYEG;
 				INFOPLIST_FILE = "EP Calipers/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 3.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -917,7 +929,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "EP CalipersTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -938,7 +954,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "EP CalipersTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -965,7 +985,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "EP CalipersUITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.EP-CalipersUITests";
@@ -992,7 +1016,11 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "EP CalipersUITests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.EP-CalipersUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";

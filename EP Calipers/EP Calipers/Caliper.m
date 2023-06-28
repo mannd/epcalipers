@@ -471,7 +471,7 @@
     if (self.roundMsecRate) {
         interval = round(interval);
     }
-    return interval;
+    return fabs(interval);
 }
 
 - (double)intervalInSecs:(double)interval {
