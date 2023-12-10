@@ -906,6 +906,11 @@
     }
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* timeCaliperAction = [UIAlertAction actionWithTitle:TIME_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addHorizontalCaliper];}];
+
+    // Note: This can be done to add images to the actions, but it is not supported
+    // by Apple, and doesn't look that great anyway, so no go.
+    //[timeCaliperAction setValue:[[UIImage imageNamed:@"time-caliper"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]   forKey:@"image"];
+
     [actionSheet addAction:timeCaliperAction];
     UIAlertAction* amplitudeCaliperAction = [UIAlertAction actionWithTitle:AMPLITUDE_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addVerticalCaliper];}];
     [actionSheet addAction:amplitudeCaliperAction];

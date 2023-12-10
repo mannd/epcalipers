@@ -528,7 +528,6 @@
 					};
 					8E1423701AB5F16A00CC15BC = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = W74NPJXYEG;
 						LastSwiftMigration = 0900;
 						TestTargetID = 8E1423571AB5F16A00CC15BC;
 					};
@@ -924,6 +923,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = W74NPJXYEG;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = W74NPJXYEG;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -937,6 +940,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EP CalipersTests/EP CalipersTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -953,6 +957,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = W74NPJXYEG;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = W74NPJXYEG;
 				INFOPLIST_FILE = "EP CalipersTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -962,6 +970,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "EP CalipersTests/EP CalipersTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EP Calipers.app/EP Calipers";
