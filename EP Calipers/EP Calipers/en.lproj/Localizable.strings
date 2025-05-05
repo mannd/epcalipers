@@ -6,7 +6,7 @@
   Copyright © 2017 EP Studios. All rights reserved.
 */
 
-"Copyright_message" = "Copyright © 2015-2023 EP Studios, Inc.\nAll rights reserved.\nVersion %@";
+"Copyright_message" = "Copyright © 2015-2025 EP Studios, Inc.\nAll rights reserved.\nVersion %@";
 "EP Calipers" = "EP Calipers";
 
 /* Sorted dialog titles, messages, button labels */
@@ -205,6 +205,7 @@
 "Save_snapshot_error_message" = "Photo Library not accessible.  Change Photo Library permissions in Settings app to allow access to all photos.";
 "Snapshot_saved_title" = "Snapshot Saved";
 "Snapshot_saved_message" = "Snapshot saved to Photo Library";
+"Delete" = "Delete";
 
 /* Unused at present (incomplete list here, see FR or RU Localizable.strings for full list */
 //"Add calipers" = "Add calipers";

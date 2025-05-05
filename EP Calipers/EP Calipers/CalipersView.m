@@ -110,6 +110,10 @@
 
 - (void)doubleTap:(UITapGestureRecognizer *)t {
     CGPoint location = [t locationInView:self];
+    [self deleteCaliper:location];
+}
+
+- (void)deleteCaliper:(CGPoint)location {
     for (int i = (int)self.calipers.count - 1; i >= 0; i--) {
         if ([(Caliper *)self.calipers[i] pointNearCaliper:location]) {
             [self.calipers removeObject:self.calipers[i]];

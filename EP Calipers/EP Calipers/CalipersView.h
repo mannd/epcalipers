@@ -47,5 +47,6 @@
 - (CGPoint)getATimeCaliperMidpoint;
 - (void)clearChosenComponentsExceptFor:(Caliper *)caliper;
 - (void)clearAllChosenComponents;
+- (void)deleteCaliper:(CGPoint)location;
 
 @end

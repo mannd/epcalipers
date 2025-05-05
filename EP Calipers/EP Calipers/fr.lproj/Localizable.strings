@@ -7,7 +7,7 @@
 */
 
 "EP Calipers" = "Compas EP";
-"Copyright_message" = "Copyright © 2015-2023 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
+"Copyright_message" = "Copyright © 2015-2025 EP Studios, Inc.\nTous droits réservés.\nVersion %@";
 
 /* Sorted dialog titles, messages, button labels */
 "10 mm" = "10 mm";
@@ -203,6 +203,8 @@
 "Help_image_1" = "epcalipershelp-1-fr";
 "Help_image_2" = "epcalipershelp-2-fr";
 "Help_image_3" = "epcalipershelp-3-fr";
+
+"Delete" = "Supprimer";
 
 /* Unused or obsolete strings */
 //"Help" = "Aide";

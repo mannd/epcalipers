@@ -77,6 +77,7 @@
 #define SET L(@"Set")
 #define CLEAR L(@"Clear")
 #define OK L(@"OK")
+#define DELETE L(@"Delete")
 #define DONE L(@"Done")
 
 #define COLOR L(@"Color")
@@ -781,13 +782,14 @@
     UIMenuItem *colorMenuItem = [[UIMenuItem alloc] initWithTitle:COLOR action:@selector(colorAction)];
     UIMenuItem *tweakMenuItem = [[UIMenuItem alloc] initWithTitle:TWEAK action:@selector(tweakAction)];
     UIMenuItem *marchMenuItem = [[UIMenuItem alloc] initWithTitle:MARCH action:@selector(marchAction)];
+    UIMenuItem *deleteMenuItem = [[UIMenuItem alloc] initWithTitle:DELETE action:@selector((deleteAction))];
     UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:DONE action:@selector(doneMenuAction)];
     // Only include march menu if we are on a time caliper.
     if ([self.calipersView caliperNearLocationIsTimeCaliper:location]) {
-        menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, doneMenuItem];
+        menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, deleteMenuItem, doneMenuItem];
     }
     else {
-        menu.menuItems = @[colorMenuItem, tweakMenuItem, doneMenuItem];
+        menu.menuItems = @[colorMenuItem, tweakMenuItem, deleteMenuItem, doneMenuItem];
     }
     CGRect rect = CGRectMake(location.x, location.y, 0, 0);
     UIView *superView = sender.view.superview;
@@ -867,6 +869,13 @@
     [self.calipersView resignFirstResponder];
 }
 
+- (void)deleteAction {
+    [self.calipersView deleteCaliper:self.pressLocation];
+    //[self.calipersView setNeedsDisplay];
+    [self.calipersView resignFirstResponder];
+
+}
+
 - (UIImage *)scaleImageForImageView:(UIImage *)image {
     EPSLog(@"scaleImageForImageView");
     // Downscale upscaled images.
@@ -906,6 +915,11 @@
     }
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* timeCaliperAction = [UIAlertAction actionWithTitle:TIME_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addHorizontalCaliper];}];
+
+    // Note: This can be done to add images to the actions, but it is not supported
+    // by Apple, and doesn't look that great anyway, so no go.
+    //[timeCaliperAction setValue:[[UIImage imageNamed:@"time-caliper"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]   forKey:@"image"];
+
     [actionSheet addAction:timeCaliperAction];
     UIAlertAction* amplitudeCaliperAction = [UIAlertAction actionWithTitle:AMPLITUDE_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addVerticalCaliper];}];
     [actionSheet addAction:amplitudeCaliperAction];

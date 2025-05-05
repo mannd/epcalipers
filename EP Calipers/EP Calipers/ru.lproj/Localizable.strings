@@ -8,7 +8,7 @@
 
 /* Strings needing translation */
 "EP Calipers" = "ЭФИ калипер";
-"Copyright_message" = "Авторские права © 2015-2023 EP Studios, Inc.\nВсе права защищены. \nВерсия %@";
+"Copyright_message" = "Авторские права © 2015-2025 EP Studios, Inc.\nВсе права защищены. \nВерсия %@";
 
 /* Simple dialog button labels */
 "10 mm" = "10 мм";
@@ -203,6 +203,8 @@
 "Help_image_1" = "epcalipershelp-1-ru";
 "Help_image_2" = "epcalipershelp-2-ru";
 "Help_image_3" = "epcalipershelp-3-ru";
+
+"Delete" = "удалить";
 
 /* Unused or obsolete strings */
 // "Help" = "Помощь";

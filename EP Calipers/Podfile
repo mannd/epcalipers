@@ -1,4 +1,4 @@
-platform :ios, '8.0'
+platform :ios, '14.0'
 
 target 'EP Calipers' do
   pod 'CMPopTipView', '~> 2.3'
