@@ -77,6 +77,7 @@
 #define SET L(@"Set")
 #define CLEAR L(@"Clear")
 #define OK L(@"OK")
+#define DELETE L(@"Delete")
 #define DONE L(@"Done")
 
 #define COLOR L(@"Color")
@@ -781,13 +782,14 @@
     UIMenuItem *colorMenuItem = [[UIMenuItem alloc] initWithTitle:COLOR action:@selector(colorAction)];
     UIMenuItem *tweakMenuItem = [[UIMenuItem alloc] initWithTitle:TWEAK action:@selector(tweakAction)];
     UIMenuItem *marchMenuItem = [[UIMenuItem alloc] initWithTitle:MARCH action:@selector(marchAction)];
+    UIMenuItem *deleteMenuItem = [[UIMenuItem alloc] initWithTitle:DELETE action:@selector((deleteAction))];
     UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:DONE action:@selector(doneMenuAction)];
     // Only include march menu if we are on a time caliper.
     if ([self.calipersView caliperNearLocationIsTimeCaliper:location]) {
-        menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, doneMenuItem];
+        menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, deleteMenuItem, doneMenuItem];
     }
     else {
-        menu.menuItems = @[colorMenuItem, tweakMenuItem, doneMenuItem];
+        menu.menuItems = @[colorMenuItem, tweakMenuItem, deleteMenuItem, doneMenuItem];
     }
     CGRect rect = CGRectMake(location.x, location.y, 0, 0);
     UIView *superView = sender.view.superview;
@@ -865,6 +867,13 @@
     [self.calipersView toggleShowMarchingCaliper:self.pressLocation];
     [self.calipersView setNeedsDisplay];
     [self.calipersView resignFirstResponder];
+}
+
+- (void)deleteAction {
+    [self.calipersView deleteCaliper:self.pressLocation];
+    //[self.calipersView setNeedsDisplay];
+    [self.calipersView resignFirstResponder];
+
 }
 
 - (UIImage *)scaleImageForImageView:(UIImage *)image {

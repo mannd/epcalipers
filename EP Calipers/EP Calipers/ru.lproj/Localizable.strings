@@ -204,6 +204,8 @@
 "Help_image_2" = "epcalipershelp-2-ru";
 "Help_image_3" = "epcalipershelp-3-ru";
 
+"Delete" = "удалить";
+
 /* Unused or obsolete strings */
 // "Help" = "Помощь";
 // "About" = "О нас";

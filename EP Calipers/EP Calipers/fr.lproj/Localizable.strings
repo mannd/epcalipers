@@ -204,6 +204,8 @@
 "Help_image_2" = "epcalipershelp-2-fr";
 "Help_image_3" = "epcalipershelp-3-fr";
 
+"Delete" = "Supprimer";
+
 /* Unused or obsolete strings */
 //"Help" = "Aide";
 //"About" = "Sur";
