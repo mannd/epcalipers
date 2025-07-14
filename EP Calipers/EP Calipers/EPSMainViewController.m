@@ -2457,11 +2457,17 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (void)chooseColor:(Caliper *)caliper {
     FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
     colorPicker.backgroundColor = [UIColor systemBackgroundColor];
+
     self.chosenCaliper = caliper;
     colorPicker.color = caliper.unselectedColor;
     colorPicker.delegate = self;
 
-    [colorPicker setModalPresentationStyle:UIModalPresentationFullScreen];
+    if (@available(iOS 13.0, *)) {
+        colorPicker.modalPresentationStyle = UIModalPresentationAutomatic;
+    } else {
+        colorPicker.modalPresentationStyle = UIModalPresentationPageSheet;
+    }
+
     [self presentViewController:colorPicker animated:YES completion:nil];
 }
 
