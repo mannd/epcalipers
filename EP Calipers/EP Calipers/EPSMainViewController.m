@@ -166,6 +166,8 @@
 #define NUM_RRS L(@"Num_RRs")
 #define QT L(@"QT")
 #define MEASURE L(@"Measure")
+#define MEASURE_RR L(@"Measure_RR")
+#define MEASURE_QT L(@"Measure_QT")
 #define CALCULATE L(@"Calculate")
 #define THREE L(@"Three")
 #define ONE L(@"One")
@@ -244,6 +246,9 @@
 
 @property (nonatomic) CGAffineTransform imageTransform;
 @property (nonatomic) BOOL imageIsUpscaled;
+
+@property (nonatomic, strong) UISegmentedControl *movementSegmentedControl;
+@property (nonatomic, strong) UISegmentedControl *rotateSegmentedControl;
 
 @end
 
@@ -362,15 +367,6 @@
      addObserver:self selector:@selector(orientationChanged:)
      name:UIDeviceOrientationDidChangeNotification
      object:[UIDevice currentDevice]];
-
-    // Touches
-    UILongPressGestureRecognizer *longPressScrollView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doScrollViewLongPress:)];
-    [longPressScrollView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
-    [self.scrollView addGestureRecognizer:longPressScrollView];
-
-    UILongPressGestureRecognizer *longPressCalipersView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doCalipersViewLongPress:)];
-    [longPressCalipersView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
-    [self.calipersView addGestureRecognizer:longPressCalipersView];
 
     [self createCanvasView];
 }
@@ -773,70 +769,6 @@
     return [[self applicationLanguage] isEqualToString:@"ru"];
 }
 
-//- (void)doCalipersViewLongPress:(UILongPressGestureRecognizer *)sender {
-//    EPSLog(@"long press calipers view from main");
-//    if (sender.state != UIGestureRecognizerStateBegan || self.hamburgerMenuIsOpen) {
-//        return;
-//    }
-//    [sender.view becomeFirstResponder];
-//    CGPoint location = [sender locationInView:sender.view];
-//    self.pressLocation = location;
-//    if (self.tweakingInProgress) {
-//        [self tweakAction];
-//        return;
-//    }
-//    UIMenuController *menu = UIMenuController.sharedMenuController;
-//    menu.arrowDirection = UIMenuControllerArrowDefault;
-//    UIMenuItem *colorMenuItem = [[UIMenuItem alloc] initWithTitle:COLOR action:@selector(colorAction)];
-//    UIMenuItem *tweakMenuItem = [[UIMenuItem alloc] initWithTitle:TWEAK action:@selector(tweakAction)];
-//    UIMenuItem *marchMenuItem = [[UIMenuItem alloc] initWithTitle:MARCH action:@selector(marchAction)];
-//    UIMenuItem *deleteMenuItem = [[UIMenuItem alloc] initWithTitle:DELETE action:@selector((deleteAction))];
-//    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:DONE action:@selector(doneMenuAction)];
-//    // Only include march menu if we are on a time caliper.
-//    if ([self.calipersView caliperNearLocationIsTimeCaliper:location]) {
-//        menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, deleteMenuItem, doneMenuItem];
-//    }
-//    else {
-//        menu.menuItems = @[colorMenuItem, tweakMenuItem, deleteMenuItem, doneMenuItem];
-//    }
-//    CGRect rect = CGRectMake(location.x, location.y, 0, 0);
-//    UIView *superView = sender.view.superview;
-//    //        [menu setTargetRect:rect inView:superView];
-//    [menu showMenuFromView:superView rect:rect];
-//    //        [menu setMenuVisible:YES animated:YES];
-//}
-//
-//- (void)doScrollViewLongPress:(UILongPressGestureRecognizer *) sender {
-//    EPSLog(@"Long press from main");
-//    if (sender.state != UIGestureRecognizerStateBegan || self.hamburgerMenuIsOpen) {
-//        return;
-//    }
-//    [sender.view becomeFirstResponder];
-//    EPSLog(@"Sender = %@", sender);
-//    UIMenuController *menu = UIMenuController.sharedMenuController;
-//    menu.arrowDirection = UIMenuControllerArrowDefault;
-//    UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:ROTATE action:@selector(rotateAction)];
-//    UIMenuItem *flipMenuItem = [[UIMenuItem alloc] initWithTitle:FLIP action:@selector(flipAction)];
-//    UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:RESET action:@selector(resetAction)];
-//    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:DONE action:@selector(doneMenuAction)];
-//    // Determine if we add PDF menu item.
-//    BOOL isMultipagePDF = self.numberOfPages > 1 && pdfRef != NULL;
-//    if (isMultipagePDF || SHOW_PDF_MENU) {
-//        UIMenuItem *pdfMenuItem = [[UIMenuItem alloc] initWithTitle:PDF action:@selector(pdfAction)];
-//        menu.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, pdfMenuItem, doneMenuItem];
-//    }
-//    else {
-//        menu.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, doneMenuItem];
-//    }
-//    CGPoint location = [sender locationInView:sender.view];
-//    CGPoint offset = self.scrollView.contentOffset;
-//    CGRect rect = CGRectMake(location.x - offset.x, location.y - offset.y, 0, 0);
-//    UIView *superView = sender.view.superview;
-//    //        [menu setTargetRect:rect inView:superView];
-//    [menu showMenuFromView:superView rect:rect];
-//    //        [menu setMenuVisible:YES animated:YES];
-//}
-
 - (void)rotateAction {
     [self selectRotateImageToolbar];
     [self.scrollView resignFirstResponder];
@@ -1010,7 +942,7 @@
 - (void)createToolbars {
     [self createMainToolbar];
     [self createPDFToolbar];
-    [self rotateImageToolbar];
+    [self createRotateImageToolbar];
     [self createSetupCalibrationToolbar];
     [self createQTcStep1Toolbar];
     [self createQTcStep2Toolbar];
@@ -1056,24 +988,92 @@
     self.pdfMenuItems = [self spaceoutToolbar:array];
 }
 
-- (void)rotateImageToolbar {
-    UIBarButtonItem *rotateImageRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_R style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageRight:)];
-    UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_L style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
-    UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_R style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
-    UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_L style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
-    UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_01_R style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
-    UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_01_L style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
-    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
+//- (void)rotateImageToolbar {
+//    UIBarButtonItem *rotateImageRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_R style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageRight:)];
+//    UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_L style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
+//    UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_R style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
+//    UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_L style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
+//    UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_01_R style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
+//    UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_01_L style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
+//    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
+//
+//    NSArray *array = [NSArray arrayWithObjects:rotateImageRightButton,
+//                      rotateImageLeftButton,
+//                      tweakRightButton,
+//                      tweakLeftButton,
+//                      microTweakRightButton,
+//                      microTweakLeftButton,
+//                      backToMainMenuButton, nil];
+//    self.rotateImageMenuItems = [self spaceoutToolbar:array];
+//}
 
-    NSArray *array = [NSArray arrayWithObjects:rotateImageRightButton,
-                      rotateImageLeftButton,
-                      tweakRightButton,
-                      tweakLeftButton,
-                      microTweakRightButton,
-                      microTweakLeftButton,
-                      backToMainMenuButton, nil];
-    self.rotateImageMenuItems = [self spaceoutToolbar:array];
+//- (void)createRotateImageToolbar {
+//    NSArray *items = @[ROTATE_90_R, ROTATE_90_L, ROTATE_1_R, ROTATE_1_L, ROTATE_01_R, ROTATE_01_L];
+//    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:items];
+//    segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+//    [segmentedControl addTarget:self action:@selector(rotateSegmentChanged:) forControlEvents:UIControlEventValueChanged];
+//
+//    UIBarButtonItem *segmentedItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
+//
+//    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
+//
+//    self.rotateImageMenuItems = @[segmentedItem, doneItem];
+//}
+
+- (void)createRotateImageToolbar {
+    NSArray *items = @[ROTATE_90_R, ROTATE_90_L, ROTATE_1_R, ROTATE_1_L, ROTATE_01_R, ROTATE_01_L];
+
+    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:items];
+    segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+    [segmentedControl addTarget:self action:@selector(rotateSegmentChanged:) forControlEvents:UIControlEventValueChanged];
+    self.rotateSegmentedControl = segmentedControl; // Optional: keep a reference if needed
+
+    // Wrap in a fixed-width container view to prevent overflow
+    UIView *controlWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 32)];
+    segmentedControl.frame = controlWrapper.bounds;
+    segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [controlWrapper addSubview:segmentedControl];
+
+    UIBarButtonItem *segmentedItem = [[UIBarButtonItem alloc] initWithCustomView:controlWrapper];
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                             target:nil
+                             action:nil];
+    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                             target:self
+                             action:@selector(adjustImageDone)];
+
+    self.rotateImageMenuItems = @[segmentedItem, flexibleSpace, doneItem];
 }
+
+
+- (void)rotateSegmentChanged:(UISegmentedControl *)sender {
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            [self rotateImageRight:nil];
+            break;
+        case 1:
+            [self rotateImageLeft:nil];
+            break;
+        case 2:
+            [self tweakImageRight:nil];
+            break;
+        case 3:
+            [self tweakImageLeft:nil];
+            break;
+        case 4:
+            [self microTweakImageRight:nil];
+            break;
+        case 5:
+            [self microTweakImageLeft:nil];
+            break;
+        default:
+            break;
+    }
+    sender.selectedSegmentIndex = UISegmentedControlNoSegment; // deselect after action
+}
+
 
 
 - (void)createSetupCalibrationToolbar {
@@ -1088,49 +1088,141 @@
 }
 
 - (void)createQTcStep1Toolbar {
-    UILabel *label = [[UILabel alloc] init];
-    [label setText:NUM_RRS];
-    [label sizeToFit];
-    label.textColor = GRAY_COLOR;
-    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    self.qtcMeasureRateButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
+//    UILabel *label = [[UILabel alloc] init];
+//    [label setText:NUM_RRS];
+//    [label sizeToFit];
+//    label.textColor = GRAY_COLOR;
+//    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
+    self.qtcMeasureRateButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE_RR style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
 
-    NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
-                      self.qtcMeasureRateButton,
-                      cancelButton, nil];
+//    NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
+//                      self.qtcMeasureRateButton,
+//                      cancelButton, nil];
+    NSArray *array = [NSArray arrayWithObjects:self.qtcMeasureRateButton, cancelButton, nil];
     self.qtcStep1MenuItems = [self spaceoutToolbar:array];
 }
 
 - (void)createQTcStep2Toolbar {
-    UILabel *label = [[UILabel alloc] init];
-    [label setText:QT];
-    [label sizeToFit];
-    label.textColor = GRAY_COLOR;
-    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    self.qtcMeasureQTcButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
+//    UILabel *label = [[UILabel alloc] init];
+//    [label setText:QT];
+//    [label sizeToFit];
+//    label.textColor = GRAY_COLOR;
+//    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
+    self.qtcMeasureQTcButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE_QT style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
 
-    NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
-                      self.qtcMeasureQTcButton,
+    NSArray *array = [NSArray arrayWithObjects:self.qtcMeasureQTcButton,
                       cancelButton, nil];
     self.qtcStep2MenuItems = [self spaceoutToolbar:array];
 }
 
-- (void)createMovementToolbar {
-    self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveLeft)];
-    self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveRight)];
+//- (void)createMovementToolbar {
+//    self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveLeft)];
+//    self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveRight)];
+//
+//    self.upButton = [[UIBarButtonItem alloc] initWithTitle:UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveUp)];
+//    self.downButton = [[UIBarButtonItem alloc] initWithTitle:DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveDown)];
+//    self.microLeftButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveLeft)];
+//    self.microRightButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveRight)];
+//    self.microUpButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveUp)];
+//    self.microDownButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveDown)];
+//    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTweaking)];
+//    NSArray *array = [NSArray arrayWithObjects:self.leftButton, self.upButton, self.rightButton, self.downButton, self.microLeftButton, self.microUpButton, self.microRightButton, self.microDownButton, doneButton, nil];
+//    self.movementMenuItems = [self spaceoutToolbar:array];
+//}
 
-    self.upButton = [[UIBarButtonItem alloc] initWithTitle:UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveUp)];
-    self.downButton = [[UIBarButtonItem alloc] initWithTitle:DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveDown)];
-    self.microLeftButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveLeft)];
-    self.microRightButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveRight)];
-    self.microUpButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveUp)];
-    self.microDownButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveDown)];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTweaking)];
-    NSArray *array = [NSArray arrayWithObjects:self.leftButton, self.upButton, self.rightButton, self.downButton, self.microLeftButton, self.microUpButton, self.microRightButton, self.microDownButton, doneButton, nil];
-    self.movementMenuItems = [self spaceoutToolbar:array];
+- (void)createMovementToolbar {
+    NSArray *items = @[LEFT_ARROW, UP_ARROW, RIGHT_ARROW, DOWN_ARROW,
+                       MICRO_LEFT_ARROW, MICRO_UP_ARROW, MICRO_RIGHT_ARROW, MICRO_DOWN_ARROW];
+
+    UISegmentedControl *control = [[UISegmentedControl alloc] initWithItems:items];
+    control.momentary = YES;
+    [control addTarget:self action:@selector(movementSegmentChanged:) forControlEvents:UIControlEventValueChanged];
+    self.movementSegmentedControl = control;
+
+    // Wrap in a view and constrain width
+    UIView *controlWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 32)];
+    control.frame = controlWrapper.bounds;
+    control.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [controlWrapper addSubview:control];
+
+    UIBarButtonItem *segmentedItem = [[UIBarButtonItem alloc] initWithCustomView:controlWrapper];
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                             target:nil
+                             action:nil];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]
+        initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                             target:self
+                             action:@selector(doneTweaking)];
+
+    self.movementMenuItems = @[segmentedItem, flexibleSpace, doneButton];
 }
+
+
+//- (void)createMovementToolbar {
+//    // Create segmented control with your movement items
+//    NSArray *items = @[LEFT_ARROW, UP_ARROW, RIGHT_ARROW, DOWN_ARROW, MICRO_LEFT_ARROW, MICRO_UP_ARROW, MICRO_RIGHT_ARROW, MICRO_DOWN_ARROW];
+//    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:items];
+//    segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment;
+//
+//    // Force equal widths so it doesn't try to size per text
+//    segmentedControl.apportionsSegmentWidthsByContent = NO;
+//
+//    // Make the font smaller so it fits easily
+//    UIFont *smallFont = [UIFont systemFontOfSize:12.0];
+//    NSDictionary *attributes = @{NSFontAttributeName: smallFont};
+//    [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+//
+//    // Hook up the action
+//    [segmentedControl addTarget:self action:@selector(movementSegmentChanged:) forControlEvents:UIControlEventValueChanged];
+//
+//    self.movementSegmentedControl = segmentedControl;
+//
+//    // Wrap in UIBarButtonItem
+//    UIBarButtonItem *segmentedItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
+//
+//    // Add your done button as a separate item
+//    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTweaking)];
+//
+//    self.movementMenuItems = @[segmentedItem, doneButton];
+//}
+
+- (void)movementSegmentChanged:(UISegmentedControl *)sender {
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            [self moveLeft];
+            break;
+        case 1:
+            [self moveUp];
+            break;
+        case 2:
+            [self moveRight];
+            break;
+        case 3:
+            [self moveDown];
+            break;
+        case 4:
+            [self microMoveLeft];
+            break;
+        case 5:
+            [self microMoveUp];
+            break;
+        case 6:
+            [self microMoveRight];
+            break;
+        case 7:
+            [self microMoveDown];
+            break;
+        default:
+            break;
+    }
+    sender.selectedSegmentIndex = UISegmentedControlNoSegment; // deselect after action
+}
+
+
+
 
 - (void)shrinkButtonFontSize:(NSArray *)barButtonItems {
     [self changeButtonFontSize:barButtonItems attributes:self.smallFontAttributes];
@@ -1699,6 +1791,8 @@
     self.toolbarItems = self.movementMenuItems;
 }
 
+// FIXME: This is broken in iOS 26 beta.  It opens the Settings app, but not the specific EP Calipers page.
+// Need to retest this on later versions of iOS 26 because it is probably a bug that Apple may or may not fix.
 - (void)openSettings {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString] options:@{} completionHandler:nil];
 }
@@ -2480,24 +2574,62 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)tweakComponent:(CaliperComponent)component forCaliper:(Caliper *)caliper {
+    EPSLog(@"tweakComponent called");
     self.tweakingInProgress = YES;
     self.chosenCaliper = caliper;
     self.chosenCaliperComponent = component;
     caliper.chosenComponent = component;
     [self.calipersView clearChosenComponentsExceptFor:caliper];
+
     BOOL disableUpDown = caliper.direction == Horizontal && component != Crossbar;
     BOOL disableLeftRight = caliper.direction == Vertical && component != Crossbar;
-    self.upButton.enabled = !disableUpDown;
-    self.microUpButton.enabled = !disableUpDown;
-    self.downButton.enabled = !disableUpDown;
-    self.microDownButton.enabled = !disableUpDown;
-    self.leftButton.enabled = !disableLeftRight;
-    self.microLeftButton.enabled = !disableLeftRight;
-    self.rightButton.enabled = !disableLeftRight;
-    self.microRightButton.enabled = !disableLeftRight;
+
+    // Segment indexes (adjust if you reorder items)
+    NSInteger upIndex = 1;
+    NSInteger downIndex = 3;
+    NSInteger microUpIndex = 5;
+    NSInteger microDownIndex = 7;
+    NSInteger leftIndex = 0;
+    NSInteger rightIndex = 2;
+    NSInteger microLeftIndex = 4;
+    NSInteger microRightIndex = 6;
+
+    [self.movementSegmentedControl setEnabled:!disableUpDown forSegmentAtIndex:upIndex];
+    [self.movementSegmentedControl setEnabled:!disableUpDown forSegmentAtIndex:microUpIndex];
+    [self.movementSegmentedControl setEnabled:!disableUpDown forSegmentAtIndex:downIndex];
+    [self.movementSegmentedControl setEnabled:!disableUpDown forSegmentAtIndex:microDownIndex];
+
+    [self.movementSegmentedControl setEnabled:!disableLeftRight forSegmentAtIndex:leftIndex];
+    [self.movementSegmentedControl setEnabled:!disableLeftRight forSegmentAtIndex:microLeftIndex];
+    [self.movementSegmentedControl setEnabled:!disableLeftRight forSegmentAtIndex:rightIndex];
+    [self.movementSegmentedControl setEnabled:!disableLeftRight forSegmentAtIndex:microRightIndex];
+
     [self.calipersView setNeedsDisplay];
     [self selectMovementToolbar];
 }
+
+
+
+//- (void)tweakComponent:(CaliperComponent)component forCaliper:(Caliper *)caliper {
+//    EPSLog(@"tweakComponent called");
+//    self.tweakingInProgress = YES;
+//    self.chosenCaliper = caliper;
+//    self.chosenCaliperComponent = component;
+//    caliper.chosenComponent = component;
+//    [self.calipersView clearChosenComponentsExceptFor:caliper];
+//    BOOL disableUpDown = caliper.direction == Horizontal && component != Crossbar;
+//    BOOL disableLeftRight = caliper.direction == Vertical && component != Crossbar;
+//    self.upButton.enabled = !disableUpDown;
+//    self.microUpButton.enabled = !disableUpDown;
+//    self.downButton.enabled = !disableUpDown;
+//    self.microDownButton.enabled = !disableUpDown;
+//    self.leftButton.enabled = !disableLeftRight;
+//    self.microLeftButton.enabled = !disableLeftRight;
+//    self.rightButton.enabled = !disableLeftRight;
+//    self.microRightButton.enabled = !disableLeftRight;
+//    [self.calipersView setNeedsDisplay];
+//    [self selectMovementToolbar];
+//}
 
 - (void)moveComponent:(Caliper *)caliper component:(CaliperComponent)component distance:(CGFloat)distance direction:(MovementDirection)direction {
     if (caliper == nil || component == None) {
@@ -2710,6 +2842,11 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     if (interaction.view == self.calipersView) {
         EPSLog(@"Long press calipers view from main");
         self.pressLocation = location;
+        
+        if (self.tweakingInProgress) {
+            [self tweakAction];
+            return nil;
+        }
 
         return [UIContextMenuConfiguration configurationWithIdentifier:nil
                                                        previewProvider:nil
@@ -2729,11 +2866,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                                                         image:nil
                                                    identifier:nil
                                                       handler:^(__kindof UIAction * _Nonnull action) {
-                if (self.tweakingInProgress) {
-                    [self tweakAction];
-                } else {
-                    [self tweakAction];
-                }
+                [self tweakAction];
             }];
             [actions addObject:tweakAction];
 
