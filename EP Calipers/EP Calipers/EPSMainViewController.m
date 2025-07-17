@@ -2557,21 +2557,33 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 // from https://github.com/fcanas/ios-color-picker
 - (void)chooseColor:(Caliper *)caliper {
-    FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
-    colorPicker.backgroundColor = [UIColor systemBackgroundColor];
-
+    UIColorPickerViewController *picker = [[UIColorPickerViewController alloc] init];
     self.chosenCaliper = caliper;
-    colorPicker.color = caliper.unselectedColor;
-    colorPicker.delegate = self;
+    picker.selectedColor = caliper.unselectedColor;
+    picker.delegate = self;
+    picker.supportsAlpha = YES;
 
-    if (@available(iOS 13.0, *)) {
-        colorPicker.modalPresentationStyle = UIModalPresentationAutomatic;
-    } else {
-        colorPicker.modalPresentationStyle = UIModalPresentationPageSheet;
-    }
+    picker.modalPresentationStyle = UIModalPresentationFormSheet;
+    picker.presentationController.delegate = self;
 
-    [self presentViewController:colorPicker animated:YES completion:nil];
+    [self presentViewController:picker animated:YES completion:nil];
 }
+
+//
+//
+//
+//    FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
+//    colorPicker.backgroundColor = [UIColor systemBackgroundColor];
+//
+//    self.chosenCaliper = caliper;
+//    colorPicker.color = caliper.unselectedColor;
+//    colorPicker.delegate = self;
+//
+//    colorPicker.modalPresentationStyle = UIModalPresentationFormSheet;
+//    colorPicker.presentationController.delegate = self;
+//
+//    [self presentViewController:colorPicker animated:YES completion:nil];
+//}
 
 - (void)tweakComponent:(CaliperComponent)component forCaliper:(Caliper *)caliper {
     EPSLog(@"tweakComponent called");
@@ -2672,6 +2684,17 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self moveComponent:self.chosenCaliper component:self.chosenCaliperComponent distance:MICRO_MOVEMENT direction:Down];
 }
 
+#pragma mark - ColorPickerViewControllerDelegate Methods
+
+- (void)colorPickerViewControllerDidSelectColor:(UIColorPickerViewController *)viewController {
+    EPSLog(@"colorPickerViewController didSelectColor");
+    if (self.chosenCaliper != nil) {
+        self.chosenCaliper.color = viewController.selectedColor;
+        self.chosenCaliper.unselectedColor = viewController.selectedColor;
+        self.chosenCaliper.selected = NO;
+        [self.calipersView setNeedsDisplay];
+    }
+}
 
 
 #pragma mark - FCColorPickerViewControllerDelegate Methods
@@ -2966,6 +2989,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     }
 
     return nil; // fallback if triggered by something unexpected
+}
+
+#pragma mark - UIAdaptivePresentationControllerDelegate
+
+- (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
+    // Return NO to prevent swipe-to-dismiss
+    return NO;
 }
 
 
