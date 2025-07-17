@@ -448,26 +448,6 @@
     [self.navigationController setToolbarHidden:NO animated:YES];
 
     if (self.firstRun) {
-        // scale image for imageView;
-        // autolayout not done in viewDidLoad
-//        CGRect screenRect = [[UIScreen mainScreen] bounds];
-//        CGFloat screenWidth = screenRect.size.width;
-//        CGFloat screenHeight = screenRect.size.height;
-//
-//        UIStatusBarManager *statusBarManager = [self.view.window windowScene].statusBarManager;
-//        CGFloat statusBarHeight = 0;
-//        if (statusBarManager != nil) {
-//            statusBarHeight = statusBarManager.statusBarFrame.size.height;
-//        }
-//        CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
-//        CGFloat toolbarHeight = self.navigationController.toolbar.frame.size.height;
-//        CGFloat verticalSpace = statusBarHeight + navigationBarHeight + toolbarHeight;
-//
-//        self.portraitWidth = fminf(screenHeight, screenWidth);
-//        self.landscapeWidth = fmaxf(screenHeight, screenWidth);
-//        self.portraitHeight = fmaxf(screenHeight, screenWidth) - verticalSpace;
-//        self.landscapeHeight = fminf(screenHeight, screenWidth) - verticalSpace;
-
         // if running first time and opening URL then overwrite old image
         if (self.launchFromURL) {
             self.launchFromURL = NO;
@@ -988,38 +968,6 @@
     self.pdfMenuItems = [self spaceoutToolbar:array];
 }
 
-//- (void)rotateImageToolbar {
-//    UIBarButtonItem *rotateImageRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_R style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageRight:)];
-//    UIBarButtonItem *rotateImageLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_90_L style:UIBarButtonItemStylePlain target:self action:@selector(rotateImageLeft:)];
-//    UIBarButtonItem *tweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_R style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageRight:)];
-//    UIBarButtonItem *tweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_1_L style:UIBarButtonItemStylePlain target:self action:@selector(tweakImageLeft:)];
-//    UIBarButtonItem *microTweakRightButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_01_R style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageRight:)];
-//    UIBarButtonItem *microTweakLeftButton = [[UIBarButtonItem alloc] initWithTitle:ROTATE_01_L style:UIBarButtonItemStylePlain target:self action:@selector(microTweakImageLeft:)];
-//    UIBarButtonItem *backToMainMenuButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
-//
-//    NSArray *array = [NSArray arrayWithObjects:rotateImageRightButton,
-//                      rotateImageLeftButton,
-//                      tweakRightButton,
-//                      tweakLeftButton,
-//                      microTweakRightButton,
-//                      microTweakLeftButton,
-//                      backToMainMenuButton, nil];
-//    self.rotateImageMenuItems = [self spaceoutToolbar:array];
-//}
-
-//- (void)createRotateImageToolbar {
-//    NSArray *items = @[ROTATE_90_R, ROTATE_90_L, ROTATE_1_R, ROTATE_1_L, ROTATE_01_R, ROTATE_01_L];
-//    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:items];
-//    segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment;
-//    [segmentedControl addTarget:self action:@selector(rotateSegmentChanged:) forControlEvents:UIControlEventValueChanged];
-//
-//    UIBarButtonItem *segmentedItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
-//
-//    UIBarButtonItem *doneItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(adjustImageDone)];
-//
-//    self.rotateImageMenuItems = @[segmentedItem, doneItem];
-//}
-
 - (void)createRotateImageToolbar {
     NSArray *items = @[ROTATE_90_R, ROTATE_90_L, ROTATE_1_R, ROTATE_1_L, ROTATE_01_R, ROTATE_01_L];
 
@@ -1074,8 +1022,6 @@
     sender.selectedSegmentIndex = UISegmentedControlNoSegment; // deselect after action
 }
 
-
-
 - (void)createSetupCalibrationToolbar {
     self.setButton = [[UIBarButtonItem alloc] initWithTitle:SET style:UIBarButtonItemStylePlain target:self action:@selector(setCalibration)];
     self.clearButton = [[UIBarButtonItem alloc] initWithTitle:CLEAR style:UIBarButtonItemStylePlain target:self action:@selector(clearCalibration)];
@@ -1088,27 +1034,14 @@
 }
 
 - (void)createQTcStep1Toolbar {
-//    UILabel *label = [[UILabel alloc] init];
-//    [label setText:NUM_RRS];
-//    [label sizeToFit];
-//    label.textColor = GRAY_COLOR;
-//    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     self.qtcMeasureRateButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE_RR style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureRR)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
 
-//    NSArray *array = [NSArray arrayWithObjects:labelBarButtonItem,
-//                      self.qtcMeasureRateButton,
-//                      cancelButton, nil];
     NSArray *array = [NSArray arrayWithObjects:self.qtcMeasureRateButton, cancelButton, nil];
     self.qtcStep1MenuItems = [self spaceoutToolbar:array];
 }
 
 - (void)createQTcStep2Toolbar {
-//    UILabel *label = [[UILabel alloc] init];
-//    [label setText:QT];
-//    [label sizeToFit];
-//    label.textColor = GRAY_COLOR;
-//    UIBarButtonItem *labelBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:label];
     self.qtcMeasureQTcButton = [[UIBarButtonItem alloc] initWithTitle:MEASURE_QT style:UIBarButtonItemStylePlain target:self action:@selector(qtcMeasureQT)];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(selectMainToolbar)];
 
@@ -1116,21 +1049,6 @@
                       cancelButton, nil];
     self.qtcStep2MenuItems = [self spaceoutToolbar:array];
 }
-
-//- (void)createMovementToolbar {
-//    self.leftButton = [[UIBarButtonItem alloc] initWithTitle:LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveLeft)];
-//    self.rightButton = [[UIBarButtonItem alloc] initWithTitle:RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveRight)];
-//
-//    self.upButton = [[UIBarButtonItem alloc] initWithTitle:UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveUp)];
-//    self.downButton = [[UIBarButtonItem alloc] initWithTitle:DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(moveDown)];
-//    self.microLeftButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_LEFT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveLeft)];
-//    self.microRightButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_RIGHT_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveRight)];
-//    self.microUpButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_UP_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveUp)];
-//    self.microDownButton = [[UIBarButtonItem alloc] initWithTitle:MICRO_DOWN_ARROW style:UIBarButtonItemStylePlain target:self action:@selector(microMoveDown)];
-//    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTweaking)];
-//    NSArray *array = [NSArray arrayWithObjects:self.leftButton, self.upButton, self.rightButton, self.downButton, self.microLeftButton, self.microUpButton, self.microRightButton, self.microDownButton, doneButton, nil];
-//    self.movementMenuItems = [self spaceoutToolbar:array];
-//}
 
 - (void)createMovementToolbar {
     NSArray *items = @[LEFT_ARROW, UP_ARROW, RIGHT_ARROW, DOWN_ARROW,
@@ -1159,35 +1077,6 @@
 
     self.movementMenuItems = @[segmentedItem, flexibleSpace, doneButton];
 }
-
-
-//- (void)createMovementToolbar {
-//    // Create segmented control with your movement items
-//    NSArray *items = @[LEFT_ARROW, UP_ARROW, RIGHT_ARROW, DOWN_ARROW, MICRO_LEFT_ARROW, MICRO_UP_ARROW, MICRO_RIGHT_ARROW, MICRO_DOWN_ARROW];
-//    UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:items];
-//    segmentedControl.selectedSegmentIndex = UISegmentedControlNoSegment;
-//
-//    // Force equal widths so it doesn't try to size per text
-//    segmentedControl.apportionsSegmentWidthsByContent = NO;
-//
-//    // Make the font smaller so it fits easily
-//    UIFont *smallFont = [UIFont systemFontOfSize:12.0];
-//    NSDictionary *attributes = @{NSFontAttributeName: smallFont};
-//    [segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
-//
-//    // Hook up the action
-//    [segmentedControl addTarget:self action:@selector(movementSegmentChanged:) forControlEvents:UIControlEventValueChanged];
-//
-//    self.movementSegmentedControl = segmentedControl;
-//
-//    // Wrap in UIBarButtonItem
-//    UIBarButtonItem *segmentedItem = [[UIBarButtonItem alloc] initWithCustomView:segmentedControl];
-//
-//    // Add your done button as a separate item
-//    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTweaking)];
-//
-//    self.movementMenuItems = @[segmentedItem, doneButton];
-//}
 
 - (void)movementSegmentChanged:(UISegmentedControl *)sender {
     switch (sender.selectedSegmentIndex) {
@@ -1220,9 +1109,6 @@
     }
     sender.selectedSegmentIndex = UISegmentedControlNoSegment; // deselect after action
 }
-
-
-
 
 - (void)shrinkButtonFontSize:(NSArray *)barButtonItems {
     [self changeButtonFontSize:barButtonItems attributes:self.smallFontAttributes];
@@ -2569,22 +2455,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self presentViewController:picker animated:YES completion:nil];
 }
 
-//
-//
-//
-//    FCColorPickerViewController *colorPicker = [FCColorPickerViewController colorPicker];
-//    colorPicker.backgroundColor = [UIColor systemBackgroundColor];
-//
-//    self.chosenCaliper = caliper;
-//    colorPicker.color = caliper.unselectedColor;
-//    colorPicker.delegate = self;
-//
-//    colorPicker.modalPresentationStyle = UIModalPresentationFormSheet;
-//    colorPicker.presentationController.delegate = self;
-//
-//    [self presentViewController:colorPicker animated:YES completion:nil];
-//}
-
 - (void)tweakComponent:(CaliperComponent)component forCaliper:(Caliper *)caliper {
     EPSLog(@"tweakComponent called");
     self.tweakingInProgress = YES;
@@ -2619,29 +2489,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self.calipersView setNeedsDisplay];
     [self selectMovementToolbar];
 }
-
-
-
-//- (void)tweakComponent:(CaliperComponent)component forCaliper:(Caliper *)caliper {
-//    EPSLog(@"tweakComponent called");
-//    self.tweakingInProgress = YES;
-//    self.chosenCaliper = caliper;
-//    self.chosenCaliperComponent = component;
-//    caliper.chosenComponent = component;
-//    [self.calipersView clearChosenComponentsExceptFor:caliper];
-//    BOOL disableUpDown = caliper.direction == Horizontal && component != Crossbar;
-//    BOOL disableLeftRight = caliper.direction == Vertical && component != Crossbar;
-//    self.upButton.enabled = !disableUpDown;
-//    self.microUpButton.enabled = !disableUpDown;
-//    self.downButton.enabled = !disableUpDown;
-//    self.microDownButton.enabled = !disableUpDown;
-//    self.leftButton.enabled = !disableLeftRight;
-//    self.microLeftButton.enabled = !disableLeftRight;
-//    self.rightButton.enabled = !disableLeftRight;
-//    self.microRightButton.enabled = !disableLeftRight;
-//    [self.calipersView setNeedsDisplay];
-//    [self selectMovementToolbar];
-//}
 
 - (void)moveComponent:(Caliper *)caliper component:(CaliperComponent)component distance:(CGFloat)distance direction:(MovementDirection)direction {
     if (caliper == nil || component == None) {
@@ -2694,23 +2541,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         self.chosenCaliper.selected = NO;
         [self.calipersView setNeedsDisplay];
     }
-}
-
-
-#pragma mark - FCColorPickerViewControllerDelegate Methods
-
--(void)colorPickerViewController:(FCColorPickerViewController *)colorPicker didSelectColor:(UIColor *)color {
-    if (self.chosenCaliper != nil) {
-        self.chosenCaliper.color = color;
-        self.chosenCaliper.unselectedColor = color;
-        self.chosenCaliper.selected = NO;
-        [self.calipersView setNeedsDisplay];
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void)colorPickerViewControllerDidCancel:(FCColorPickerViewController *)colorPicker {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - restore view controller state
@@ -2997,6 +2827,5 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     // Return NO to prevent swipe-to-dismiss
     return NO;
 }
-
 
 @end
