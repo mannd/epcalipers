@@ -205,6 +205,8 @@
 "Help_image_3" = "epcalipershelp-3-fr";
 
 "Delete" = "Supprimer";
+"Measure_RR" = "Mesurer intervalle(s) RR";
+"Measure_QT" = "Mesurer intervalle QT";
 
 /* Unused or obsolete strings */
 //"Help" = "Aide";

@@ -206,6 +206,8 @@
 "Snapshot_saved_title" = "Snapshot Saved";
 "Snapshot_saved_message" = "Snapshot saved to Photo Library";
 "Delete" = "Delete";
+"Measure_RR" = "Measure RR interval(s)";
+"Measure_QT" = "Measure QT interval";
 
 /* Unused at present (incomplete list here, see FR or RU Localizable.strings for full list */
 //"Add calipers" = "Add calipers";

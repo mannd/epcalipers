@@ -48,5 +48,6 @@
 - (void)clearChosenComponentsExceptFor:(Caliper *)caliper;
 - (void)clearAllChosenComponents;
 - (void)deleteCaliper:(CGPoint)location;
+- (BOOL)caliperIsMarching:(CGPoint)location;
 
 @end

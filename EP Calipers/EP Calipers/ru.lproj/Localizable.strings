@@ -205,6 +205,8 @@
 "Help_image_3" = "epcalipershelp-3-ru";
 
 "Delete" = "удалить";
+"Measure_RR" = "Измерьте интервал(ы) RR";
+"Measure_QT" = "Измерьте интервал QT";
 
 /* Unused or obsolete strings */
 // "Help" = "Помощь";

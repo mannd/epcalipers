@@ -296,6 +296,14 @@
     return [self.calipers count];
 }
 
+- (BOOL)caliperIsMarching:(CGPoint)location {
+    Caliper *selectedCaliper = [self caliperNearLocation:location];
+    if (selectedCaliper != nil && selectedCaliper.marching) {
+        return YES;
+    }
+    return NO;
+}
+
 - (void)toggleShowMarchingCaliper:(CGPoint)location {
     if (self.calipers.count <= 0) {
         self.aCaliperIsMarching = NO;
