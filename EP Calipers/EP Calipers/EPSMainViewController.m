@@ -279,12 +279,24 @@
     EPSLog(@"viewDidLoad");
 
     // TODO: iOS 26 need to reimagine bottom menus (don't fit with liquid glass)
+    if (@available(iOS 26.0, *)) {
+        UIContextMenuInteraction *calipersInteraction = [[UIContextMenuInteraction alloc] initWithDelegate:self];
+        [self.calipersView addInteraction:calipersInteraction];
+        
+        UIContextMenuInteraction *scrollInteraction = [[UIContextMenuInteraction alloc] initWithDelegate:self];
+        [self.scrollView addInteraction:scrollInteraction];
+    } else {
+        // Touches
+        UILongPressGestureRecognizer *longPressScrollView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doScrollViewLongPress:)];
+        [longPressScrollView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
+        [self.scrollView addGestureRecognizer:longPressScrollView];
 
-    UIContextMenuInteraction *calipersInteraction = [[UIContextMenuInteraction alloc] initWithDelegate:self];
-    [self.calipersView addInteraction:calipersInteraction];
-
-    UIContextMenuInteraction *scrollInteraction = [[UIContextMenuInteraction alloc] initWithDelegate:self];
-    [self.scrollView addInteraction:scrollInteraction];
+        UILongPressGestureRecognizer *longPressCalipersView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doCalipersViewLongPress:)];
+        [longPressCalipersView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
+        [self.calipersView addGestureRecognizer:longPressCalipersView];
+    }
+    
+    [self createCanvasView];
 
     pdfRef = NULL;
     self.imageIsUpscaled = NO;
@@ -2687,145 +2699,206 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 - (UIContextMenuConfiguration *)contextMenuInteraction:(UIContextMenuInteraction *)interaction
                           configurationForMenuAtLocation:(CGPoint)location {
 
-    if (self.hamburgerMenuIsOpen) {
-        return nil;
-    }
-
-    // CALIPERS VIEW
-    if (interaction.view == self.calipersView) {
-        EPSLog(@"Long press calipers view from main");
-        self.pressLocation = location;
-        
-        if (self.tweakingInProgress) {
-            [self tweakAction];
+    if (@available(iOS 26.0, *)) {
+        if (self.hamburgerMenuIsOpen) {
             return nil;
         }
 
-        return [UIContextMenuConfiguration configurationWithIdentifier:nil
-                                                       previewProvider:nil
-                                                        actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+        // CALIPERS VIEW
+        if (interaction.view == self.calipersView) {
+            EPSLog(@"Long press calipers view from main");
+            self.pressLocation = location;
 
-            NSMutableArray<UIMenuElement *> *actions = [NSMutableArray array];
-
-            UIAction *colorAction = [UIAction actionWithTitle:COLOR
-                                                        image:nil
-                                                   identifier:nil
-                                                      handler:^(__kindof UIAction * _Nonnull action) {
-                [self colorAction];
-            }];
-            [actions addObject:colorAction];
-
-            UIAction *tweakAction = [UIAction actionWithTitle:TWEAK
-                                                        image:nil
-                                                   identifier:nil
-                                                      handler:^(__kindof UIAction * _Nonnull action) {
+            if (self.tweakingInProgress) {
                 [self tweakAction];
-            }];
-            [actions addObject:tweakAction];
+                return nil;
+            }
 
-            if ([self.calipersView caliperNearLocationIsTimeCaliper:location]) {
-                BOOL result = [self.calipersView caliperIsMarching:location];
+            return [UIContextMenuConfiguration configurationWithIdentifier:nil
+                                                           previewProvider:nil
+                                                            actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
 
-                UIAction *marchAction = [UIAction actionWithTitle:MARCH
+                NSMutableArray<UIMenuElement *> *actions = [NSMutableArray array];
+
+                UIAction *colorAction = [UIAction actionWithTitle:COLOR
                                                             image:nil
                                                        identifier:nil
                                                           handler:^(__kindof UIAction * _Nonnull action) {
-                    [self marchAction];
+                    [self colorAction];
                 }];
-                // Set checkmark if marching
-                marchAction.state = result ? UIMenuElementStateOn : UIMenuElementStateOff;
+                [actions addObject:colorAction];
 
-                [actions addObject:marchAction];
-            }
+                UIAction *tweakAction = [UIAction actionWithTitle:TWEAK
+                                                            image:nil
+                                                       identifier:nil
+                                                          handler:^(__kindof UIAction * _Nonnull action) {
+                    [self tweakAction];
+                }];
+                [actions addObject:tweakAction];
 
-            UIAction *deleteAction = [UIAction actionWithTitle:DELETE
-                                                         image:nil
-                                                    identifier:nil
-                                                       handler:^(__kindof UIAction * _Nonnull action) {
-                [self deleteAction];
+                if ([self.calipersView caliperNearLocationIsTimeCaliper:location]) {
+                    BOOL result = [self.calipersView caliperIsMarching:location];
+
+                    UIAction *marchAction = [UIAction actionWithTitle:MARCH
+                                                                image:nil
+                                                           identifier:nil
+                                                              handler:^(__kindof UIAction * _Nonnull action) {
+                        [self marchAction];
+                    }];
+                    // Set checkmark if marching
+                    marchAction.state = result ? UIMenuElementStateOn : UIMenuElementStateOff;
+
+                    [actions addObject:marchAction];
+                }
+
+                UIAction *deleteAction = [UIAction actionWithTitle:DELETE
+                                                             image:nil
+                                                        identifier:nil
+                                                           handler:^(__kindof UIAction * _Nonnull action) {
+                    [self deleteAction];
+                }];
+                [actions addObject:deleteAction];
+                deleteAction.attributes = UIMenuElementAttributesDestructive;
+                [actions addObject:deleteAction];
+
+                UIAction *doneAction = [UIAction actionWithTitle:DONE
+                                                           image:nil
+                                                      identifier:nil
+                                                         handler:^(__kindof UIAction * _Nonnull action) {
+                    [self doneMenuAction];
+                }];
+                [actions addObject:doneAction];
+
+                return [UIMenu menuWithTitle:@"" children:actions];
             }];
-            [actions addObject:deleteAction];
-            deleteAction.attributes = UIMenuElementAttributesDestructive;
-            [actions addObject:deleteAction];
+        }
 
-            UIAction *doneAction = [UIAction actionWithTitle:DONE
-                                                       image:nil
-                                                  identifier:nil
-                                                     handler:^(__kindof UIAction * _Nonnull action) {
-                [self doneMenuAction];
+        // SCROLL VIEW
+        if (interaction.view == self.scrollView) {
+            EPSLog(@"Long press scroll view from main");
+
+            BOOL isMultipagePDF = self.numberOfPages > 1 && pdfRef != NULL;
+
+            return [UIContextMenuConfiguration configurationWithIdentifier:nil
+                                                           previewProvider:nil
+                                                            actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+
+                NSMutableArray<UIMenuElement *> *actions = [NSMutableArray array];
+
+                UIAction *rotateAction = [UIAction actionWithTitle:ROTATE
+                                                             image:nil
+                                                        identifier:nil
+                                                           handler:^(__kindof UIAction * _Nonnull action) {
+                    [self rotateAction];
+                }];
+                [actions addObject:rotateAction];
+
+                UIAction *flipAction = [UIAction actionWithTitle:FLIP
+                                                           image:nil
+                                                      identifier:nil
+                                                         handler:^(__kindof UIAction * _Nonnull action) {
+                    [self flipAction];
+                }];
+                [actions addObject:flipAction];
+
+                UIAction *resetAction = [UIAction actionWithTitle:RESET
+                                                            image:nil
+                                                       identifier:nil
+                                                          handler:^(__kindof UIAction * _Nonnull action) {
+                    [self resetAction];
+                }];
+                [actions addObject:resetAction];
+
+                if (isMultipagePDF || SHOW_PDF_MENU) {
+                    UIAction *pdfAction = [UIAction actionWithTitle:PDF
+                                                              image:nil
+                                                         identifier:nil
+                                                            handler:^(__kindof UIAction * _Nonnull action) {
+                        [self pdfAction];
+                    }];
+                    [actions addObject:pdfAction];
+                }
+
+                UIAction *doneAction = [UIAction actionWithTitle:DONE
+                                                           image:nil
+                                                      identifier:nil
+                                                         handler:^(__kindof UIAction * _Nonnull action) {
+                    [self doneMenuAction];
+                }];
+                [actions addObject:doneAction];
+
+                return [UIMenu menuWithTitle:@"" children:actions];
             }];
-            [actions addObject:doneAction];
-
-            return [UIMenu menuWithTitle:@"" children:actions];
-        }];
+        }
     }
 
-    // SCROLL VIEW
-    if (interaction.view == self.scrollView) {
-        EPSLog(@"Long press scroll view from main");
+    return nil; // fallback if triggered by something unexpected or if IOS version < 26
+}
 
-        BOOL isMultipagePDF = self.numberOfPages > 1 && pdfRef != NULL;
-
-        return [UIContextMenuConfiguration configurationWithIdentifier:nil
-                                                       previewProvider:nil
-                                                        actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
-
-            NSMutableArray<UIMenuElement *> *actions = [NSMutableArray array];
-
-            UIAction *rotateAction = [UIAction actionWithTitle:ROTATE
-                                                         image:nil
-                                                    identifier:nil
-                                                       handler:^(__kindof UIAction * _Nonnull action) {
-                [self rotateAction];
-            }];
-            [actions addObject:rotateAction];
-
-            UIAction *flipAction = [UIAction actionWithTitle:FLIP
-                                                       image:nil
-                                                  identifier:nil
-                                                     handler:^(__kindof UIAction * _Nonnull action) {
-                [self flipAction];
-            }];
-            [actions addObject:flipAction];
-
-            UIAction *resetAction = [UIAction actionWithTitle:RESET
-                                                        image:nil
-                                                   identifier:nil
-                                                      handler:^(__kindof UIAction * _Nonnull action) {
-                [self resetAction];
-            }];
-            [actions addObject:resetAction];
-
-            if (isMultipagePDF || SHOW_PDF_MENU) {
-                UIAction *pdfAction = [UIAction actionWithTitle:PDF
-                                                          image:nil
-                                                     identifier:nil
-                                                        handler:^(__kindof UIAction * _Nonnull action) {
-                    [self pdfAction];
-                }];
-                [actions addObject:pdfAction];
-            }
-
-            UIAction *doneAction = [UIAction actionWithTitle:DONE
-                                                       image:nil
-                                                  identifier:nil
-                                                     handler:^(__kindof UIAction * _Nonnull action) {
-                [self doneMenuAction];
-            }];
-            [actions addObject:doneAction];
-
-            return [UIMenu menuWithTitle:@"" children:actions];
-        }];
+#pragma -- long press
+- (void)doCalipersViewLongPress:(UILongPressGestureRecognizer *)sender {
+    EPSLog(@"long press calipers view from main");
+    if (sender.state != UIGestureRecognizerStateBegan || self.hamburgerMenuIsOpen) {
+        return;
     }
-
-    return nil; // fallback if triggered by something unexpected
+    [sender.view becomeFirstResponder];
+    CGPoint location = [sender locationInView:sender.view];
+    self.pressLocation = location;
+    if (self.tweakingInProgress) {
+        [self tweakAction];
+        return;
+    }
+    UIMenuController *menu = UIMenuController.sharedMenuController;
+    menu.arrowDirection = UIMenuControllerArrowDefault;
+    UIMenuItem *colorMenuItem = [[UIMenuItem alloc] initWithTitle:COLOR action:@selector(colorAction)];
+    UIMenuItem *tweakMenuItem = [[UIMenuItem alloc] initWithTitle:TWEAK action:@selector(tweakAction)];
+    UIMenuItem *marchMenuItem = [[UIMenuItem alloc] initWithTitle:MARCH action:@selector(marchAction)];
+    UIMenuItem *deleteMenuItem = [[UIMenuItem alloc] initWithTitle:DELETE action:@selector((deleteAction))];
+    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:DONE action:@selector(doneMenuAction)];
+    // Only include march menu if we are on a time caliper.
+    if ([self.calipersView caliperNearLocationIsTimeCaliper:location]) {
+        menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, deleteMenuItem, doneMenuItem];
+    }
+    else {
+        menu.menuItems = @[colorMenuItem, tweakMenuItem, deleteMenuItem, doneMenuItem];
+    }
+    CGRect rect = CGRectMake(location.x, location.y, 0, 0);
+    UIView *superView = sender.view.superview;
+    //        [menu setTargetRect:rect inView:superView];
+    [menu showMenuFromView:superView rect:rect];
+    //        [menu setMenuVisible:YES animated:YES];
 }
 
-#pragma mark - UIAdaptivePresentationControllerDelegate
-
-- (BOOL)presentationControllerShouldDismiss:(UIPresentationController *)presentationController {
-    // Return NO to prevent swipe-to-dismiss
-    return NO;
+- (void)doScrollViewLongPress:(UILongPressGestureRecognizer *) sender {
+    EPSLog(@"Long press from main");
+    if (sender.state != UIGestureRecognizerStateBegan || self.hamburgerMenuIsOpen) {
+        return;
+    }
+    [sender.view becomeFirstResponder];
+    EPSLog(@"Sender = %@", sender);
+    UIMenuController *menu = UIMenuController.sharedMenuController;
+    menu.arrowDirection = UIMenuControllerArrowDefault;
+    UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:ROTATE action:@selector(rotateAction)];
+    UIMenuItem *flipMenuItem = [[UIMenuItem alloc] initWithTitle:FLIP action:@selector(flipAction)];
+    UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:RESET action:@selector(resetAction)];
+    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:DONE action:@selector(doneMenuAction)];
+    // Determine if we add PDF menu item.
+    BOOL isMultipagePDF = self.numberOfPages > 1 && pdfRef != NULL;
+    if (isMultipagePDF || SHOW_PDF_MENU) {
+        UIMenuItem *pdfMenuItem = [[UIMenuItem alloc] initWithTitle:PDF action:@selector(pdfAction)];
+        menu.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, pdfMenuItem, doneMenuItem];
+    }
+    else {
+        menu.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, doneMenuItem];
+    }
+    CGPoint location = [sender locationInView:sender.view];
+    CGPoint offset = self.scrollView.contentOffset;
+    CGRect rect = CGRectMake(location.x - offset.x, location.y - offset.y, 0, 0);
+    UIView *superView = sender.view.superview;
+    //        [menu setTargetRect:rect inView:superView];
+    [menu showMenuFromView:superView rect:rect];
+    //        [menu setMenuVisible:YES animated:YES];
 }
+
 
 @end
