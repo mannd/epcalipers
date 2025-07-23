@@ -2453,7 +2453,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 #pragma mark - CalipersViewDelegate Methods
 
-// from https://github.com/fcanas/ios-color-picker
 - (void)chooseColor:(Caliper *)caliper {
     UIColorPickerViewController *picker = [[UIColorPickerViewController alloc] init];
     self.chosenCaliper = caliper;
@@ -2900,5 +2899,10 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     //        [menu setMenuVisible:YES animated:YES];
 }
 
+#pragma mark - UIAdaptivePresentationControllerDelegate
+
+- (void)presentationControllerDidDismiss:(UIPresentationController *)presentationController {
+    // No need to do anything with dismissal.
+}
 
 @end
