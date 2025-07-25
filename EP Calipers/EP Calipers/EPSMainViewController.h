@@ -11,7 +11,6 @@
 #import "BlackView.h"
 #import "Calibration.h"
 #import "Settings.h"
-#import "FCColorPickerViewController.h"
 #import "HamburgerTableViewController.h"
 #import <CMPopTipView/CMPopTipView.h>
 #import <PencilKit/PencilKit.h>
@@ -20,7 +19,7 @@
 - (NSString *)calculateFromQtInSec: (double)qtInSec rrInSec: (double)rrInSec formula: (QTcFormulaPreference)formula convertToMsec: (BOOL)convertToMsec units:(NSString *)units;
 @end
 
-@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, FCColorPickerViewControllerDelegate, CalipersViewDelegate, HamburgerDelegate, CMPopTipViewDelegate, UIDocumentPickerDelegate, PKCanvasViewDelegate>
+@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, UIContextMenuInteractionDelegate, CalipersViewDelegate, HamburgerDelegate, CMPopTipViewDelegate, UIDocumentPickerDelegate, PKCanvasViewDelegate, UIColorPickerViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
