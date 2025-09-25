@@ -35,6 +35,38 @@
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(rotated) name:NSNotificationCenter.UIDeviceOrientationDidChangeNotification object:nil];
 //    NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.rotated), name: NSNotification.Name.UIDeviceOrientationDidChange, object: nil)
 
+//    // Create a new appearance configuration
+//    UINavigationBarAppearance *appearance = [[UINavigationBarAppearance alloc] init];
+//
+//    // Configure it for a transparent background
+//    [appearance configureWithTransparentBackground];
+//
+//    // Explicitly set background color to clear to ensure transparency
+//    appearance.backgroundColor = [UIColor clearColor];
+//
+//    // Remove the shadow line at the bottom of the navigation bar
+//    appearance.shadowColor = [UIColor clearColor];
+//
+//    // Apply the appearance to all navigation bars
+//    [UINavigationBar appearance].standardAppearance = appearance;
+//    [UINavigationBar appearance].scrollEdgeAppearance = appearance;
+//    [UINavigationBar appearance].compactAppearance = appearance;
+//
+//
+//    // Create a new appearance configuration for the toolbar
+//    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
+//
+//    // Configure it for a transparent background
+//    [toolbarAppearance configureWithTransparentBackground];
+//
+//    // Explicitly set background color to clear
+//    toolbarAppearance.backgroundColor = [UIColor clearColor];
+//
+//    // Apply the appearance to all toolbars
+//    [UIToolbar appearance].standardAppearance = toolbarAppearance;
+////    [UIToolbar appearance].scrollEdgeAppearance = toolbarAppearance;
+//    [UIToolbar appearance].compactAppearance = toolbarAppearance;
+
     return YES;
 }
 
