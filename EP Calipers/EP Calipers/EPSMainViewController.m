@@ -278,7 +278,8 @@
     [super viewDidLoad];
     EPSLog(@"viewDidLoad");
 
-    self.view.backgroundColor = [UIColor clearColor];
+    // TODO: Change
+    //    self.view.backgroundColor = [UIColor clearColor];
 
     // TODO: iOS 26 need to reimagine bottom menus (don't fit with liquid glass)
     if (@available(iOS 26.0, *)) {
@@ -402,82 +403,82 @@
     return [UIColor tertiarySystemBackgroundColor];
 }
 
-//- (void)setupTheme {
-//    self.navigationController.navigationBar.translucent = NO;
-//    self.navigationController.toolbar.translucent = NO;
-//
-//    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-//    [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
-//
-//    UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
-//    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
-//    [navigationBarAppearance configureWithOpaqueBackground];
-//    [toolbarAppearance configureWithOpaqueBackground];
-//    navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor];
-//    toolbarAppearance.backgroundColor = [UIColor systemBackgroundColor];
-//    self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
-//    self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
-//    self.navigationController.toolbar.standardAppearance = toolbarAppearance;
-//    if (@available(iOS 15.0, *)) {
-//        self.navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance;
-//    } else {
-//        // Fallback on earlier versions
-//    }
-//    self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
-//    self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
-//}
-
 - (void)setupTheme {
-
-    // --- PART 1: Remove Translucency and set Bar Style (Existing Code) ---
-    // NOTE: For transparent bars that overlay content, you typically WANT YES for translucent.
-    // The Appearance objects below control the *background*, so setting it to NO here might conflict.
-    // However, if your existing app logic depends on NO, you can leave it, but we MUST
-    // change the appearance configuration below.
-    self.navigationController.navigationBar.translucent = YES; // Change to YES for overlay effect
-    self.navigationController.toolbar.translucent = YES; // Change to YES for overlay effect
+    self.navigationController.navigationBar.translucent = NO;
+    self.navigationController.toolbar.translucent = NO;
 
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
 
-    // --- PART 2: Configure Appearance for Transparency (The Fix) ---
     UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
     UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
-
-    // FIX 1: Change to configureWithTransparentBackground
-    [navigationBarAppearance configureWithTransparentBackground];
-    [toolbarAppearance configureWithTransparentBackground];
-
-    // FIX 2: Remove the background color assignment (or set to clear)
-    // We want the background to be clear, not systemBackgroundColor
-    navigationBarAppearance.backgroundColor = [UIColor clearColor]; // Explicitly clear
-    toolbarAppearance.backgroundColor = [UIColor clearColor];       // Explicitly clear
-
-    // Optional: Remove the shadow line
-    navigationBarAppearance.shadowColor = [UIColor clearColor];
-    toolbarAppearance.shadowColor = [UIColor clearColor];
-
-    // --- PART 3: Apply the Appearance (Existing Code) ---
+    [navigationBarAppearance configureWithOpaqueBackground];
+    [toolbarAppearance configureWithOpaqueBackground];
+    navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor];
+    toolbarAppearance.backgroundColor = [UIColor systemBackgroundColor];
     self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
     self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
     self.navigationController.toolbar.standardAppearance = toolbarAppearance;
-
     if (@available(iOS 15.0, *)) {
         self.navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance;
     } else {
         // Fallback on earlier versions
     }
-
-    // NOTE: barTintColor is deprecated in favor of the Appearance objects,
-    // but setting it to clear or removing it might help consistency
-    self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
-    self.navigationController.toolbar.barTintColor = [UIColor clearColor];
-
-    // --- FINAL STEP: Ensure Button Contrast ---
-    // Set the tint color to white so the buttons are visible over the dark ECG image
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationController.toolbar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
+    self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
 }
+
+//- (void)setupTheme {
+//
+//    // --- PART 1: Remove Translucency and set Bar Style (Existing Code) ---
+//    // NOTE: For transparent bars that overlay content, you typically WANT YES for translucent.
+//    // The Appearance objects below control the *background*, so setting it to NO here might conflict.
+//    // However, if your existing app logic depends on NO, you can leave it, but we MUST
+//    // change the appearance configuration below.
+//    self.navigationController.navigationBar.translucent = YES; // Change to YES for overlay effect
+//    self.navigationController.toolbar.translucent = YES; // Change to YES for overlay effect
+//
+//    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
+//    [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
+//
+//    // --- PART 2: Configure Appearance for Transparency (The Fix) ---
+//    UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
+//    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
+//
+//    // FIX 1: Change to configureWithTransparentBackground
+//    [navigationBarAppearance configureWithTransparentBackground];
+//    [toolbarAppearance configureWithTransparentBackground];
+//
+//    // FIX 2: Remove the background color assignment (or set to clear)
+//    // We want the background to be clear, not systemBackgroundColor
+//    navigationBarAppearance.backgroundColor = [UIColor clearColor]; // Explicitly clear
+//    toolbarAppearance.backgroundColor = [UIColor clearColor];       // Explicitly clear
+//
+//    // Optional: Remove the shadow line
+//    navigationBarAppearance.shadowColor = [UIColor clearColor];
+//    toolbarAppearance.shadowColor = [UIColor clearColor];
+//
+//    // --- PART 3: Apply the Appearance (Existing Code) ---
+//    self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
+//    self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
+//    self.navigationController.toolbar.standardAppearance = toolbarAppearance;
+//
+//    if (@available(iOS 15.0, *)) {
+//        self.navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance;
+//    } else {
+//        // Fallback on earlier versions
+//    }
+//
+//    // NOTE: barTintColor is deprecated in favor of the Appearance objects,
+//    // but setting it to clear or removing it might help consistency
+//    self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
+//    self.navigationController.toolbar.barTintColor = [UIColor clearColor];
+//
+//    // --- FINAL STEP: Ensure Button Contrast ---
+//    // Set the tint color to white so the buttons are visible over the dark ECG image
+//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//    self.navigationController.toolbar.tintColor = [UIColor whiteColor];
+//}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
