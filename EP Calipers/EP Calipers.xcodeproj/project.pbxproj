@@ -28,6 +28,7 @@
 		8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E559EA81ACD9262004A6F91 /* Launch Screen.xib */; };
 		8E5A8F711ACC7A54000EEA89 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F701ACC7A54000EEA89 /* WebViewController.m */; };
 		8E5A8F741ACC8DE4000EEA89 /* DismissSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */; };
+		8E5D3B692E84CA980018BD39 /* epcalipers-liquidglass01.icon in Resources */ = {isa = PBXBuildFile; fileRef = 8E5D3B682E84CA980018BD39 /* epcalipers-liquidglass01.icon */; };
 		8E600E9021D3FCF500C97425 /* HelpImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */; };
 		8E787AA325AE7BD1009C44F9 /* ImageSaver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E787AA225AE7BD1009C44F9 /* ImageSaver.swift */; };
 		8E8DDE391FF96D13007247DA /* MiniQTcResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E8DDE381FF96D13007247DA /* MiniQTcResult.m */; };
@@ -117,6 +118,7 @@
 		8E5A8F701ACC7A54000EEA89 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		8E5A8F721ACC8DE4000EEA89 /* DismissSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DismissSegue.h; sourceTree = "<group>"; };
 		8E5A8F731ACC8DE4000EEA89 /* DismissSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DismissSegue.m; sourceTree = "<group>"; };
+		8E5D3B682E84CA980018BD39 /* epcalipers-liquidglass01.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = "epcalipers-liquidglass01.icon"; sourceTree = "<group>"; };
 		8E600E8E21D3FCF500C97425 /* HelpImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpImageViewController.h; sourceTree = "<group>"; };
 		8E600E8F21D3FCF500C97425 /* HelpImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpImageViewController.m; sourceTree = "<group>"; };
 		8E7340F71FFA9E020066A28C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				8E14235C1AB5F16A00CC15BC /* Info.plist */,
 				8E14235D1AB5F16A00CC15BC /* main.m */,
 				8E9F71EF1F19CA1A00029BED /* InfoPlist.strings */,
+				8E5D3B682E84CA980018BD39 /* epcalipers-liquidglass01.icon */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				8EB3DE411AC9A488009376AD /* Settings.bundle in Resources */,
 				8E1423691AB5F16A00CC15BC /* Images.xcassets in Resources */,
 				8E559EA91ACD9262004A6F91 /* Launch Screen.xib in Resources */,
+				8E5D3B692E84CA980018BD39 /* epcalipers-liquidglass01.icon in Resources */,
 				8E9BA12E1EF47D1C00FC8DD2 /* Localizable.strings in Resources */,
 				8ED8B5561E9DBB6800EB1BB8 /* sampleECG.jpg in Resources */,
 				8E9F71ED1F19CA1A00029BED /* InfoPlist.strings in Resources */,
@@ -829,10 +833,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D16E9BDFAC77A2377883E14A /* Pods-EP Calipers.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "epcalipers-liquidglass01";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_TEAM = W74NPJXYEG;
 				INFOPLIST_FILE = "EP Calipers/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -840,7 +844,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.9.0;
+				MARKETING_VERSION = 3.10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "EP Calipers/EP Calipers-Bridging-Header.h";
@@ -853,10 +857,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B483D0269B9745F9D159766F /* Pods-EP Calipers.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "epcalipers-liquidglass01";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 62;
+				CURRENT_PROJECT_VERSION = 64;
 				DEVELOPMENT_TEAM = W74NPJXYEG;
 				INFOPLIST_FILE = "EP Calipers/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -864,7 +868,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.9.0;
+				MARKETING_VERSION = 3.10.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.epstudios.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "EP Calipers/EP Calipers-Bridging-Header.h";
