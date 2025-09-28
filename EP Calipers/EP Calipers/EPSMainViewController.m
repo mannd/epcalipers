@@ -404,28 +404,49 @@
 }
 
 - (void)setupTheme {
+    [self setupNavigationBar];
+    if (@available(iOS 26.0, *)) { } else {
+        [self setupToolbar]; // iOS 26 liquid glass seems to ignore toolbar appearance
+    }
+}
+
+- (void)setupNavigationBar {
     self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.toolbar.translucent = NO;
 
     [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-    [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
 
     UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
-    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
-    [navigationBarAppearance configureWithOpaqueBackground];
-    [toolbarAppearance configureWithOpaqueBackground];
+    [navigationBarAppearance configureWithTransparentBackground];
     navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor];
-    toolbarAppearance.backgroundColor = [UIColor systemBackgroundColor];
+
+    // FIX 2: Remove the background color assignment (or set to clear)
+    // We want the background to be clear, not systemBackgroundColor
+    navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor]; // Explicitly clear
+
     self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
     self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
+
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+}
+
+
+- (void)setupToolbar {
+    self.navigationController.toolbar.translucent = NO;
+
+    [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
+
+    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
+    [toolbarAppearance configureWithOpaqueBackground];
+    toolbarAppearance.backgroundColor = [UIColor systemBackgroundColor];
+
     self.navigationController.toolbar.standardAppearance = toolbarAppearance;
     if (@available(iOS 15.0, *)) {
         self.navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance;
     } else {
         // Fallback on earlier versions
     }
-    self.navigationController.navigationBar.barTintColor = [UIColor systemBackgroundColor];
-    self.navigationController.toolbar.barTintColor = [UIColor systemBackgroundColor];
+
+    self.navigationController.toolbar.barTintColor = [UIColor whiteColor];
 }
 
 //- (void)setupTheme {
