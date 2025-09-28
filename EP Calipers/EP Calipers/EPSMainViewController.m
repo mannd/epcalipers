@@ -403,6 +403,7 @@
     return [UIColor tertiarySystemBackgroundColor];
 }
 
+
 - (void)setupTheme {
     [self setupNavigationBar];
     if (@available(iOS 26.0, *)) { } else {
@@ -2407,6 +2408,17 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         [self.toggleIntervalRateButton setTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE]];
         [self.mRRButton setTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE]];
         [self.calibrateCalipersButton setTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE]];
+    }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        // The appearance (Dark/Light Mode) has changed
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            NSLog(@"Switched to Dark Mode");
+            // Perform actions for Dark Mode
+        } else {
+            NSLog(@"Switched to Light Mode");
+            // Perform actions for Light Mode
+        }
+        [self setupTheme];
     }
 }
 
