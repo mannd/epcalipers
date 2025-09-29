@@ -977,6 +977,7 @@
 
 - (void)hideHamburgerMenu {
     [self.navigationController setToolbarHidden:NO animated:NO];
+    [self setupTheme]; // Need to ensure toolbar isn't messed up in iOS 26
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
     [self.calipersView setUserInteractionEnabled:YES];
