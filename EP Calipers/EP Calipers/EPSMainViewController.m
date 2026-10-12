@@ -204,7 +204,7 @@
 
 #define FLEX_SPACE [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]
 
-@interface EPSMainViewController ()
+@interface EPSMainViewController () <UIEditMenuInteractionDelegate>
 
 @property (strong, nonatomic) UIFont *verySmallFont;
 @property (strong, nonatomic) NSDictionary *verySmallFontAttributes;
@@ -215,6 +215,8 @@
 @property (strong, nonatomic) UIFont *regularFont;
 @property (strong, nonatomic) NSDictionary *regularFontAttributes;
 @property (nonatomic) CGPoint pressLocation;
+@property (strong, nonatomic) UIEditMenuInteraction *calipersEditMenuInteraction;
+@property (strong, nonatomic) UIEditMenuInteraction *scrollEditMenuInteraction;
 
 // Tooltips
 @property (strong, nonatomic) CMPopTipView *addCaliperButtonPopTipView;
@@ -289,6 +291,12 @@
         UIContextMenuInteraction *scrollInteraction = [[UIContextMenuInteraction alloc] initWithDelegate:self];
         [self.scrollView addInteraction:scrollInteraction];
     } else {
+        // Edit menus preserve the existing long-press gestures without context-menu previews.
+        self.calipersEditMenuInteraction = [[UIEditMenuInteraction alloc] initWithDelegate:self];
+        [self.calipersView addInteraction:self.calipersEditMenuInteraction];
+        self.scrollEditMenuInteraction = [[UIEditMenuInteraction alloc] initWithDelegate:self];
+        [self.scrollView addInteraction:self.scrollEditMenuInteraction];
+
         // Touches
         UILongPressGestureRecognizer *longPressScrollView = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(doScrollViewLongPress:)];
         [longPressScrollView setMinimumPressDuration:MINIMUM_PRESS_DURATION];
@@ -2792,7 +2800,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
                                                            handler:^(__kindof UIAction * _Nonnull action) {
                     [self deleteAction];
                 }];
-                [actions addObject:deleteAction];
                 deleteAction.attributes = UIMenuElementAttributesDestructive;
                 [actions addObject:deleteAction];
 
@@ -2877,62 +2884,88 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         return;
     }
     [sender.view becomeFirstResponder];
-    CGPoint location = [sender locationInView:sender.view];
+    CGPoint location = [sender locationInView:self.calipersView];
     self.pressLocation = location;
     if (self.tweakingInProgress) {
         [self tweakAction];
         return;
     }
-    UIMenuController *menu = UIMenuController.sharedMenuController;
-    menu.arrowDirection = UIMenuControllerArrowDefault;
-    UIMenuItem *colorMenuItem = [[UIMenuItem alloc] initWithTitle:COLOR action:@selector(colorAction)];
-    UIMenuItem *tweakMenuItem = [[UIMenuItem alloc] initWithTitle:TWEAK action:@selector(tweakAction)];
-    UIMenuItem *marchMenuItem = [[UIMenuItem alloc] initWithTitle:MARCH action:@selector(marchAction)];
-    UIMenuItem *deleteMenuItem = [[UIMenuItem alloc] initWithTitle:DELETE action:@selector((deleteAction))];
-    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:DONE action:@selector(doneMenuAction)];
-    // Only include march menu if we are on a time caliper.
-    if ([self.calipersView caliperNearLocationIsTimeCaliper:location]) {
-        menu.menuItems = @[colorMenuItem, tweakMenuItem, marchMenuItem, deleteMenuItem, doneMenuItem];
-    }
-    else {
-        menu.menuItems = @[colorMenuItem, tweakMenuItem, deleteMenuItem, doneMenuItem];
-    }
-    CGRect rect = CGRectMake(location.x, location.y, 0, 0);
-    UIView *superView = sender.view.superview;
-    //        [menu setTargetRect:rect inView:superView];
-    [menu showMenuFromView:superView rect:rect];
-    //        [menu setMenuVisible:YES animated:YES];
+    UIEditMenuConfiguration *configuration =
+        [UIEditMenuConfiguration configurationWithIdentifier:nil sourcePoint:location];
+    [self.calipersEditMenuInteraction presentEditMenuWithConfiguration:configuration];
 }
 
-- (void)doScrollViewLongPress:(UILongPressGestureRecognizer *) sender {
+- (void)doScrollViewLongPress:(UILongPressGestureRecognizer *)sender {
     EPSLog(@"Long press from main");
     if (sender.state != UIGestureRecognizerStateBegan || self.hamburgerMenuIsOpen) {
         return;
     }
     [sender.view becomeFirstResponder];
-    EPSLog(@"Sender = %@", sender);
-    UIMenuController *menu = UIMenuController.sharedMenuController;
-    menu.arrowDirection = UIMenuControllerArrowDefault;
-    UIMenuItem *rotateMenuItem = [[UIMenuItem alloc] initWithTitle:ROTATE action:@selector(rotateAction)];
-    UIMenuItem *flipMenuItem = [[UIMenuItem alloc] initWithTitle:FLIP action:@selector(flipAction)];
-    UIMenuItem *resetMenuItem = [[UIMenuItem alloc] initWithTitle:RESET action:@selector(resetAction)];
-    UIMenuItem *doneMenuItem = [[UIMenuItem alloc] initWithTitle:DONE action:@selector(doneMenuAction)];
-    // Determine if we add PDF menu item.
-    BOOL isMultipagePDF = self.numberOfPages > 1 && pdfRef != NULL;
-    if (isMultipagePDF || SHOW_PDF_MENU) {
-        UIMenuItem *pdfMenuItem = [[UIMenuItem alloc] initWithTitle:PDF action:@selector(pdfAction)];
-        menu.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, pdfMenuItem, doneMenuItem];
+    // The source point uses the interaction's view coordinates, including its bounds origin.
+    CGPoint location = [sender locationInView:self.scrollView];
+    UIEditMenuConfiguration *configuration =
+        [UIEditMenuConfiguration configurationWithIdentifier:nil sourcePoint:location];
+    [self.scrollEditMenuInteraction presentEditMenuWithConfiguration:configuration];
+}
+
+#pragma mark - UIEditMenuInteractionDelegate
+
+- (UIMenu *)editMenuInteraction:(UIEditMenuInteraction *)interaction
+          menuForConfiguration:(UIEditMenuConfiguration *)configuration
+              suggestedActions:(NSArray<UIMenuElement *> *)suggestedActions {
+    NSMutableArray<UIMenuElement *> *actions = [NSMutableArray array];
+    __weak typeof(self) weakSelf = self;
+
+    if (interaction == self.calipersEditMenuInteraction) {
+        [actions addObject:[UIAction actionWithTitle:COLOR image:nil identifier:nil
+                                           handler:^(__kindof UIAction *action) {
+            [weakSelf colorAction];
+        }]];
+        [actions addObject:[UIAction actionWithTitle:TWEAK image:nil identifier:nil
+                                           handler:^(__kindof UIAction *action) {
+            [weakSelf tweakAction];
+        }]];
+        if ([self.calipersView caliperNearLocationIsTimeCaliper:configuration.sourcePoint]) {
+            [actions addObject:[UIAction actionWithTitle:MARCH image:nil identifier:nil
+                                               handler:^(__kindof UIAction *action) {
+                [weakSelf marchAction];
+            }]];
+        }
+        [actions addObject:[UIAction actionWithTitle:DELETE image:nil identifier:nil
+                                           handler:^(__kindof UIAction *action) {
+            [weakSelf deleteAction];
+        }]];
+    } else if (interaction == self.scrollEditMenuInteraction) {
+        [actions addObject:[UIAction actionWithTitle:ROTATE image:nil identifier:nil
+                                           handler:^(__kindof UIAction *action) {
+            [weakSelf rotateAction];
+        }]];
+        [actions addObject:[UIAction actionWithTitle:FLIP image:nil identifier:nil
+                                           handler:^(__kindof UIAction *action) {
+            [weakSelf flipAction];
+        }]];
+        [actions addObject:[UIAction actionWithTitle:RESET image:nil identifier:nil
+                                           handler:^(__kindof UIAction *action) {
+            [weakSelf resetAction];
+        }]];
+        BOOL isMultipagePDF = self.numberOfPages > 1 && pdfRef != NULL;
+        if (isMultipagePDF || SHOW_PDF_MENU) {
+            [actions addObject:[UIAction actionWithTitle:PDF image:nil identifier:nil
+                                               handler:^(__kindof UIAction *action) {
+                [weakSelf pdfAction];
+            }]];
+        }
+    } else {
+        return [UIMenu menuWithTitle:@"" children:@[]];
     }
-    else {
-        menu.menuItems = @[rotateMenuItem, flipMenuItem, resetMenuItem, doneMenuItem];
-    }
-    CGPoint location = [sender locationInView:sender.view];
-    CGPoint offset = self.scrollView.contentOffset;
-    CGRect rect = CGRectMake(location.x - offset.x, location.y - offset.y, 0, 0);
-    UIView *superView = sender.view.superview;
-    //        [menu setTargetRect:rect inView:superView];
-    [menu showMenuFromView:superView rect:rect];
-    //        [menu setMenuVisible:YES animated:YES];
+
+    [actions addObject:[UIAction actionWithTitle:DONE image:nil identifier:nil
+                                       handler:^(__kindof UIAction *action) {
+        [weakSelf.calipersEditMenuInteraction dismissMenu];
+        [weakSelf.scrollEditMenuInteraction dismissMenu];
+        [weakSelf doneMenuAction];
+    }]];
+    return [UIMenu menuWithTitle:@"" children:actions];
 }
 
 #pragma mark - UIAdaptivePresentationControllerDelegate
