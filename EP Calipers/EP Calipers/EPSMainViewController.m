@@ -276,9 +276,20 @@
     EPSLog(@"Regular font = %f", self.regularFont.pointSize);
 }
 
+- (void)viewIsAppearing:(BOOL)animated {
+    [super viewIsAppearing:animated];
+    // Registration handles later changes; initialize menus once traits are established.
+    [self updateMenusForSizeClass];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     EPSLog(@"viewDidLoad");
+
+    [self registerForTraitChanges:@[
+        [UITraitHorizontalSizeClass class],
+        [UITraitVerticalSizeClass class]
+    ] withAction:@selector(updateMenusForSizeClass)];
 
     // TODO: Change
     //    self.view.backgroundColor = [UIColor clearColor];
@@ -1022,13 +1033,32 @@
     [segmentedControl addTarget:self action:@selector(rotateSegmentChanged:) forControlEvents:UIControlEventValueChanged];
     self.rotateSegmentedControl = segmentedControl; // Optional: keep a reference if needed
 
-    // Wrap in a fixed-width container view to prevent overflow
+    // The wrapper is resized to leave room for Done on modern toolbars.
     UIView *controlWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 32)];
     segmentedControl.frame = controlWrapper.bounds;
     segmentedControl.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [controlWrapper addSubview:segmentedControl];
 
     UIBarButtonItem *segmentedItem = [[UIBarButtonItem alloc] initWithCustomView:controlWrapper];
+    if (@available(iOS 26.0, *)) {
+        segmentedItem.hidesSharedBackground = YES;
+    }
+    if (@available(iOS 27.0, *)) {
+        segmentedItem.paddingRemoved = YES;
+    }
+
+    // A custom view cannot supply its segment actions to the overflow menu automatically.
+    NSArray<NSNumber *> *angles = @[@90, @(-90), @1, @(-1), @0.1, @(-0.1)];
+    NSMutableArray<UIMenuElement *> *rotationActions = [NSMutableArray array];
+    __weak typeof(self) weakSelf = self;
+    [items enumerateObjectsUsingBlock:^(NSString *title, NSUInteger index, BOOL *stop) {
+        UIAction *action = [UIAction actionWithTitle:title image:nil identifier:nil
+                                          handler:^(__kindof UIAction *action) {
+            [weakSelf rotateImage:angles[index].doubleValue];
+        }];
+        [rotationActions addObject:action];
+    }];
+    segmentedItem.menuRepresentation = [UIMenu menuWithTitle:ROTATE children:rotationActions];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc]
         initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                              target:nil
@@ -1708,7 +1738,36 @@
 }
 
 - (void)selectRotateImageToolbar {
+    [self updateRotateToolbarLayout];
     self.toolbarItems = self.rotateImageMenuItems;
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self updateRotateToolbarLayout];
+}
+
+- (void)updateRotateToolbarLayout {
+    if (@available(iOS 26.0, *)) {
+        UIToolbar *toolbar = self.navigationController.toolbar;
+        CGFloat availableWidth = CGRectGetWidth(toolbar.bounds)
+            - toolbar.safeAreaInsets.left - toolbar.safeAreaInsets.right;
+        if (availableWidth <= 0 || self.rotateImageMenuItems.count == 0) {
+            return;
+        }
+
+        // Reserve space for Done, outer margins, and the gap between toolbar items.
+        // Below 264 points, keep usable segment widths and allow the menu fallback.
+        CGFloat width = MAX(264.0, MIN(320.0, availableWidth - 112.0));
+        UIBarButtonItem *segmentedItem = self.rotateImageMenuItems.firstObject;
+        UIView *wrapper = segmentedItem.customView;
+        if (fabs(CGRectGetWidth(wrapper.frame) - width) > 0.5) {
+            CGRect frame = wrapper.frame;
+            frame.size.width = width;
+            wrapper.frame = frame;
+            segmentedItem.width = width;
+        }
+    }
 }
 
 - (void)selectCalibrateToolbar {
