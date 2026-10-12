@@ -368,8 +368,9 @@
 
     self.isCalipersView = YES;
 
-    // Not sure this makes a difference anymore.
-    self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
+    // NB: This line was deleted for iOS toolbar to work correctly in iOS 26,
+    // and it doesn't seem necessary for earlier iOS either.
+    //self.edgesForExtendedLayout = UIRectEdgeNone;   // nav & toolbar don't overlap view
 
     self.firstRun = YES;
     self.wasLaunchedFromUrl = NO;
@@ -403,10 +404,14 @@
     return [UIColor tertiarySystemBackgroundColor];
 }
 
+
 - (void)setupTheme {
+    NSLog(@"Setting up theme");
     [self setupNavigationBar];
-    if (@available(iOS 26.0, *)) { } else {
-        [self setupToolbar]; // iOS 26 liquid glass seems to ignore toolbar appearance
+    if (@available(iOS 26.0, *)) {
+        // Leave toolbar alone in iOS 26, to allow liquid glass to work.
+    } else {
+        [self setupToolbar];
     }
 }
 
@@ -417,10 +422,6 @@
 
     UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
     [navigationBarAppearance configureWithTransparentBackground];
-    navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor];
-
-    // FIX 2: Remove the background color assignment (or set to clear)
-    // We want the background to be clear, not systemBackgroundColor
     navigationBarAppearance.backgroundColor = [UIColor systemBackgroundColor]; // Explicitly clear
 
     self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
@@ -431,6 +432,7 @@
 
 
 - (void)setupToolbar {
+    NSLog(@"setupToolbar****");
     self.navigationController.toolbar.translucent = NO;
 
     [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
@@ -448,58 +450,6 @@
 
     self.navigationController.toolbar.barTintColor = [UIColor whiteColor];
 }
-
-//- (void)setupTheme {
-//
-//    // --- PART 1: Remove Translucency and set Bar Style (Existing Code) ---
-//    // NOTE: For transparent bars that overlay content, you typically WANT YES for translucent.
-//    // The Appearance objects below control the *background*, so setting it to NO here might conflict.
-//    // However, if your existing app logic depends on NO, you can leave it, but we MUST
-//    // change the appearance configuration below.
-//    self.navigationController.navigationBar.translucent = YES; // Change to YES for overlay effect
-//    self.navigationController.toolbar.translucent = YES; // Change to YES for overlay effect
-//
-//    [self.navigationController.navigationBar setBarStyle:UIBarStyleDefault];
-//    [self.navigationController.toolbar setBarStyle:UIBarStyleDefault];
-//
-//    // --- PART 2: Configure Appearance for Transparency (The Fix) ---
-//    UINavigationBarAppearance *navigationBarAppearance = [[UINavigationBarAppearance alloc] init];
-//    UIToolbarAppearance *toolbarAppearance = [[UIToolbarAppearance alloc] init];
-//
-//    // FIX 1: Change to configureWithTransparentBackground
-//    [navigationBarAppearance configureWithTransparentBackground];
-//    [toolbarAppearance configureWithTransparentBackground];
-//
-//    // FIX 2: Remove the background color assignment (or set to clear)
-//    // We want the background to be clear, not systemBackgroundColor
-//    navigationBarAppearance.backgroundColor = [UIColor clearColor]; // Explicitly clear
-//    toolbarAppearance.backgroundColor = [UIColor clearColor];       // Explicitly clear
-//
-//    // Optional: Remove the shadow line
-//    navigationBarAppearance.shadowColor = [UIColor clearColor];
-//    toolbarAppearance.shadowColor = [UIColor clearColor];
-//
-//    // --- PART 3: Apply the Appearance (Existing Code) ---
-//    self.navigationController.navigationBar.standardAppearance = navigationBarAppearance;
-//    self.navigationController.navigationBar.scrollEdgeAppearance = navigationBarAppearance;
-//    self.navigationController.toolbar.standardAppearance = toolbarAppearance;
-//
-//    if (@available(iOS 15.0, *)) {
-//        self.navigationController.toolbar.scrollEdgeAppearance = toolbarAppearance;
-//    } else {
-//        // Fallback on earlier versions
-//    }
-//
-//    // NOTE: barTintColor is deprecated in favor of the Appearance objects,
-//    // but setting it to clear or removing it might help consistency
-//    self.navigationController.navigationBar.barTintColor = [UIColor clearColor];
-//    self.navigationController.toolbar.barTintColor = [UIColor clearColor];
-//
-//    // --- FINAL STEP: Ensure Button Contrast ---
-//    // Set the tint color to white so the buttons are visible over the dark ECG image
-//    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-//    self.navigationController.toolbar.tintColor = [UIColor whiteColor];
-//}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
@@ -2408,6 +2358,16 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
         [self.mRRButton setTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE]];
         [self.calibrateCalipersButton setTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE]];
     }
+    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
+        // The appearance (Dark/Light Mode) has changed
+        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
+            NSLog(@"Switched to Dark Mode");
+            // Perform actions for Dark Mode
+        } else {
+            NSLog(@"Switched to Light Mode");
+            // Perform actions for Light Mode
+        }
+    }
 }
 
 - (void)lockImage {
@@ -2633,9 +2593,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 #pragma mark - restore view controller state
 
 // see https://useyourloaf.com/blog/state-preservation-and-restoration/
-- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+- (void)encodeSceneStateWithCoder:(NSCoder *)coder
 {
-    EPSLog(@"encodeRestorableStateWithCoder");
+    EPSLog(@"encodeSceneStateWithCoder");
     // possibly enable restart from URL
     [coder encodeObject:self.launchURL forKey:LAUNCH_URL_KEY];
     [coder encodeInteger:self.numberOfPages forKey:NUMBER_OF_PAGES_KEY];
@@ -2670,12 +2630,12 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             [self encodeDrawing:drawing withKey:CANVAS_VIEW_DRAWING_STRING_KEY toCoder:coder];
         }
     }
-    [super encodeRestorableStateWithCoder:coder];
+
 }
 
-- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+- (void)restoreSceneStateWithCoder:(NSCoder *)coder
 {
-    EPSLog(@"decodeRestorableStateWithCoder");
+    EPSLog(@"restoreSceneStateWithCoder");
     //self.firstRun = NO;
     self.launchURL = [coder decodeObjectOfClass:[NSURL class] forKey:LAUNCH_URL_KEY]; 
     self.numberOfPages = (int)[coder decodeIntegerForKey:NUMBER_OF_PAGES_KEY];
@@ -2732,7 +2692,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             self.canvasView.zoomScale = self.scrollView.zoomScale;
         }
     }
-    [super decodeRestorableStateWithCoder:coder];
+
 }
 
 - (UIImage *)decodeImageForKey:(NSString *)key fromCoder:(NSCoder *)coder {
