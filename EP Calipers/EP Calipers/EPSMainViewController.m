@@ -2593,9 +2593,9 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 #pragma mark - restore view controller state
 
 // see https://useyourloaf.com/blog/state-preservation-and-restoration/
-- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+- (void)encodeSceneStateWithCoder:(NSCoder *)coder
 {
-    EPSLog(@"encodeRestorableStateWithCoder");
+    EPSLog(@"encodeSceneStateWithCoder");
     // possibly enable restart from URL
     [coder encodeObject:self.launchURL forKey:LAUNCH_URL_KEY];
     [coder encodeInteger:self.numberOfPages forKey:NUMBER_OF_PAGES_KEY];
@@ -2630,12 +2630,12 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             [self encodeDrawing:drawing withKey:CANVAS_VIEW_DRAWING_STRING_KEY toCoder:coder];
         }
     }
-    [super encodeRestorableStateWithCoder:coder];
+
 }
 
-- (void)decodeRestorableStateWithCoder:(NSCoder *)coder
+- (void)restoreSceneStateWithCoder:(NSCoder *)coder
 {
-    EPSLog(@"decodeRestorableStateWithCoder");
+    EPSLog(@"restoreSceneStateWithCoder");
     //self.firstRun = NO;
     self.launchURL = [coder decodeObjectOfClass:[NSURL class] forKey:LAUNCH_URL_KEY]; 
     self.numberOfPages = (int)[coder decodeIntegerForKey:NUMBER_OF_PAGES_KEY];
@@ -2692,7 +2692,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
             self.canvasView.zoomScale = self.scrollView.zoomScale;
         }
     }
-    [super decodeRestorableStateWithCoder:coder];
+
 }
 
 - (UIImage *)decodeImageForKey:(NSString *)key fromCoder:(NSCoder *)coder {

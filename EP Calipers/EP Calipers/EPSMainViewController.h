@@ -92,6 +92,8 @@
 @property (nonatomic) CGFloat landscapeWidth;
 @property (nonatomic) CGFloat landscapeHeight;
 
+- (void)encodeSceneStateWithCoder:(NSCoder *)coder;
+- (void)restoreSceneStateWithCoder:(NSCoder *)coder;
 - (void)openURL:(NSURL *)url;
 - (void)hideHamburgerMenu;
 - (void)showHamburgerMenu;  
