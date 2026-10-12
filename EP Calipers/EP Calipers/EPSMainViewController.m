@@ -2588,11 +2588,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 
 #pragma mark - ColorPickerViewControllerDelegate Methods
 
-- (void)colorPickerViewControllerDidSelectColor:(UIColorPickerViewController *)viewController {
+- (void)colorPickerViewController:(UIColorPickerViewController *)viewController
+                  didSelectColor:(UIColor *)color
+                    continuously:(BOOL)continuously {
     EPSLog(@"colorPickerViewController didSelectColor");
     if (self.chosenCaliper != nil) {
-        self.chosenCaliper.color = viewController.selectedColor;
-        self.chosenCaliper.unselectedColor = viewController.selectedColor;
+        self.chosenCaliper.color = color;
+        self.chosenCaliper.unselectedColor = color;
         self.chosenCaliper.selected = NO;
         [self.calipersView setNeedsDisplay];
     }
