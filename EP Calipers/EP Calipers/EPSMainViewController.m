@@ -2353,29 +2353,13 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 // TODO: adjust toolbars that need adjusting too
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    EPSLog(@"traitCollectionDidChange");
-    if ((self.traitCollection.verticalSizeClass != previousTraitCollection.verticalSizeClass)
-        || (self.traitCollection.horizontalSizeClass != previousTraitCollection.horizontalSizeClass)) {
-        // note that this fixes menus for future use after rotation, but it doesn't immediately change font
-        // size on involved menus (until menu is changed).
-        [self fixupMenus:[self isCompactSizeClass]];
+- (void)updateMenusForSizeClass {
+    // Menu font changes take effect when the menu is changed.
+    [self fixupMenus:[self isCompactSizeClass]];
 
-        [self.toggleIntervalRateButton setTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE]];
-        [self.mRRButton setTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE]];
-        [self.calibrateCalipersButton setTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE]];
-    }
-    if ([self.traitCollection hasDifferentColorAppearanceComparedToTraitCollection:previousTraitCollection]) {
-        // The appearance (Dark/Light Mode) has changed
-        if (self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark) {
-            NSLog(@"Switched to Dark Mode");
-            // Perform actions for Dark Mode
-        } else {
-            NSLog(@"Switched to Light Mode");
-            // Perform actions for Light Mode
-        }
-    }
+    [self.toggleIntervalRateButton setTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE]];
+    [self.mRRButton setTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE]];
+    [self.calibrateCalipersButton setTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE]];
 }
 
 - (void)lockImage {
