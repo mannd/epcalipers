@@ -1135,13 +1135,32 @@
     [control addTarget:self action:@selector(movementSegmentChanged:) forControlEvents:UIControlEventValueChanged];
     self.movementSegmentedControl = control;
 
-    // Wrap in a view and constrain width
+    // The wrapper is resized to leave room for Done on modern toolbars.
     UIView *controlWrapper = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 32)];
     control.frame = controlWrapper.bounds;
     control.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [controlWrapper addSubview:control];
 
     UIBarButtonItem *segmentedItem = [[UIBarButtonItem alloc] initWithCustomView:controlWrapper];
+    if (@available(iOS 26.0, *)) {
+        segmentedItem.hidesSharedBackground = YES;
+    }
+    if (@available(iOS 27.0, *)) {
+        segmentedItem.paddingRemoved = YES;
+    }
+
+    // Supply the segment actions if a narrow layout requires the overflow menu.
+    NSMutableArray<UIMenuElement *> *movementActions = [NSMutableArray array];
+    __weak typeof(self) weakSelf = self;
+    [items enumerateObjectsUsingBlock:^(NSString *title, NSUInteger index, BOOL *stop) {
+        UIAction *action = [UIAction actionWithTitle:title image:nil identifier:nil
+                                          handler:^(__kindof UIAction *action) {
+            [weakSelf moveForSegmentIndex:index];
+        }];
+        [movementActions addObject:action];
+    }];
+    segmentedItem.menuRepresentation = [UIMenu menuWithTitle:TWEAK children:movementActions];
+
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc]
         initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                              target:nil
@@ -1155,7 +1174,12 @@
 }
 
 - (void)movementSegmentChanged:(UISegmentedControl *)sender {
-    switch (sender.selectedSegmentIndex) {
+    [self moveForSegmentIndex:sender.selectedSegmentIndex];
+    sender.selectedSegmentIndex = UISegmentedControlNoSegment;
+}
+
+- (void)moveForSegmentIndex:(NSInteger)index {
+    switch (index) {
         case 0:
             [self moveLeft];
             break;
@@ -1183,7 +1207,6 @@
         default:
             break;
     }
-    sender.selectedSegmentIndex = UISegmentedControlNoSegment; // deselect after action
 }
 
 - (void)shrinkButtonFontSize:(NSArray *)barButtonItems {
@@ -1745,6 +1768,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self updateRotateToolbarLayout];
+    [self updateMovementToolbarLayout];
 }
 
 - (void)updateRotateToolbarLayout {
@@ -1770,6 +1794,29 @@
     }
 }
 
+- (void)updateMovementToolbarLayout {
+    if (@available(iOS 26.0, *)) {
+        UIToolbar *toolbar = self.navigationController.toolbar;
+        CGFloat availableWidth = CGRectGetWidth(toolbar.bounds)
+            - toolbar.safeAreaInsets.left - toolbar.safeAreaInsets.right;
+        if (availableWidth <= 0 || self.movementMenuItems.count == 0) {
+            return;
+        }
+
+        // Reserve space for Done, outer margins, and the gap between toolbar items.
+        // Below 264 points, keep usable segment widths and allow the menu fallback.
+        CGFloat width = MAX(264.0, MIN(320.0, availableWidth - 112.0));
+        UIBarButtonItem *segmentedItem = self.movementMenuItems.firstObject;
+        UIView *wrapper = segmentedItem.customView;
+        if (fabs(CGRectGetWidth(wrapper.frame) - width) > 0.5) {
+            CGRect frame = wrapper.frame;
+            frame.size.width = width;
+            wrapper.frame = frame;
+            segmentedItem.width = width;
+        }
+    }
+}
+
 - (void)selectCalibrateToolbar {
     self.toolbarItems = self.calibrateMenuItems;
 }
@@ -1779,6 +1826,7 @@
 }
 
 - (void)selectMovementToolbar {
+    [self updateMovementToolbarLayout];
     self.toolbarItems = self.movementMenuItems;
 }
 
