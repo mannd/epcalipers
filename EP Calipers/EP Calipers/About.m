@@ -15,10 +15,9 @@
 
 @implementation About
 
-+ (void)show {
++ (void)showFromViewController:(UIViewController *)viewController {
     NSString *message = [NSString localizedStringWithFormat:L(@"Copyright_message"), [self getVersion]];
-    UIViewController *vc = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [Alert showSimpleAlertWithTitle:L(@"EP Calipers") message:message viewController:vc];
+    [Alert showSimpleAlertWithTitle:L(@"EP Calipers") message:message viewController:viewController];
 }
 
 + (NSString *)getVersion {

@@ -797,7 +797,7 @@
 }
 
 - (void)showAbout {
-    [About show];
+    [About showFromViewController:self];
 }
 
 // Create toolbars

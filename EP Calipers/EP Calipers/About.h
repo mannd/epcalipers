@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class UIViewController;
+
 @interface About : NSObject
 
-+ (void)show;
++ (void)showFromViewController:(UIViewController *)viewController;
 
 @end
