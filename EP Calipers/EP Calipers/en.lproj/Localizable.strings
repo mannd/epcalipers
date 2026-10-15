@@ -61,7 +61,6 @@
 "Mean_rate_ipad" = "Mean Rate";
 "Mean_rate_iphone" = "MeanRate";
 "Mean_rate_iphone_shortest" = "MRate";
-"Mean_rate_tooltip" = "Measure 2 or more intervals and calculate mean rate and interval";
 "Mean_rr_result_for_qtc" = "Mean RR = %.4g %@\nQT = %.4g %@";
 "Measure" = "Measure";
 "msec" = "msec";
@@ -111,14 +110,12 @@
 
 /* Side menu */
 "About_ep_calipers" = "About EP Calipers";
-"Hide_tooltips" = "Hide tooltips";
 "Lock_image" = "Lock image";
 "Manual" = "Manual";
 "Preferences" = "Preferences";
 "Quick_help" = "Quick help";
 "Sample_ecg" = "Sample ECG";
 "Select_image" = "Select image";
-"Show_tooltips" = "Show tooltips";
 "Take_photo" = "Take photo";
 "Topics" = "Topics";
 "Unlock_image" = "Unlock image";
@@ -142,22 +139,6 @@
 "Preferences_ht" = "Preferences";
 "Acknowledgments_ht" = "Acknowledgments";
 
-/* Tooltips */
-"Add_tooltip" = "Add calipers";
-"Clear_calibration_tooltip" = "Clear all calibration";
-"Int_rate_tooltip" = "Toggle between interval and heart rate";
-"Longpress_tooltip" = "Long press on image or caliper to show additional options";
-"Mean_rate_tooltip" = "Measure 2 or more intervals and calculate mean rate and interval";
-"Measurement_tooltip" ="Use measurement toolbar to calibrate calipers, then make measurements";
-"Move_caliper_tooltip" = "Move caliper by dragging crossbar.  Expand and contract it by dragging sidebars.  Tap to select it for measurements.  Double-tap to delete it.";
-"Move_image_tooltip" = "Pinch to zoom and drag to reposition image"; 
-"QTc_step_1_tooltip" = "Measure 1 or more RR intervals";
-"QTc_step_2_tooltip" = "Measure the QT interval";
-"QTc_tooltip" = "Calculate the QTc";
-"Set_calibration_tooltip" = "Measure a known interval with selected caliper.";
-"Setup_calibration_tooltip" = "Select a caliper by tapping it. Use it to measure a known interval (e.g. 1000 msec).";
-"Side_menu_tooltip" = "Load a new image, change preferences, get help";
-"Scribble_tooltip" = "Annotate with Apple Pencil";
 
 /* Onboard labels */
 "Move_caliper_label" = "Drag crossbar, drag sidebars";

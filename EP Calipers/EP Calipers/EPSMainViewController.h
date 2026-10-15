@@ -12,14 +12,13 @@
 #import "Calibration.h"
 #import "Settings.h"
 #import "HamburgerTableViewController.h"
-#import <CMPopTipView/CMPopTipView.h>
 #import <PencilKit/PencilKit.h>
 
 @protocol QTcResultProtocol
 - (NSString *)calculateFromQtInSec: (double)qtInSec rrInSec: (double)rrInSec formula: (QTcFormulaPreference)formula convertToMsec: (BOOL)convertToMsec units:(NSString *)units;
 @end
 
-@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, UIContextMenuInteractionDelegate, CalipersViewDelegate, HamburgerDelegate, CMPopTipViewDelegate, UIDocumentPickerDelegate, PKCanvasViewDelegate, UIColorPickerViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
+@interface EPSMainViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIScrollViewDelegate, UIAlertViewDelegate, UIContextMenuInteractionDelegate, CalipersViewDelegate, HamburgerDelegate, UIDocumentPickerDelegate, PKCanvasViewDelegate, UIColorPickerViewControllerDelegate, UIAdaptivePresentationControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *imageView;
 @property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
@@ -108,11 +107,9 @@
 - (void)openSettings;
 - (void)lockImage;
 - (BOOL)imageIsLocked;
-- (void)showToolTips;
 - (BOOL)isIpad;
 
 @property (nonatomic) BOOL tweakingInProgress;
-@property (nonatomic) BOOL showingToolTips;
 
 //@property (nonatomic) CGPDFDocumentRef documentRef;
 @property (nonatomic) int pageNumber;

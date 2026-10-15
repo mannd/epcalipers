@@ -109,14 +109,12 @@
 
 /* Side menu */
 "About_ep_calipers" = "Sur Compas EP";
-"Hide_tooltips" = "Masquer les infobulles";
 "Lock_image" = "Immobiliser l'image";
 "Manual" = "Manuel";
 "Preferences" = "Préférences";
 "Quick_help" = "Aide rapide";
 "Sample_ecg" = "Exemple ECG";
 "Select_image" = "Choisir une image";
-"Show_tooltips" = "Afficher les infobulles";
 "Take_photo" = "Prendre une photo";
 "Topics" = "Sujets";
 "Unlock_image" = "Débloquer l'image";
@@ -140,22 +138,6 @@
 "Preferences_ht" = "Préférences";
 "Acknowledgments_ht" = "Remerciements";
 
-/* Tooltips */
-"Add_tooltip" = "Ajouter des compas";
-"Clear_calibration_tooltip" = "Effacer tout l'étalonnage";
-"Int_rate_tooltip" = "Changer entre intervalle et fréquence cardiaque";
-"Longpress_tooltip" = "Appuyer pendant quelques secondes sur l'image ou sur un compas pour montrer plus d'options";
-"Mean_rate_tooltip" = "Mesurer 2 ou plus d'intervalles pour calculer l'intervalle moyen et la fréquence cardiaque moyenne";
-"Measurement_tooltip" = "Utiliser le menu des mesures pour l'étalonnage des compas et puis prendre des mesures";
-"Move_caliper_tooltip" = "Déplacer le compas en glissant la barre transversale.  Élarger et contracter le compas en glissant les barres verticales.  Taper pour le choisir.  Taper deux fois pour le supprimer.";
-"Move_image_tooltip" = "Pincer et zoomer ou glisser pour repositionner l'image";
-"QTc_step_1_tooltip" = "Mesurer un ou plus des intervalles RR";
-"QTc_step_2_tooltip" = "Mesurer l'intervalle QT";
-"QTc_tooltip" = "Calculer l'intervalle QTc";
-"Set_calibration_tooltip" = "Mesurer un intervalle connu avec le compas choisi";
-"Setup_calibration_tooltip" = "Choisir un compas en le tapant.  Utiliser le compas pour mesurer un intervalle connu, par exemple 1 000 msec.";
-"Side_menu_tooltip" = "Choisir une nouvelle image";
-"Scribble_tooltip" = "Annoter avec Apple Pencil";
 
 /* Onboard labels */
 "Move_caliper_label" = "Glisser les barres";

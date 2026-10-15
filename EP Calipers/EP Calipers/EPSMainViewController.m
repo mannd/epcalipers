@@ -105,23 +105,6 @@
 #define BRUGADA_RESULTS_TITLE L(@"Brugada_results_title")
 #define BRUGADA_INCREASED_RISK L(@"Brugada_increased_risk")
 
-// Tooltips
-#define ADD_TOOLTIP L(@"Add_tooltip")
-#define SIDE_MENU_TOOLTIP L(@"Side_menu_tooltip")
-#define MOVE_CALIPER_TOOLTIP L(@"Move_caliper_tooltip")
-#define MEASUREMENT_TOOLTIP L(@"Measurement_tooltip")
-#define MOVE_IMAGE_TOOLTIP L(@"Move_image_tooltip")
-#define LONGPRESS_TOOLTIP L(@"Longpress_tooltip")
-#define SETUP_CALIBRATION_TOOLTIP L(@"Setup_calibration_tooltip")
-#define SET_CALIBRATION_TOOLTIP L(@"Set_calibration_tooltip")
-#define CLEAR_CALIBRATION_TOOLTIP L(@"Clear_calibration_tooltip")
-#define INT_RATE_TOOLTIP L(@"Int_rate_tooltip")
-#define MEAN_RATE_TOOLTIP L(@"Mean_rate_tooltip")
-#define QTC_TOOLTIP L(@"QTc_tooltip")
-#define QTC_STEP_1_TOOLTIP L(@"QTc_step_1_tooltip")
-#define QTC_STEP_2_TOOLTIP L(@"QTc_step_2_tooltip")
-#define SNAPSHOT_TOOLTIP L(@"Snapshot_screen")
-#define SCRIBBLE_TOOLTIP L(@"Scribble_tooltip")
 
 // Dialog titles and messages
 #define ADD_CALIPER L(@"Add_caliper")
@@ -218,33 +201,6 @@
 @property (strong, nonatomic) UIEditMenuInteraction *calipersEditMenuInteraction;
 @property (strong, nonatomic) UIEditMenuInteraction *scrollEditMenuInteraction;
 
-// Tooltips
-@property (strong, nonatomic) CMPopTipView *addCaliperButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *snapshotButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *scribbleButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *sideMenuButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *setupCalibrationButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *setCalibrationButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *clearCalibrationButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *intRateButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *meanRateButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *calculateQTcPopTipView;
-@property (strong, nonatomic) CMPopTipView *qtcStep1ButtonPopTipView;
-@property (strong, nonatomic) CMPopTipView *qtcStep2ButtonPopTipView;
-
-// Toggles for individual tooltips
-@property (nonatomic) BOOL showAddCaliperButtonToolTip;
-@property (nonatomic) BOOL showSnapshotButtonToolTip;
-@property (nonatomic) BOOL showScribbleButtonToolTip;
-@property (nonatomic) BOOL showSideMenuButtonToolTip;
-@property (nonatomic) BOOL showSetupCalibrationToolTip;
-@property (nonatomic) BOOL showSetCalibrationToolTip;
-@property (nonatomic) BOOL showClearCalibrationToolTip;
-@property (nonatomic) BOOL showIntRateToolTip;
-@property (nonatomic) BOOL showMeanRateToolTip;
-@property (nonatomic) BOOL showCalculateQTcToolTip;
-@property (nonatomic) BOOL showQtcStep1ToolTip;
-@property (nonatomic) BOOL showQtcStep2ToolTip;
 
 @property (nonatomic) CGAffineTransform imageTransform;
 @property (nonatomic) BOOL imageIsUpscaled;
@@ -535,11 +491,10 @@
         self.firstRun = NO;
         self.firstStart = NO;
 
-        if (TEST_QUICK_START || [self shouldShowTooltipsAtStart]) {
+        if (TEST_QUICK_START || [self shouldShowQuickStartAtStart]) {
             self.firstStart = YES;
             [self showHelp];
             self.firstStart = NO;
-            [self showToolTips];
         }
 
         if (self.isNewInstallation || self.isUpgrade) {
@@ -611,18 +566,6 @@
     if (![self canHaveCanvasView]) {
         return;
     }
-    if (nil == self.scribbleButtonPopTipView && self.showScribbleButtonToolTip) {
-        self.scribbleButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SCRIBBLE_TOOLTIP];
-        [self setupToolTip:self.scribbleButtonPopTipView];
-        [self.scribbleButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItems[2]  animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.scribbleButtonPopTipView dismissAnimated:YES];
-        self.scribbleButtonPopTipView = nil;
-        self.showScribbleButtonToolTip = NO;
-    }
 
     [self performToggleCanvasView];
 }
@@ -683,118 +626,18 @@
     self.canvasView.zoomScale = self.scrollView.zoomScale;
 }
 
-- (void)showToolTips {
-    // This method is a toggle.  Turn off tool tips if showing them.
-    if (self.showingToolTips) {
-        [self disableToolTips];
-        return;
-    }
-    [self initToolTips];
-}
-
-- (BOOL)shouldShowTooltipsAtStart {
+- (BOOL)shouldShowQuickStartAtStart {
     EPSLog(@"Previous app version = %@", self.priorVersion);
     EPSLog(@"Current app version = %@", self.currentVersion);
     EPSLog(@"Previous app major version = %@", self.priorMajorVersion);
     if (self.isNewInstallation) {
         return YES;
     }
-    // Only show tooltips at startup if upgrade is from version 1 or 2
+    // Only show Quick Start at startup if upgrade is from version 1 or 2
     if (self.isUpgrade && (self.priorMajorVersion == nil || [self.priorMajorVersion  isEqual: @"1"] || [self.priorMajorVersion  isEqual: @"2"])) {
         return YES;
     }
     return NO;
-}
-
-- (void)setToolTipState:(BOOL)value {
-    self.showAddCaliperButtonToolTip = value;
-    self.showSnapshotButtonToolTip = value;
-    self.showScribbleButtonToolTip = value;
-    self.showSideMenuButtonToolTip = value;
-    self.showSetupCalibrationToolTip = value;
-    self.showSetCalibrationToolTip = value;
-    self.showClearCalibrationToolTip = value;
-    self.showIntRateToolTip = value;
-    self.showMeanRateToolTip = value;
-    self.showCalculateQTcToolTip = value;
-    self.showQtcStep1ToolTip = value;
-    self.showQtcStep2ToolTip = value;
-}
-
-- (void)initToolTips {
-    [self setToolTipState:YES];
-    [self stillShowingToolTips];
-}
-
-- (void)disableToolTips {
-    [self setToolTipState:NO];
-    [self stillShowingToolTips];
-}
-
-- (void)stillShowingToolTips {
-    BOOL toolTipsRemain = self.showSetupCalibrationToolTip || self.showSetCalibrationToolTip || self.showIntRateToolTip || self.showMeanRateToolTip || self.showClearCalibrationToolTip || self.showQtcStep1ToolTip || self.showQtcStep2ToolTip ||
-    self.showAddCaliperButtonToolTip || self.showSnapshotButtonToolTip ||
-    (self.showScribbleButtonToolTip && [self canHaveCanvasView]);
-    self.showingToolTips = toolTipsRemain;
-    self.hamburgerViewController.showingToolTips = self.showingToolTips;
-}
-
-- (void)setupToolTip:(CMPopTipView *)toolTip {
-    toolTip.delegate = self;
-    toolTip.dismissTapAnywhere = YES;
-    toolTip.has3DStyle = NO;
-}
-
-// CMPopTipViewDelegate method
-- (void)popTipViewWasDismissedByUser:(CMPopTipView *)popTipView {
-    if ([popTipView isEqual:self.addCaliperButtonPopTipView]) {
-        self.showAddCaliperButtonToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.snapshotButtonPopTipView]) {
-        self.showSnapshotButtonToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.scribbleButtonPopTipView]) {
-        self.showScribbleButtonToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.sideMenuButtonPopTipView]) {
-        self.showSideMenuButtonToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.setupCalibrationButtonPopTipView]) {
-        self.showSetupCalibrationToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.setCalibrationButtonPopTipView]) {
-        self.showSetCalibrationToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.clearCalibrationButtonPopTipView]) {
-        self.showClearCalibrationToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.intRateButtonPopTipView]) {
-        self.showIntRateToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.meanRateButtonPopTipView]) {
-        self.showMeanRateToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.calculateQTcPopTipView]) {
-        self.showCalculateQTcToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.qtcStep1ButtonPopTipView]) {
-        self.showQtcStep1ToolTip = NO;
-        [self stillShowingToolTips];
-    }
-    if ([popTipView isEqual:self.qtcStep2ButtonPopTipView]) {
-        self.showQtcStep2ToolTip = NO;
-        [self stillShowingToolTips];
-    }
 }
 
 - (NSString *)applicationLanguage {
@@ -878,18 +721,6 @@
 }
 
 - (void)showAddCaliperMenu {
-    if (nil == self.addCaliperButtonPopTipView && self.showAddCaliperButtonToolTip) {
-        self.addCaliperButtonPopTipView = [[CMPopTipView alloc] initWithMessage:ADD_TOOLTIP];
-        [self setupToolTip:self.addCaliperButtonPopTipView];
-        [self.addCaliperButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItems[0]  animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.addCaliperButtonPopTipView dismissAnimated:YES];
-        self.addCaliperButtonPopTipView = nil;
-        self.showAddCaliperButtonToolTip = NO;
-    }
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction* timeCaliperAction = [UIAlertAction actionWithTitle:TIME_CALIPER style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {[self addHorizontalCaliper];}];
 
@@ -909,18 +740,6 @@
 }
 
 - (void)toggleHamburgerMenu {
-    if (nil == self.sideMenuButtonPopTipView && self.showSideMenuButtonToolTip) {
-        self.sideMenuButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SIDE_MENU_TOOLTIP];
-        [self setupToolTip:self.sideMenuButtonPopTipView];
-        [self.sideMenuButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.leftBarButtonItem  animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.sideMenuButtonPopTipView dismissAnimated:YES];
-        self.sideMenuButtonPopTipView = nil;
-        self.showSideMenuButtonToolTip = NO;
-    }
     if (self.hamburgerMenuIsOpen) {
         [self hideHamburgerMenu];
     }
@@ -1267,37 +1086,11 @@
 }
 
 - (void)toggleIntervalRate {
-    if (nil == self.intRateButtonPopTipView && self.showIntRateToolTip) {
-        self.intRateButtonPopTipView = [[CMPopTipView alloc] initWithMessage:INT_RATE_TOOLTIP];
-        [self setupToolTip:self.intRateButtonPopTipView];
-        [self.intRateButtonPopTipView presentPointingAtBarButtonItem:self.toggleIntervalRateButton animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.intRateButtonPopTipView dismissAnimated:YES];
-        self.intRateButtonPopTipView = nil;
-        self.showIntRateToolTip = NO;
-        [self stillShowingToolTips];
-    }
     self.horizontalCalibration.displayRate = ! self.horizontalCalibration.displayRate;
     [self.calipersView setNeedsDisplay];
 }
 
 - (void)meanRR {
-    if (nil == self.meanRateButtonPopTipView && self.showMeanRateToolTip) {
-        self.meanRateButtonPopTipView = [[CMPopTipView alloc] initWithMessage:MEAN_RATE_TOOLTIP];
-        [self setupToolTip:self.meanRateButtonPopTipView];
-        [self.meanRateButtonPopTipView presentPointingAtBarButtonItem:self.mRRButton animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.meanRateButtonPopTipView dismissAnimated:YES];
-        self.meanRateButtonPopTipView = nil;
-        self.showMeanRateToolTip = NO;
-        [self stillShowingToolTips];
-    }
     if (self.calipersView.calipers.count < 1) {
         [self showNoCalipersAlert];
         [self selectMainToolbar];
@@ -1346,19 +1139,6 @@
 }
 
 - (void)calculateQTc {
-    if (nil == self.calculateQTcPopTipView && self.showCalculateQTcToolTip) {
-        self.calculateQTcPopTipView = [[CMPopTipView alloc] initWithMessage:QTC_TOOLTIP];
-        [self setupToolTip:self.calculateQTcPopTipView];
-        [self.calculateQTcPopTipView presentPointingAtBarButtonItem:self.qtcButton animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.calculateQTcPopTipView dismissAnimated:YES];
-        self.calculateQTcPopTipView = nil;
-        self.showCalculateQTcToolTip = NO;
-        [self stillShowingToolTips];
-    }
     self.horizontalCalibration.displayRate = NO;
     Caliper *singleHorizontalCaliper = [self getLoneTimeCaliper];
     if (singleHorizontalCaliper != nil) {
@@ -1376,19 +1156,6 @@
 }
 
 - (void)qtcMeasureRR {
-    if (nil == self.qtcStep1ButtonPopTipView && self.showQtcStep1ToolTip) {
-        self.qtcStep1ButtonPopTipView = [[CMPopTipView alloc] initWithMessage:QTC_STEP_1_TOOLTIP];
-        [self setupToolTip:self.qtcStep1ButtonPopTipView];
-        [self.qtcStep1ButtonPopTipView presentPointingAtBarButtonItem:self.qtcMeasureRateButton animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.qtcStep1ButtonPopTipView dismissAnimated:YES];
-        self.qtcStep1ButtonPopTipView = nil;
-        self.showQtcStep1ToolTip = NO;
-        [self stillShowingToolTips];
-    }
     if ([self noTimeCaliperSelected]) {
         [self showNoTimeCaliperSelectedAlertView];
     }
@@ -1431,19 +1198,6 @@
 }
 
 - (void)qtcMeasureQT {
-    if (nil == self.qtcStep2ButtonPopTipView && self.showQtcStep2ToolTip) {
-        self.qtcStep2ButtonPopTipView = [[CMPopTipView alloc] initWithMessage:QTC_STEP_2_TOOLTIP];
-        [self setupToolTip:self.qtcStep2ButtonPopTipView];
-        [self.qtcStep2ButtonPopTipView presentPointingAtBarButtonItem:self.qtcMeasureQTcButton animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.qtcStep2ButtonPopTipView dismissAnimated:YES];
-        self.qtcStep1ButtonPopTipView = nil;
-        self.showQtcStep2ToolTip = NO;
-        [self stillShowingToolTips];
-    }
     if ([self noTimeCaliperSelected]) {
         [self showNoTimeCaliperSelectedAlertView];
     }
@@ -1530,37 +1284,12 @@
 }
 
 - (void)clearCalibration {
-    if (nil == self.clearCalibrationButtonPopTipView && self.showClearCalibrationToolTip) {
-        self.clearCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:CLEAR_CALIBRATION_TOOLTIP];
-        [self setupToolTip:self.clearCalibrationButtonPopTipView];
-        [self.clearCalibrationButtonPopTipView presentPointingAtBarButtonItem:self.clearButton animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.clearCalibrationButtonPopTipView dismissAnimated:YES];
-        self.clearCalibrationButtonPopTipView = nil;
-        self.showClearCalibrationToolTip = NO;
-        [self stillShowingToolTips];
-    }
     [self resetCalibration];
     [self.calipersView setNeedsDisplay];
 }
 
 
 - (void)setupCalibration {
-    if (nil == self.setupCalibrationButtonPopTipView && self.showSetupCalibrationToolTip) {
-        self.setupCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SETUP_CALIBRATION_TOOLTIP];
-        [self setupToolTip:self.setupCalibrationButtonPopTipView];
-        [self.setupCalibrationButtonPopTipView presentPointingAtBarButtonItem:self.calibrateCalipersButton  animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.setupCalibrationButtonPopTipView dismissAnimated:YES];
-        self.setupCalibrationButtonPopTipView = nil;
-        self.showSetupCalibrationToolTip = NO;
-    }
     if (self.calipersView.calipers.count < 1) {
         [self showNoCalipersAlert];
         [self selectMainToolbar];
@@ -1576,18 +1305,6 @@
 }
 
 - (void)setCalibration {
-    if (nil == self.setCalibrationButtonPopTipView && self.showSetCalibrationToolTip) {
-        self.setCalibrationButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SET_CALIBRATION_TOOLTIP];
-        [self setupToolTip:self.setCalibrationButtonPopTipView];
-        [self.setCalibrationButtonPopTipView presentPointingAtBarButtonItem:self.setButton  animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.setCalibrationButtonPopTipView dismissAnimated:YES];
-        self.setCalibrationButtonPopTipView = nil;
-        self.showSetCalibrationToolTip = NO;
-    }
     if ([self.calipersView noCaliperIsSelected]) {
         [Alert showSimpleAlertWithTitle:NO_CALIPER_SELECTED_MESSAGE message:CALIBRATION_INSTRUCTIONS viewController:self];
         return;
@@ -2485,18 +2202,6 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
 }
 
 - (void)snapshotScreen {
-    if (nil == self.snapshotButtonPopTipView && self.showSnapshotButtonToolTip) {
-        self.snapshotButtonPopTipView = [[CMPopTipView alloc] initWithMessage:SNAPSHOT_TOOLTIP];
-        [self setupToolTip:self.snapshotButtonPopTipView];
-        [self.snapshotButtonPopTipView presentPointingAtBarButtonItem:self.navigationItem.rightBarButtonItems[1]  animated:YES];
-        return;
-    }
-    else {
-        // Dismiss
-        [self.snapshotButtonPopTipView dismissAnimated:YES];
-        self.snapshotButtonPopTipView = nil;
-        self.showSnapshotButtonToolTip = NO;
-    }
     [self checkPhotoLibraryStatus];
 }
 
