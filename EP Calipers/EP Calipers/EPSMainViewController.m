@@ -205,6 +205,12 @@
 @property (nonatomic) CGAffineTransform imageTransform;
 @property (nonatomic) BOOL imageIsUpscaled;
 
+@property (nonatomic, strong) UIView *mainActionBar;
+@property (nonatomic, strong) NSArray<UIButton *> *mainActionButtons;
+@property (nonatomic) BOOL mainActionBarSelected;
+@property (nonatomic) BOOL bottomControlsHidden;
+@property (nonatomic) CGFloat mainActionBarInset;
+
 @property (nonatomic, strong) UISegmentedControl *movementSegmentedControl;
 @property (nonatomic, strong) UISegmentedControl *rotateSegmentedControl;
 
@@ -244,13 +250,13 @@
 
     [self registerForTraitChanges:@[
         [UITraitHorizontalSizeClass class],
-        [UITraitVerticalSizeClass class]
+        [UITraitVerticalSizeClass class],
+        [UITraitPreferredContentSizeCategory class]
     ] withAction:@selector(updateMenusForSizeClass)];
 
     // TODO: Change
     //    self.view.backgroundColor = [UIColor clearColor];
 
-    // TODO: iOS 26 need to reimagine bottom menus (don't fit with liquid glass)
     if (@available(iOS 26.0, *)) {
         UIContextMenuInteraction *calipersInteraction = [[UIContextMenuInteraction alloc] initWithDelegate:self];
         [self.calipersView addInteraction:calipersInteraction];
@@ -458,7 +464,7 @@
 
     [self.view setUserInteractionEnabled:YES];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self.navigationController setToolbarHidden:NO animated:YES];
+    [self setBottomControlsHidden:NO animated:YES];
 
     if (self.firstRun) {
         // if running first time and opening URL then overwrite old image
@@ -590,7 +596,7 @@
         [self scaleCanvasView];
         // Do not animate hiding toolbar, as it will cause an animation to
         // appear in the calipers.
-        [self.navigationController setToolbarHidden:NO animated:NO];
+        [self setBottomControlsHidden:NO animated:NO];
         [self.calipersView setNeedsDisplay];
         self.navigationItem.leftBarButtonItems[0].enabled = YES;
         self.navigationItem.rightBarButtonItems[0].enabled = YES;
@@ -608,7 +614,7 @@
         [self.toolPicker addObserver:self.canvasView];
         [self.canvasView becomeFirstResponder];
         [self.canvasView setUserInteractionEnabled:YES];
-        [self.navigationController setToolbarHidden:YES animated:NO];
+        [self setBottomControlsHidden:YES animated:NO];
         [self.calipersView setNeedsDisplay];
         self.canvasView.hidden = NO;
         [self recenterImage];
@@ -750,7 +756,7 @@
 }
 
 - (void)showHamburgerMenu {
-    [self.navigationController setToolbarHidden:YES animated:NO];
+    [self setBottomControlsHidden:YES animated:NO];
     [self.hamburgerViewController reloadData];
     self.constraintHamburgerLeft.constant = 0;
     self.hamburgerMenuIsOpen = YES;
@@ -763,7 +769,7 @@
 }
 
 - (void)hideHamburgerMenu {
-    [self.navigationController setToolbarHidden:NO animated:NO];
+    [self setBottomControlsHidden:NO animated:NO];
     self.constraintHamburgerLeft.constant = -self.constraintHamburgerWidth.constant;
     self.hamburgerMenuIsOpen = NO;
     [self.calipersView setUserInteractionEnabled:YES];
@@ -831,6 +837,7 @@
     self.qtcButton = [[UIBarButtonItem alloc] initWithTitle:QTC style:UIBarButtonItemStylePlain target:self action:@selector(calculateQTc)];
     NSArray *array = [NSArray arrayWithObjects: self.calibrateCalipersButton, self.toggleIntervalRateButton, self.mRRButton, self.qtcButton, /* self.brugadaButton ? */ nil];
     self.mainMenuItems = [self spaceoutToolbar:array];
+    [self createMainActionBar];
 }
 
 - (void)createPDFToolbar {
@@ -1150,7 +1157,7 @@
     }
     else {
         self.rrIntervalForQTc = 0.0;
-        self.toolbarItems = self.qtcStep1MenuItems;
+        [self showToolbarItems:self.qtcStep1MenuItems];
         self.inRRForQTc = YES;
     }
 }
@@ -1181,7 +1188,7 @@
                 double intervalResult = fabs(c.intervalResult);
                 double meanRR = intervalResult / divisor;
                 self.rrIntervalForQTc = [c intervalInSecs:meanRR];
-                self.toolbarItems = self.qtcStep2MenuItems;
+                [self showToolbarItems:self.qtcStep2MenuItems];
                 self.inQtc = YES;
                 self.inRRForQTc = NO;
             }
@@ -1212,7 +1219,7 @@
             [self selectMainToolbar];
         }];
         UIAlertAction *repeatQtcAction = [UIAlertAction actionWithTitle:REPEAT_QT style:UIAlertActionStyleDefault handler:^(UIAlertAction *alert) {
-            self.toolbarItems = self.qtcStep2MenuItems;
+            [self showToolbarItems:self.qtcStep2MenuItems];
         }];
         [qtcResultAlertController addAction:cancelAlertAction];
         [qtcResultAlertController addAction:repeatQtcAction];
@@ -1299,7 +1306,7 @@
         [self showNoCalipersAlert];
     }
     else {
-        self.toolbarItems = self.calibrateMenuItems;
+        [self showToolbarItems:self.calibrateMenuItems];
         [self.calipersView selectCaliperIfNoneSelected];
     }
 }
@@ -1441,9 +1448,160 @@
     }
 }
 
+// The main actions live outside UIToolbar so the system cannot overflow them.
+- (void)createMainActionBar {
+    if (@available(iOS 26.0, *)) {
+        self.mainActionBar = [[UIView alloc] initWithFrame:CGRectZero];
+        self.mainActionBar.hidden = YES;
+        self.mainActionBar.accessibilityIdentifier = @"mainActionBar";
+        [self.view addSubview:self.mainActionBar];
+
+        NSArray<UIBarButtonItem *> *items = @[self.calibrateCalipersButton,
+            self.toggleIntervalRateButton, self.mRRButton, self.qtcButton];
+        NSArray<NSString *> *identifiers = @[@"calibrateAction", @"intervalRateAction",
+            @"meanRateAction", @"qtcAction"];
+        NSArray<NSString *> *labels = @[L(@"Calibration_ht"), L(@"Interval_rate_ht"),
+            L(@"Mean_rate_ht"), L(@"QTc_ht")];
+        NSMutableArray<UIButton *> *buttons = [[NSMutableArray alloc] init];
+        for (NSUInteger index = 0; index < items.count; index++) {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+            button.configuration = [UIButtonConfiguration glassButtonConfiguration];
+            button.accessibilityIdentifier = identifiers[index];
+            button.accessibilityLabel = labels[index];
+            [button addTarget:self action:items[index].action forControlEvents:UIControlEventTouchUpInside];
+            [self.mainActionBar addSubview:button];
+            [buttons addObject:button];
+        }
+        self.mainActionButtons = buttons;
+        self.mainActionBar.accessibilityElements = buttons;
+        [self updateMainActionButtons];
+    }
+}
+
+- (void)updateMainActionButtons {
+    if (self.mainActionButtons.count == 0) {
+        return;
+    }
+    NSArray<UIBarButtonItem *> *items = @[self.calibrateCalipersButton,
+        self.toggleIntervalRateButton, self.mRRButton, self.qtcButton];
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody
+                     compatibleWithTraitCollection:self.traitCollection];
+    for (NSUInteger index = 0; index < items.count; index++) {
+        UIButton *button = self.mainActionButtons[index];
+        UIButtonConfiguration *configuration = button.configuration;
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.alignment = NSTextAlignmentCenter;
+        paragraphStyle.lineBreakMode = NSLineBreakByCharWrapping;
+        configuration.attributedTitle = [[NSAttributedString alloc]
+            initWithString:items[index].title
+            attributes:@{NSFontAttributeName: font, NSParagraphStyleAttributeName: paragraphStyle}];
+        configuration.titleAlignment = UIButtonConfigurationTitleAlignmentCenter;
+        // Character wrapping also accommodates long, unbroken translated labels.
+        configuration.titleLineBreakMode = NSLineBreakByCharWrapping;
+        configuration.contentInsets = NSDirectionalEdgeInsetsMake(10, 12, 10, 12);
+        button.configuration = configuration;
+        button.titleLabel.adjustsFontSizeToFitWidth = NO;
+        button.enabled = items[index].enabled;
+    }
+    [self.view setNeedsLayout];
+}
+
+- (void)showToolbarItems:(NSArray<UIBarButtonItem *> *)items {
+    if (@available(iOS 26.0, *)) {
+        self.mainActionBarSelected = (items == self.mainMenuItems);
+        self.toolbarItems = self.mainActionBarSelected ? @[] : items;
+        [self setBottomControlsHidden:self.bottomControlsHidden animated:NO];
+    } else {
+        self.toolbarItems = items;
+    }
+}
+
+- (void)setBottomControlsHidden:(BOOL)hidden animated:(BOOL)animated {
+    self.bottomControlsHidden = hidden;
+    if (@available(iOS 26.0, *)) {
+        self.mainActionBar.hidden = hidden || !self.mainActionBarSelected;
+        [self.navigationController setToolbarHidden:(hidden || self.mainActionBarSelected)
+                                           animated:animated];
+        [self layoutMainActionBar];
+    } else {
+        [self.navigationController setToolbarHidden:hidden animated:animated];
+    }
+}
+
+- (void)layoutMainActionBar {
+    if (self.mainActionBar == nil) {
+        return;
+    }
+
+    CGFloat reservedHeight = 0;
+    if (!self.mainActionBar.hidden) {
+        const CGFloat margin = 16;
+        const CGFloat spacing = 8;
+        UIEdgeInsets safeInsets = self.view.safeAreaInsets;
+        CGFloat width = CGRectGetWidth(self.view.bounds) - safeInsets.left - safeInsets.right - 2 * margin;
+        if (width <= 0) {
+            return;
+        }
+
+        CGFloat naturalWidths[4];
+        CGFloat requiredWidth = 3 * spacing;
+        for (NSUInteger index = 0; index < self.mainActionButtons.count; index++) {
+            UIButton *button = self.mainActionButtons[index];
+            // Measure the configured text directly: UIButton may defer applying a new
+            // configuration until its next update, returning stale sizes in the meantime.
+            NSDirectionalEdgeInsets padding = button.configuration.contentInsets;
+            naturalWidths[index] = MAX(44, ceil(button.configuration.attributedTitle.size.width)
+                + padding.leading + padding.trailing);
+            requiredWidth += naturalWidths[index];
+        }
+        BOOL twoRows = requiredWidth > width;
+        NSUInteger columns = twoRows ? 2 : 4;
+        CGFloat rowHeights[2] = {44, 44};
+        CGFloat buttonWidths[4];
+        for (NSUInteger index = 0; index < self.mainActionButtons.count; index++) {
+            CGFloat buttonWidth = twoRows ? (width - spacing) / 2
+                : naturalWidths[index] + (width - requiredWidth) / 4;
+            buttonWidths[index] = buttonWidth;
+            UIButtonConfiguration *configuration = self.mainActionButtons[index].configuration;
+            NSDirectionalEdgeInsets padding = configuration.contentInsets;
+            CGFloat textWidth = MAX(1, buttonWidth - padding.leading - padding.trailing);
+            CGRect textBounds = [configuration.attributedTitle boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)
+                options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil];
+            NSUInteger row = index / columns;
+            rowHeights[row] = MAX(rowHeights[row], ceil(CGRectGetHeight(textBounds)) + padding.top + padding.bottom);
+        }
+        CGFloat height = rowHeights[0] + (twoRows ? spacing + rowHeights[1] : 0);
+        // Remove only our own safe-area contribution to avoid a layout feedback loop.
+        CGFloat bottomInset = MAX(0, safeInsets.bottom - self.mainActionBarInset);
+        self.mainActionBar.frame = CGRectMake(safeInsets.left + margin,
+            CGRectGetMaxY(self.view.bounds) - bottomInset - spacing - height, width, height);
+
+        CGFloat x = 0;
+        for (NSUInteger index = 0; index < self.mainActionButtons.count; index++) {
+            NSUInteger row = index / columns;
+            if (index % columns == 0) {
+                x = 0;
+            }
+            CGFloat y = row == 0 ? 0 : rowHeights[0] + spacing;
+            self.mainActionButtons[index].frame = CGRectMake(x, y, buttonWidths[index], rowHeights[row]);
+            x += buttonWidths[index] + spacing;
+        }
+        [self.view bringSubviewToFront:self.mainActionBar];
+        reservedHeight = height + 2 * spacing;
+    }
+
+    // The storyboard anchors both ECG and calipers to the safe area.
+    if (fabs(reservedHeight - self.mainActionBarInset) > 0.5) {
+        UIEdgeInsets insets = self.additionalSafeAreaInsets;
+        insets.bottom += reservedHeight - self.mainActionBarInset;
+        self.mainActionBarInset = reservedHeight;
+        self.additionalSafeAreaInsets = insets;
+    }
+}
+
 // Select toolbars
 - (void)selectPDFToolbar {
-    self.toolbarItems = self.pdfMenuItems;
+    [self showToolbarItems:self.pdfMenuItems];
 }
 
 - (void)doneTweaking {
@@ -1451,10 +1609,10 @@
     [self.calipersView clearAllChosenComponents];
     [self.calipersView setNeedsDisplay];
     if (self.inQtc) {
-        self.toolbarItems = self.qtcStep2MenuItems;
+        [self showToolbarItems:self.qtcStep2MenuItems];
     }
     else if (self.inRRForQTc) {
-        self.toolbarItems = self.qtcStep1MenuItems;
+        [self showToolbarItems:self.qtcStep1MenuItems];
     }
     else {
         [self selectMainToolbar];
@@ -1462,12 +1620,13 @@
 }
 
 - (void)selectMainToolbar {
-    self.toolbarItems  = self.mainMenuItems;
+    [self showToolbarItems:self.mainMenuItems];
     [self.calipersView setUserInteractionEnabled:YES];
     BOOL enable = [self.horizontalCalibration canDisplayRate];
     [self.toggleIntervalRateButton setEnabled:enable];
     [self.mRRButton setEnabled:enable];
     [self.qtcButton setEnabled:enable];
+    [self updateMainActionButtons];
     self.calipersView.allowTweakPosition = NO;
     self.inQtc = NO;
     self.inRRForQTc = NO;
@@ -1479,13 +1638,14 @@
 
 - (void)selectRotateImageToolbar {
     [self updateRotateToolbarLayout];
-    self.toolbarItems = self.rotateImageMenuItems;
+    [self showToolbarItems:self.rotateImageMenuItems];
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self updateRotateToolbarLayout];
     [self updateMovementToolbarLayout];
+    [self layoutMainActionBar];
 }
 
 - (void)updateRotateToolbarLayout {
@@ -1535,16 +1695,16 @@
 }
 
 - (void)selectCalibrateToolbar {
-    self.toolbarItems = self.calibrateMenuItems;
+    [self showToolbarItems:self.calibrateMenuItems];
 }
 
 - (void)selectColorToolbar {
-    self.toolbarItems = self.colorMenuItems;
+    [self showToolbarItems:self.colorMenuItems];
 }
 
 - (void)selectMovementToolbar {
     [self updateMovementToolbarLayout];
-    self.toolbarItems = self.movementMenuItems;
+    [self showToolbarItems:self.movementMenuItems];
 }
 
 // FIXME: This is broken in iOS 26 beta.  It opens the Settings app, but not the specific EP Calipers page.
@@ -2184,6 +2344,7 @@ static inline double radians (double degrees) {return degrees * M_PI/180;}
     [self.toggleIntervalRateButton setTitle:[self selectSize:TOGGLE_INT_RATE_IPAD compactSize:TOGGLE_INT_RATE_IPHONE]];
     [self.mRRButton setTitle:[self selectSize:MEAN_RATE_IPAD compactSize:MEAN_RATE_IPHONE]];
     [self.calibrateCalipersButton setTitle:[self selectSize:CALIBRATE_IPAD compactSize:CALIBRATE_IPHONE]];
+    [self updateMainActionButtons];
 }
 
 - (void)lockImage {
