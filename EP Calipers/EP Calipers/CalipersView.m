@@ -28,6 +28,9 @@
         [self addGestureRecognizer:doubleTapGestureRecognizer];
         [singleTapGestureRecognizer requireGestureRecognizerToFail:doubleTapGestureRecognizer];
         
+        // Redraw at the stored caliper coordinates when toolbar changes resize the view.
+        // Scaling the cached drawing would move the bars without changing the measurement.
+        self.contentMode = UIViewContentModeRedraw;
         self.clearsContextBeforeDrawing = YES;
         self.allowTweakPosition = NO;
         self.lockImageScreen = NO;
